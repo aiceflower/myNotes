@@ -1,0 +1,55 @@
+mysql退出：
+	exit;
+	quit;
+	\q;
+修改提示符：
+	prompt +...
+	\D 完整的日期
+	\d 当前数据库
+	\h 服务器名称
+	\u 当前用户
+	例如：prompt \d
+select version();  显示当前服务器版本
+select now();  显示当前日期时间
+select user();  显示当前用户
+
+关键字与函数名称全部大写
+数据库名称，表名称，字段名称全部小写
+sql语句必须以分号结尾
+
+create database t1;
+ show warnings
+   
+数据类型，数据表
+
+打开数据库：use 数据库名称
+显示数据库: show databases;
+
+显示表；show table from ..
+查看表结构：show columns from emp;
+
+插入记录：
+insert [into]tab_name[(column)] values();
+
+auto_increment 默认情况下起始 值 为1，每次的增量为1  必须与主键组合使用
+
+unique key;不能为空
+
+查看使用的字符集show variables like 'char%';
+	
+
+查看现在的日期格式show variables like '%date%';
+
+日期类型不能有默认值  设置值为  hirdate datetime就可以
+	《date 表示 YYYY-MM-DD datetime 表示YYYY-MM-DD HH:mm:ss》
+	《需要设置时间为当前时间时，设置类型为timestamp即可》
+
+auto_increment 设置自增量
+
+alter database 数据库名 character set utf8;
+alter table 表名 convert to character set utf8;
+
+url="jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8"
+
+create database jsd1408db defalut character set utf8; //创建名字为jsd1408db的默认编码为utf8的数据库
+

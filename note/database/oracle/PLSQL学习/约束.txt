@@ -1,0 +1,69 @@
+约束：
+	非空约束：
+		创建表时：
+			create table table_name(col1 datatype not null,col2 ...);
+		修改表时：
+			alter table table_name modify (col1 datatype not null,col2 ...)添加非空约束
+		删除非空约束	
+			alter table table_name modify col1 datatype null删除非空约束
+	主键约束：一个，不能为空
+		创建表时：
+			create table table_name(col1 datatype primary key,col2 ...);
+			constraint constraint_name primary key(col1,col2)写在所有字段后
+			查询约束 user_constraints
+		修改表时：
+			alter table table_name add constraint constraint_name primary key(col1,col2...)多个字段为联合主键
+		修改约束名称 
+			alter table table_name rename constraint old_constraint_name to new_constraint_name;
+		删除主键约束
+			alter table table_name disable|enable constraint constraint_name;启用或禁用约束
+			alter table table_name drop constraint constraint_name; 删除约束
+			alter table table_name drop primary key[cascade]其中cascade为级联，如果其它表用到了主键约束可以同时删除
+	外键约束：
+		创建表时：
+			create table table_name1[从表](col1 datatype references table_name2[主表](col1_name),...);主表字段为主键，字段数据类型一至，外键可以为空
+			constraint constraint_name foreign key(col1_name) references table_name[主表](col2_name) [on delete cascade] 写在所有字段后
+			查询约束 user_constraints
+		修改表时：
+			alter table table_name1 add constraint constraint_name foreign key(col1_name) references table_name2(col2_name) [on delete cascade] 
+		修改约束名称 
+			alter table table_name rename constraint old_constraint_name to new_constraint_name;
+		删除外键约束
+			查看约束名，及状态
+			select constraint_name,constraint_type,status from user_constraints;
+			alter table table_name disable|enable constraint constraint_name;启用或禁用外键约束
+			alter table table_name drop constraint constraint_name; 删除约束
+	唯一约束：多个，可以为空
+		创建表时：
+			create table table_name (col datatype unique,...);
+			constraint constraint_name unique(col1_name);如果设置多个唯一约束，只能重写这样的一条语句，不能在unique后面加多个字段，因为每个约束都有它的名字。
+		修改表时：
+			alter table table_name add constraint constraint_name unique(col1_name);
+		删除唯一约束
+			查看约束名，及状态
+			select constraint_name,constraint_type,status from user_constraints;
+			alter table table_name disable|enable constraint constraint_name;启用或禁用唯一约束
+			alter table table_name drop constraint constraint_name; 删除约束
+	检查约束：
+		创建表时：
+			create table table_name (col datatype check(expressions),...);expressions表达式
+			constraint constraint_name check(expressions);如果设置多个唯一约束，只能重写这样的一条语句，不能在unique后面加多个字段，因为每个约束都有它的名字。
+		修改表时：
+			alter table table_name add constraint constraint_name check(expressions);
+		删除检查约束
+			查看约束名，及状态
+			select constraint_name,constraint_type,status from user_constraints;
+			alter table table_name disable|enable constraint constraint_name;启用或禁用检查约束
+			alter table table_name drop constraint constraint_name; 删除约束
+	约束总结：
+		主键约束，一个表中只能有一个，但是可以由多个字段 构成
+		创建表时设置约束，非空约束只能在列级设置，不能在表级设置，没有名字。
+		修改表时添加约束，alter table table_name modify col1_name datatype not null;非空约束，特殊
+		更改约束名称 数据字典 user_constraints
+		rename constraint old_constraint_name to new_constraint_name;
+		删除约束 
+		alter table table_name modify col1 datatype null删除非空约束，特殊
+		其它
+		disable|enable constraint constraint_name
+		drop constraint constraint_name
+		drop primary key ;删除主键约束，较特殊

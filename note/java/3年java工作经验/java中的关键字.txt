@@ -1,0 +1,42 @@
+一、静态
+	1.static表示‘全局’或者‘静态’的意思，用来修饰成员变量和成员方法，也可形成静态static块。
+	2.static修饰的变量可方法独立于文类的任何对象。也就是说，它不依赖类特定的实例，被类的掺实例共享。
+	3.JVM只为静态变量分配一次内存，在类加载的时候完成内存分配。（静态变量）
+	4.静态方法可以直接通过类名调用，所以静态方法中不能有this，super关键字。（静态方法）
+	5.静态代码块，是类中独立于类成员的static语句块，可以有多个，位置可以随便放，但不能在方法体中，，如果static代码块有多个，JVM将按照它们在类中出现的先后顺序执行，每个静态代码块只被执行一次。
+	示例：
+	public class Test { 
+		Person person = new Person("Test"); 
+		static{ 
+			System.out.println("test static"); 
+		} 
+		  
+		public Test() { 
+			System.out.println("test constructor"); 
+		} 
+		  
+		public static void main(String[] args) { 
+			new MyClass(); 
+		} 
+	} 
+  
+	class Person{ 
+		static{ 
+			System.out.println("person static"); 
+		} 
+		public Person(String str) { 
+			System.out.println("person "+str); 
+		} 
+	} 
+	  
+	  
+	class MyClass extends Test { 
+		Person person = new Person("MyClass"); 
+		static{ 
+			System.out.println("myclass static"); 
+		} 
+		  
+		public MyClass() { 
+			System.out.println("myclass constructor"); 
+		} 
+	｝

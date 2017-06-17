@@ -1,0 +1,9 @@
+1.查看表结构sql：
+SELECT COLUMN_NAME,DATA_TYPE,DATA_LENGTH ,nullable from user_tab_cols where table_name='FASTATM_ATMCT_DETAIL';
+2.查询所有表
+SELECT * FROM user_tables;
+3.查询所有用户
+SELECT * FROM user_tables;
+select * from dba_users;  
+select * from user_users;
+

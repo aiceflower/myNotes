@@ -1,0 +1,25 @@
+dbca -silent -createDatabase -templateName 
+/grg/oracle/OracleHome/assistants/dbca/templates/General_Purpose.dbc --模板位置
+-gdbName pillow -sid pillow --数据库名和sid
+-datafileDestination $ORACLE_BASE/oracledata --数据文件位置，可要可不要
+-responseFile NO_VALUE 
+-characterSet al32utf8 --设置编码
+-nationalCharacterSet a116uft16
+--如果启用oem添加下面语句
+-emConfiguration LOCAL -dbsnmpPassword pss1 -sysmanPassword pss2
+--需要指定两个密码
+
+静默删除数据库
+dbca -silent -deleteDatabase -sourceDB pillow （sid名)
+
+克隆模板
+dbca -silent -createCloneTemplate -sourceDB orcl -templateName mytemplate
+
+启动
+startup 
+关闭
+shutdown immediate
+注册监听
+alter system register;
+查看sid 状态
+select name,open_mode from v$database;

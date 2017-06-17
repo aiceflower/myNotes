@@ -1,0 +1,46 @@
+jquery的ajax方式有如下几种: 
+1.   $.post(url,params,callback); 
+2.   $.get(url,params,callback);
+3.   $.getJSON(url,params,callback); 
+4.   $.ajax({ url:url,data:data,type:type....}); 
+5.   $.load(url,params,callback); 
+
+第一种:采用post方式提交，中文参数无需转码，在callback中如果要获取json字符串，还需转换一下。 
+实例：
+$.post(url, { "fid": fids, "fname": fnames},function([data]) {
+       //TODO处理
+});
+
+
+第二种：采用get方式提交
+实例：
+$.get(url, { name: "John", time: "2pm" },function(data){
+   	 //TODO处理
+}); 
+
+第三种方式:getJSON采取get方式提交，所以如果你的params参数里面有中文的话，请先转码，否则会出现乱码提交到后台。 
+实例： 
+$.getJSON(url,param,function(jsondata){   
+       //TODO处理   
+}  
+
+第四种方式:$.ajax， 这种方式最灵活，如果需要在出错时执行函数，请使用这种方式 
+$.ajax({   
+       url: url,//地址    
+        data: data,//参数    
+        type: 'POST',//提交方式 可以选择post/get 推荐post     
+        async: false,//同步异步     
+        dataType: 'json',//返回数据类型     
+        success:function(data){   
+           //TODO这里处理请求成功的情况         
+        }，
+	error:function(data){
+	   //TODO这里处理请求出错的情况
+	 }
+    });  
+当然$.ajax里面还有很多参数 可以加更多的特效在里面，如ajaxStart ,ajaxStop等等， 
+上面的参数type,async,dataType都不是必须的.
+第五种方式:$.load 这种用得很少，一般是来加载某一个页面或者xml等等。 
+
+总结:如果参数中没有中文，又想直接用json ,那就推荐$.getJSON,如果有中文 那就采用$.post或者$.ajax。
+

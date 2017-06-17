@@ -1,0 +1,554 @@
+	
+Book7:WebBasic
+  
+    unit1:
+    WEB＝浏览器＋WEB服务器＋HTTP通讯协议
+    1 ,浏览器客户端
+    向服务器发送HTTP请求，接收并且处理服务
+    器的响应结果。响应结果中经常是HTML
+    在浏览器中显示HTML页面。
+    2， WEB 服务器
+    处理浏览器的请求，将处理结果发送浏览器
+    处理结果经常是HTML。
+    3，HTTP通讯协议
+    浏览器和服务器之间的通讯协议
+    
+    
+    HTML 、CSS、JS
+    HTML的工作原理。
+    部署在WEB服务器上，经过浏览器请求，通过
+      HTTP协议下载以浏览器中，显示执行。
+      
+      XML
+	标签：分为三种
+	  <标签名> 开始标签
+	  </标签名>结束标签
+	  <标签名/>自结束标签，相当于一对空标签
+	  自结束标签是空标签的简洁写法
+	 
+	 元素：开始标签＋内容＋结束标签
+	 <name>Tom</name>
+	 内容：文本，子元素，文本，元素混合
+	 属性：在开始标签上定义的 属性＝“值”
+	  属性无顺序
+	  属性必须使用引号
+	  属性不能重复
+	  只能在开始标签上定义
+	  
+	  XML是严格区分大小写的
+	  
+    XML 格式良好要求
+      有唯一的根元素
+      标签必须配对使用，自结束是一对标签
+      标签要正确嵌套
+      
+     XML的可扩展性
+      1，标签名可以任意定义
+      2，属性可以扩展
+      3，内容可以扩展
+      
+      
+      HTML 
+	1，语法与XML基本相同  HTML不区分大小写。
+	2，标签固定
+	根标签必须是<html>
+	html 元素的内容只能是 <head> <body>
+	3，属性也规定好了
+	4，有些元素的嵌套关系也规定了
+	
+	在终端窗口执行命令：gedit
+	notepad 
+	
+	编写HTML
+	1.使用文本工具编写
+	文本工具：editplus  gedit notepad   eclipse 
+	2,一定以.html为结尾保存
+	demo01.html
+	3,保存文件的时候，都有编码问题
+	
+	通用属性：id   title  class   style  原则上id不能重复
+	
+	DOCTYPE : 文档类型定义
+	  DOCTYPE规定了在HTML页面中可以使用哪些标签。
+	  DOCTYPE：标准
+	    HTML4：
+	      1，严谨版本（严格版本）不允许使用过时标记
+	      2，宽松版本  可以使用过时标签
+	      3,XHTML严谨版本 严格遵守XML语法 
+	      4，XHTML 宽松版本  严格遵守XML语法
+		  可以使用过时标签
+	      HTML 5：
+		是最宽松版本 ，不用严格遵守XML语法
+		（科技以人为本）
+	  已经简化为：<!DOCTYPE html>
+	  
+	  <head>用于为页面定义全局信息
+	  可包含 title  meta  script  style   link  
+	
+	单标签：
+	<br>、<meta>、<img src=" image/hjf.gif" /> <input>
+	
+	分区元素：span，div
+	div ：块分区
+	span ：行内分区
+	
+	按照语义使用HTML标签
+	h1~h6 用于定义标题
+	p 用于定义文章内容
+	br段落内部换行
+	span段落内部分块
+	div页面区域分块
+	 
+	块元素会自动插入前后的回车，占有一个方形区域
+	
+	有序列表：ol
+	无序列表：ul
+	
+	超链接：
+	<a href=" "></a>
+	锚：
+	<a name="s1"></a>
+	<a href="#s1"></a>
+	<a href="#"></a>
+	<a href="demo1.html#s1"></a>
+	<p id ="s1"></a>
+	
+	<table> 表 tr行 td 列   </table>
+	
+	乱码：HTML文本的编码与浏览器解析的编码不一致就会出现乱码。
+	
+	如果解决乱码问题：
+	1，HTML文件的保存编码
+	2，在head 中使用meta标签：通知浏览器如何解释网页编码
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	
+	<thead></thead>		<tbody></tbody>
+
+	表格：table  tr td th
+		跨列：colspan
+		跨行：rowspan
+	
+	文本框
+	<input type="text"/>
+	<input type="password"/>
+	value 
+	maxlength: 最大长度
+	readonly: 设置为只读
+	
+	按钮
+	<input type="submit" value="保存">提交
+	<input type="reset"  value="重写">重填
+	<input type="button" value="空白">普通
+
+	下拉框和列表框
+	<label>
+	<select value="1" size="3">(size=1为下拉框，size>1为列表框) multiple 复选按住ctrl
+	
+	<textarea rows="2" cols="10">
+	
+	<fieldset>为控件分组（给框起来的内容加框）
+	<legend>为分组指定一个标题
+
+
+      CSS:
+	选择器：
+	１）元素选择器　　eg：<p>  <h1>等
+	２）类选择器　 class= "myClass"　.myClass{ } 可以让不同的元素使用相同的样式
+	３）id选择器   id="myId"        #myId{}  整个页面中id是不能重复的
+	４）组选择器　　h1,h2,h3,h4,h5,h6{  }
+	５）派生选择器　h1 span{ } 派生一定有上下级关系　
+	  <h1>  A <span> importment here change</span>  question</h1>
+	  <span>not change </span>
+	  
+	  <!-- 选择类是list的元素，全部li子孙-->
+	.list li{color:blue;}
+	<!-- 选择类是list的元素，全部li孩子不包括孙子，第一层孩子-->
+	.list > li{color:green;}
+	
+	table :
+	表单是向服务器了送数据
+	form定义数据的发送范围
+	form中的表单项目一次性向服务器发送。
+	
+	  网页＝　html提供的内容　＋　　css　样式　
+	  
+	  css　
+	  内联，内部，外部
+	  继承，层叠性（叠加效果），
+	  优先级（解决冲突）
+	  id>class>元素
+	  
+	  选择器：
+	  元素选择器：使用元素名字选择　　选择相同名的元素
+	  类选择器：　使用class属性选择　元素　
+	  可以选择不同元素，但是具有相同class名。
+	  id选择器：选择唯一的元素
+	  
+	  选择器组：一组选择器设置相同样式
+	  派生选择器：利用层级关系选择元素。
+	  
+	  
+	  伪类选择器：
+	  ：link
+	  ：active
+	  ：visited
+	  ：hover
+	  ：focus
+	  
+	  ＰＰＩ point per Intch
+	  pt 磅（１pt等于１／７２英寸）
+	  
+	  尺寸：
+	  width height
+	  overflow:当内容溢出元素框时如何处理
+	  visible 
+	  hidden 
+	  scroll 
+	  auto
+	  
+	  盒模型：
+	  padding 内边距
+	  margin 外边距
+	  border　边框
+	 
+	 
+	 repeat
+	 repeat-x
+	 repeat-y
+	 no-repeat
+	 
+	background-image:url('bee.png'); 背景图片
+	background-repeat:no-repeat;　　　背景重复
+	background-position:200px bottom;　　背景位置
+	background-attachment: fixed;
+	
+	控制字体：
+	font-family:value1,value2; 字体
+	font-size:value;　　字体大小
+	font-weight:normal/bold　　字体
+	color:value　　字体颜色
+	text-align:left/right/center 文本排列
+	text-decooration:none/underline;  
+	line-eight:value;  行高
+	text-indent:value;   首行文本缩进
+	
+	
+	border  :
+	border-collapse:separate/collapse  边框合并
+	border-spacing:10px 20px　　边框边距
+	vertical-align ：top/middle/bottom
+	
+	浮动的用途：１，网站的导航菜单，２，
+	
+
+
+
+
+
+
+JavaScript:
+	使用JavaScript:
+	1）事件定义方式
+	<input type ="button" value="第一个按钮" onclick="alert('helloworld');">
+	2)嵌入式：
+	<script type="text/javascript>alert("helloworld.");
+	</script>
+	3)文件调用方式
+	<script src="myJs.js" type = "text/javascript">
+	</script>
+  注释：
+  	单行：／／
+  	多行：／＊　＊／
+  	
+  大小写敏感
+	
+　数据类型：
+　a）基本类型：number string boolean
+　b）特殊类型：null空 undifined未定义　
+　c）复杂类型：function 函数　object 
+　
+　number:不区分整型和浮点型数值，都用６４位浮点格式存储，同于double
+　boolean:true 1  or  false  0;
+　数据类型隐式转换：
+　	数字＋字符串：数字转换为字符串
+　	数字＋布尔：true转换为１，false转换为０
+　	字符串＋布尔：布尔转换为字符串true或false
+　	布尔＋布尔：布尔转换为数值１或０
+　	
+　	null在程序中代表　　无值　　或　无对象
+　	可以通过给一个就是赋值为null来清除变量的内容
+　	undifined　声明了就是从未赋值或对象属性不存在
+　	
+　	关系运算：
+　	全等：＝＝＝ 类型相同且数值相同
+　	不全等：！＝＝
+　	
+　	JavaScript对象
+　	包含：
+　			内置对象
+　			自定义对象
+　			浏览器对象
+　			ＨＴＭＬ　ＤＯＭ对象
+　			
+　			String 对象
+　			属性：length
+　			方法：x.toLowerCase()
+　				   x.toUpperCase()
+　				   x.charAt(index)返回指定位置字符
+　				   x.charCodeAt(index):返回指定位置字符的Ｕnicode编码
+　				　x.indexOf(findstr,[index])
+　				　x.lastIndexOf(findstr,[index])
+　				　x.substring(start,[end])
+　				　x.replace(findstr,tostr)
+　				　x.match(regexp)
+　			Array对象
+　				length;
+　			方法：x.join()
+　				  x.toString()
+　				  x.concat()
+　				  x.slice(start,[end])
+　				  x.reverse()
+　			Math:对象
+　			属性：Math.E()
+　				  Math.PI()
+　				  Math.LN2()
+　				  Math.LN10()
+　			方法：
+　				Math.sin(x)/cos  tan  asin  acos 
+　				Math.sqrt(x)/log  exp  abs  max  random  round
+　				
+　			Number对象
+　			属性：
+　			方法：toString   
+　			toFixed(num)转换为字符串保留小数点后一定位数
+　			
+　	正则表达式：
+　		var rgExp=/pattern/flags;
+　		flags标识：
+　			g:设定当前匹配为全局模式
+　			i:忽略匹配中的大小写检测
+　			m:多行搜索模式
+　		方法：
+　			ret.exec(str)检索字符串中指定的值，返回找到的值，并确定其位置。（对g没有作用，只查找一个）查询全部可以用
+　			str.match()传一个reg 带g 
+　			reg.test(str)检索字符串中指定的值返回true或false
+　	
+　	Date对象
+　		var time=new Date()
+　	方法：
+　		getDate()  getDay() getFullYear()
+　		setDate()  setDay() setFullYear()
+　		toString()
+　		toLocaleTimeString()
+　		toLocaleDateString()
+　	
+　	Function对象：
+　	函数与Ｆunction对象
+　	函数是一个可以重复执行的代码段
+　	Ｆunction对象可以表示开发者定义的任何函数
+　	函数实际上是功能完整的对象
+　	
+　	arguments对象　可以用来模拟方法的重载
+　	javascript中没有方法重载
+　	
+　	匿名函数
+　	var fun = function(arg1...){...  }没有函数名
+　	按数值排序：
+　	ary.sort(functioin(a,b){return a-b；})
+　	
+    全局函数：
+    parseInt/parseFloat
+    isNaN
+    eval
+    decodeURL/encodeURL
+    等
+
+    encodeURL():把字符串作为ＵＲＬ进行编码
+    decodeURL():对encodeURL()函数编码过的ＵＲＬ进行解码。
+    
+    
+    window对象：
+    
+    DHTML:操作ＨＴＭＬ以创造各种动态视觉效果
+    是一种浏览器端的动态网页技术
+    
+    ＤＨＴＭＬ的功能
+    １）动态改变页面元素
+    ２）与用户进行交互等
+    ＤＨＴＭＬ对象模型包括浏览器对象模型ＢＯＭ和ＤＯＭ对象模型
+    
+    ＢＯＭ：
+    	浏览器对象模型,用来访问和操纵浏览器窗口
+    	使JavaScript有能力与浏览器“对话”
+    	
+    ＤＯＭ　：文档对象模型，用来操作文档
+    
+    window对象：
+    属性：
+    	document:窗口中显示的ＨＴＭＬ文对象
+    	history:浏览器窗口的历史记录对象
+    	location:窗口文件对象
+    	name:窗口名称
+    	operer:打开当前窗口的window对象
+    方法:
+    	alert(),confirm,prompt();对话框
+    	close(),open();关闭，打开窗口
+    	focum(),blur();窗口获得焦点或者失去焦点
+    	moveBy(),moveTo()移动窗口
+    	resizeBy(),resizeTo();调整窗口大小
+    	scrollBy(),scrollTo():滚动窗口中网页的内容
+    	
+    
+    定时器：
+    	周期性定时器：
+    	setInterval(exp,time):exp:周期性触发代码exp
+    	exp：执行语句
+    	time：时间周期，单位为毫秒
+    	返回已经启动的定时器对象
+    	clearInterval(tID):停止启动的定时器
+    	tID：启动的定时器对象
+    	
+    	一次性定时器：
+    	setTimeout(exp,time)
+    	clearTimeout(tID)
+    	
+    Document对象
+    	
+    	ＤＯＭ概述：
+    	DOM(Document Object Model):文档对象模型
+    
+    	节点信息：
+    	nodeName:节点名称
+    		元素节点和属性节点：标签或属性名称
+    		文本节点：永远是  #text
+    		文档节点：永远是　　#document
+    		
+    	nodeType: 节点类型
+    	元素节点：返回１
+    	属性节点：返回２
+    	文本节点：返回３
+    	注释节点：返回８
+    	文档节点：返回９
+    	
+    	元素节点的内容：
+    		innerText:设置或获取位于对象起始和结束标签内的文本
+    		innerHTML:设置功获取位于对象起始和结束标签内的HTML
+    	节点属性：
+    		getAttribute()方法：根据属性名称获取属性的值
+    		setAttribute()、removeAttribute()
+    
+    将ＨＴＭＬ标记、属性和ＣＳＳ样式都对象化
+    <a href = "default.aspx" id="al" click me</a>
+    <img src ="ball.jpg" id = "img1"/>
+    var img = document.getElementById("img1");
+    img.getAttribute("src")获取属性
+    img.setAttribute("src","bee.png")修改属性
+    img.removeAttribute("src")删除属性
+    
+    Dom 在历史发展过程中出现过　	HTML DOM
+    后来出现了　Ｗ３Ｃ　ＤＯＭ　（称为标准DOM)
+    .className 是HTML DOM 标准中修改　class属性的方法
+    setAttribute("class",值)是W3C DOM 的修改class属性的方法
+    都可以修改class　，结果也是一样的
+    HTML DOM API 简洁，但是专用！
+    W3C DOM 繁琐但W3C DOM　API是统一通用
+    
+    html　dom　有style属性，修改内联样式
+    setAtrubute("style",样式属性)结果一样！
+    
+    //找到ul中的全部li子元素
+	var li = ul.getElementsByTagName("li");
+	
+	DOM操作－查询
+		查节点：
+		根据元素ID查找节点
+		方法：document.getElementById()
+		eg:var o = document.getElementById()
+		o.style.color=""
+		o.innerHtml="";
+		o.className=""
+		
+		根据层次查找节点
+		parentNode  firstChild 和lastChild查找单个节点
+		childNodes上下层次结构，查找多个节点
+		previousSibling前一个同级节点
+		nextSibling后一个同级节点
+		处理子元素：
+		根据标签名查找节点：（返回数组）
+		body.getElementsByTagName("p")
+		
+		
+JS 中的对象
+	１，内置对象
+		String 
+		Number
+		Boolean
+		Array
+		Function
+		Object
+	２，宿主环境对象
+		DHTML　Ｄ动态是HTML页面在澡中的执行状况
+		a）ＢＯＭ浏览器对象:操作浏览器
+			Location
+			History
+			window
+		b）ＤＯＭ文档对象:HTML解析的结果
+			document
+			a）W3C DOM (新标准DOM)
+				创建，插入，删除节点
+					document.creatElement()
+					node.appendChild()
+					node.insertBefore()
+					node.removeChild()
+				创建，修改，删除属性
+					element.setAttribute()
+					element.getAttribute()
+					element.removeAttribute()
+			b) HTML DOM　(历史遗留)
+				专用，简洁
+				x.innerHTML
+				x.innerText
+				input.value
+				x.className
+				x.style.xxx
+			
+			计算机编程艺术
+			the art of  Computer Programming
+			
+		Js 代码创建的对象
+		
+		ＨＴＭＬ　ＤＯＭ　
+		var img = new Image()
+		img.src = "bee.png";
+		等同于：
+		var img = document.createElement("img");
+		img.setAttribute（"src");
+		
+		事件：
+			指ＤＨＴＭＬ对象在状态改变操作鼠标或键盘时触发的动作
+			事件触发后会产生一个event对象
+			
+		鼠标事件：
+			onclick
+			ondblcick
+			onmousedown
+			onmouseup
+			onmouseover
+			onmouseout
+		键盘事件：
+			onkeydown
+			onkeyup
+		状态事件：
+			onload
+			onunoad
+			onchange
+			onfocus
+			onblur
+			onresize
+			onsubmit
+	
+1,	<body onload="init();">
+2, window.onload=init;
+
+
+		

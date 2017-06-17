@@ -1,0 +1,109 @@
+一、
+------------------------for循环-------------------------------------------
+1.for
+语法：其中list代表迭代的一系列值，var代表迭代的当前值
+for var int list (;do)
+do 
+ command
+done
+
+2.解决单引号和想 输出空格的情况(默认shell将空格、制表符、换行符当作分隔符)
+a)用转义字符"\"
+b)用双引号括起来  for var in it\'s a good day in "New York" ...
+
+3.读取值：直接读取，从变量中读取，从命令中读取
+从变量中读取：
+lists="this is a good day"
+for var int $lists; do ....
+从命令中读取：
+for var in `ls`;do...
+for var in $(ls);do...
+
+4.更改分隔符
+临时更改:
+在脚本中修改变量IFS的值
+如：
+IFS=$'\n'
+IFS=$':'
+实践：(避免在长shell中忘记改回来)
+IFS.OLD=$IFS
+IFS=$'\n'
+...
+IFS=$IFS.OLD
+
+5.用通配符读取文件
+for file in /home/feelview/* ;do 
+可以使用双号将变量file包起来来防止空格
+6.c语言形式的for循环
+for(( variable assignment ; condition;iteration process))
+例：
+for  ((a=1;a<10;a++));do echo $a;done
+------------------------for循环-------------------------------------------
+
+二、
+------------------------while循环-----------------------------------------
+1.while基本语法
+while test command
+do 
+  other command
+done
+2.例
+var=10
+while [ $var -gt 0 ];do ...
+3.实例
+#!/bin/bash
+var1=10
+while [ $var1 -gt 0 ]
+do
+  echo $var1
+  var1=$[ $var1 - 1 ]
+done
+
+------------------------while循环-----------------------------------------
+
+三、
+------------------------until循环-----------------------------------------
+1.until基本语法
+until test command
+do 
+  other command
+done
+2.以上几种循环也可以使用嵌套
+3.until循环实例
+#!/bin/bash
+var=10
+until [ $var -le 0 ]
+do
+        echo $var
+        var=$[$var - 1]
+done
+------------------------until循环-----------------------------------------
+
+四、
+循环例子
+循环处理文件数据
+IFS.OLD=$IFS
+IFS=$'\n'
+for entry in `cat /etc/passwd`
+do
+        echo "vavlues in $entry -"
+        IFS=:
+        for value in $entry
+        do
+                echo " value are .......$value"
+        done
+done
+
+五、
+跳出循环：
+break 
+默认break 退出当前循环 即break 1 
+可以 break 2来跳出上一级的外部循环
+continue 同break
+
+六、
+处理循环的输出：
+可以在done 后面输出到文件 
+...done > test.txt
+也可给管道符
+...done | sort 

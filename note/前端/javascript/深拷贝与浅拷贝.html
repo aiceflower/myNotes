@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>JavaScript</title>
+		<script>
+		
+			var baseCopy = function(){
+				var temp ={};
+				for(var k in this){
+					if(typeof this[k] === 'object'){
+						temp[k]=this[k].baseCopy();
+					}else{
+						temp[k]=this[k];
+					}
+				}
+				return temp;
+			}
+			var car = {
+				name:"法拉力",
+				corlor:"red"
+			}
+			
+			var p = {
+				name:"张三",
+				age:18,
+				gender:"男",
+				car : car
+			}
+			
+			p.baseCopy = baseCopy;
+			car.baseCopy = baseCopy;
+			var p1 = p.baseCopy();
+			p.name="李四";
+			p.car.name="大众";
+			console.log(p1.name);
+			
+		</script>
+	</head>
+	<body>
+		<h1>深拷贝与浅拷贝</h1>
+	</body>
+</html>

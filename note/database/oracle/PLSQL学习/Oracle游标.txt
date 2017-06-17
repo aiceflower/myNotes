@@ -1,0 +1,48 @@
+1.光标 也叫游标 就是一个结果集 
+    cursor 光标名 (参数)  is  select 语句
+    使用光标
+    a）打开光标  open 光标名
+    b）取一行光标的值 fetch 光标名 into pename;
+    c) 关闭光标  close 光标名
+    光标的四个属性
+	%found	%notfound	如 光标名%notfound  exit when c1%notfound
+	%isopen 判断光标是否打开
+	%rowcount 影响的行数  即取出了多少行
+    光标的限制：oracle默认在同一个会话中打开300个光标
+2.conn sys/password@192.168.45.121:1521/orcl as sysdba 切换用户
+   show user
+   show parameter cursor   查看参数  
+   修改游标数量
+   alter system set open_cursors = 400 scope = both;
+   scope 的取值： both memory(只更改当前实例不更改参数文件) spfile(同左相反，数据库需要重启)
+
+3.带参数的光标
+   cursor 光标名(参数 ) is select 语句
+   open 光标名(参数)
+
+
+光标例：
+set serveroutput on
+declare
+cursor c1 is select job,no from emp
+pname emp.name%type
+pno   emp.no%type
+begin
+open c1
+	loop
+	  fetch c1 into pname,pno
+	  exit when c1%notfound
+	  if c1='' upd
+	  elsif c1='' upd
+  	  else upd
+	  end if
+	end loop
+close c1
+
+end;
+/
+
+
+
+
+		

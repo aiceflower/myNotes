@@ -1,0 +1,142 @@
+Linux权限管理
+基本权限：
+文件的基本权限：--------------------------------
+修改权限：
+	chmod [选项] 模式 文件名
+	-R 递归
+	模式 [ugoa] [+-=] [rwx]
+	[mode=755]
+	例：
+		chmod u+x,g+x test.sh
+		chmod u=rw,g=rw test.txt
+		chmod 755 test.txt
+	常用：755   644   777
+		5 读和执行
+		7 所有
+		6 读写
+		4 只读
+
+权限对文件的作用
+	r:读取文件内容(cat more head tail less)
+	w:编辑，新增，修改文件内容(vi echo),但是不能删除文件
+	x:可执行
+权限对目录的作用
+	r:可以查询目录下的文件(ls)
+	w:增，删除，改名,剪切目录下的文件和子目录(touch rm mv cp)
+	x:可进入目录(cd)
+对文件来讲：最高权限是x
+对目录来讲：最高权限是w,有意义 0 5 7,其它1,4,6无意义
+
+修改文件的所有者
+	chown 用户名 文件名
+	如：chown user_test file_test
+	chown 所有者:所属组 文件名
+修改所属组
+	chgrp 组名 文件名
+	如：chgrp grout_test file_test
+分配文件权限原则：在最小权限情况下能够实现要求即可。
+
+文件的默认权限：
+查看默认权限
+	umask
+	修改umask : umask 0033  临时改
+	永久改 /etc/profile
+	0022  -- 0 文件的特殊权限  022 文件默认权限，文件644，目录755
+	怎么得到022的呢，其实是逻辑与的结果可以看成为换成字母后相减
+	666(文件默认的最大权限) -rw-rw-rw-  减去  -----w--w-(022) 等与 -rw-r--r--(文件默认权限)
+文件默认权限
+	文件默认权限不能为执行文件，必须手工赋与执行权限
+	所以文件默认最大权限为666
+目录默认权限
+	目录最大权限为777
+	默认权限需要换成字母再相减
+	建立目录之后的默认权限为777减去umask值
+
+特殊权限：---------------------------------------
+ACL权限：用来解决用户对文件的身份不足的情况，如隔壁老王，不属于所有者，所属组，其它人。
+	查看acl权限是否开启：dumpe2fs -h /dev/sda5  --dumpe2fs是查询指定分区详细文件系统信息的命令
+	-h 仅显示超级块中信息，而不显示磁盘块组的详细信息
+	如： dumpe2fs -h /dev/sda3
+	临时开启acl权限：mount -o remount,acl /    --重新挂载根分区并加入acl权限
+	永久修改 /etc/fstab   UUID=e0e18a8e-c5f5-45aa-9d5c-4ddb5e86c65e / ext4    defaults,acl 
+	之后重启系统，或重新挂载：mount -o remount /
+	
+查看acl权限
+	getfacl 文件名
+设置acl权限
+	setfacl 选项 文件名
+	-m 设定 qcl权限
+	-x 删除指定的acl权限
+	-b 删除所有的acl权限
+	-d 设定默认的acl权限
+	-k 删除默认的acl权限
+	-R 递归设定acl权限
+		setfacl -m [ugoa]:用户名:[rwx] 文件名
+	例：setfacl -m u:lw:rx av
+	
+最大有效权限：mask，mask是用来控制最大权限
+	改mask权限：setfacl -m m:权限 文件名
+	用户的实际权限是与mask权限相与之后得到的权限，mask权限默认为7
+删除acl权限
+	setfacl -x u:用户名 文件名
+	setfacl -b 文件名
+递归设定acl权限 文件名前加 -R,递归后容易出现权限溢出，如给目录执行权限后，目录下的文件也会带有执行权限
+默认权限
+递归设定acl权限后在该目录下又创建文件是没有acl权限的
+setfacl -m d:[ugoa]:用户:权限 -R 目录 --注意前面比之前多了个d:
+设置默认后，在以后新建的文件有acl权限
+
+sudo权限	用户操作系统命令的权限 ------------------------------------
+root把本来只有超级用户执行的命令赋予普通用户执行。
+sudo的操作的对象是系统命令
+查看可用的sudo命令 sudo -l 
+普通用户执行sudo赋予的命令  sudo   命令绝对命令
+如：
+	visudo 后在文件中添加如下内容，可看例子：root    ALL=(ALL)       ALL
+	给用户授权：test_user ALL=(ALL)  /sbin/shutdown -r now  --这里写的命令越详细用户的权限越小
+	给组授权：参照 %wheel        ALL=(ALL)       ALL   --组名前加%
+例：授权普通用户可以添加其他用户
+	user1 ALL=/usr/sbin/useradd
+	极权普通用户设定密码的权限
+	user ALL = /usr/bin/passwd --用这个很危险
+	user ALL = /usr/bin/passwd [A-Za-z]*, !/usr/bin/passwd "", !/usr/bin/passwd root  --用这个就可以了
+	还有给vi赋sudo的权限要慎重
+	
+文件特殊权限 ------------------------ SetUID,SetGID,Sticky BIT
+SUID 只针对文件
+1、SetUID的功能
+	只有可执行的文件二进制程序才能设定SUID权限
+	命令执行者要对该程序拥有执行权限
+	命令者在执行该程序时获得该程序文件属主身份
+	setuid权限只在该程序执行过程中有效，也就是说身份以身试法只在程序执行过程中有效
+	setuid权限中s为正常的S为不可执行的 s=S+x
+2.设定suid的方法 4 
+	4代表suid 4755 文件名  如：chmod 4755 test
+	chmod u+s 文件名
+	s 代表 SUID
+	g 代表 SGID
+	o 代表 SBIT
+	应用：find / -perm -4000 -o -perm -2000
+SGID 针对文件和目录，针对文件与SUID	一样
+针对目录：
+	普通用户对此目录有r和x权限才能进入此目录
+	普通用户在此目录中的有效组会变成此目录的属组
+	若普通用户对此目录拥有w权限时，新建的文件的默认属组是这个目录属组
+赋SGID权限 2 
+	chmod 2755 文件名
+	chmod g+s 文件名
+取消设为 0755 或 g - s 
+
+普通用户对此目录有w和x权限才能进入此目录
+SBIT  1 针对目录有效粘着位
+	chmod 1755 目录名
+	chmod o+t 目录名
+	chmod 0755 目录名
+	chmod o-t 目录名
+
+不可改变位仅限----------------------
+chattr [+-=] [选项] 文件或目录名  -- +-= 增加，删除等于某权限
+常用选项 i 和 a insert append
+如：chattr +i 文件名
+查看attr : lsattr 文件名
+ 

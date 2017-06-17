@@ -1,0 +1,47 @@
+java.lang包中
+1.Cloneable
+	实现该接口后，使用Object.clone() 方法可以合法地对该类实例进行按字段复制。
+	未实现该接口，调用Object.clone()方法则会导致抛出 CloneNotSupportedException 异常。 
+2.Comparable<T>
+	此接口强行对实现它的每个类的对象进行整体排序。这种排序被称为类的自然排序，类的 compareTo 方法被称为它的自然比较方法。
+3.Iterable<T>
+	实现这个接口允许对象成为 "foreach" 语句的目标。
+	Iterator<T> iterator();返回一个在一组 T 类型的元素上进行迭代的迭代器。
+4.Boolean
+	Boolean.TRUE,Boolean.FALSE,Boolean.TYPE(字段)
+	两个构造方法：1.传入一个布尔值。2.传入一个String字符串，忽略大小写，当字符串是true时对象的值为true否则不false
+	public int compareTo(Boolean b) {
+        return (b.value == value ? 0 : (value ? 1 : -1));
+    }
+	public static boolean getBoolean(String name);当且仅当以参数命名的系统属性存在，且等于 "true" 字符串时，才返回 true。
+	public int hashCode() {
+		return value ? 1231 : 1237;
+    }
+5.Byte
+	public static Byte decode(String nm) Throws NumberFormatException
+	将 String 解码为 Byte。nm格式为十进制、十六进制和八进制数的字符串0x33,053,#10(#10为16)：
+	public double doubleValue() {}作为一个 double 返回此 Byte 的值。
+	同上有各种xxxValue xxx为int，short...
+	parseByet(String s);parseByet(String s, int redix);
+	public static Byte valueOf(byte b[String s][Strin s,int redix]){} 返回一个 Byte 实例。
+6.Character
+	只有一个构造方法public Character(char value) {}
+	public static int charCount(int codePoint) {//确定表示指定字符（Unicode 代码点）所需的 char 值的数量。
+        return codePoint >= 0x010000? 2 : 1;	
+    }
+	public static int codePointAt(char[] a, int index) {}返回 char 数组的给定索引上的代码点。1-->1,'1'-->49,'a'-->97
+	public static int codePointAt(char[] a, int index, int limit) {}同上，但有范围限制
+	public static int codePointBefore(CharSequence seq, int index) {} 返回指定位置前一个位置的代码点。
+	public static int digit(int codePoint[char c], int radix) {}返回使用指定基数的指定字符（Unicode 代码点）的数值。如：digit('c',16)=12 
+	public static char forDigit(int digit, int radix) {} 同上相反 forDigit(12, 16)='c';
+	public static boolean isDefined(char ch[int c]) {} 确定字符是否被定义为 Unicode 中的字符。
+	public static boolean isDigit(char ch[int c]) {}确定指定字符是否为数字。如isDigit('3')=true,isDigit('c')=false
+	public static boolean isJavaIdentifierPart(char ch[int c]) {}确定指定字符（Unicode 代码点）是否可以是 Java 标识符中首字符以外的部分。
+	public static boolean isJavaIdentifierStart(char ch[int c]) {}确定指定的内容是否可以为java标识答首字母
+	public static boolean isLetter(char chch[int c]) {}确定指定字符（Unicode 代码点）是否为字母。
+	public static boolean isLetterOrDigit(char chch[int c]) {}确定指定字符（Unicode 代码点）是否为字母或数字。
+	isLowerCase(char ch[int i]);确定指定字符是否为小写字母。
+	public static boolean isMirrored(char ch[int i]) {}确定指定字符（Unicode 代码点）依据 Unicode 规范是否对称。如：isMirrored('(')=true,isMirrored('0')=false
+	isSpaceChar(char c)判断是否是空白字符
+7.Class
+	public <U> Class<? extends U> asSubclass(Class<U> clazz) {}强制转换该 Class 对象，以表示指定的 class 对象所表示的类的一个子类。

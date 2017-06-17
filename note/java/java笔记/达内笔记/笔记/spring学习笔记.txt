@@ -1,0 +1,243 @@
+李洪鹤
+lihh@tarena.com.cn
+
+1.什么是JavaBean
+  满足如下规范的对象
+  1)有包
+  2)有默认构造器
+  3)实现序列化接口
+  4)有通过get、set方法声明的bean属性
+3.bean属性和对象属性
+  private String name;
+  public String getUserName(){
+    return name;
+  }
+  public void setUserName(String name){
+    this.name = name;
+  }
+  bean属性:userName
+  对象属性:name
+  比如EL表达式访问的是对象的bean属性
+
+Spring框架
+  1)IOC
+  2)Spring MVC
+  3)整合
+  4)AOP
+IOC
+  1)什么是IOC
+    使用Spring管理对象，可以将对象的管理权由程序员移交给Spring，使权利发生了反转，因此称为控制反转
+    IOC的作用是降低对象之间的耦合度，便于团队开发。
+  2)Spring如何实现IOC
+    --依赖注入
+  3)依赖注入的类型
+    --setter注入
+    --构造器注入
+
+轻量级：代码耦合度低的框架是轻量级框架
+作业：
+  1.什么是IOC?
+  2.依赖注入有几种方式?
+  3.Spring容器如何创建bean,如何管理bean的生命周期,如何管理bean的作用域?
+基本值＝基本类型+封装类型+String
+<util:list>
+<util:set>
+<util:map>
+<util:properties>
+
+@Autowired@Qualifier  Spring提供的,可以实现setter注入和构造器注入
+@inject@Named   第3方提供的,可以实现setter注入和构造器注入，用法和@Autowired@Qualifier一样，但是需要导包
+@Resource   Java自带的，实现setter注入，它实现setter注入比@Autowired@Qualifier简单
+@Component为通用注释
+@Repository为持久层组件注释
+@Service为业务层组件注释
+@Scope为Bean的作用域注解。
+@Autowired、@Inject为指定Bean之间依赖关系的注解
+@Value为注入Spring表达式值的注解
+
+作业：
+  1.如何创建集合类型的bean
+  2.如何使用bean直接读取.properties文件
+  3.如何注入Spring表达式
+  4.什么是组件扫描
+
+1.注解和XML配置
+  1)注解
+    --简单
+    --阅读和管理不便
+  2)XML配置
+    --复杂
+    --更方便阅读和管理的
+2.Java Web开发发展过程
+  1)Java Model 1
+    A.直接使用JSP处理请求和业务，使得页面上耦合了处理请求、处理业务、展现数据的逻辑。
+  2)Java Model 2
+    A.采用了MVC的设计思想，对代码进行了分层，使用Servlet统一处理请求，JSP只负责展现。
+    B.Servlet需要我们自己支接收参数、转型、判断URL等。
+  3)使用框架
+    A.Strutsl
+    B.WebWork
+    C.Struts2
+    D.Spring MVC
+3.SpringMVC体系结构
+  1)DispatcherServlet
+    --负责分发请求，将请求分发给某一个Controller，该组件是Spring预置的，我们需要在web.xml中配置它
+  2)Controller
+    --负责处理请求，该组件是我们自己写的
+  3)ModelAndView
+    --该组件是Spring预置的，需要包装返回的数据时使用它,有替代方案
+  4)HandlerMapping
+    --负责根据请求URL找到对应的Controller，即给Controller声明一个访问路径。
+    --是Spring预置的，需要在Spring配置文件中配置它
+  5)ViewResolver
+    --负责将请求转发到页面，是Spring预置的，需要在Spring配置文件中配置它
+
+Spring包含SpringMVC,SpringMVC是Spring的一个核心功能
+4.使用XML配置
+  1)准备
+    创建项目、导入jar包、导入Spring配置文件  ctrl+shift+t   ctrl+o
+  2)DispatcherServlet
+    在web.xml中配置DispatcherServlet
+  3)Controller
+    --实现Controller接口
+  4)HandlerMapping
+    --在配置文件中配置HandlerMapping
+  5)ViewResolver
+    --在配置文件中配置ViewResolver
+  6)JSP
+
+5.使用注解
+  1)准备
+    创建项目，导入jar包，导入Spring配置文件
+  2)DispatcherServlet
+  3)Spring配置文件
+    --开启IOC注解扫描
+    --开启SpringMVC注解扫描
+    --ViewResolver
+  4)Controller
+    --不用实现Controller接口
+    --用注解声明类的访问路径
+    --用注解声明方法的访问路径
+  5)JSP
+
+
+Spring Web MVC的处理流程
+*浏览器向Spring发出请求，请求交给前端控制器DispatcherServlet处理
+*控制器通过HandlerMapping找到相应的Controller组件处理请求
+*执行Controller组件约定方法处理请求,在约定方法调用模型组件完成业务处理。约定方法可以返回一个ModelAndView对象，封装了处理结果数据和视图名称信息.
+*控制器接收ModelAndView之后，调用ViewResolver组件，定位View(JSP)并传递数据信息，生成响应界面结果。
+
+作业：
+  1.使用注解方式实现SpringMVC处理/demo/hi.do请求，转发hi.jsp
+  2.为什么JSP放到WEB-INF下，有什么好处?  
+    我们是按照MVC模式开发的项目，其中视图层数据来源于控制层，若用户直接访问视图层会有错误为了规避这个错误，将JSP加入/WEB-INF下，强制用户按照MVC规则来访问项目
+
+package com.tarena.web;
+
+@Controller
+@RequestMapping("/demo")
+public class HelloController implements Serializable{
+  @RequestMapping("/hello.do")
+  public ModelAndView sayHello(){
+    System.out.println("Hello,Controller.");
+    return new ModelAndView("jsp/hello");
+  }
+
+  @RequestMapping("/test1.do")
+  public ModelAndView test1(HttpServletRequest request){
+    String username = request.getParameter("username");
+    String pwd = request.getParameter("password");
+    System.out.println(username);
+    System.out.println(pwd);
+    return new ModelAndView("jsp/hello");
+  }
+
+  @RequestMapping("/test2.do")
+  public ModelAndView test2(String username,@RequestParam("password) String pwd){
+    System.out.println(username);
+    System.out.println(pwd);
+    return new ModelAndView("jsp/hello");
+  }
+
+}
+
+转发：
+1.1次请求
+2.地址不变
+3.内部资源
+4.效率高
+重定向：
+1.2次请求
+2.地址会变
+3.外部资源
+4.效率低
+
+1.电信计费项目
+  NETCTOSS ＝ NET China Telecom Operation Support System
+  中国电信运营支持系统－网络版
+  该项目主要解决的是电信公司里面的服务器的租赁业务。
+2.登陆功能
+  1)包含几次请求
+    A.打开登陆页
+    B.打开NEWCTOSS首页
+    C.登陆验证
+      --查询用户表，以判断账号密码是否正确
+      --程序调用顺序
+      --Controller
+        接收页面参数，调用Service,将验证结果输出给页面。
+      --Service
+        验证账号、密码是否正确
+      --DAO
+        查询用户
+      --JSP
+        设置表单，将账号密码提交给Controller
+  2)开发步骤
+    A、B.只是简单打开页面，无业务
+    C.按照调用顺序反序
+      a.DAO
+        --创建Admin实体类
+        --创建AdminDao,增加Admin findByCode(String code)
+      b.Service
+        --创建AdminService,增加验证账号密码的方法
+        --由于验证成功后，在Controller中需要将登陆信息Admin存入Session
+      c.Controller
+        --接收表单数据
+        --调用Service验证
+        --判断验证结果，若成功则重定向到首页，否则转发回登陆页，并传递错误信息
+      d.JSP
+        --
+
+
+作业：
+  1.images/WEB-INF/main/login.jsp
+    images和login.jsp差2级，在引用图片时只需加一个../
+    页面与图片相关几级应该看它们的访问路径差几级，而不是源代码
+    页面的访问路径：
+    /NETCTOSS/login/toLogin.do
+    图片的访问路径：
+    /NETCTOSS/images/account_on.png
+    页面和images差1级
+ctrl+shift+o 同时引入多个类
+ctrl+shift+x 选中的字母变大写
+ctrl+shift+y 选中的字母变小写
+
+1.Spring整合MyBatis要导入的包
+  1)JDBC 1
+  2)MyBatis 1
+  3)连接池 3
+  4)Spring
+    --IOC 5
+    --DAO 2
+    --整合 1
+    --AOP 4
+合计:17个
+
+
+
+
+
+
+
+
+
+

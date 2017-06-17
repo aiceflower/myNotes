@@ -1,0 +1,118 @@
+1.js中一切都是对象
+2.创建一个对象有五种方式
+	a.
+3.打印对象的构造方法
+	alert(对象名.constructor);
+4.打印对象的类型
+	alert(typeof 对象名);
+5.判断一个对象是不是Person对象
+	function Person(){}
+	var a = new Person();
+	if(a instanseof Person){
+		alert("a是个Persion对象");
+	}
+	if(a.constructor==Person){
+		alert("a是个Persion对象");
+	}
+6.使用对象的属性或方法
+	1.对象名.属性名
+	  对象名.方法名();
+	2.对象名["属性名"]//可以动态调用
+		<script>
+			function Cat(){}//定义对象
+			var c1 = new Cat();//创建对象
+			c1.name = "小白";//给对象添加属性，动态
+			var my = "na"+"me";
+			alert(c1[my]);//使用
+		</script>
+7.手动删除对象属性
+	delete 对象名.属性名 //不能删除对象
+8.用this.属性名，this.方法() 定义公开属性和方法
+9. 
+	function Person(){}
+	function show(){
+		return 1;
+	}
+	var p = Person();
+	p.a1 = show;//把函数show给p的a1,调用 p.a1();a1是函数
+	p.a2 = show();//把函数show的返回结果给p的a2属性，a2是属性
+10.给对象添加属性
+	a. 
+		function Person(){
+			this.show1 = function(){...}
+		}
+	b.
+		function Person(){}
+		var p = new Person
+		function show2(){...}
+		p.a = show2;
+	c.
+		function Person(){}
+		var p = new Person
+		
+		p.a = function show2(){...}
+11.多个对象共享函数代码
+	function Dog(){}
+	var d1 = new Dog();
+	Dog.prototype.show = function (){...}//prototype不对访问对象的私有成员
+	d1.show();
+	var d2 = new Dog();
+	d2.show();
+12.创建对象的另一种方式
+	var dog={name:"abc",age:8,fun:function(){...}}
+
+13.改变对象中的this
+	var dog = {name:"hello"};
+	function test(){
+		alert(this.name);
+	}
+	test();	//弹出空
+	test.call(dog);//弹出hello,call将this改变为dog
+	函数名.call(对象实例);//这样调用，该函数的this就是对象实例
+14.for(var key in 对象) 遍历对象的属性和方法
+	var dog = {name:"小名",sayHello:function(){alert("sayHello")}}
+15.js只有公开和私有两种访问权限
+	function dog(){
+		this.name = "abc";//公开属性
+		var age = 13;//私有属性
+		this.show = function(){...}//公开方法
+		function show1(){...}//私有方法
+	}
+16.js中的继承
+	function Stu(name,age){
+				this.name = name;
+				this.age = age;
+				this.show= function(){
+					alert(this.name+" "+this.age);
+				}
+			}
+			function MidStu(name,age){
+				this.stu = Stu;
+				this.stu(name,age);//js中是通过对象冒充，来实现继承的，这句话不能少
+			}
+			var s = new Stu("张三",18);
+			s.show();
+	}//这样js中可以实现多继承
+17.js是动态脚本语言，在执行的时候才创建对象，用来解释16中那名话为什么不能少
+18.js中不支持重载，但是它天然支持可变参数，也可以认为它支持
+	argument.length用来获取参数个数
+19.js是无态，天然支持多态，对象指向谁，就表示谁
+	function Person(){}
+	function Cat(){}
+	var v = new Person();
+	v = new Cat();
+20.闭包
+	function Stu(name,age){
+				var i = 0;
+				function b(){
+					alert(++i);
+				}
+				return b;
+			}
+			//闭包==gc,与回收i的内在空间有关
+			A();//此时内在中 i空间，只到这里，执行后i 有可能被回收
+			var c = A();
+			c();//到这里执行之后i没有被回收，这里保证i变量被闭包
+	//闭包是和gc相关的
+	//闭包实际上是涉及到一个对象的属性，何时被gc的处理问题
+	//怎么样才能对对象的属性形成一个闭包，上例

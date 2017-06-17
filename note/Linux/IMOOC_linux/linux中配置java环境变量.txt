@@ -1,0 +1,19 @@
+1.要使JDK在所有的用户中使用，可以这样： 
+vi /etc/profile.d/java.sh 
+在新的java.sh中输入以下内容： 
+#set java environment
+JAVA_HOME=/usr/java/jdk1.6.0_45
+CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+PATH=$JAVA_HOME/bin:$PATH
+export CLASSPATH JAVA_HOME PATH
+保存退出，然后给java.sh分配权限：chmod 755 /etc/profile.d/java.sh 
+重启
+查看
+#echo ＄JAVA_HOME 
+#echo ＄CLASSPATH 
+#echo ＄PATH 
+
+修改环境变量的三种方式
+/etc/profile (针对所有用户生效)
+系统初始化的时候通过/etc/profile加载执行/etc/profile.d文件中的脚本
+控制到用户级别：用户家目录下的 ~/.bashrc文件中添加环境变量

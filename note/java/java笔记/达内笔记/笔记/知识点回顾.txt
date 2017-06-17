@@ -1,0 +1,492 @@
+舍入误差、
+ＦundaMental
+	unit1:
+		JDK:Java开发工具包 java Development kit
+		JRE:java 运行环境　java Runtime Environment
+		JVM:java虚拟机　java virtual machines
+	JDK:http://www.oracle.com/technetwork/java/javase/downloads/index.html;
+	
+	IDE:集成开发环境Integrated Development Environment
+	Ｅclipse：(http://www.eclipse.org/downloads)
+	
+	unit2:
+		变量：在内存中开辟的存储空间，用于存放运算过程中需要用到的数据。（声明　命名　初始化　访问）
+		char类型：一个１６位无符号整数，对应的是字符编码。
+		强制转换可能出现数度丧失和溢出
+	
+	unit3:	
+		任何重要的程序逻辑都可以通过“顺序”，“分枝”，“循环”三种基本的程序结构实现。
+		switck-case常常和break语句结合使用，效率较if-else高，结构清晰
+		jdk7.0switch-case支持字符串表达式。
+		
+	unit4:
+		什么是循环结构：程序设计语言中反复执行某些代码的一种计算机处理过程，是一组相同或相似语句被有规律的重复执行。
+		循环要素：循环体　循环条件　
+		for语句用于固定次数循环
+		continue只能用于循环中
+		“当”循环　优先使用while
+		“直到”循环　优先使用do-while
+		确定循环次数　优先用for
+	unit5:
+		程序＝算法＋数据结构
+		数据结构：把数据按照特定的某种结构来保存。
+		数组：相同数据类型的元素组成的集合，元素按线性顺序排列。
+		线性顺序：除第一个元素外，每一个元素都有唯一的前驱元素；除最后一个元素外，每一个元素都有唯一的后继元素（“一个跟一个”）
+		int arr[] = {1,2,3}; true
+		int arr[]; arr ={1,2,3} false
+		 arr = new int[]{1,2,3} true
+		 数组有length属性
+		 复制数组：
+		 １. System.arraycopy(Object src,int srcPos,Object dest,int destPos,int length)
+		  2. Arrays.copyOf(src,length)
+		  数组排序：插入排序　冒泡排序　快速排序等
+		  冒泡排序：比较相邻元素
+			
+OOP
+	unit1:
+		代码的模块化及代码的重用性
+		类：成员变量、成员方法
+		成员变量：用于描述该类型对象共同的数据结构。
+		成员方法：用于描述对象的行为，封装对象的功能。
+
+		创建对象的过程通常称为实例化。
+		类、接口、数组声明的变量称为引用类型变量，简称　引用
+		引用类型变量存储的是对象的地址信息。
+	unit2:
+		方法的签名：方法名和参数列表
+		一个类中不可以有两个方法的签名完全相同。
+		方法的重载：方法的名称相同，但参数列表不同
+			有相应类型就调用相应的类型，没有的话就调用父类型（引用类型）或包装类型（基本类型）如果都没有编译不通过。null匹配引用类型。
+		构造方法：名称与类名相同，没有返回值，不能写void
+		参数名与成员变量名相同，有利于代码的可读性。
+		任何一个类都必须含有构造方法。默认空参。
+		数组的元素可以看成数组对象的成员变量，只不过类型全都相同。
+	unit3:
+		ＧＣ：垃圾回收机制（Garbage Collection)用于回收没有任何引用指向的对象。
+		判断对象是否可能回收的依据是该对象是否有引用指向。
+		System.gc()用于即刻收回无用对象。
+		当某一个方法调用完成后，其对应的栈帧将被清除，局部变量失效。
+		成员变量和局部变量的差别：
+		局部变量：
+			定义在方法中
+			没有默认值，必须自行设定初始值；
+			方法被调用时，存在栈中，方法调用结束，从栈中清除。
+		成员变量：
+			定义在类中，方法外；
+			有默认初始值，可以不显式初始化；
+			所在类被实例化后，存在堆中，对象被回收时，成员变量失效。
+	unit4:
+		一个类只能有一个父类，但一个父类可以有多个子类。
+		方法的重写：
+			方法名和参数列表与父类的方法相同；但方法的实现不同。
+		用static修饰的成员变量不属于对象的数据结构。
+		static 成员变量和类的信息一起存储在方法区中，而不是在堆中，一个类的static 成员变量只有"一份"，不论该类创建了多少对象。
+		static方法的作用在于提供一些“工具方法”和“工厂方法”等。
+	
+	unit5:
+		final修饰成员变量，两种初始化：
+			声明同时初始化
+			构造函数中初始化。
+		使一个类不能继承的意义在于：
+			可以保护类不被继承修改，可以控制滥用继承对系统造成的危害。
+		static　final　修饰的成员变量称为常量，必须声明同时初始化，不可被改变。
+		abstract和final关键字不可以同时用于修饰一个类，因为final关键字可使得类不可继承，而abstract修饰的类如果不可以继承将没有任何意义。
+		抽象类的意义在于：
+			为其子类提供一个公共的类型；
+			封装子类中的重复内容（成员变量和方法）；
+			定义有抽象方法，子类虽然有不同的实现，但该方法的定义是一致的。
+		unit6：
+			多态的意义：
+				一个类型的引用在指向不同的对象时会有不同的实现.
+			向上造型：
+				父类的类型，其实现的接口类型。
+			强制转型：
+				子类类型，或实现了该接口。
+			instanceof判断某个引用指向的对象是否为指定类型。
+
+JAVASE01
+	unit1:
+		API:(Application Programming Interface)
+		应用程序编程接口，就是一些己写好、可供直接调用的功能
+		字符串一旦创建，对象永远无法改变，但字符串引用可以重新赋值。
+		String 常量池：
+			java为了提高性能，静态字符串（字面量／常量／常量连接的结果）在常量池中创建，并尽量使用同一个对象，重用静态字符串；
+		String 　在内存中采用Unicode编码，每个字符占用两个字节，任何一个字符（无论中文还是英文）都算１个字符长度，占用两个字节。
+		StringBuilder的很多方法的返回值均为StringBuilder类型。这些方法的返回语句均为:return this;
+		StringBuilder内部维护一个可变的字符数组。该类用于修改字符串使用。
+		StringBuffer是线程安全的，同步处理的，性能稍慢。
+		StringBuilder是非线程安全的，并发处理的，性能稍快
+		
+	unit2:
+		正则：
+			边界匹配：“^”（代表开始）和“$”（代表结束）
+			\d,\D,\s,\S,\w,\W,x?,x+,x*,x{}
+		Object类型的引用变量可以指向任何对象。
+		equals和==的区别：
+			==用于比较变量的值，可以应用任何类型，如果用于引用类型，比较两个引用变量中存储的值（地址信息），判断两个变量是否指向同一个对象。
+		包装类是不可变类，在构造了包装类对象后，不允许更改包装在其中的值。		
+		基本类型的父类：char,boolean,是java.lang.Object其它都是java.lang.Number
+		包装类：为了解决基本类型不能参与面向对象开发。
+	unit3:
+		SimpleDateFormat提供了一个方法:Date parse(String str)		该方法可以将给定的字符串按照创建SimpleDateFormat时指定的日期格式进行解析然后返回对应的Date对象。
+		String str = "2008年08月08日 20点08分00秒";
+		SimpleDateFormat sdf	= new SimpleDateFormat(
+		"yyyy年MM月dd日 HH点mm分ss秒");
+		UTC(Universal Time Coordinated世界高速时间)
+		GMT(Greenwich Mean Time格林威治时间）
+		GregorianCalendar(格里高里历，阳历）
+		System.out.println("周"+(week==1?7:week-1));
+	unit4:
+		sublist:获取的Ｌist与原Ｌist占有相同的存储空间，对子Ｌist的操作会影响原Ｌist。
+		Ｌist转换为数组：(Collection中的方法)
+			Object[] toArray();
+			<T> T[] toArray(T[] a)
+		数组转换为List：(Arrays类中的方法）
+			static <T> List <T> asList(T...a)
+		Collections 集合的工具类，提供了很多便于我们操作集合的方法。
+		集合提供了统一的遍历方式：迭代器
+		使用迭代器遍历要遵循：“问取删”的顺序，其中删除不是必须的。
+		迭代的过程中不要通过集合的方法修改元素数量。
+		删除只能通过迭代器提供的删除方法。
+		List集合是可重复集，且有序，特点是可以根据下标操作元素，这一点和数组很相似。
+		 集合的排序，只排序List集合。Set大部分实现是无序的，对其排序没意义。
+	unit5:
+		HashMap集合的遍历
+			a.遍历所有的key
+				Set<String> keySet=map.keySet();
+			b.遍历所有的key-value
+				Set<Entry<String,Integer>> entry=map.entrySet();
+			c.遍历所有的value
+				Collection<Integer> values = map.values();
+		Map对存入的元素有一个要求，就是key不能重复，所谓不能重复指的是在Map中不能包含两个equals为true的key。
+		Capacity：容量, hash表里bucket(桶)的数量, 也就是散列数组大小.
+		Initial capacity：初始容量, 创建hash表的时 初始bucket的数量, 默认构建容量是16. 也可以使用特定容量.
+		Size ： 大小, 当前散列表中存储数据的数量.
+		Load factor：加载因子, 默认值0.75(就是75%), 向散列表增加数据时如果 size/capacity 的值大于Load factor则发生扩容并且重新散列(rehash).
+		
+JAVASE02
+	unit1:
+		这里没有内容写一些不易理解的东西：
+			对象
+				File:只能操作文件名字获取文件大小，不能操作文件内容。
+				RandomAccessFile :有读写模式，有指针，可以对文件做精准操作
+		FileInputStream 	FileOutputStream 文件流 有追加模式。以字节为单位读取文件。
+		BufferedInputStream BufferedOutputStream 缓冲字节流   接收文件流 输入输出流 outputStream inputStream及其子类
+		ObjectOutputStream ObjectInputStream 对象流 接收同上。  Serializable  transient(瘦身)
+		InputStreamReader OutputStreamWriter 转换流 可以指定字符集
+		PrintWriter 带有自动行刷新的缓冲字符输出流　第二个参数为true时有自动刷新功能
+		BufferedReader 缓冲字符输入流，可以读一行。readLine
+		BufferedWriter 缓冲字符输出流，newLine()方法。
+				
+	unit2:
+		节点流与处理流：
+			按照流是否与特定的地方（如磁盘，内存，设备等）相连，分为节点流和处理流两类。
+			节点流：可以从或向一个特定的地方（节点）读写民数据。
+			处理流：是对一个已存在的流的连接和封装，通过所封装的流的功能调用实现数据读写。
+			从数据结构转化为字节的过程称为：序列化
+ 			将java中的对象转换为字节的过程：对象序列化
+			把内存上的数据写入碰盘中做长久保存的过程称为：持久化
+			被transient修饰的属性在序列化时其值将被忽略
+	unti3:
+		 PrintWriter内部嵌套了BufferedWriter
+		 缓冲字符流可以以行为单位读写字符串	 
+	转码：
+		 思路：
+			由于osw.txt文件中的字符数据都是以UTF-8编码转换的字节保存的所以我们要先用UTF-8编码将每一个字符读取出来，然后再将该字符按照GBK编码写入另一个文件即可（要用到带有指定字符集的流）
+		finalize:该方法是在Object中定义的方法，当该类的对象不被任何引用变量指向时,会被GC回收，在回收前该方法会被调用
+		throw关键字
+用于主动抛出一个异常，通常两种情况我们会抛出异常而不是自己解决
+1.当遇到了满足语法要求，但是不符合业务逻辑要求时，我们可以抛出异常，让调用者解决
+2.当前代码遇到异常，但是不负责解决，而是应当将异常反馈给调用者时，会抛出异常。
+重写方法果的throws:
+不处理异常（重写方法时不声明throws）
+可仅在throws中声明父类中声明的部分异常
+可在throws中声明父类方法中抛出的异常的子类异常
+但是不能做以下操作：
+重写方法时在throws中声明抛出额外的异常
+重写方法时在throws中声明父类方法中声明的抛出异常的父类异常
+
+	unit4:
+		用继承的方式写线程：不足之处：
+１：由于需要继承Thread，当前类就不能扩展其他类了，这在实际地开发项目时是很麻烦的一件事
+２：由于线程内部重写了run方法决定了当前线程要执行的任务这就导致当前线程只能做这件事，任务与线程有了强耦合关系，不利于线程重用。
+		可以使用Collections给集合加锁：
+		Collections.synchronized();
+		ArrayList/HashSet/HashMap
+	自我理解join方法
+		我加入(join)到你里面，你要等到我的方法执行完了之后，才能执行你自己的方法。
+	unit5:
+		线程池　ExecutorService
+		 线程池主要解决两个问题：
+			 1.控制线程数量
+			 2.重用线程
+		tcp:
+			
+	unit6:
+		udp:
+			client:步骤
+				 1:创建Socket
+				 2:准备数据
+				 3:打包
+				 4:发送
+			server:步骤
+			1:创建socket，并指定服务端口
+			2:准备一个接收数据的包
+			3:接收数据，这个过程做完后，接收包会有一些变化，首先需要包中就有客户端发送过来的数据了， 并且包也知道实际发送过来的数据有多长，
+			　包还知道了这些数据是从哪里来的（客户端的地址信息）
+			4:拆包拿数据
+		tcp:
+			client:步骤
+			server:步骤
+	unit7:
+		写出Xml的步骤：
+		 １：创建一个Document对象，表示文档内容
+		 ２：向Document中添加一个元素（根元素）
+		 ３：向根元素中按照层级结构组建整个xml内容
+		 ４：通过XMLWriter将Document写出完成工作
+		 解析Xml步骤:
+		 	 解析过程：
+		 １：创建用于解析xml文档的SAXReader
+		 ２：使用SAXReader去解析给定的zml文档，并生成Doxument对象，
+		  　　这一步就是耗时耗资源的步骤，因为在这里就会将xml文档全部解析完毕，并以
+		    Document对象的形式返回，由于对象的内存中，所有相当于将整个xml文档内容嵌入了内存
+		 ３：通过Document获取根元素（根标签）
+		 ４：通过遍历根标签下的子标签，子标签下的子标签这样一层一层的最终将xml文档中所有内容全部获取到。
+		查找Xml
+			List selectNodes(String path); Document的方法
+
+ORACLE
+	unit1:
+		数据库(Database,简称DB)
+		数据库管理系统(Database Management System,DBMS)
+		数据类型:
+		number(p,s)　p 为1-38
+		char(n) n表示占用字节数 定长字符　max 2000字节
+		varchar2 变长字符　max 4000字节
+		date DD-MON-RR 7个字节
+		建表
+		create table table_name(id number()...)
+		desc table_name
+		default 
+		not null
+		改表
+		rename old_name to new_name
+		alter table table_name add(id number()...)
+		alter table table_name drop(id);
+		alter table table_name modify(...)
+		DML语句
+		insert into table_name([]) values(...)
+		to_date('2009-09-01','YYYY-MM-DD')
+		update table_name set coulmn=value...[where..]
+		delete table_name [where...]
+		//truncate table table_name
+	unit2:
+		char(10 char) char(20) 有默认长度１
+		varchar2(10 char) varchar2(20)无默认长度
+		long:varchar2加长版　2GB
+		字符串函数
+			concat(c1,c2)有一个为null相当于边了一个空格
+			等价于||
+			length(char)返回字符串的长度
+			upper/lower/initcap 如果是null仍返回null
+			trim/ltrim/rtrim　截取子串
+			lpad/rpad eg:lpad(c1,n,c2) 不够补c2
+			substr eg : substr(char,m[,n])
+			m为０从首开始,为负从尾开始,无n或超过了char的长度,到尾为止.
+			instr eg:instr(c1,c2[,n[,m]])
+			返回c2在c1中的位置找不到返回０
+			n:从n开始搜索,没有从１开始
+			m:第m次出现次数,没有为１次
+		数值函数:
+			round(n[,m])(四舍五入)
+			m为舍入到小数点的位数,可以是0(默认),正数,负数.
+			trunc(n[,m])(截取)
+			mod(m,n):返回m除以n后的余数
+			ceil/floor
+		日期类型:
+			date:世纪,年,月,天,小时,分,秒
+			timestamp:同上可精确到纳秒
+		日期关键字:
+			sysdate 精确到秒
+			systimestamp精确到毫秒
+		日期转换函数
+			to_date(c1[,fmt,[nls(用于指定日期语言)]]
+			to_char(date[,fmt[,nls]]
+		日期常用函数
+			last_day(date)返回date所在月的最后一天
+			add_months(date,i)
+			months_between(date1,date2)
+			next_day(date,char)下一个周几
+			least,greatest
+			eg:least(e1[,e2[,e3]]...)返回最小的　类型要一致不一致会自动转,转不了报错.
+			extract(date from datetime)
+			eg:extract(year from sysdate);
+		空值null
+			可用于任何数据类型中如果有非空约束则不能使用
+			等于null　　is null? is not null?
+		空值函数	
+			nvl(e1,e2)类型一致
+			nvl(e1,e2,e3) 类型一致
+	unit3:
+		查询条件:
+			and/or
+			like  %   _
+			in/ not in
+			between ..and..
+			is null/is not null
+			any /all(不能单独使用)　>,<,<=,>=
+			egL where sal>any(3500,4000,4500);
+			distinct过滤重复
+		排序:
+			order by (asc/desc)出现在select中的最后一个子句
+		聚合函数
+			max/min
+			avg/sum
+			count eg:count(*)/count(job)
+		分组:
+			group by 
+			having:对分组后的结果进一步限制,必须跟在group by后
+		查询语句执行顺序
+	from->where->group by->having->select->order by
+		关联基础
+			笛卡尔积
+			等值连接
+		关联查询
+			内连接　from emp e JOIN dept d ON(e.dn=d.dn)
+			外连接	from t1 left|right|full [outer] join t2 on t1.c1=t2.c2
+			left:左外连接:左边全显示,右边没有补null
+			where d.deptno(+)=e.deptno(+)哪边补null哪边写+
+			自连接
+				from emp w join emp m on w.mgr=m.eno
+		unit4:
+			根据返回结果的不同,子查询可分为:
+			单行子查询:返回一行数据
+			多行子查询:返回多行数据
+			多列子查询:返回多行多列数据
+			子查询返回多行使用多行比较操作符:
+			in /not in /all /any (配合>,<,>=,<=使用) 
+			在子查询中需要引用到主查询的字段数据,使用exists
+			decode用于比较参数e1的值,匹配到哪个sx,返回对应结果,没有则返回default再没有返回null
+			decode(e1,s1,r1[,s1,r2...][,default])
+			case job when j1 then r1
+						  when j2 then r2
+						  else sal end 
+			排序函数:
+			  row_number:(无重复值 1 2 3 4)
+			row_number() over(partition o1 order by o2)
+			  rank:(有重复值 1 2 2 4)
+			 rank() over(partition o1 order by o2)
+			 	dense_rank(1 2 2 3)
+			dense_rank() over(partition o1 order by o2)
+			集合操作:
+				union去掉合并后的重复记录 并排序
+				union al 包括重复 不排序
+				intersect 结果以第一列数据作升序排序
+				minus 差集 
+			高级分组函数
+				rollup(n-1)次分组/cube(2的n次方)
+				/grouping sets(指定分组)
+				group by rollup/cube/grouping sets(a,b,c)
+	unit5:
+		视图:(view)也叫虚表
+			视图对应于一条select语句,结果集被赋予一个名字,视图名字
+			简单视图,复杂视图,连接视图
+			视图作用:简化复杂查询,限制数据访问.
+			create view v_name as select 语句
+			select * from v_name
+			drop view v_name
+			with check option 约束
+			with read only 约束
+			
+			数据字典:
+			user_objects
+			user_views
+			user_tables (object_name view_type table_name)
+		序列:用来生成唯一数字值的数据库对象
+			create sequence s_name
+			start with 		increment by 
+			maxvalue        nomaxvalue
+			minvalue        nominvalue
+			cycle 				nocycle
+			cache p				nocache
+			s_name.nextval
+			s_name.currval
+			drop sequence s_name
+		索引
+			create [unique] index i_name on table (column1[,c2]); 可以使用函数 c3 (upper(ename))
+			alter intex i_name rebuild 重建索引
+			drop index i_name
+		约束:
+			not null NN
+			unique UK
+			primary key PK
+			foreign key FK
+			check CK
+JDBC
+		unit1:
+		jdbc(Java Database Connectivity)
+		用相同的方式访问不同的数据库,以实现与具体数据库无关的java操作界面.
+		使用JDBC连接数据库基本操作流程:
+		1:加载驱动类 class.forName("oracle.jdbc.driver.OracleDriver")("com.mysql.jdbc.Driver")
+		2:与数据库建立连接
+		DriverManager.getConnection(
+		"jdbc:oracle:thin:@localhost:tarena",n,p)
+		3:创建语句对象,执行SQL语句
+		Statement PrepareStatement 
+		4:处理结果集
+		ResultSet
+		5:关闭连接
+	配置文件:
+	Properties prop = new Properties();
+	prop.load(new FileInputStream(""));
+	prop.getProperty("");
+	连接池:
+	BasicDataSource bds = new BasicDataSource();
+	要从外部引入一个包.
+	org.apache.commons.dbcp.BasicDataSource;
+	批处理:
+	Statement state = conn.createStatement();
+	state.addBatch(sql);
+	state.executeBatch();
+	 该方法返回值为一个int数组数组中一个数字表示批处理中的一条语句影响了数据库多少条数据
+	 PrepareStatement prep = conn.prepareStatement(sql);
+	 prep.addBatch();
+	 prep.executeBatch();
+	 获取主键
+	 ResultSet rs = prep.getGeneratedKeys();
+	 int id = rs.getInt(1);
+	 事务特性:(ACID)
+	 原子性(Atomicity):事务必须是原子工作单元,对于其数据修改,要么全部执行,要么全不执行.
+	 一致性(Consistency):事务在完成时,必须使所有的数据都保持一致状态.
+	 隔离性(Isolation):由并发事务所作的修改必须与任何其它并发事务所作的修改隔离
+	 持久性(Durability):事务完成之后,它对于系统的影响是永久的性的.
+	 Connection.getAutoCommit();
+	 Connection.setAutoCommit();t:自动 f:不自动
+	 Connection.commit();
+	 Connection.rollback();
+	 DAO:(Data Access Object)数据访问对象
+	 建立在数据库和业务层之间,封装所有对数据库的访问
+	 目的:数据访问逻辑与业务逻辑分开.
+Ajax_Jquery
+	unit1:
+		ajax:一种用来改善用户体验的技术,其实质是,使用XMLHttpRequest对象异步地向服务器发请求.
+		readyState:ajax与服务器的通信状态
+			0 :尚未初始化
+			1 :正在发送请求
+			2 :请求完成
+			3 :请求成功,正在接受数据
+			4 :数据接收成功
+		status:
+			200 请求成功
+			202 请求被接受但处理未完成
+			400 错误的请求
+			404 资源找不到
+			500 内部服务器错误
+		发送异步请求的步骤:
+		1)获取Ajax对象getXhr();
+		2)调协回调函数 onreadystatechange(function(){});
+		3)创建请求xhr.open();
+		4)发送请求xhr.send();
+		xhr.open('post','xx.do',true);
+		xhr.setRequestHeader('content-type','application/x-www-form-urlencoded');
+		

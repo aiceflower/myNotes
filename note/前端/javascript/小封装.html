@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>JavaScript</title>
+		<meta charset='utf-8'/>
+		<style>
+			div,p,span{
+				width:100px;
+				height:30px;
+				margin:10px;
+				border:2px dashed black;
+			}
+		</style>
+		
+	</head>
+	<body>
+		<div id="d1" class="c1"></div>
+		<div id="d2" class="c1"></div>
+		<p id="p1" class="c2"> </p>
+		<p id="p2" class="c2"></p>
+		<span>进而城喷枪</span>
+		<div id="get"></div>
+	</body>
+	<script>
+			onload = function(){
+				each(get('.c1',get('span')),function(){
+					this.style.backgroundColor='yellow';
+				});
+				/*each(getClass('c1',getClass('c2')),function(){
+					this.style.backgroundColor = 'red';
+				
+				});
+				each(getId('d1',getId('d2')),function(){
+					this.style.backgroundColor = 'blue';
+				
+				});
+				each(getTag('span'),function(){
+					this.style.backgroundColor = 'orange';
+				
+				});*/
+				
+				//alert(document.getElementById("get"));
+					
+			};
+			
+			//获取Tag
+			var getTag = function(tag,results){
+				results = results||[];
+				results.push.apply(results,document.getElementsByTagName(tag));
+				return results;
+			};
+			//获取id‘
+			var getId = function(id,results){
+				results = results||[];
+				results.push(document.getElementById(id));
+				return results;
+			};
+			//获取class
+			var getClass = function(className,results){
+				results = results||[];
+				results.push.apply(results,document.getElementsByClassName(className));
+				return results;
+			};
+			
+			//单独的方法用于获取id,tag,className
+			var get = function(selector,results){
+				results = results||[];
+				//
+				var rquickExpr = /^(?:#([\w-]+)|\.([\w-]+)|([\w]+)|(\*))$/,
+					m=rquickExpr.exec(selector);
+					/*for(var i = 0;i<m.length;i++){
+						alert(m[i]);
+					}*/
+				if(m){
+					if(m[1]){
+						results = getId(m[1],results);
+					}else if(m[2]){
+						results = getClass(m[2],results);
+					}else if(m[3]){
+						results = getTag(m[3],results);
+					}else if(m[4]){
+						results = getTag(m[4],results);
+					}
+				}
+				
+				/*
+				if(m){
+					if(m[1]){
+						results = getId(m[1],results);
+					}else if(m[2]){
+						results = getClass(m[2],results);
+					}else{
+						results = getTag(m[3]||"*",results);
+					}
+				}*/
+				return results;
+			};
+			
+			var each = function(arr,fn ){
+				for( var i = 0; i < arr.length; i++){
+					if( fn.call(arr[i],i,arr[i]) === false){
+						break;
+					}
+				}
+			};
+			
+		</script>
+</html>

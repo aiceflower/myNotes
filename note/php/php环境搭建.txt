@@ -1,0 +1,114 @@
+1.安装httpd d:\amp\apache
+2.拷贝php文件来指定文件 d:\amp\php
+3.安装mysql d:\amp\mysql
+配置1：
+	以下配置让apache可以运行php程序，测试 httpd -t
+	文件?中添加如下内容大概在130行左右：d:\amp\apache\D:\amp\apache\conf\httpd.conf
+	--第一步：装载php模块，需要给出php5apache2_2.dll的绝对路径
+	LoadModule php5_module "D:/amp/php/php5apache2_2.dll"
+	--第二步告知apache凡是以.php结尾的文件，找php语言模块(这里称为application/x-httpd-php)
+	<FilesMatch "\.php$">
+		setHandler application/x-httpd-php
+	</FilesMatch>
+	--第二步的另一种做法,可以代替上述三行
+	AddType application/x-httpd-php .php .pap .phtml
+配置2：改时区
+	第一步： 
+	改php.ini-development文件为php.ini然后打开该文件
+	搜索timezone改时区
+	改：date.timezone = Asia/Shanghai或date.timezone = PRC
+	第二步：
+	--让apache知道php.ini的位置
+	在httpd.conf文件中添加如下行
+	PhpIniDir "D:\amp\php"
+添加mysql模块：
+	第一步： 
+	在php.ini文件中
+	搜索extension_dir添加如下行，给出ext文件的绝对路径
+	extension_dir = "D:/amp/php/ext"
+	第二步：
+	在php.ini文件中
+	搜索mysql
+	;extension=php_mysql.dll
+	;extension=php_mysqli.dll
+	将如上两行打开
+	extension=php_mysql.dll
+	extension=php_mysqli.dll
+-------------------------------------------
+配置站点监听：
+	httpd.conf文件中
+	搜索：Listen
+	Listen 12.34.56.78:80
+	Listen 80
+	Listen 8088
+	Listen 8888
+	Listen 192.168.12.23:8080
+一个站点的2个核心信息：httpd.conf文件 
+	主机名(服务器名/站点位置) ServerName
+	站点位置(站点目录路径) DocumentRoot(实际物理路径)
+设置站点ServerName	
+#ServerName localhost:80
+ServerName localhost
+设置主机(站点)物理路径DocumentRoot
+DocumentRoot
+DocumentRoot "D:/amp/apache/htdocs"  --默认
+设置自己的站点
+DocumentRoot "D:\mytest"
+<Directory "D:\mytest">
+	Options Indexes    --没有给指定请求文件名，又没有设置默认文件，时显示文件列表
+	Order Deny,Allow   --设置权限控制的先后顺序，只有两种：Deny，Allow(先拒绝后允许) Allow，Deny(先允许后拒绝)
+	Allow from all
+	DirectoryIndex index.html --默认页面
+	AllowOverride all  --允许‘分布式权限’配置
+</Directory>
+	Deny from 拒绝名单 如：deny from 192.168.3.8 172.184.4
+	Allow from 允许名单 如：Allow from all 
+	DirectoryIndex index.html index.php main.php 123.html  .... 
+权限设置2：不用重启apache，上一种权限设置需要重启apache
+	分两步
+	第一步： 添加如下(在第一种权限的基础上添加一行如下)
+	AllowOverride all  --允许‘分布式权限’配置
+	第二步：在该目录下的任何子目录下新建一个特殊的文件(.htaccess)
+	其内容为：
+	Deny from all 
+	Allow from 192.168.3.4
+	
+多站点配置：
+	第一步：
+	在httpd.conf中找 httpd-vhosts
+	#Include conf/extra/httpd-vhosts.conf  打开
+	第二步：设定希望提供的多站点服务的ip地址和端口,默认为*:80 ,默认配好
+	在httpd-vhosts.conf文件中 /conf/extra/httpd-vhosts.conf
+	关键字：NameVirtualHost
+	第三步：
+	然后就一个站点一个小点加上，形式如下
+	<virtualhost *:80>
+		#这里设置站点1的各项信息
+	</virtualhost>
+	<virtualhost *:80>
+		#这里设置站点2的各项信息
+	</virtualhost>
+	<virtualhost *:80>
+		#这里设置站点3的各项信息
+	</virtualhost>
+	.........
+	注意：
+		1.删除httpd-vhosts.conf的2个初始安装生成的站点，删除，否则会有警告
+		2.每个站点的设置项，主要就3个ServerName ，DocumentRoot,<Directory>...<Directory>
+		例：第一个站点配置
+		<VirtualHost *:80>
+			ServerName www.test.com
+			ServerAlias map.test.com tv.test.com --设置站点别名
+			DocumentRoot "D:\test"
+			<Directory "D:\test">
+				Options Indexes
+				Order Deny,Allow
+				Allow From All 
+				#几乎不需要写Deny
+			</Directory>
+		</VirtualHost>
+		#第二个站点
+		<VirtualHost *:80>
+			...
+		</VirtualHost>
+配置多站点的时候需要在C:\Windows\System32\drivers\etc\hosts文件中配置域名才能使用

@@ -1,0 +1,8 @@
+adb指令：
+1.adb kill-server 杀死adb服务
+2.adb start-server 启动adb服务
+3.adb install aa.apk 安装一个apk
+4.adb uninstall 服务名 卸载一个apk
+5.adb shell 进入手机终端
+6.adb pull test.txt 把一个文件从终端拉出
+7.adb push test.txt /mnt/sdcard  把一个文件从电脑推到手机

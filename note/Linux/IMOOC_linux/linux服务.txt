@@ -1,0 +1,42 @@
+服务分类：
+1.RPM包默认安装的服务
+	a.独立的服务
+	b.基于xinetd服务
+2.源码包服务
+
+查看自启动服务
+chkconfig --list
+删除一个服务
+chkconfig -del 
+添加服务
+chkconfig -add 服务名
+查看开启的服务
+	netstat -tlunp
+/etc/init.d/独立服务名
+start|stop|status|restart|
+service 独立服务名
+start|stop|status|restart|
+以上service和绝对路径启动服务
+
+rmp安装的独立服务在 /etc/init.d目录下
+在目录/etc/rc.d/init.d目录下和上面的文件一样
+
+修改rpm包服务的自启动：
+	1. chkconfig --level 2345 httpd on|off
+	2. vi /etc/rc.d/rc.local 或 /etc/rc.local 文件(为前一个文件的软链接) 中添加一行  /etc/init.d/httpd start  
+	注：以上两种只能改一个，否则启动时第二次会失败
+	还有一种 在 ntsysv中配置  ntsysv 2345
+	
+基于xinetd服务  yum -y install xinetd
+	改 /etc/xinetd.d/rsync 文件中  disable = no 
+	service xinetd restart 
+	可以用chkconfig rsync on 开启自启动xinetd 服务 
+注：xinetd的服务启动也就自启动，自启动也就启动，不用重启系统也生效
+
+源码包服务：
+使用绝对路径来启动，可以查看安装说明
+例：/usr/local/apache2/bin/apachectl start 
+自启动 修改 /etc/rc.d/rc.local 中加入上句话
+让service服务可以管理源码包,通过软链接实现
+	ln -s /usr/local/apache2/bin/apachectl /etc/init.d/apache 
+	

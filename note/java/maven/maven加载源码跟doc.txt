@@ -1,0 +1,20 @@
+方式一：
+mvn dependency:sources
+mvn dependency:resolve -Dclassifier=javadoc
+方式二：
+打开maven配置文件 setting.xml文件，添加如下配置
+<profiles>  
+<profile>  
+    <id>downloadSources</id>  
+    <properties>  
+        <downloadSources>true</downloadSources>  
+        <downloadJavadocs>true</downloadJavadocs>             
+    </properties>  
+</profile>  
+</profiles>  
+  
+<activeProfiles>  
+  <activeProfile>downloadSources</activeProfile>  
+</activeProfiles>  
+方式三：
+eclipse中Window > Preferences > Maven and checking the "Download Artifact Sources" and "Download Artifact JavaDoc" options

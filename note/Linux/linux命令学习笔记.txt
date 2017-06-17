@@ -1,0 +1,330 @@
+0.linux 命令行快捷键
+
+个人感觉常用的：
+ctrl + k 删除光标后面所有字符
+ctrl + u 删除光标前面所有字符
+	ctrl + w 删除光标前一个单词
+ctrl + y 恢复上次执行时删除的字符
+	alt + r 撤消前一次动作
+ctrl + a 将光标移动到命令行开头
+ctrl + e 将光标移动到命令行结尾处
+ctrl + 方向键左键 光标移动到前一个单词开头
+ctrl + 方向键右键 光标移动到后一个单词结尾
+	ctrl + x（两次） 在上次光标所在字符和当前光标所在字符之间跳转
+	alt + c 把光标当前位置单词头一个字母变为大写
+	ctrl + o 重复执行命令
+
+清屏：
+clear命令能够清空屏幕，但不彻底
+printf “\033c”兼容程度低
+Reset  比较慢
+
+删除
+ctrl + d 删除光标所在位置上的字符相当于VIM里x或者dl
+	ctrl + h 删除光标所在位置前的字符相当于VIM里hx或者dh
+	ctrl + k 删除光标后面所有字符相当于VIM里d shift+$
+	ctrl + u 删除光标前面所有字符相当于VIM里d shift+^
+	ctrl + w 删除光标前一个单词相当于VIM里db
+	ctrl + y 恢复ctrl+u上次执行时删除的字符
+ctrl + ? 撤消前一次输入
+	alt + r 撤消前一次动作
+	alt + d 删除光标所在位置的后单词 
+
+移动
+ctrl + a 将光标移动到命令行开头相当于VIM里shift+^
+ctrl + e 将光标移动到命令行结尾处相当于VIM里shift+$
+	ctrl + f 光标向后移动一个字符相当于VIM里l
+	ctrl + b 光标向前移动一个字符相当于VIM里h
+	ctrl + 方向键左键 光标移动到前一个单词开头
+	ctrl + 方向键右键 光标移动到后一个单词结尾
+	ctrl + x 在上次光标所在字符和当前光标所在字符之间跳转
+	alt + f 跳到光标所在位置单词尾部 
+
+替换
+ctrl + t 将光标当前字符与前面一个字符替换
+	alt + t 交换两个光标当前所处位置单词和光标前一个单词
+	alt + u 把光标当前位置单词变为大写
+	alt + l 把光标当前位置单词变为小写
+	alt + c 把光标当前位置单词头一个字母变为大写
+	^oldstr^newstr 替换前一次命令中字符串 
+
+历史命令编辑
+ctrl + p 返回上一次输入命令字符
+ctrl + r 输入单词搜索历史命令
+	alt + p 输入字符查找与字符相接近的历史命令
+	alt + > 返回上一次执行命令 
+
+其它
+	ctrl + s 锁住终端
+	ctrl + q 解锁终端
+ctrl + l 清屏相当于命令clear
+	ctrl + c 另起一行
+	ctrl + i 类似TAB健补全功能
+	ctrl + o 重复执行命令
+	alt + 数字键 操作的次数
+
+
+
+
+
+
+
+
+
+
+11.:添加或删除用户sudo权限
+a.切换到root用户下,怎么切换就不用说了吧,不会的自己百度去.
+b.添加sudo文件的写权限,命令是:
+chmod u+w /etc/sudoers
+c.编辑sudoers文件
+vi /etc/sudoers
+找到这行 root ALL=(ALL) ALL,在他下面添加xxx ALL=(ALL) ALL (这里的xxx是你的用户名)
+
+ps:这里说下你可以sudoers添加下面四行中任意一条
+youuser            ALL=(ALL)                ALL
+%youuser           ALL=(ALL)                ALL
+youuser            ALL=(ALL)                NOPASSWD: ALL
+%youuser           ALL=(ALL)                NOPASSWD: ALL
+
+第一行:允许用户youuser执行sudo命令(需要输入密码).
+第二行:允许用户组youuser里面的用户执行sudo命令(需要输入密码).
+第三行:允许用户youuser执行sudo命令,并且在执行的时候不输入密码.
+第四行:允许用户组youuser里面的用户执行sudo命令,并且在执行的时候不输入密码.
+
+d.撤销sudoers文件写权限,命令:
+chmod u-w /etc/sudoers
+
+这样普通用户就可以使用sudo了.
+
+
+13.touch 指令改变档案的时间记录。  ls -l file 可以显示档案的时间记录。
+　　参数： 
+　　a 改变档案的读取时间记录。 
+　　m 改变档案的修改时间记录。 
+　　c 假如目的档案不存在,不会建立新的档案。与 --no-create 的效果一样。 
+　　f 不使用,是为了与其他 unix 系统的相容性而保留。 
+　　r 使用参考档的时间记录,与 --file 的效果一样。 
+　　d 设定时间与日期,可以使用各种不同的格式。 
+　　t 设定档案的时间记录,格式与 date 指令相同。 
+　　--no-create 不会建立新档案。 
+　　--help 列出指令格式。 
+　　--version 列出版本讯息。 
+　　范例：
+　　最简单的使用方式,将档案的时候记录改为现在的时间。若档案不存在,系统会建立一个新的档案。 
+　　touch file 
+　　touch file1 file2 
+　　将 file 的时间记录改为 5 月 6 日 18 点 3 分,公元两千年。时间的格式可以参考 date 指令,至少需输入 MMDDHHmm ,就是月日时与分。
+　　touch -c -t 05061803 file 
+　　touch -c -t 050618032000 file 
+　　将 file 的时间记录改变成与 referencefile 一样。
+　　touch -r referencefile file 
+
+　　将 file 的时间记录改成 5 月 6 日 18 点 3 分,公元两千年。时间可以使用 am, pm 或是 24 小时的格式,日期可以使用其他格式如 6 May 2000 。 
+　　touch -d "6:03pm" file 
+　　touch -d "05/06/2000" file 
+　　touch -d "6:03pm 05/06/2000" file 
+
+14. cal 显示日历
+　　使用权限：所有使用者 
+　　使用方式：cal [-mjy] [month [year]] 
+　　说明： 
+　　显示日历。若只有一个参数,则代表年份(1-9999),显示该年的年历。
+    使用两个参数,则表示月份及年份。若没有参数则显示这个月的月历。 
+　　-m:以星期一为每周的第一天方式显示。 
+　　-j:以凯撒历显示,即以一月一日起的天数显示。 
+　　-y:显示今年年历。 
+　　范例： 
+　　cal 4 1992 显示1992年4月的日历
+    cal -m 以星期一为每周的第一天显示本月日历
+ 
+15.date  可以用来显示或设定系统的日期与时间
+	date 显示  --date 设置
+格式设定为一个加号后接数个标记,其中可用的标记列表如下:
+　　时间方面:
+
+　　%:印出 % 
+　　%n:下一行 
+　　%t:跳格 
+　　%H:小时(00..23) 
+　　%I:小时(01..12) 
+　　%k:小时(0..23) 
+　　%l:小时(1..12) 
+　　%M:分钟(00..59) 
+　　%p:显示本地 AM 或 PM 
+　　%r:直接显示时间 (12 小时制,格式为 hh:mm:ss [AP]M) 
+　　%s:从 1970 年 1 月 1 日 00:00:00 UTC 到目前为止的秒数 
+　　%S:秒(00..61) 
+　　%T:直接显示时间 (24 小时制) 
+　　%X:相当于 %H:%M:%S 
+　　%Z:显示时区 
+
+　　日期方面:
+　　%a:星期几 (Sun..Sat) 
+　　%A:星期几 (Sunday..Saturday) 
+　　%b:月份 (Jan..Dec) 
+　　%B:月份 (January..December) 
+　　%c:直接显示日期与时间 
+　　%d:日 (01..31) 
+　　%D:直接显示日期 (mm/dd/yy) 
+　　%h:同 %b 
+　　%j:一年中的第几天 (001..366) 
+　　%m:月份 (01..12) 
+　　%U:一年中的第几周 (00..53) (以 Sunday 为一周的第一天的情形) 
+　　%w:一周中的第几天 (0..6) 
+　　%W:一年中的第几周 (00..53) (以 Monday 为一周的第一天的情形) 
+　　%x:直接显示日期 (mm/dd/yy) 
+　　%y:年份的最后两位数字 (00.99) 
+　　%Y:完整年份 (0000..9999) 
+
+　　若是不以加号作为开头,则表示要设定时间,而时间格式为 MMDDhhmm[[CC]YY][.ss],其中 MM 为月份,DD 为日,hh 为小时,mm 为分钟,CC 为年份前两位数字,YY 为年份后两位数字,ss 为秒数 
+　　把计:
+　　-d datestr:显示 datestr 中所设定的时间 (非系统时间) 
+　　--help:显示辅助讯息 
+　　-s datestr:将系统时间设为 datestr 中所设定的时间 
+　　-u:显示目前的格林威治时间 
+　　--version:显示版本编号 
+　　例子:
+　　显示时间后跳行,再显示目前日期:
+　　date +%T%n%D 
+　　显示月份与日数:
+　　date +%B %d 
+
+　　显示日期与设定时间(12:34:56):
+　　date --date 12:34:56 
+　　注意:
+　　当你不希望出现无意义的 0 时(比如说 1999/03/07),则可以在标记中插入 - 符号,比如说 date +%-H:%-M:%-S 
+    会把时分秒中无意义的 0 给去掉,像是原本的 08:09:04 会变为 8:9:4。另外,只有取得权限者(比如说 root)才能设定系统时间。 
+　　当你以 root 身分更改了系统时间之后,请记得以 clock -w 来将系统时间写入 CMOS 中,这样下次重新开机时系统时间才会
+    持续抱持最新的正确值。
+
+16.sleep 
+　　使用权限:所有使用者 
+　　使用方式:sleep [--help] [--version] number[smhd] 
+　　说明:sleep 可以用来将目前动作延迟一段时间 
+　　参数说明:
+　　--help:显示辅助讯息 
+　　--version:显示版本编号 
+　　number:时间长度,后面可接 s,m,h 或 d 
+　　其中 s 为秒,m 为 分钟,h 为小时,d 为日数 
+　　例子:
+　　显示目前时间后延迟 1 分钟,之后再次显示时间:
+　　date;sleep 1m;date
+
+17.uptime [-V] 
+　　说明： uptime 提供使用者下面的资讯,不需其他参数： 
+　　现在的时间 
+　　系统开机运转到现在经过的时间 
+　　连线的使用者数量 
+　　最近一分钟,五分钟和十五分钟的系统负载 
+　　参数： -V 显示版本资讯。 
+　　范例： uptime 
+　　其结果为： 
+　　10:41am up 5 days, 10 min, 1 users, load average: 0.00, 0.00, 1.99 
+
+18.time 用来计算一个或一些命令的执行时间
+	time [options] COMMAND [arguments] 
+
+19.chfn 
+　　使用权限：所有使用者 
+　　用法： chfn 
+　　说明：提供使用者更改个人资讯
+
+20.who 
+　　使用权线:所有使用者都可使用 
+　　使用方式:who - [husfV] [user] 
+　　说明:显示系统中有那些使用者正在上面,显示的资料包含了使用者 ID,使用的终端机,从那边连上来的,上线时间,呆滞时间,CPU 使用量,动作等等。 
+　　把计:
+　　-h:不要显示标题列 
+　　-u:不要显示使用者的动作/工作 
+　　-s:使用简短的格式来显示 
+　　-f:不要显示使用者的上线位置 
+　　-V:显示程式版本 
+
+21.名称：kill 
+　　使用权限：所有使用者 
+　　使用方式： 
+　　kill [ -s signal | -p ] [ -a ] pid ... 
+　　kill -l [ signal ] 
+　　说明：kill 送出一个特定的信号 (signal) 给行程 id 为 pid 的行程根据该信号而做特定的动作, 若没有指定, 预设是送出终止 (TERM) 的信号 
+　　把计: 
+　　-s (signal):其中可用的讯号有 HUP (1), KILL (9), TERM (15), 分别代表着重跑, 砍掉, 结束; 详细的信号可以用 kill -l 
+　　-p:印出 pid , 并不送出信号 
+　　-l (signal):列出所有可用的信号名称 
+　　范例： 
+　　将 pid 为 323 的行程砍掉 (kill):
+　　kill -9 323 
+　　将 pid 为 456 的行程重跑 (restart):
+　　kill -HUP 456 
+
+22.名称：ps 
+　　使用权限：所有使用者 
+　　使用方式：ps [options] [--help] 
+　　说明：显示瞬间行程 (process) 的动态 
+　　参数： 
+　　ps 的参数非常多, 在此仅列出几个常用的参数并大略介绍含义 
+　　-A 列出所有的行程 
+　　-w 显示加宽可以显示较多的资讯 
+　　-au 显示较详细的资讯 
+　　-aux 显示所有包含其他使用者的行程 
+
+　　au(x) 输出格式:
+
+　　USER PID %CPU %MEM VSZ RSS TTY STAT START TIME COMMAND 
+　　USER: 行程拥有者 
+　　PID: pid 
+　　%CPU: 占用的 CPU 使用率 
+　　%MEM: 占用的记忆体使用率 
+　　VSZ: 占用的虚拟记忆体大小 
+　　RSS: 占用的记忆体大小 
+　　TTY: 终端的次要装置号码 (minor device number of tty) 
+　　STAT: 该行程的状态: 
+　　D: 不可中断的静止 (通悸□□缜b进行 I/O 动作) 
+　　R: 正在执行中 
+　　S: 静止状态 
+　　T: 暂停执行 
+　　Z: 不存在但暂时无法消除 
+　　W: 没有足够的记忆体分页可分配 
+　　<: 高优先序的行程 
+　　N: 低优先序的行程 
+　　L: 有记忆体分页分配并锁在记忆体内 (即时系统或捱A I/O) 
+　　START: 行程开始时间 
+　　TIME: 执行的时间 
+　　COMMAND:所执行的指令
+
+23.名称：top 
+　　使用权限：所有使用者 
+　　使用方式：top [-] [d delay] [q] [c] [S] [s] [i] [n] [b] 
+　　说明：即时显示 process 的动态 
+　　把计: 
+　　d:改变显示的更新速度,或是在交谈式指令列( interactive command)按 s 
+　　q:没有任何延迟的显示速度,如果使用者是有 superuser 的权限,则 top 将会以最高的优先序执行 
+　　c:切换显示模式,共有两种模式,一是只显示执行档的名称,另一种是显示完整的路径与名称S:累积模式,会将己完成或消失的子行程 ( dead child process ) 的 CPU time 累积起来 
+　　s:安全模式,将交谈式指令取消, 避免潜在的危机 
+　　i:不显示任何闲置 (idle) 或无用 (zombie) 的行程 
+　　n:更新的次数,完成后将会退出 top 
+　　b:批次档模式,搭配 "n" 参数一起使用,可以用来将 top 的结果输出到档案内 
+　　范例： 
+　　显示更新十次后退出 ; 
+　　top -n 10 
+24.名称：expr 
+　　使用权限：所有使用者 
+　　### 字串长度 
+　　shell>> expr length "this is a test" 
+　　14 
+
+　　### 数字商数 
+　　shell>> expr 14 % 9 
+　　5 
+
+　　### 从位置处抓取字串 
+　　shell>> expr substr "this is a test" 3 5 
+　　is is 
+
+　　### 数字串 only the first character 
+
+　　shell>> expr index "testforthegame" e 
+　　2 
+
+　　### 字串真实重现 
+　　shell>> expr quote thisisatestformela 
+　　thisisatestformela 

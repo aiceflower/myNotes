@@ -1,0 +1,117 @@
+1.ajax(asynchronous异步 javascript and xml)
+	（１）什么是ajax?
+		是一种用来改善用户体验的技术，其实质是选用浏览器提供的一个特殊对象（XMLHttpRequest)异步地向服务器发送请求，服务器返回部分数据的更新，整个过程，页面无刷新，不打断用户的操作。
+		注：
+			异步：当这个ajax对象(XMLHttpRequest)向服务器发送请求进浏览器不会销毁当前页面，用户仍然可以对当前页面做其它操作。
+	（２）如何获得ajax对象？
+		ActiveXObject　ie
+		XMLHttpRequest 非ie　
+		w3c　不同的浏览器获得对象方式不同
+－－－－－－－－－－－－－－－－－－－－－－－
+		function getXhr(){
+			var xhr = null;
+			if(window.XMLHttpRequest){
+				xhr = new XMLHttpRequest();
+			}else{
+				xhr = new ActiveXObject('MicroSoft.XMLHttp');
+			}
+			return xhr;
+		}
+	(3)ajax对象的几个重要的属性
+		a.onreadystatechange:绑定事件处理函数(readystatechange事件).
+		注：当ajax对象的readyState属性发生了任何改变，比如从0变成了1,就会产生readyStatechange事件。
+		b.readyState:有５个值，分别是0,1,2,3,4.用来获得当前ajax对象与服务器之间通信的状态。其中，４表示ajax对象已经获得了服务器返回的所有数据。
+		c.responseText：获得服务器返回的文本
+		d.responseXML：获得服务器返回的xml
+		e.status:获得服务器返回的状态码。
+	（４）编程步骤
+		step1,获得ajax对象
+			比如：
+				var xhr = getXhr();
+		step2,发送请求
+			１）get请求
+				xhr.open('get','check_uname.do?username=eric',true);
+				xhr.onreadystatechange=f1(事件处理函数);
+				xhr.send(null); 
+				注：
+					第三个参数如果是true，表示异步地发送请求。如果是false表示同步发送请求(当ajax对象发请求时，浏览器会锁定当前页面，用户不能够对当前页面做其它操作)。
+			２）post请求
+				xhr.open('post','check_uname.do',true)
+				xhr.setRequestHeader('content-type','');
+				xhr.onreadystatechange=f1(事件处理函数);
+				xhr.send('username=Tom&pwd=1234')
+				注：
+					按照http协议要求，如果发送的是post请求，在请求数据包里面，应该包含content-type消息头。
+		step3,编写服务器端的处理程序。
+			服务器端一般只需要返回部分数据。
+		step4,编写事件处理函数f1
+			function f1(){
+				if(xhr.readState==4&&xhr.status==200){
+			 		var txt =	xhr.responseText;
+			 		更新页面
+			 	}
+			}
+
+2.缓存问题
+	ie浏览器在发送get请求会比较请求地址是否访问过，如果访问过则不再发送新的请求，会显示之前访问过的结果。
+	解决方式：
+		在请求地址后面添加一个随机数。
+3.编码问题
+	(1)发送get请求
+		１）产生乱码问题的原因
+			ie浏览器会使用"gbk"来编码,其它浏览器会使用"utf-8"来编码，服务器端默认会使用"iso-8859-1"来解码。
+		２）解决方式
+			step1,让服务器统一使用"utf-8"来解码，可以修改tomcat的配置文件
+			(conf/server.xml)
+			<Connector URIEncoding="utf-8"/>
+			注：
+				只针对get请求有效
+			step2,使用encodeURI函数对请求地址进行编码。
+			注：
+				该函数是js内置的一个函数，会使用"utf-8"来编码。
+	(2)发送post请求
+		1)产生乱码的原因
+			浏览器会使用utf-8来编码，服务器端会使用"iso-8859-1"来解码。
+		2)解决方式
+			request.setCharacterEncoding("utf-8").
+			注：只针对post请求有效。
+
+----------------------------------------------------------------------------------------------------------
+１.json(javascript object notation)js对象声明
+	www.json.crg
+	(1)什么是json?
+		是一种轻量级的数据交换格式。
+		1)数据交换
+			将要交换的数据转换成一种与平台无关的数据格式（比如xml)交给接收方来处理。
+		2)轻量
+			相对于xml，json文档更小，解析速度更快。
+	(2)语法
+		1)表示一个对象
+			{属性名：属性值，属性名：属性值...}
+			注意:
+			a.属性名必须用双引号括起来。
+			b.属性值可以是string ,number,ture/false,null,object.
+			c.属性值如果是字符串，必须使用双引号括起来。
+		2)表示一个对象组成的数组
+			[{},{},{}...]
+	(3)使用json来交换数据
+		１）java对象转换成json字符串
+			可以使用json官方提供的jara包
+			JSONObject,JSONArray
+			方法：json.fromObject.
+		2)json字符串转换成js对象。
+			prototype.js
+			jQueery.js
+			可以使用prototype提供的evalJSON函数
+			$(id):依据id查找节点。
+			$F(id):依据id查找节点，并返回节点的value值。
+			strip():除掉字符串两端的空格。
+			evalJSON():将json字符串转换成js对象。
+			
+2.同步请求
+	(1)什么是同步请求
+		当ajax对象发送请求时，浏览器会锁定当前页面，用户不能够对当前页做其它操作。
+	(2)如何发送同步请求
+		open(请求类型，请求地址，false).
+		服务器返回println("ok")到客户端ok==ok 为什么是false
+		用print("ok")可以解决

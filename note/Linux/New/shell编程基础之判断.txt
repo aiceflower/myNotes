@@ -1,0 +1,109 @@
+1.if语句
+如果if后面的命令的退出状态码为0则执行then后面的命令
+a)
+if command
+then
+	command
+fi
+或
+if command ; then command;fi
+then
+	command
+else
+	command
+fi
+c)
+if command
+then 
+	command
+elif command
+then
+	command
+elif command
+then
+	command
+else
+	command
+fi
+d)复合条件
+if [ condition1 ] && [ condition2 ] ;then ...
+if [ condition1 ] || [ condition2 ] ;then ...
+2.test
+解决if语句只能判断跟状态码有关的条件
+test列出的条件成立则返回0，否则返回1
+test可以判断3类条件：数值比较、字符串比较、文件比较
+数值比较：
+int1 -eq int2 如果 int1 等于 int2，则为真
+int1 -ge int2 如果 int1 大于或等于 int2，则为真
+int1 -gt int2 如果 int1 大于 int2，则为真
+int1 -le int2 如果 int1 小于或等于 int2，则为真
+int1 -lt int2 如果 int1 小于 int2，则为真
+int1 -ne int2 如果 int1 不等于 int2，则为真
+
+字符串比较：
+-n string 测试以判断字符串是否不为空；字符串必须为 test 所识别
+-z string 测试以判断字符串是否为空；字符串必须为 test 所识别
+string1 = string2 测试以判断 string1 是否与 string2 相同
+string1 != string2 测试以判断 string1 是否与 string2 不同
+str1 < str2 str1是否比str2小 
+str1 > str2 str1是否比str2大
+注：大于小于号必须转义
+大于小于顺序和sort命令采用的不同
+test使用标准的ASCII顺序，sort使用的是系统的本地化语言设置中定义的排序顺序
+
+文件比较：
+-b file 如果文件为一个块特殊文件，则为真
+-c file 如果文件为一个字符特殊文件，则为真
+-d file 如果文件为一个目录，则为真
+-e file 如果文件存在，则为真
+-f file 如果文件为一个普通文件，则为真
+-g file 如果设置了文件的 SGID 位，则为真
+-G file 如果文件存在且归该组所有，则为真
+-k file 如果设置了文件的粘着位，则为真
+-O file 如果文件存在并且归该用户所有，则为真
+-p file 如果文件为一个命名管道，则为真
+-r file 如果文件可读，则为真
+-s file 如果文件的长度不为零，则为真
+-S file 如果文件为一个套接字特殊文件，则为真
+-t fd 如果 fd 是一个与终端相连的打开的文件描述符（fd 默认为 1），则为真
+-u file 如果设置了文件的 SUID 位，则为真
+-w file 如果文件可写，则为真
+-x file 如果文件可执行，则为真
+file1 -ef file2 测试以判断两个文件是否与同一个设备相连，是否拥有相同的 inode 编号
+file1 -nt file2 测试以判断第一个文件是否比第二个文件更新（由修改日期决定）
+file1 -ot file2 测试以判断第一个文件是否比第二个文件更旧
+
+3.高级if - then
+a)使用双圆括号 （针对数学比较的高级特性）
+test命令只允许使用简单的算术操作，双圆括号提供了高级数学符号
+(( expression ))
+val++
+val--
+++val
+--val
+!		逻辑求反
+~		位求反
+**		幂求反
+<< 		左位移
+>>		右位移
+&		位布尔和
+|		位布尔或
+&&
+||
+例：if (( 10 ** 2 > 90 )) then...
+b)使用双方括号(针对字符串比较的高级特性)
+支持模式匹配(可以定义正则)
+[[ expression ]]
+例：if [[ $USER == feel* ]] then...
+
+4.case
+case variable in 
+pattern1 | pattern2) commands1;;
+pattern3 commands2 ;;
+*) default commands;;
+esac
+注意：
+in
+)
+;;
+esac

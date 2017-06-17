@@ -1,0 +1,743 @@
+Day1
+1. 1G-4G
+	1G 代表 大哥大
+	2G 小灵通 ，可以发短信
+	3G 沃
+	4G lte
+2.Android系统介绍
+	安迪鲁宾,最开始应用于数码相机
+	不能有种族歧视，不能有民族色彩，从而出来了安卓图标
+3.Android的四层结构
+	1.应用层
+	2.应用框架层
+	3.函数库层
+	4.Linux内核
+4.jvm与dvm
+	google由于版权问题开发出了dvm（与sun公司打官司）
+	jvm:java-->class-->jar(基于栈架构)
+	dvm:java->>class-->dex-->odex(把所有的.class文件变成了一个.dex文件，基于寄存器架构)
+5.art模式，android运行时
+	速度快，但占用空间变大了
+6.sdkManager介绍
+	dx.bat 把所有的.class文件变成了一个.dex文件
+	aapt Android应用打包工具
+	adb Android调试桥
+7.Android版本对应api级别
+	2.3-->10
+	3.0-->11
+	4.0-->14
+	4.1.2-->16
+8.Android常见分辨率
+	320*480
+	480*800
+	1280*720
+9.Android清单文件，相当于web应用中的web.xml
+	Android的四大组件
+	Activity
+	BroadCastReceiver
+	service
+	ContentProvider
+	需要在清单文件中配置
+10.adb指令：
+	1.adb kill-server 杀死adb服务
+	2.adb start-server 启动adb服务
+	3.adb install aa.apk 安装一个apk
+	4.adb uninstall 服务名 卸载一个apk
+	5.adb shell 进入手机终端
+	6.adb pull test.txt 把一个文件从终端拉出
+	7.adb push test.txt /mnt/sdcard  把一个文件从电脑推到手机
+11.安卓应用
+	a)画ui
+	b)写业务逻辑
+	c)测试
+12.按钮的四种点击事件
+	1.btn.setOnClickListener(new MyClickListener());//自己写内部内，实现OnClickListener接口
+	2.btn.setOnClickListener(new OnClickListener(){...});//使用匿名内部类
+	3.btn.setOnClickListener(this); //让当前类  实现..view.view.OnClickListener，当页面中有很多个按钮的时候时用这种方法
+	4.给button按钮设置属性android:onClick="click",然后在当前类中实现click方法，需要传一个View参数
+13.安卓中的五大布局
+	1.线性布局LinearLayout :vertical水平,horizontal竖直
+	2.相对布局RelativeLayout
+	3.帧布局，一层一层显示
+	4.表格布局，一个tableRow就代表一行
+	5.绝对布局
+14.Android中所有控件第一个字母都大写
+	id命名，控件首字母加功能
+	hint:背景提示
+15.安卓中的单位
+	ps:不会自动适应屏幕
+	dp:其它情况全用dp
+	sp:文字的字体大小使用
+16.安卓打包流程
+	java(编译)-->class-->dex文件(dx.bat)-->打包(aapt)生成一个apk文件-->adb(调试桥)-->device
+17.常用的控件都是View的子类，Active是context的子类，布局都继承自ViewGroup(可以有自己的孩子，其它的view则不能有孩子)
+Day2
+1.好的软件不是开发出来的，而是不断的测试出来的
+2.测试
+	1.根据是否知道源代码分为黑盒测试，跟白盒测试
+	2.根据测试的暴力程度分为压力测试（monkey+次数可做压力测试,先用adb shell进入到shell再使用monkey命令），冒烟测试
+3.安卓单元测试
+	安卓应用是直接运行在手机里的，直接写main方法会报错
+	1.继承AndroidTestCase
+	2.配置清单文件
+		<!-- 配置函数库，在application里-->
+       <uses-library android:name="android.test.runner" />
+	    <!-- 配置instrumenttation，在application-->
+		<instrumentation
+        android:name="android.test.InstrumentationTestRunner"
+        android:targetPackage="com.itheima.unit" />
+	3.如果忘记如何配置，可以创建一个Android测试工程，里面有配置项
+4.安卓日志
+	Log.v(MainActivity,"我是v级别"); --蓝色
+	Log.i(MainActivity,"我是i级别"); --绿色
+	Log.d(MainActivity,"我是d级别"); --黑色
+	Log.w(MainActivity,"我是w级别"); --黄色
+	Log.e(MainActivity,"我是e级别"); --红色
+	日志猫，过滤器创建，左边
+5.安卓中获取文件路径
+	可使用上下文获取
+6.获取sd卡
+	Environment.getExternalStorageDirectory();//获取sd卡目录
+	Environment.getExternalStorageState();获取sd卡状态
+7.SharedPreferences (快速存取一些数据)
+	使用步骤：
+	1.获取实例
+		sp = getSharedPreferences("config", int);//生成一个xml文件
+	2.获取编辑器
+		Edit ed = sp.edit();
+	3.存取数据
+		ed.putString("name",name);
+	4.最后一步，一定要提交
+		ed.commit();
+
+
+Day3
+1.安卓数据库sqlite
+	什么情况下使用数据库：有大量相似结构的数据需要存储的时候
+	如何创建安卓数据库：
+	1.写一个类继承SQLiteOpenHelper抽象类
+	2.创建该类的对象，并实现它的两个抽象方法onCreate,onUpgrade，使用getWritableDatabase()方法获取数据库对象
+	或使用getReadableDatabase()创建，正常情况下两个创建的数据库一样，如果磁盘满了则后一个方法创建一个只读的数据库
+	3.onCreate
+		数据库第一次被创建的时候调用，适合做表结构的初始化
+	4.onUpgrade 
+		当数据库版本升级的时候调用,这个方法适合做表结构的更新，不能降级
+	5.如果打开安卓数据库
+		使用sqlite expert professional 
+	6.google封装的增删改查
+	增：db.execSQL("insert into info(name,phone) values(?,?)", new Object[]{"张三","1388888"});
+		//返回值代表插入新行的id 
+		long insert = db.insert("info", null, values); //底层就在组拼sql语句
+	删：db.execSQL("delete from info where name=?", new Object[]{"张三"});
+		//返回值代表影响的行数 
+		int delete = db.delete("info", "name=?", new String[]{"王五"});
+	改：db.execSQL("update info set phone=? where name=? ", new Object[]{"138888888","张三"});
+		//代表更新了多少行 
+		int update = db.update("info", values, "name=?", new String[]{"王五"});
+	查：db.query("info", new String[]{"name","phone"}, "name=?", new String[]{"王五"}, null, null, null);
+		Cursor cursor = db.query("info", null,null, null, null, null, null);
+		Cursor cursor = db.rawQuery("select * from info", null);
+	7.使用命令打开数据库(sqlite3)
+		先进入到数据库所在的目录，再使用sqlite3
+	8.如果出现乱码，可通过改变dos编码来解决
+		改变dos编码 chcp 936改为GBK chcp 65001改为utf-8
+	9.数据库事务
+		事务：执行一段逻辑，要么同时成功，要么同时失败
+		安卓中事务书写：
+			db.beginTransaction();
+			try {
+				...
+				db.setTransactionSuccessful();//设置一个标识，如果执行证明事务执行成功
+			} finally {
+				db.endTransaction();
+			}
+
+2.listView（这里使用到了适配器）
+	使用ListView
+	1.ListView lv = (ListView) findViewById(R.id.lv);
+	2.显示数据  和 其他普通控件(textview )有点区别 数据来源于数据适配器
+	lv.setAdapter(new MyListAdapter());
+	3.定义listview的数据适配器，继承BaseAdapter，实现其方法就可以了
+	优化：
+	public View getView(int position, View convertView, ViewGroup parent) {
+		TextView tv ;
+		if (convertView == null) {
+			//创建新的view 对象 
+			tv = new TextView(MainActivity.this);
+			System.out.println("创建新的view 对象---"+position);
+		}else{
+			System.out.println("复用历史缓存 对象---"+position);
+			tv = (TextView) convertView;
+		}
+		tv.setText("哈哈哈"+position);
+		return tv;
+	}
+3.listView数据展示原理
+	mvc
+	javaweb
+	m: mode 数据
+	v:view 视图 jsp
+	c:controller  servlet
+
+	android：
+	m:mode 数据(javabean)
+	v:view listview
+	c:adapter
+
+4.listView的奇怪现象
+	高不能使用包裹内容，要使用填充窗体 300dp，相当于小优化
+	如果设置为包裹内容，高度是不确定的，安卓不能确定是否能把内容全部显示完全，就去多尝试了几次
+
+5.安卓打气筒inflate
+	什么是打气筒：通过打气筒可以把一个布局资源转换成一个View对象
+	获取打气筒的方法：
+	//创建新的view对象   可以通过打气筒把一个布局资源转换成一个view对象 
+	//resource 就是 我们定义的布局文件 
+	//[一☆☆☆☆]获取打气筒服务
+	view = View.inflate(getApplicationContext(), R.layout.item, null);
+	//[二☆☆☆☆]获取打气筒服务
+	view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.item, null);
+	//[三☆☆☆☆]获取打气筒服务
+	LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+	view = inflater.inflate(R.layout.item, null);
+				
+6.ArrayAdapter数组适配器
+	不管是什么适配器就是把数据展示到ListView中
+	创建数组适配器
+	ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.item, objects);
+	ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.item1, R.id.tv_name, objects);
+7.权重
+	主要在线性布局中使用，用于分配控件占用的空间
+	android:layout_weight="1"  两个控件如果权重一样，则各占50%，数值越大，占空间越大
+8.SimpleAdapter简单适配器
+	SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(), data, R.layout.item,
+				new String[]{"name","phone"}, new int[]{R.id.tv_name,R.id.tv_phone});
+	其中data为需要显示的数据是一个list，list中的数据为map，如下
+	List<Map<String, String>> data = new ArrayList<Map<String,String>>();
+	Map<String, String> map1 = new  HashMap<String, String>();
+	map1.put("name", "张飞");
+	map1.put("phone", "1388888");
+	String数组中存放map中的key，
+	int数组中存放需要显示对应数据的控件
+9.tips：找控件的时候要去对应的布局中找，不要直接就写findViewById(R.id.item)这是从主布局中找的
+
+以上为数据存储与界面展示
+
+下面为网络编程,在ie上安装httpwatch，用ctrl+f2打开
+1.HttpURLConnection 用于发送或接收数据
+	创建HttpURLConnection
+		URL url = new URL(path);
+		//[2.3]拿到httpurlconnection对象  用于发送或者接收数据 
+		HttpURLConnection  conn = (HttpURLConnection) url.openConnection();
+	一些属性
+		//[2.4]设置发送get请求 
+		conn.setRequestMethod("GET");//get要求大写  默认就是get请求
+		//[2.5]设置请求超时时间
+		conn.setConnectTimeout(5000);
+		//[2.6]获取服务器返回的状态码 
+		int code = conn.getResponseCode();
+		//[2.8]获取服务器返回的数据   是以流的形式返回的  由于把流转换成字符串是一个非常常见的操作  所以我抽出一个工具类(utils)
+1.0
+	多线程下载请求部分资源，设置
+	conn.setRequestProperty("Range","bytes="+startIndex+"-"+endIndex);
+		InputStream in = conn.getInputStream(); 
+2.ScollView,这个view可以有孩子，但只能有一个孩子，可以创建一个布局，来扩充
+3.如果主线程进行了耗时的操作，如报一个anr的异常
+  可以把耗时的操作，放到子线程中，自己创建一个线程做耗时的操作
+  在4.0以后google强制要求，连接网络不能放在主线程中
+  只有主线程才可以更新ui，如xxx.setText(str);Tooase是一个view，so不能在子线程中使用吐司
+4.Handler
+	 使用
+	 1.在主线程中定义一个Handler
+		private Handler handler = new Handler(){...}
+	 2.重写handler的handleMessage方法
+	 3.拿着在主线程中创建的handler去子线程中发消息，handler.sendMessage(msg);之后重写的handleMessage方法就会执行
+	 4.这样就可以在主线程中更新ui了
+	 作用：用于发消息，跟处理消息
+	 Looper的作用是去消息队列中取消息
+	 Looper是在主线程一创建就有了
+	 规则：
+	 不管什么版本的手机，只要做耗时的操作，如连接网络，传输入大量数据，就自己开一个子线程，获取数据后想要更新ui，使用handler就可以了
+5.getCacheDir()与getFileDir()
+	手机清除cache的时候会清除cache的数据
+	手机清除数据的时候会清除cache跟file的数据
+6.runOnUiThread这个不管在哪里书写，更新ui则一定在主线程
+	1.对于只更新ui可以使用runOnUiThread，如果需要发送消息，则还需要原始的handler
+
+
+多页面的开发
+day06一个activity就是一个页面
+1.安卓的四个组件都要在清单文件中配置
+2.如何让应用有多个启动图标,在activity中配置如下filter，MAIN，LAUNCHER
+	<intent-filter >
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+    </intent-filter>
+3.隐式意图
+	通过指定一组动作或数据
+	<intent-filter >
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+		<data 
+			android:scheme="aa/bb" 使用intent.setData(Uri.parse("aa/bb:"));设定(只有scheme约束的时候)
+            android:mimeType="ttt" 使用intent.setType("ttt");设定(只有mimeType约束的时候)
+				如果两个约束都有需要使用intent.setDataAndType(Uri.parse("aa/bb:"), "ttt");设定，
+				否则单独调用哪一个都会将另一个清除
+		/>
+	</intent-filter>
+4.显示意图，通过指定具体的包名和类名
+5.总结
+	1.开启自己的应用的界面用显示意图
+	2.开启其他应用(系统应用)的时候用隐式意图
+	3.显示意图安全一些
+6.Activity的生命周期
+	onCreate方法,当activity启动的时候调用
+	onDestroy方法,当activity销毁的时候调用
+	onStart方法,当activity变成可视的时候调用
+	onStop方法,当activity不可见的时候调用
+	onResume方法,当界面有按钮被点击了，获取焦点
+	onPause方法,界面上的按钮不可以被点击
+	onRestart方法，界面重新启动时调用
+7.横竖屏切换
+	ctrl+f11
+	android:screenOrientation
+	"unspecified":默认值 由系统来判断显示方向.判定的策略是和设备相关的，所以不同的设备会有不同的显示方向. 
+	"landscape":横屏显示（宽比高要长） 
+	"portrait":竖屏显示(高比宽要长) 
+	"user":用户当前首选的方向 
+	"behind":和该Activity下面的那个Activity的方向一致(在Activity堆栈中的) 
+	"sensor":有物理的感应器来决定。如果用户旋转设备这屏幕会横竖屏切换。 
+	"nosensor":忽略物理感应器，这样就不会随着用户旋转设备而更改了（"unspecified"设置除外）。
+	也可以在Java代码中通过setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)来设置。
+8.短信大全http://www.aizhufu.cn/
+9.任务栈的概念
+	栈：先进后出
+	队列：先进先出
+	task 什么叫任务
+	
+	1.打开一个activity叫进栈，关闭一个activity叫出栈
+	2.我们操作的activity一定是栈顶的activity
+	3.任务栈是用来维护用户操作体验的
+	4.应用程序退出了是任务栈被清空了
+	5.一般情况一个应用对应一个任务栈
+10.activity的四种启动模式
+	1.stander
+	2.singletop,任务栈，会检查栈顶的元素，如果是需要加载的任务，则不再重新加载，浏览器的书签
+	3.singletask，检查任务栈，如果有实例开启，会清空之上的任务，浏览器的activity
+	4.singleinstance，会再单独开一个任务栈，且该任务栈，只存在本实例的一个任务，来电界面
+
+day07,四大组件之二广播接收者BroadCastReceiver
+1.使用BroadCastReceiver
+	a)定义一个类继承BroadCastReceiver,重写onReceive()方法
+	b)在清单文件中配置receiver
+		<receiver android:name=".SMSBroadcastReceiver" >
+ 　　		<intent-filter android:priority = "2147483647" >
+ 　　　　		<action android:name="android.provider.Telephony.SMS_RECEIVED" />
+ 　　		</intent-filter>
+		</receiver >
+	c)小细节,配置sd卡挂载，卸载的时候需要加file约束
+		<receiver android:name="com.itheima.sdcardstate.SdcardReceiver">
+            <intent-filter >
+                <action android:name="android.intent.action.MEDIA_UNMOUNTED"/>
+                <action android:name="android.intent.action.MEDIA_MOUNTED"/>
+                 <action android:name="android.intent.action."/>
+                <!--想让上面的这2个事件生效 必须的加上这样的一个data   -->
+                <data android:scheme="file"/>
+            </intent-filter>
+        </receiver>
+	d)小细节，配置应用安装卸载的时候需要加package约束
+		<intent-filter>  
+			<!-- 一个新应用包已经安装在设备上，数据包括包名（监听所在的app，新安装时，不能接收到这个广播） -->  
+			<action android:name="android.intent.action.PACKAGE_ADDED" />  
+			<!-- 一个新版本的应用安装到设备，替换之前已经存在的版本  替换时会先收到卸载的再收到替换的， 替换自身也能收到-->  
+			<action android:name="android.intent.action.PACKAGE_REPLACED" />  
+			<!-- 一个已存在的应用程序包已经从设备上移除，包括包名（卸载监听所在的app，则无法接收到） -->  
+			<action android:name="android.intent.action.PACKAGE_REMOVED" />  
+			<data android:scheme="package" />  
+		</intent-filter>  
+2.有序广播和无序广播
+	1.有序广播,类似中央发送红头文件，按照一定的优先级进行接收
+		有序广播可以被终止
+		有序广播可以被修改
+	2.无序广播sendBroadcast(intent);
+		无序广播不可以被终止，数据不能被修改
+	3.特殊的广播接收者
+		操作特别频繁的广播事件，比如，屏幕的锁屏和解锁，电池电量的变化，这种广播在清单文件中配置无效
+		注册广播接收者的两种方式（通过继承的方式注册无效	）
+		1.动态注册，通过代码的方式注册，在onCreate方法中，
+		ScreenReceiver screenReceiver = new ScreenReceiver();
+		IntentFilter filter = new IntentFilter();
+		filter.setAction("android.intent.action.SCREEN_OFF");
+		filter.setAction("android.intent.action.SCREEN_ON");
+		registerReceiver(screenReceiver,filter);
+		如果这样当activity销毁的时候需要取消注册unRegisterReceiver(receiver);//在onDestroy方法中取消
+		2.在清单文件中通过receiver tag节点静态发布
+2.1不能在广播接收者里面直接开启activity
+	解决：设置一个标记
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+2.2屏蔽后退按钮，在activity中屏蔽掉onDestroy();方法
+	@Override
+	protected void onDestroy() {
+		//super.onDestroy();
+	}
+2.3发送一个无序广播
+	发送：
+	Intent intent = new Intent();
+	intent.setAction("com.grgbanking.noOrder");
+	intent.setExtra("content","新闻联播每天七点准时开播");
+	sendBroadcast(intent);
+	接收：
+	在清单文件中配置广播接收者
+	获取数据,intent.getStringExtra("content");
+2.4发送有序广播
+	发送：
+	Intent intent = new Intent();
+	intent.setAction("com.grgbanking.order");
+	intent.setExtra("content","...");
+	sendOrderBroadcast(intent,null,null,null,1,"...",null);//第三个参数可以设置最终的广播接收者，这个接收者不需要在清单文件中配置，直接继承BroadcastReceiver就可以了
+	接收：
+	在清单文件中配置，需要配置优先级 android:priority="100" 数字越大优先级越高
+	abortBroadcast();//终止广播发送
+	setResultData("修改广播内容");//修改广播数据
+3.样式和主题 values/style.xml
+	样式：一般作用于控件上，作用范围较小
+	主题：一般作用于activity和application节点下，作用范围较大
+	共同点，定义的方式是一样的
+4.国际化i18n
+	中文:values-zh
+	英文:values-en
+5.0两种上下文的区别
+	getApplicationContext();返回的是Context对象
+	this最终继承Context
+	对话框不能用getApplicationContext(),其它都可以用
+引申：父类与子类的两占区别，1.指定为父类不能确定目标作用到哪个类上。2.子类有的方法父类不一定有
+5.对话框AlertDialog.builder builder = new Builder(this);//注：这里只能用this
+	普通对话框
+	单选对话框
+	多选对话框
+	进度条对话框
+	注：与进度相关的控件都可以在子线程中更新ui
+6.SystemClock.sleep(50);不抛异常
+7.安卓中的动画
+	1.帧动画
+	2.view动画
+	3.属性动画
+day8
+1.进程
+	1.Android下四大组件都是运行在主线程中的
+	2.服务是在后台运行 没有界面
+2.进程的优先级
+	1.Foreground progress 前台进程，优先级最高，相当于activity执行了onResume方法，用户下在交互
+	2.Visiable progress 可视进程 一直影响用户看得见，相当于activity执行了onPause方法
+	3.service progress 服务进程 通过startService方法开启了一个服务
+	4.badkground progress 后台进程，相当于activity执行了onStop方法，界面不可见，但是activity并没有销毁
+	5.Empty progress 空进程，不会维持任何组件运行
+3.start方式开启服务
+	1.定义四大组件的方式是一样的
+	2.定义一个类继承service
+	3.第一次点击按钮开启服务，执行onCreate方法和onStart方法
+	4.第二次点击按钮，再次开启服务，服务执行onStart方法
+	5.服务一但被开启，服务就会在后台长期执行,直到用户手工停止（重要特点）
+4.bind方式开启服务
+	bindService开启服务的特点
+	1.第一次点击按钮，会执行服务的onCreate方法和onBind方法
+	2.当onBind方法返回为null时，onServiceConnected方法是不执行的
+	3.第二次点击按钮，服务无响应
+	4.不求同时生，但求同时死（只是调用者activity和服务之间）（重要的特点）
+	5.服务不可以多次解绑，多次解绑会报错
+	6.通过bind方式开启服务，不能在设置页面找到该服务，相当于是一个隐形的服务
+	7.如果不解绑服务会报红色警告，但不是错误，可解绑服务消除警告
+5.为什么引入了bindService
+	如果需要在activity中使用服务中的方法，不能通过new对象的方式获取服务对象然后执行其方法(没有上下文环境)
+	所以引入了bindService.
+6.通过bindService方式调用服务里面的方法的过程
+	service中
+	1.在服务内部定义一个方法，让activity去调用
+	2.在服务内部定义一个中间人对象(IBander)
+	3.把定义的中间人对象在onBind方法中返回
+	activity中
+	4.在activity中的onCreate方法中调用bindService，目的是为了获取我们定义的中间人对象
+	5.在activity中定义一个类实现ServiceConnection方法，然后在onServiceConnected方法中获取中间人对象
+	6.拿到中间人对象后，可间接调用service中的方法
+	7.当activity销毁的时候解绑服务
+7.通过接口的形式调用服务中的方法
+	接口可以隐藏代码内部的细节，让程序员暴露自己想暴露的方法
+	1.定义一个接口，把想暴露的方法都定义在接口里面
+	2.在我们定义中间人对象的时候实现上述定义的接口
+	3.获取中间人对象的时候类型转换为接口类型
+8.混合方式开启服务
+	需求：现在既想让服务在后台一直运行，又想调用服务里面的方法(音乐盒基本上都有这样的需求)
+	1.先调用startService方法开启服务，能够保证服务在后台一直运行
+	2.调用bindService方法，获取中间人对象，能够保证使用服务中的方法
+	3.调用unBindService解绑服务，此时服务并没有销毁
+	4.调用stopService
+9.aidl介绍（用来解决进程间的通信）
+	本地服务：运行自己应用里面的服务
+	远程服务：运行其它应用里面的服务
+	实现进程间通信：IPC
+	使用aidl的步骤
+	1.把MusicInterface.java文件变成一个以aidl为后缀的文件
+	2.aidl语言不认识public把MusicInterface.java中的public去掉
+	3.自动生成一个MusicInterface.java文件，系统自动帮我们生成了一个类Stub,这个类继承了Binder,实现了我们自己定义的接口
+	4.我们自己定义的中间人对象（在远程应用中）就直接继承Stub就可以了
+	5.保证2个应用中的aidl文件是同一个，保证aidl文件所在的包名相同
+	6.获取中间人对象的方式不一样了
+		Stub.asInterface(service);
+	
+day09内容提供者
+1.为什么需要内容提供者
+  如何创建一个数据库 定义一个类继承SqliteOpenHelper
+  sqlite3打开数据库
+  chmod linux下修改文件权限
+  通过内容提供者把私有的数据库的内容给暴露出来
+2.实现内容提供者步骤
+	1.定义一个类继承ContentProvider
+	2.在清单文件中配置内容提供者
+	<provider 
+		android:name="com.grgbanking.contentprovider.AccountProvider"
+        android:authorities="com.grgbanking.provider"
+    ></provider>
+	3.定义一个路径匹配器
+	//定义一个uriMatcher，路径匹配器
+	private static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+	4.写一个静态代码块，添加匹配规则
+		static {
+		//这样定义后访问的路径为"content://com.grgbanking/query"
+		sURIMatcher.addURI("com.grgbanking.provider", "query", QUERYSUCCESS);
+	}
+	5.暴露你想暴露的方法(增删改查)
+	6.其它应用通过内容的解析者操作数据库
+		getContentResolver().query(uri, new String[] { "address", "date", "body" }, null, null, null);
+2.读取联系人
+	三张重要的表
+	1.data data1里面存的是所胡联系人的信息
+	2.data表里面的raw_contact_id实际上是raw_contact表的contact_id
+	3.data表里面的mimetype_id列，实际对应mimetype表
+	步骤：
+	1.先读取raw_contact表，读取contact_id字段，从而就可以知道手机里面共有几条联系人
+	2.再读取data表，根据raw_contact_id去读取data1和mimetype(这里不能直接获取mimetype_id列，因为操作的是视图，视图中没有这一列)
+3.内容观察者
+	1.注册内容观察者
+		getContentResolver().registerContentObserver(uri, true, new MyObserver(new Handler)));
+	2.定义一个内容观察者
+		定义一个类继承ContentObserver类，当观察的内容改变时调用其onChange方法
+		
+day10多媒体(文字，图片，音频，视频)
+1.表示图片的几种形式
+	bmp:以高质量保存，用于计算机
+	jpg:以良好质量保存，用于计算机或网络
+	png:以高质量保存
+	图片大小的计算工式：图片总像素*每个像素大小
+	单色：每个像素最多可以表示两种颜色，要么是黑，要么是白，那么只需要用长度为1的二进制位来表示，那么一个像素占1/8个byte
+	16色:每个像素最多可以表示16种颜色，0000-1111，那么只需要用长度为4的二进制位来表示，那么一个像素占1/2个byte
+	256色:每个像素最多可以表示256种颜色，0000 0000 - 1111 1111，那么只需要用长度为8的二进制位来表示，那么一个像素占1个byte
+	24位:每个像素最多可以表示1600多万种颜色，那么一个像素点3个byte,r:1个byte，g:1个byte，b:1个byte.
+	android采用的是png格式，采用ARGB,一个像素点4byte
+2.将大图片加载到android中
+	android加载图片的时候会申请空间，图片分辨率*4byte 
+	实现步骤：
+	1.获取手机的分辨率
+		WindowManager winM = (WindowManager) getSystemService(WINDOW_SERVICE);
+		int width = winM.getDefaultDisplay().getWidth();
+		int height = winM.getDefaultDisplay().getHeight();
+	2.获取图片的分辨率
+		//2.获取图片的分辨率
+		BitmapFactory.Options opts = new Options();
+		//设置为true不加载图片，只是获取图片的信息
+		opts.inJustDecodeBounds = true;
+		BitmapFactory.decodeFile("/mnt/sdcard/win.bmp",opts);
+		//获取图片的分辨率
+		int outWidth = opts.outWidth;
+		int outHeight = opts.outHeight;
+	3.计算缩放比
+		int scale = 1;
+		int scaleX=outWidth/width;
+		int scaleY=outHeight/height;
+		if(scaleX>scaleY&&scaleX>=scale){
+			scale = scaleX;
+		}
+		if(scaleY>scaleX&&scaleY>=scale){
+			scale = scaleY;
+		}
+	4.按照缩放比进行显示
+		opts.inSampleSize=scale;
+		opts.inJustDecodeBounds=false;
+		Bitmap win = BitmapFactory.decodeFile("/mnt/sdcard/win.bmp", opts);
+		bitmap.setImageBitmap(win);
+3.创建原图的副本
+	// 创建一个原图的副本
+		Bitmap copyImg = Bitmap.createBitmap(orgImg.getWidth(), orgImg.getHeight(), orgImg.getConfig());
+		// 创建一个画笔
+		Paint paint = new Paint();
+		// 创建一个画布
+		Canvas canvas = new Canvas(copyImg);
+		// 开始作画
+		canvas.drawBitmap(orgImg, new Matrix(), paint);
+		// 操作副本
+		for (int i = 0; i < 20; ++i) {
+			for (int j = 0; j < 20; ++j) {
+				copyImg.setPixel(20+i, 10+j, Color.BLUE);
+			}
+		}
+		orginal.setImageBitmap(orgImg);//设置图片到imageView
+		copy.setImageBitmap(copyImg);//设置图片到imageView
+4.图片处理api
+	Matrix matrix = new Matrix();
+	旋转:matrix.setRotate(20, copyImg.getWidth()/2, copyImg.getHeight()/2);
+	缩放:matrix.setScale(0.5f, 0.5f);
+	平移:matrix.setTranslate(30, 0);
+	镜面:matrix.setScale(-1.0f, 1);matrix.postTranslate(copyImg.getWidth(), 0);
+	倒影:matrix.setScale(1, -1);matrix.postTranslate(0, copyImg.getHeight());
+5.画布小案例
+6.播放音频MediaPlayer		
+	MediaPlayer player = new MediaPlayer();
+		try {
+			player.setDataSource("/mnt/sdcard/xpg.mp3");
+			player.prepare();
+			player.start();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+7.mediaPlayer的生命周期
+	同步和异步
+	同步一般播放本地音乐
+	异步一般播放网络音乐，不用开子线程
+8.surfaceView介绍
+	播放视频
+	mediaPlayer只能播放mp4格式或者3gp格式
+	surfaceView是一个重量级控件
+	内部维护了2个子线程
+		A加载数据 B负责显示
+		B加载数据 A负责显示
+	他可以直接在子线程中更新ui
+	
+day11
+1.fragment入门
+	viewGroup可以有自己的孩子
+	1.通过onCreateView 这个方法Fragment可以加载自己的布局
+	2.name属性指定的是我们自己定义的fragment
+2.动态替换fragment
+	1.获取fragment管理者
+		FragmentManager fm = getFragmentManager();
+	2.开启一个事物
+		FragmentTransaction ft = fm.beginTransaction();
+	3.提交事物
+		ft.commit();
+3.fragment中给按钮设置点击事件不能通过按钮的第四个点击事件(通过反射的方式实现的)
+4.使用fragment兼容低版本的写法
+	fragment是在11的时候引入的
+	兼容底版本写法就是所有的fragment全部使用v4包中的fragment
+5.fragment的生命周期
+	1.实际开发中必须重写onCreateView方法
+	2.还可以写onDestroy方法进行一些回收内存的操作
+6.fragment之间的通信
+	通过getActivity();获取管理者，然后通过管理者获取fragemnt来修改内容
+7.菜单
+	1.重写onCreateOptionsMenu(Menu menu)方法
+	2.声明菜单getMenuInflater().inflate(R.menu.main, menu);
+	3.动态添加菜单
+		重写的方法里
+		menu.add(0, 1, 0, "前进");
+		menu.add(0, 2, 0, "后退");
+		menu.add(0, 3, 0, "首页");
+	4.如何知道具体点击的是哪个菜单，重写下面的方法
+	onOptionsItemSelected(Menu menu);
+		第一种方式加载菜单：
+			switch (item.getItemId()) {
+			case R.id.item1:
+				break;
+			case R.id.item1:
+				break;
+			}
+		第二种方式加载菜单
+			switch (item.getItemId()) {
+			case 1:
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+			}
+8.点击菜单时修改菜单
+	1.重写onMenuOpened方法返回false
+	2.弹出来个弹框
+		 AlertDialog.Builder builder = new Builder(this);
+    	  builder.setTitle("警告");
+    	  builder.setPositiveButton("确定", new OnClickListener() {
+			
+			public void onClick(DialogInterface dialog, int which) {
+				
+			}
+		});
+    	  builder.setNegativeButton("取消", new OnClickListener() {
+  			
+  			public void onClick(DialogInterface dialog, int which) {
+  				
+  			}
+  		});
+		//最后一步show出来
+		builder.show();
+9.AutoCompleteTextView
+	使用
+	//1.找到控件
+	AutoCompleteTextView actv = (AutoCompleteTextView) findViewById(R.id.actv);
+	//2.显示数据根listView 一样simple_dropdown_item_line  COUNTRIES
+	ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.id.simple_dropdown_item_line,COUNTRIES);
+	actv.setAdapter(adapter);
+10.补间动画，也叫view动画
+    透明:AlphaAnim
+	旋转:RotateAnim
+	缩放:ScaleAnim
+	位移:TranslateAnim
+	原理：动画效果不会改变控件的真实坐标
+11.使用xml的形式创建补间动画
+	1.在res目录下创建一个目录anim
+	2.在该目录下创建对应的动画
+	3.在代码中调用
+		Animation aa = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.alhpa);
+		anmy_iv.setAnimation(aa);
+12.属性动画，会改变控件的真实坐标
+	ObjectAnimator不是new出来的
+	1.属性动画使用xml在res下创建animator目录
+13.应用程序反编译
+	apktools 可获取res下的资源文件 
+	dex2jar 可以把apk转换为jar
+	jd-gui.exe  可以直接查看源码
+14.通知栏
+	给用户友好提示的几种方式：
+	1.Toast
+	2.对话框
+	3.通知栏
+作业：day1-day4
+	1.做一个打电话的应用
+	2.做一个数据库的增删改查应用
+	3.做一个使用listview显示数据的应用
+	4.做一个将数据库中的数据显示到listview中的应用
+	5.做一个把流转换为字符串的工具类，使用内存输出流
+	6.做一个源码查看器
+	7.使用handler做源码查看器（想想为什么会引入handler）
+	8.做一个图片查看器，并使用缓存，getFileDir(),getCacheDir();
+	9.把上面的查看器更换为runOnUiThread
+	10.写一个定时器，分别使用安卓跟java实现更新ui操作
+	11.写一个新闻客户端
+	12.使用smartimageview显示网络上的图片
+	
+	day5-
+	1.使用httpurlconnection向服务器发送get或post请求
+	2.使用httpclient向服务器发送get，post请求
+	3.使用开源项目向服务器发送get，post请求
+	4.写一个多线程下载项目
+	5.完善多线程下载，实现断点续传
+	6.将java的下载移动到android中
+	7.使用开源项目实现多线程下载
+	day6-
+	1.做一个人品计算器
+	2.做一个短信发送应用
+	day07
+	1.监控打电话，添加区号
+	2.监控sd卡状态，短信发送，安装卸载程序，手机重启，等监控
+	3.制作一个各种对话框的应用
+	4.做一个帧动画，考虑2.3的兼容性
+	day08
+	做一个电话录音的小案例
+	

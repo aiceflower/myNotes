@@ -1,0 +1,489 @@
+0.三句话
+	alert("aaa");
+	console.log("aaa");
+	prompt("请输入数字");//返回输入的内容
+1.注释
+	1.html
+		<!---->
+	2.css
+		/* */ 
+	3.javascript
+		// ,/* */
+2.规范
+	如果换行可以不用加分号，如果不换行则一定要加分号。
+3.如果页面出现弹出框后，页面不能移动也不能被关闭，进程被暂停了。
+4.typeof判断数据类型
+	使用typeof("abc")或typeof "abc"
+5.逻辑运算符的优先级
+	!>&&>||
+6.将字符串转换为数字
+	1.Number("123")
+		1.能转换则转换为对应数字
+		2.不能转换则返回NaN
+		3.如果是小数，小数会保留
+		4.如果为空，则转换为0
+		5.boolean中true为1，false为0
+	2.parseInt("123")
+		1.能转换则转换为对应数字
+		2.不能转换则返回NaN
+		3.如果是小数会去掉小数
+		4.如果第一个字符是数字则解析到非数字parseInt("   123abc")结果为123
+	3.parseFloat("12.345");
+		与parseInt一样，唯一的区别是可以保留小数
+7.转换成String
+	1. xxx.toString();
+	2.String(123);
+8.boolean转换
+	Boolean("true");
+	其中false,"",0,NaN,undefined转换为false，其它全为true（"false"会转换为true）
+9.隐式转换成number
+	使用算术运算符转换
+	var a = "123";
+	a = +a;
+	console.log(a);
+	console.log(typeof a);
+10.隐式转换为boolean
+	var a = 123;
+	a = !a;
+	a=!!a;
+	一般用两个非转换
+11.else if
+	如果有一个条件满足就会退出，所以，小范围放在前面，大范围放在后面
+12.JS中的数据类型共分为两种，根据在内存中存放位置划分的
+	1.简单数据类型(栈中，值类型)
+		String，Number，Boolean,undefined
+	2.复杂数据类型(堆中，引用类型)
+		Null，Object，Function
+13.对象的创建
+	var people = new Object();
+	赋值
+	people.name="zhangsan";
+14.数组
+	js中数组定义好后就是一个无限大的容器
+	数组元素可以无限添加
+15.函数的默认返回值为undefined
+	js中函数没有重载，后面的函数会覆盖前面的同名函数
+	函数的两种声明方式
+	方式一函数的声明：
+		function f1(a,b){return a+b}
+	方式二函数表达式：
+		var fnName = function (a,b){return a+b}
+	//TODO两种方式的区别
+16.变量的作用域
+	不使用var申明的变量是全局变量！
+	js中没有块级作用域   {},for(var i=0;i<10;i++){},这里面的变量都是全局变量
+17.js中解析过程
+	1.预解析
+		先找var,function和参数，找到后会把var和functioon提前
+	2.解析,一行一行向下执行，执行到函数中的时候还是先预解析再执行，依次类推
+	变量提升:定义变量的时候变量的声明会被提升到作用域的最上面。
+	函数提升:js解析会把当前作用域的函数声明提前到整个作用域的最前面
+18.自调用函数，只能执行一次
+	(function(){
+		console.log();
+	})();//jquery中使用的是这种调用
+19.函数是一种数据类型
+	函数可以作为另一个函数的参数
+		function getResult(a,b,fn){
+			fn(a,b);
+		}
+		getResult(3,5,function(a,b){return a+b});
+20.自定义对象
+	function Stu(name,age){
+		this.name = name;
+		this.age = age;
+		
+		this.sayHi = function(){
+			console.log("大家好，我是"+this.name);
+		}
+	}
+	//使用
+	var s1 =  new Stu("zhangsan",18);
+	//方法
+	s1.sayHi();
+	//属性,以下两种方式都可以调用对象的属性
+	console.log(s1.name);
+	console.log(s1["name"]);
+21.js中的对象是无序属性的集合，可以把对象看成键值对	，属性为变量跟方法
+22.script中的函数的对象是window
+23.字面量
+	数组的字面量
+	 var arr=["zhangsan","lisi"];
+	对象的字面量
+	 var o = {
+		name:"zhangsan",
+		age:18,
+		sayHi:function(){
+			console.log("hi");
+		},
+		dogs:["xiaobai","xiaohei"]
+	 }
+24.json描述数据的一种标准规范
+	var o = {
+		"name":"zhangsan",
+		"age":18
+	}
+	json与对象字面量的区别仅仅是需要使用双引号引起
+25.输出对象的方法
+	法一：直接输出对象
+	console.log(obj);
+	法二:遍历
+	for(var key in value){
+		console.log(value);//输出值
+		console.log(obj.key);//报错,没有key这个属性
+		console.log(obj[key]);//正确
+26.instanceof 是否是谁的对象
+	var o = [];
+	console.log(o instanceof Array);//返回true
+	
+27.数组中的常用方法
+	检测数组
+		instanceof
+		Array.isArray();//html5新增，ie8不支持，ie9部分支持，手机中的浏览器都支持h5
+	转换数组
+		toString();//把数组转换成字符串，一项用,分割
+		valueOf();//返回数组对象本身
+	join("|");//可使用指定分割符把数组转换成字符串，默认为逗号
+28.开发者文档
+	https://developer.mozilla.org/zh-CN/  mozilla 开发者文档 MDN
+29.typeof与instanceof的区别
+	typeof可以获取任意变量的类型，任意对象获取的都是object
+	instanceof只能判断对象的类型，可以精确判断对象的类型，如Array
+30.继承
+	在js中继承就是把别人的属性拿过来变成自己的属性
+	实现一混入：
+		function mix(o1,o2){
+			for(var k in o2){
+				o1[k]=o2[k];
+			}
+		}
+		var o1 = {name:"zhangsan"};
+		var o2 = {age:18};
+		mix(o1,o2);
+31.面向对象的方式去思考
+    创建一个div并设置样式
+	1.抽取对象(名词提炼法),div,body
+	2.分析属性与方法(动词提炼法),添加，设置样式
+	例：
+		function DivTag(){
+			this.DOM = document.createElement('div');
+			this.__add = function(node){
+				node.appendChild(this.DOM);
+				//return this;
+			}
+			this.__setStyle=function(name,value){
+				this.DOM.style[name]=value;
+			}
+			this.css=function(option){
+				for(var key in option){
+					this.DOM.style[key]=option[key];
+				}
+				//return this;
+			}
+		}
+	//都return this后可以使用方法调用链
+		new DivTag().__add(document.body).css({"width":'100px',"height":'200px'});
+32.中途小结
+	1.值类型与引用类型的特征
+		赋值特征：值类型两个数据副本。引用类型两个变量，一个数据对象
+		参数传递特征：值类型两个不同变量，两个数据副本。引用类型两个不同变量，指向同一个数据对象。
+	2.深拷贝与浅拷贝
+		深拷贝：得到一个新的对象，两个对象完全隔离，修改一个对另一个完全没有影响
+		只有在对象中存在对象的时候深拷贝与浅拷贝才有区别。
+	3.对象的动态特性
+		可以给任何对象动态添加属性
+		var p = {};
+		p.name = '张三';
+		p.sayHi = function(){console.log("Hi")};
+	4.构造函数的执行过程
+		创建对象的过程
+		1.代码 var p = new Person();
+		2.首先运算符new 创建了一个对象，它类似于{},是一个'没有任何成员'的对象。
+			使用new创建对象，对象的类型就是创建它的构造函数名。
+			使用{}无论如何都是object 类型，相当于new Object();
+		3.然后调用构造函数为其初始化成员
+			构造函数在调用的一开始有一个赋值的操作，即this = 刚刚创建的对象。
+			在构造函数中this就是刚刚创建的对象
+		4.在构造函数中利用对象的动态特性为对象添加成员。
+	5.异常处理
+		try{
+			console.log("业务逻辑");
+		}catch(e){
+			throw new Err("自己抛出异常");
+			throw new Math();
+		}finally{
+			console.log("一定会执行的");
+		}
+33.DOM
+	1.绘制dom树childNodes,attributes
+	2.从一个中心开始访问直系亲属
+		父元素：parentNode
+		上一个兄弟：previousSibling
+		下一个兄弟：nextSibling
+		第一个属性元素：attributes[0]
+		最后一个子元素：lastChild或childNodes[childNodes.length-1]
+34.DOM操作
+	核心内容就是利用增删改查
+	获取元素：
+	1.标准DOM的APi
+		document.getElementById
+		document.getElementsByTagName
+		document.getElementByName
+		document.getElementsByClassName
+		document.querySelectorAll
+	2.亲属访问：
+	3.属性获取
+		getAttributes
+		getAttributeNode
+	增加
+		1.创建
+			document.createElement 创建元素节点
+			document.createTextNode 创建文本节点
+			document.createAttribute 属性节点
+			innerHTML
+			innerText
+			cloneNode()
+		2.加入
+			appendChild 追加到结尾处
+			innerHTML
+			insertBefore 将元素插入到某个元素的前面，父元素.insertBefore(新元素,旧元素);新元素插入到旧元素的前面
+		3.其它方法
+			style的操作
+			setAttribute(属性名,属性值)
+			setAttributeNode(属性名)
+	删除
+		1.删除元素
+			removeChild
+			removeAttributeNode
+	修改
+		1.修改节点
+			删除节点再加入
+		2.修改样式
+			style.xxx = value;
+			setAttribute
+		3.修改文本
+			innerHTML
+			innerText
+			nodeValue
+		4.修改属性
+			.xxx=value
+			setAttribute
+35.常见的节点属性,元素节点，属性节点，文本节点
+	nodeValue
+		var tx = document.body.lastChild.nodeValue //获取
+		document.body.lastChild.nodeValue = '我是唯一的文本';//修改
+	nodeName
+		document.body.nodeName //BODY,所有获取的都是大写，除了所有的文本节点都是#text
+	获取属性节点,两种方法
+		document.body.getAttributeNode("test");
+		document.body.getAttributes[0];
+	nodeType
+36.属性操作
+	添加：
+	var div = document.querySelectorAll("#dv");
+		1.DOM core DOM核心
+			div.setAttribute("test",'测试');
+		2.HTML-DOM
+			div.className="c";
+		3.第三种(了解)纯DOM操作
+			var attr = document.createAttribute("test");
+			attr.nodeValue='测试';
+			div.setAttributeNode(attr);
+	删除
+		1.check.removeAttribute('checked');
+		2. var attr = check.getAttributeNode('checked');
+			check.removeAttributeNode(attr);
+		3.check.checked=false;//赋值删除
+			check.checked="checked";
+			check.checked="";//这两种都是先转换成boolean再赋值
+----------------------------------------------------------------------------
+1.原型prototype
+	使用构造函数创建的对象，函数中的方法会被创建多次（同样的逻辑，创建多次，占用内存）
+	每个对象创建出来后都会连接到一个神秘的对象上prototype,如果访问数据，当前对象中没有该数据就到构造函数的原型属性中去找。
+	由构造函数创建出来的众多对象共享一个对象，就是构造函数.prototype
+	原型能够存储方法，构造函数创建的对象，都可以访问原型中的方法。
+2.原型的概念
+	神秘对象相对于构造函数称为构造函数的"原型属性"，简称原型
+	神秘对象相对于构造函数创建出来的对象称为该对象的"原型对象"，简称原型
+	对象继承自其原型
+		构造函数创建的对象继承自构造函数的原型属性
+		构造函数创建的对象继承自该对象的原型对象
+		原型中的成员，可以直接被实例对象所使用
+3.js是基于原型继承的面向对象语言
+3.1继承
+	最简单的继承就是将别的对象的属性强加到我的身上，那么我就有这个成员了
+	利用原型也可以实现继承，不需要在我身上添加任何成员，只要原型有了，我就有了。
+4.如何使用原型
+	1.利用对象的动态特性
+		构造函数.prototype.xxx = value;
+	2.利用直接替换
+		Person.prototype = {
+			
+		}
+5.凡是字面量对应的都有构造函数
+	{} Object
+	[] Array
+	/./ RegExp
+	function Function
+6.访问原型对象(原型属性)
+	function Person(){}
+	1.使用构造函数
+		Person.prototype
+	2.使用对象访问
+		var p = new Person();
+		p.__proto__
+		即Person.prototype===p.__proto__
+	3.以前如何使用对象访问原型
+		p.constructor.prototype来访问
+	p.constructor等价于Person
+7.原型
+	1.原型对象中默认有一个属性constructor，构造器，表示原型与什么构造函数联系起来。
+8.逻辑或
+	Foo = Foo || Bar;
+	如果左边为真则整个表达式的值为左边的值，而不是boolean值
+	如果左边为假则值为右边的值  
+	//注意这里是直接取值而不是取真假
+	考虑浏览器的兼容性的时候会用到
+	div.onclick = function(e){
+		e = e || window.event;
+	};
+9.小细节
+	function Person(){
+	
+	}
+	1.在构造函数内部创建对象的时候
+		一般不使用new Person();使用 this.constructor
+	2.使用替换给原型赋值时一般要创建constructor属性，直接替换时不会自动创建constructor属性
+		Person.prototype={
+			constructor:Person;
+		}
+10.静态成员与实例成员
+	静态成员：由构造函数提供的
+	实例成员：由构造函数所创建的对象
+	一般工具型方法都由静态成员提供，与实例对象有关的方法由实例成员表示。
+11.构造函数原型实例三角形
+	见图
+12.原型与继承小结
+	1.什么是原型？
+	2.如何使用原型
+		利用点添加成员
+		直接替换添加成员
+	3. 什么是原型继承
+		实例对象是继承自原型对象的
+		一般开发方式：属性交给构造函数，方法交给原型
+	4.如何实现
+		混合继承方式：利用混入的办法给原型添加成员，那么实例对象就可以继承自指定的方法和属性
+		直接替换原型对象
+	5.实现
+		function myCollection(){}
+		myCollection.prototype=[];//[]相当于Array.prototype,即myCollection.prototype=Array.prototype;
+		//上述使用后者，如果再添加新的方法会污染系统对象，虽然使用后者效率较高(使用方括号，找属性的时候会先找括号，再找原型，使用后者会直接找原型，效率理论上会高一些。)
+		//能够不修改系统对象，千万别修改系统对象,故使用[]的形式
+		
+		var arr = new myCollection();
+		arr.push(1,2,3,4,5,6);
+		arr.pop(5);//shift unshift
+		var str = arr.join('=');
+		alert(str);
+		//这里的myCollection就相当于数组了，继承了数组
+		myCollection.prototype.sum=function(){}//使用后者，添加这个方法后会污染原生Array对象
+13.两个原则
+	1.属性搜索原则，构造函数中没有属性就到原型中找，如果原型中没有就到原型的原型中找，直到Object.prototype,如果还是没有属性就是undefined,方法就是not a function;
+	//TODO
+14.Object.create
+	Object.create(对象)-->新对象
+	功能：返回的新对象，原型就是参数中表示的对象
+	例：
+		var o = { sayHi:function(){console.log("Hi")}}
+		var o1 = Object.create(0);//创建一个o1对象，该对象的原型__proto__就是o
+	使用Object.create(0)创建的对象继承自o,这个是Ecma5出来的，如果浏览器不支持如何操作？
+	function myCreate(obj){
+		if(Object.create){
+			return Object.create(obj);
+		}else{
+			function F(){}
+			F.prototype=obj;
+			return new F();
+		}
+	}
+15.js对象就是键值对集合
+16.对象的原型链
+	凡是对象就有原型
+	原型也是对象
+	即，凡是给定一个对象，就可以找到原型，原型还有原型，如此下去，就构成一个对象的序列，称为原型链
+	问题
+		1.原型链到什么时候是个头
+		2.一个默认的原型链结构是什么样子的
+			凡是使用构造函数创建出来的对象，并且没有利用赋值的方式修改原型，就说该对象保留默认的原型链。
+			function Person(){}
+			var p = new Person();
+			默认的原型链：p-->Person.prototype-->Object.prototype-->null
+		3.原型链结构对已知语法的修正
+		{}-->Object.prototype-->null
+		[]-->Array.prototype-->Object.prototype-->null 
+17.什么是原型式继承
+	就是利用修改原型链结构来使得实例对象可以使用整条链中的所有成员	
+18.Function
+	1.函数是对象，就有
+	2.函数是对象，就有构造函数创建对象
+	3.函数是函数，可以创建其它对象
+	4.函数是唯一可以限定变量作用域的结果
+	要解决的问题：
+		1.Funnction如何使用
+		2.Function与函数的关系
+		3.函数的原型链结构
+	函数是Function的实例
+	语法：
+		new Function(arg0,arg1,arg2,...,argN,body);
+		1.这里面所有的参数都是字符串
+		2.该构造函数的作用是将参数链接起来组成函数
+			如果参数只有一个	，那么表示函数体
+			如果参数有多个，那么最后一个参数表示函数体，前面所有的参数表示函数的参数
+			如果没有参数，表示创建一个空函数
+		var fun = function(){ console.log("hehe")};
+		var foo = new Function("console.log("hehe");");
+		以上两种创建函数的功能一模一样
+		var sum = new Function("a","b","console.log(a+b);");
+	使用new Function创建函数如何解析太长看起来不爽的问题。
+		1.ECMA6出了反撇号可以在其中加入换行符
+		2.创建一个div设置display="none"，然后获取基中的内容，之后再将div删除（类似这样的操作都可以）
+19.arguments对象，是一个伪数组对象，它表示在函数调用的过程中传入的所有的参数的集合
+	1.js中并没有规定必须如何传参
+	2.定义函数时不写参数，一样可以调用时传递参数
+	3.定义的时候写了参数，调用的时候可以不传参
+	在代码设计的时候需要函数带有任意个参数的时候，一般不带任何参数，所有的参数使用arguments来获取
+	一般写成如下：
+		function foo(/* ... */){}
+20函数三角形结构
+	1.Object是Function的一个实例
+	2.Object作为对象是继承自Function.prototype的，Function.prototype继承自Object.prototype
+	3.Function是自己的构造函数
+	4.在js中任何对象的老祖宗是Object.prototype
+	5.在js中任何函数的老祖宗是Function.prototype
+21.万能的遍历(几乎同jq中的each方法)
+	var each = function(arr,fn){
+		for(var i=0;i<arr.length;i++){
+			if(fn.call(arr[i],i,arr[i] === false){
+				break;
+			}
+		}
+	}
+22.//TODO研究下call方法与apply方法,借用方法，还有字符串的slice方法
+23.能力判断(判断浏览器是否支持某方法)
+	1.在全局作用域中(最终都要变成沙箱)，提供一个support对象
+	2.里面提供的所有与方法名相同的属性，值均为boolean
+	3.在浏览器加载js的开始的时候，就进行能力判断，将与方法名相同属性作为真和假进行存储
+	4.那么凡是涉及到能力检查的时候就直接用support即可
+	var support = {};
+	support.getElementClassName = !!document.getElementsByClassName;
+	//再判断
+	if(support.getElementsByClassName){
+		return node.getElementsByClassName(className);
+	}else{
+		自己实现(className);
+	}
+	//以上只是判断了是否存在，如果加入混淆就检测不出来了 var document.getElementClassName = '123';
+	//jQuery中不仅判断了是滞存在，还测试了是否具备应有的功能(创建一个元素添加对象的属性，再获取看能不能获取到)
+24.自己实现一个getElementsByClassName   框架11
+25.头尾去空格的正则
+	str.replace(/^\s+|\s+$/g,'');

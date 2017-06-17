@@ -1,0 +1,74 @@
+1.show create table table_name;--mysql显示表结构
+2.show engines;--显示引擎
+3.如果只是查询可以不用打开事务，不会涉及到增删改
+4.对象的瞬时，持久，脱管（与session有关）
+5.实体类名和属性名与表中关键字冲突时，可以用table指定表名，或使用column指定字段名，或用反撇号
+6.query实现分页
+	query.setFirstResult(0);//从第几条开始取
+	query.setMaxResult(10);//取几条
+	查询总数：query.iterate("select count(*) from Person").next();
+	如果只根据id查询，可用session.get(Person.class,id);或session.load(..)..这样可以使用缓存，而用query则不能使用缓存
+7.Criteria同Query但不需要写hql语句（更加面向对象）
+	Criteria c = session.createCriteria(User.class);
+	c.add(Restrictions.eq("name",name));//Restrictions.lt  ...
+	c.list();//方法同query
+8.使用hibernate步骤
+	设计实体对象
+	设计dao接口
+	加入依赖包
+	写对象映射文件user.hbm.xml
+	写hibernate配置文件hibernate.cfg.xml
+	写hibernateUtils类（可选）
+	实现dao接口
+9.多对一，通过对象属性来体现
+	<many-to-one name="depart" column="depart_id" /> 默认depart_id为另一张表的主键，如果不是需要用property-ref="column_name"来指定
+10.一对多，通过set等集合来体现
+	<set name="emps">
+		<key column="depart_id"/>//这里的外键与多对一里面的需要对应
+		<one-to-many class="Employee">
+	</set>
+11.User user = (User)session.load(User.class,id);//使用懒加载，如果在session关闭后使用对象，需要初始化Hibernate.initialize(user);
+session关闭后再访问懒加载对象会报异常
+12.OpenSessionInView解决了懒加载问题跟事务边界控制问题，但是也引入了两个问题，事务跟session生存时间延长，数据库连接没有释放
+13.事务乐观锁，hibernate用version和timestamp通过添加版本号来体现，
+	定义版本号两种方式：
+	方式一(可以是其它类型)：<version name="ver_name" type="timestamp|integer"/>
+	方式二(只能是日期类型)：<timestamp name="ver_name" />
+	事务悲观锁由数据库来实现
+14.离线查询
+	创建，可能在controller中
+	DetachedCriteria dc = DetachedCriteria.forClass(Person.class);
+	dc.add(Restrictions.eq("name",name));
+	使用,可能在service中
+static List dc(DetachedCriteria dc){
+	Session session = HibernateUtil.getSession();
+	Criteria c = dc.getExecutableCriteria(session);
+	c.list();
+	。。。
+}
+15.n+1次查询
+之一：
+	使用Iterator，如果没有缓存会出现n+1(查询id)次查询
+	query.iterate();
+	先查询id，再从一级缓存查询，再从二级缓存查询，再去数据库查询
+之二：
+	懒加载
+	一条是用户需要的查询
+	n条是与上相关联的属性
+16.hibernate监听器
+	需要TxnLogListener实现SaveOrUpdateEventListener接口，DefaultSaveOrUpdateEventListener类
+	if(event.getObject() instanceof com.grgbanking.domain.TxnLog){...}
+	配置：
+	<event type="save>
+		<listener class="com.grgbanking.domain.TxnLogListener"/>
+		<listener class="org.hibernate.event.def.DefaultSaveOrUpdateEventListener"/>
+	</event>
+17.hibernate使用sql语句查询
+	Query query = session.createSQLQuery("select * from user").addEntity(User.class);
+	在配置中定义查询条件：放在class里跟class外调用是不一样的，在class内需要加上包名+类名+query名
+	<query name="getUserById">
+		<![CDATA[from User where id=:id]]
+	</query>
+	使用：
+	session.getNamedQuery("getUserById");
+	

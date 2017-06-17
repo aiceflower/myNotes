@@ -1,0 +1,27 @@
+﻿1.显示行号
+	1) Tools-->preferences-->UserInterface-->Editor-->Other-->Display line numbers
+	2) Tools-->preferences-->Window Types -->SQL Window-->Show getter
+2. 执行单条SQL语句(SQL Window中根据光标位置自动选择语句)
+	设置方法:PL/SQL Developer->tools->Preferences->Window types-->SQL Window->勾上"AutoSelect Statement" 
+3. 格式化SQL语句
+	  选中需要格式化的SQL语句,然后点击工具栏的PL/SQL beautifier按钮即可.
+4.关键字自动大写
+	Tools-->preferences-->User Interface -->Editor-->keyword case-->选择uppercase	
+5.copy to excel 查询语句右键 copy to excel
+6.pl/sql记住登陆密码
+	tools-->preferences->Oracle->logon history 在fixed Users中添加用户名/密码@数据库名  登陆的时候选择就可以了
+
+7. 快速关闭打开于Windows List中的文档窗口:按住Shift键,左键点击需要关闭的文档窗口.
+
+8. 快捷键定义的位置:
+	Tools->Preferences->User Interface->Key configuration
+9.Object Brower中自定义Object的顺序以及登录后默认自动选中My Objects 
+	  Tools菜单 -> Object Brower Filters,会打开Define Browser Filters界面,
+ 	  选中"My Objects",并勾选 "Default" 设为默认即可。
+  	  这里可以把经常用到的几个目录(比如:Tables Views Seq Functions Procedures)
+10.pl/SQL自动提示  首选项-->code Assistant
+	
+问题：
+	登录pl/sql的时候出现用户名密码不识别
+	解决方法：windows的话,命令提示符里面  set ORACLE_SID=orcl ；linux 的话 export ORACLE_SID=orcl
+

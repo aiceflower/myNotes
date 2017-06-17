@@ -1,0 +1,197 @@
+2.chkconfig NetworkManager off
+  /etc/init.d/NetworkManager stop
+  setup设置ip地址
+  service network restart
+  改：/etc/sysconfig/network-script/ifcfg-eth0 中onboot为yes
+6.	创建方便快捷实验 环境快照
+	vi /etc/selinux/config    selinux改为disabled
+	iptables -L -n 
+	iptables -F
+	service iptables save
+	再创建快照
+
+7.几个查看命令
+	cat
+	more
+	less
+	head -n 3 /etc/passwd --默认显示前10行
+	tail -n 3 /etc/passwd --默认显示后10行  -f 动态显示数据  常用来查看文件内容变化 tail -f /user/local/test.log
+11.vi的一些操作
+	dw 删除一个单词
+	yw 复制一个单词
+	D或d$ 删除到行尾
+	d^删除到行首
+	批量注释： ctrl + v 然后移动光标选行 再 输入大写I  # 再按esc
+	多行删除：同上选中按d
+	底行模式 X 加密   空格取消
+	q! 撤销所有操作，还没保存
+	替换：(底行模式)
+		:%s/this/that/
+		:%s/this/that/g
+		:%s/this/that/gc
+		:1,5s/this/that/gc
+	noh 取消高亮 或查询找不到的
+	:!ls 调用系统命令 或 :sh   用exit退出
+	vimtutor  命令练习
+	vi +N /etc/passwd
+	Ngg  如：10gg
+	打开多个文件：vi -O 文件1 文件2  切换 ctrl + ww
+	自定义：
+		在家目录创建 vim ~/.vimrc 文件添加以下内容
+			set nu 	--显示行号
+			set history=3 --历史命令个数
+			syntax off   --语法加亮
+	gedit a.txt & --后台运行gedit
+
+12.查询命令所在包
+	rpm -qf `which gedit` 
+	相当于
+	which gedit 得到 /usr/bin/gedit
+	rpm -qf /usr/bin/gedit
+13.设置语言
+	echo $LANG --查看语言
+	LANG=zh_CN.UTF-8 或 en_US.UTF-8 --修改语言
+
+14.linux-->windows 不换行
+	解决：
+		安装 unix2doc 或 doc2unix
+		rpm -ivh unix2....
+		转： unix2doc 文件名
+16.用户相关
+	创建用户：useradd 用户名 
+		-u 指定uid
+		-s 指定shell
+		-d 指定家目录
+	用户修改：
+		usermod [选项] 用户名
+		-u UID
+		-g GID
+		-d 家目录
+		-s shell
+	删除用户：userdel 用户名
+		userdel -r 用户名  --同时删除家目录，默认不删除家目录
+	一些文件：
+		/etc/default/useradd
+		/etc/login.defs
+	查看用户信息：
+		id   id root
+		who
+		whoami
+		w --查看有没有人登陆该系统
+		last --列出所有用户登陆信息	
+		lastb --查看登陆失败信息  /var/log/wtmp
+		lastlog --查看用户最近一次登陆 /var/log/lastlog
+		清空配置文件：
+			> /var/log/lastlog --隐藏登陆记录
+19.解决损坏的bash
+	cp /etc/skel/.bash* /home/用户名
+	
+20.忘记root密码
+	1.单用户进入
+		passwd 改密码
+		或去掉密码点位符
+	
+22.chattr
+	a 只能追加内容
+	i 不能修改
+	lsattr 文件名 --查看chattr
+	例：chattr +a test.txt
+23.安装rpm包的时候验证是不是红帽了的,导入key
+	rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-readhat-release
+	
+24.清空yum
+	yum clean all 
+25.加快ssh链接速度
+	vi /etc/ssh/sshd_config
+	关闭GSSAPIAuthentication no和UseDNS no
+	service sshd restart
+	ssh链接
+	ssh 用户名@ip 
+	ssh ip  --默认与当前用户相同
+	进程内存空间独享
+	线程内存空间共享
+26. 显示进程树：pstree  -- -p 显示进程号
+	ps -aux --查看所有进程 == ps -ef 
+	%MEM：内存
+	VSZ:虚拟内存
+	RSS:实际内存
+	TTY: 终端  --? 进程属于内核  
+	START:进程被运行的时间
+	TIME:进程使用cpu的时间
+	COMMAND:该程序运行的命令
+	SATA:Linux的5种状态
+		R:正在运行
+		S:sleep进程正在睡眠中，可以被杀了。
+		T:该进程目前暂停了，停止(进程收到SIGSTOP,SIGSTP,SIGTIN,SIGTOU 信号后停止运行)
+		D:不可中断状态，不可中断(收到信号不唤醒和不可运行，进程必须等待直到有中断发生)
+		Z:该程序应该已经中止，但是其父程序却无法正常终止它，造成zombie(僵尸)程序的状态
+		其它状态：
+			< 高优先级
+			N 低优先级
+			L 有内在分布但是带锁
+			s 包含子进程
+			l 多线程
+			+ 前台程序
+	ps  -aux |tee test.txt  --tee 把ps的结果 显示到屏幕并输出来文件
+	
+	dd if=/etc/passwd of=/a.txt bs=100M count=10 
+27.top查看系统信息
+	uptime查看一些时间和其它信息
+	cpu负载：任务队列的平均长度
+	NI(nice) -19 ~ 20 越小优先级越高
+	top快捷键
+	q 退出
+	s 更新刷新时间，默认为3s
+	h 获得帮助
+	<>翻屏
+	M 按内存排序
+	P按cpu排序
+	T按时间排序
+	1每个内核的cpu使用率
+	
+28.kill
+	控制（关闭）进程
+	kill 信号 进程id
+	信号：
+		1 HUP 重新加载配置文件
+		2 INT ctrl+c 通知前台进程终止
+		9 KILL 强行中断
+		15 正常结束
+		19 STOP ctrl + z 进程状态为T 
+	pkill httpd  --根据名称杀进程
+	killall httpd 同上 
+	
+29.进程优先级
+	nice -20 ~ 19  高 ~ 低 
+	调优先级：nice -5 
+	查看优先级：
+		1.ps -aux | grep aaa.txt 得到uid
+		2.top -p uid 
+	renice -5 pid(进程id)  进程启动后修改
+
+30.前后台切换
+	firefox & --后台运行
+	fg 1    --从后台调到前台  fg 序号
+	jobs 查看序号
+	screen 
+		安装 ： rpm -ivh /mnt/cdrom/Packages/screen-4.0.3-16.el6.x86_64.rpm
+		进入后台 ctra + a  再按d 
+		查看会话 screen -ls 
+		screen -r ID --恢复
+31.free查看内存
+	-m  以M来显示
+	free -m
+	结果：			  total       used       free     shared    buffers     cached
+		Mem:          2000         A          B           0        C           D 
+		-/+ buffers/cache:         X          Y
+	X=A-C-D 
+	Y=B+C+D
+buffer --缓存磁盘中的数据
+cache  --缓存的是往磁盘中写的内容
+
+32：ctrl+d 退出
+	ctrl+k 删除到行尾
+	ctrl+u 删除到行首
+	ctrl+z 暂停
+	ctrl+s 锁定
+	ctrl+q 解锁

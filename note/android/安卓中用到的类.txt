@@ -1,0 +1,233 @@
+------------------------------权限--------------------------------------------
+需要添加权限的地方：
+a.调用打电话android.permission.CALL_PHONE
+b.将数据保存到sd卡android.permission.WRITE_EXTERNAL_STORAGE
+c.联网权限：android.permission.INTERNET
+d.发短信权限:android.permission.SEND_SMS
+e.监听接收短信广播权限:android.permission.RECEIVE_SMS
+f.监听接听电话广播权限:android.permission.PROCESS_OUTGOING_CALLS
+g.监听接听电话服务权限:android.permission.READ_PHONE_STATE
+h.录音相关权限
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+ 	<uses-permission android:name="android.permission.RECORD_AUDIO" />
+i:监听重启服务广播权限:android.permission.RECEIVE_BOOT_COMPLETED
+--------------------------------控件------------------------------------------
+EditText
+CheckBox
+Button
+TextView
+ListView
+LinearLayout
+RelativeLayout
+ImageView
+ScrollView
+
+--------------------------------------------------------------------------
+1.OnClickListener 按钮点击事件需要的类
+常用：
+接口，实现其onClick方法，用于按钮点击事件
+2.EditText 输入框
+通过EditText et_user = (EditText)findViewById(R.id.et_user);方式获取
+还可以调协输入框内容：et_user.setText(content.get("userName"));
+TextView 信息提示框
+3.CheckBox 选择框
+获取：CheckBox cb_box = (CheckBox)findViewById(R.id.cb_box);
+判断是否勾选cb_box.isChecked()
+4.Button 按钮 
+获取：Button button = (Button)findViewById(R.id.btn_number);
+设置监听：需要传递一个OnClickListener接口的实现类 button.setOnClickListener(new CliskListener());
+5.Intent 意图类，用于一些意图如打电话，发短信
+创建意图：Intent intent = new Intent();
+设置一个打的动作： intent.setAction(Intent.ACTION_CALL);
+设置要拨打的数据：intent.setData(Uri.parse("tel:"+trim));
+开启意图：startActivity(intent);
+6.TextUtils	字符串工具类，用于判断字符串是否为空等操作
+判断字符串是否为空：TextUtils.isEmpty(userName);
+7.Toast 吐司类，用于输出提示信息，类似于alert弹框
+Toast.makeText(HelloWorldActivity.this, "用户名或密码不能为空", Toast.LENGTH_LONG).show();
+需要传递一个上下文，记住一定要show
+8.Context 上下文，用于获取一些信息，如项目路径，流等信息
+获取路径：String path = context.getFilesDir().getParent();
+获取流：FileOutputStream fos = context.openFileOutput("content.txt", 0);//这种方式不用再获取路径和流了,后面的模式可指定文件的权限，如MODE_APPEND
+9.Environment 环境相关类，用于获取环境相关信息
+获取sd卡路径：String path = Environment.getExternalStorageDirectory().getPath();
+然后再保存：new FileOutputStream(new File(path,"info.txt")).write(result.getBytes());
+u判断sd卡是否可用Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
+10.获取sd卡大小
+总大小：long total = Environment.getExternalStorageDirectory().getTotalSpace();
+可用空间：long usable = Environment.getExternalStorageDirectory().getUsableSpace();
+11.Formatter 用于转换数据格式
+把字节转换成合适单位：Formatter.formatFileSize(this,total);
+12.SharedPreferences用于访问和修改偏爱的数据(如保存用户名，密码)
+存：
+获取实例：SharedPreferences sp = context.getSharedPreferences(name,mode);name用于生成一个xml文件，mode模式
+获取sp的编辑器：Editor edit = sp.edit();
+保存数据:edit.put("name",name);
+提交：edit.commit();
+取：
+sp.getString("name",default);
+13.生成xml文件
+a.使用stringBuilder拼接
+b.使用XmlSerializer
+14.XmlSerializer 用于序列化xml
+获取类实例：XmlSerializer xs = XML.newSerializer();
+设置序列化器参数：xs.setOutput(fos,encoding);需要一个文件输出流
+写文档开头：xs.startDocument("utf-8",true);设置xml编码和是否是一个独立的xml文件
+写文档的结尾:xs.endDocument();
+写根结点头：xs.startTag(null,"tagName");命名空间，节点名
+写根结点尾: xs.endTag(null "tagName");不需要尖括号
+15.	XmlPullParser 用于解析xml
+获取实例：XmlPullParser xp = Xml.newPullParser();
+设置参数: xp.setInput(fis,encoding);
+获取事件类型:int type = xp.getEventType();int类型
+解析: while(type!=XmlPullParser.END_DOCUMENT)
+{
+switch(type)
+{
+case XmlPullParser.START_TAG:解析形如标签
+if..
+case XmlPullParser.END_TAG:解析结束标签
+if...
+}
+type=xp.next();//向下解析
+}
+获取属性:xp.getAttributeValue(0);0代表取出第一个属性值
+获取开始结束标签中间的值:xp.nextText();
+16.获取资产管理者,是一个流
+context.getAssets().open(文件名);
+17.	AndroidTextCase用于安卓单元测试
+写安卓单元测试需要三步：
+1.配置uses-library和instrumentation在清单文件中，也可以生成一个安卓测试工程，里面配置的有
+2.写一个类继承AndroidTextCase
+3.写测试方法
+18.SQLiteOpenHelper管理数据库和创建是一个抽象类
+创建一个有参的构造方法 super(context,"grg.db",null,1);上下文，数据库，cursor对象，版本从1开始
+并实现两个方法onCreate(SQLiteDatabase db);数据库第一次创建的时候调用，适合做表结构的初始化
+onUpgrade(SQLiteDatabase db ,int oldVersion,int newWersion);数据库版本升级的时候调用，适合做表结构的更新
+19.获取上下文getApplecationContext
+20.创建数据库18实现类的	getWritableDatabase();方法
+Cursor cursor = db.rawQuery(sql,null);游标对象，可获取行，列等信息
+查询用rawQuery其它的dml用execSQL
+21.改变dos编码 chcp 936改为GBK chcp 65001改为utf-8
+22.安卓增删改查
+ContentValues values = new ContentValues();
+values.put("column_name","value");
+db.insrert("table_name",null,values);values为一个ContentValues对象，返回插入新行的id
+db.delete(...);
+update(...);
+query(...);
+22.1.数据库事物
+db.beginTransaction();//开启事物
+try{
+	//逻辑
+	db.setTransactionSussessful();
+}finally{
+	db.endTransaction();
+}
+23.ListView 
+一个类要实现ListAdapter接口
+已经实现的类，BaseAdapter,ArrapAdapter等
+继承BaseAdapter,实现getCount();共有多少第数据需要展示 ，getView()作为ListView的条目展现
+24.ListView展现数据的原理
+m:model 数据(javaBean)
+v:view ListView
+c:adapter
+25.listView优化
+a)做convertView是否为空的判断，解决内在溢出的问题，如斜电梯
+b)将高height使用match_parent,防止多次校验
+26.打气桶 View.inflate()可以把一个xml转换成一个View对象
+view = View.inflate(getApplicationContext(), R.layout.item, null);
+27.获取打气桶的常见api
+a)view = View.inflate(getApplicationContext(), R.layout.item, null);
+b)view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.item, null);
+c)(LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE).inflate(R.layout.item, null);
+28.适配器，不管是什么适配器就是把数据展示到ListView
+BaseAdapter  基本适配器，需要继承并实现其中的方法
+arrayAdapter 数组适配器
+ArrayAdapter<String> aa = new ArrayAdapter<String>(this, R.layout.item2, R.id.textView1,obj);//obj为一个数组
+SimpleAdapter 简单适配器
+SimpleAdapter  adapter = new SimpleAdapter(getApplicationContext(), data, R.layout.simpleitem, new String[] {"name","phone"}, new int[]{R.id.tv_left,R.id.tv_right});
+29.控制台报连接错误
+开始－＞运行－＞cmd，进入到安卓的目录下android-sdk-windows\platform-tools，
+运行以下命令即可：adb devices
+-------------------------------------------------------
+30.httpurlconnection:用于发送或接收数据
+31.ByteArrayOutputStream内存输出流
+32.ScrollView滚动 只能有一个孩子(可以用布局来添加多个孩子)
+33.HttpURLConnection对象，用于发送或接收数据
+34.handler
+主线程中定义一个handler
+private Handler handler= new Handler(){
+	public void handlerMessage(Message msg){...}
+};
+次线程
+Message msg = new Message//Message msg = Message.obtain();//后者效率高
+msg.obj= str;源数据
+msg.what数据类型
+handler.sendMessage(msg);//发送消息
+消息一发送就会执行handler.handlerMessage();方法
+35.不能在子线程中更新UI,所以出现了handler，消息机制，Toast是一个View，所以也不能在子线程中使用
+36.Bitmap位图图像
+BitmapFactory可以将流转换成图像
+37.getCacheDir();缓存目录
+38.runOnUiThread(action);运行在ui线程，可以不再自己写handler，可以往里面传一个子线程
+39.定时器Timer
+TimerTask   java中的定时器
+等同与
+new Handler().postDelayed(new Runnable() {
+	public void run() {
+	}
+},5000);//这个是封装好的可以更新UI，用timer不可以更新，但可配合runOnUiThread使用
+runOnUiThread(new Runnable() {
+	public void run() {
+	}
+});
+补充：与进度条相关的都可以在子线程中更新UI，封装好了
+40.smartImageView可以把路径直接转换成图片，在布局中要写完整的包名
+41.安卓提交数据httpClient接口，子类DefaultHttpClient,HttpGet,HttpPost
+get请求
+DefaultHttpClient dhc = new DefaultHttpClient();
+HttpGet hg = new HttpGet(path);
+HttpResponse hr = dhc.execute(hg);
+post请求
+DefaultHttpClient dhc = new DefaultHttpClient();
+HttpPost hp = new HttpPost();
+List<NameValuePair> lists = new ArrayList<NameValuePair>();
+BasicNameValuePair username = new BasicNameValuePair("username",name);
+BasicNameValuePair password = new BasicNameValuePair("password",pwd);
+lists.add(username);
+lists.add(password);
+UrlEncodedFormEntity entity  = new UrlEncodedFormEntity(lists);
+hp.setEntity(entity);
+HttpResponse hr = dhc.execute(hp);
+42.开源项目提交请求asynchttpclient
+43.三种请求比较
+httpurlconnection 复杂用
+httpclient 了解没人用
+asynchhttpclient 简单用
+44.实现断点续传
+a)作用httpUrlConnection加RandomAccessFile
+b)使用开源项目xUtils
+45.ProgressBar安卓进度条
+46.从一个页面跳转到另一个页面
+a)(显式)Intent in = new Intent(this,DestinationActivity.class);目标页面，一个页面就是一个activity
+startActivity(in);//不需要返回数据
+startActivityForResult(in);//目标页面关闭时，会返回给调用者数据
+a1)Intent in = new Intent();
+in.setClassName("com.grgbanking.helloworld","com.grgbanking.helloworld.HelloWorldActivity");
+startActivity(in);
+注：创建一个Activiey就需要在清单文件中配置一下
+b)(隐式)Intent in = new Intent();
+in.setAction("com.grg.helloworld");//设置跳转动作
+in.addCategory("android.intent.category.DEFAULT");//设置category
+in.setData(Uri.pars("tel:"+110));
+in.setType("aa/bb");
+注：如果设置data与设置type要一起使用需要用下面的方法
+in.setDataAndType(data,type);
+startActivity();//开启
+47.任务栈
+打开一个Activity叫进栈，关闭一个Activity叫出栈
+我们操作的Activity永远是栈顶的Activity
+任务栈是用来维护用户操作体验的
+应用程序退出了任务栈就清空了
+一般情况一个应用程序对应一个任务栈

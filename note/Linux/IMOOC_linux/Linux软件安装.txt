@@ -1,0 +1,111 @@
+1.软件包分类
+	a)源码包  脚本安装也相当于源码包
+	b)二进制包 (RPM包、系统默认包)
+
+2.rpm命令安装
+	a.RPM包的来源  RPM包在系统光盘中
+		挂载光驱
+	b.RPM包命名原则
+		httpd-2.2.15-26.el6.x86_64.rpm
+		httpd软件包名
+		2.2.15软件版本
+		26软件发布的次数
+		el6.x86_64适合的linux平台
+		rpm rpm包扩展名
+	c.rpm包的依赖性
+		树形依赖：a-->b--c
+		环形依赖：a-->--b-->-->a
+		模块依赖：库文件依赖，查找www.rpmfind.net,这种依赖的是个文件，可以去
+			这个网站去找对应的rpm包
+	d.包名与包全名
+		包全名：操作的包是没有安装的软件包时使用包全名。
+		包名：操作已经安装的包时，使用包名，是搜索/var/lib/rpm/中的数据库
+rpm安装
+	rpm -ivh 包全名
+	-i (install) 安装
+	-v (verbose)显示详细信息
+	-h (hash) 显示进度
+	--nodeps 不检测依赖性
+	例 rpm -ivh httpd-2.2.15-26.el6.x86_64.rpm
+	升级：rpm -Uvh 包全名
+	卸载命令：rpm -e 包名 -- --nodeps不检测依赖性
+	
+rpm包查询
+	rpm -q 包名
+	-q  查询(query)
+	rpm -qa  --查询所有已经安装的rpm包
+	-a  所有(all)
+查询软件包详细信息
+	rpm -qi 包名
+	-i 查询软件信息 (information)
+	-p 查询未安装包信息(package)
+查询包中文件安装位置
+	rpm -ql 包名
+	-l 列表(list)
+	-p 查询未安装包信息(package)
+查询系统文件属于哪个rpm包
+	rpm -qf 系统文件名
+	-f 查询系统文件属于哪个软件包(file)
+查询软件包的依赖性
+	rpm -qR 包名
+	-R 查询软件包的依赖性(requires)
+	-p 查询未安装包信息(package)
+rpm包校验
+	rpm -V httpd 
+	验证内容中的8个信息
+	S 文件大小是否改变
+	M 文件的类型或文件的权限(rwx)是否被改变
+	5 文件MD5校验和是否改变
+	D 设备的主从代码是否改变
+	L 文件路径是否改变
+	U 文件的属主是否改变
+	G 文件的属组是否改变
+	T 文件的修改时间是否改变
+	文件类型
+	c 配置文件
+	d 普通文件
+	g “鬼文件” 
+	L 授权文件
+	r 描述文件
+	注：有修改则有提示，否则没有修改
+
+rpm包中文件提取
+	 rpm2cpio 包全名 | cpio -idv .文件绝对路径
+	 cpio格式：cpio [选项] <[文件][设备]
+	 -i copy-in 模式，还原
+	 -d 还原时自动新建目录
+	 -v 显示还原过程
+	 应用，如果ls命令文件被误删除
+	 rpm2cpio /mnt/cdrom/Packages/coreutils-8.4-19.el6.x86_64.rpm | cpio -idv ./bin/ls
+	 然后 cp /root/bin/ls /bin
+	 模拟重要系统文件丢失后怎么处理
+
+src.rpm安装
+	rpmbuild --rebuild lrzsz-...(包全名)
+	 
+yum在线安装
+
+yum命令
+yum list --查询所有可用软件包列表
+yum search 关键字  --
+查询
+	yum provides /bin/ls 
+安装
+	yum -y install 包名
+	install 安装
+	-y  自动回答yes
+	如：yum -y install gcc
+升级 
+	yum -y update httpd
+卸载
+	yum -y remove 包名
+
+yum软件组管理命令
+ yum grouplist  --列出所有可用的软件组列表
+ yum groupinstall 软件组名 --安装指定软件组,一组可以用单引号括起来
+ yum groupremove 软件组名 --卸载指定软件组
+ 
+ 源码包安装
+	下载源码包，安装gcc
+ apache rmp 安装的访问位置 /var/www/html
+ apache 源码包的访问位置  /usr/local/apache2/htdocs/index.html

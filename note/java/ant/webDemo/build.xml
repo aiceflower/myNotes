@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="GBK"?>
+<project name="antQs" basedir="." default="">
+	<property name="src" value="src"/>
+	<property name="classes" value="WEB-INFO/classes"/>
+	<property name="dest" value="dest"/>
+	<path id="classpath">
+		<pathelement path="${classes}"/>
+	</path>
+	<target name="help" description="打印帮助信息">
+		<echo>help - 打印帮助信息</echo>
+		<echo>compile - 编译java源文件</echo>
+		<echo>run -运行程序</echo>
+		<echo>build -打包jar包</echo>
+		<echo>clean - 清除所有编译生成的文件</echo>
+	</target>
+	<target name="compile" description="编译java源文件">
+		<delete dir="${classes}"/>
+		<mkdir dir="${classes}"/>
+		<javac destdir="${classes}" debug="true" includeantruntime="yes"
+			deprecation="false" optimize="false" failonerror="true">
+			<src path="${src}"/>
+			<classpath refid="classpath"/>
+		</javac>
+	</target>
+	<target name="run" description="运行程序" depends="compile">
+		<java classname="com.grgbanking.hello.HelloWorld" fork="yes" failonerror="true">
+			<classpath refid="classpath"/>
+			<arg line="测试参数1 测试参数2"/>
+		</java>
+	</target>
+	<target name="build" description="打包jar文件" depends="compile">
+		<delete dir="${dest}"/>
+		<mkdir dir="${dest}"/>
+		<jar destfile="${dest}/app.jar" basedir="${classes}"
+		includes="**/*.class">
+			<manifest>
+				<attribute name="Main-Class" value="HelloWorld" />
+			</manifest>
+		</jar>
+	</target>
+	<target name="clean" description="清除所有编译生成的文件">
+		<delete dir="${classes}"/>
+		<delete dir="${dest}"/>
+	</target>
+</project>

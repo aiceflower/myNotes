@@ -1,0 +1,48 @@
+各种注释：
+	java: //, /* */ ,/** */
+	xml: <![CDATA[文本]]> <!-- 文本－－!>
+
+函数对象
+	js中函数是一个对象！
+	函数名是引用这个函数对象的一个变量
+	函数名可以访问对象
+	函数名()调用方法
+	Array.sort(函数名)
+	返回值:
+		用return返回值
+		没有return返回未定义
+	参数:
+		js没有重载！
+		函数参数是动态的！
+		用arguments对象，自动接收所有参数。
+	
+	可以使用匿名函数作为参数使用
+	sort方法
+	sort(函数名)
+	sort(匿名函数)
+	ary.sort(functioin(a,b){
+		//return a-b;对数值排序
+		return a.age - b.age;//对年龄排序
+	})
+	
+	var str= "var a=5;"+
+				  "var b=6;"+
+				  "function add(x,y){return x+y;}"
+	eval(str);
+	动态的加载js(执行)js／表达式，使用eval函数！
+	静态加载js 使用script　标签
+	
+	如何用javascript检查当前操作系统和浏览器的版本信息
+	答：使用userＡgentntnt !
+	
+	如何用javascript跳转到一个界面，有location的href属性
+	
+	事件冒泡，元素间存在嵌套时，事件是从里往外依次执行的
+	Exception:由于网络故障、文件损坏］设备错误、用户输入非法等情况导致的异常；
+	Error表示Java运行时环境出现的错误，如jvm内存资源耗尽等。
+	
+	finalize该方法是在Object中定义的方法，当该类的对象不被任何引用变量指向时，会被GC回收，在回收前该方法会被调用
+	什么时候抛出异常：
+		满足语法要求，但是不符合业务逻辑要求
+		当前代码遇到异常，但是不负责解决，而是应当将异常反馈给调用者。
+	

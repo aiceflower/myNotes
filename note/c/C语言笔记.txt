@@ -1,0 +1,249 @@
+0.头文件与库函数
+	stdio.h:
+		printf//打印数据 
+	stdlib.h
+		system//调用系统命令
+		rand//生成随机整数
+1.solaris操作系统
+2.一些含义
+	include:告诉编译器包含一个头文件，C语言中调用库函数都要包含头文件
+	main:C语言中的主函数，一个C语言程序必须有且只有一个主函数。
+	注释: //(c++) /* */(标准C语言注释)
+	C语言区分大小写
+	return用于终止程序，C语言中return后可以根语句，但不执行
+3.printf，向标准输出设备输出字符串
+	%d,整数，有符号的十进制
+	%hd,短整数
+	%hu,无符号的短整数
+	%o,无符号的八进制
+	%x,无符号的16进制
+	%X,输出16进制大写
+	%u,无符号十进制(最高位不是符号[0正数，1负数])
+	%d,数字，数字前加0，代表八进制，加0x代表十六进制
+	%p,输出地址 printf("%p",&a);
+	%c,输出一个字符
+	%f,输出一个float或double
+	%lf,输出一个long double
+	%e,%E科学计数法表示
+	%s,%S,字符串
+	%%,输出一个%
+	l,附加在d,u,o,x表示长整数
+	-,左对齐，默认为右对齐printf("%6d",2);
+	m,代表一个整数，数据最小宽度
+	0,前面补0，与-不能同用，pringf("%06",2);
+	N,宽度至少为N位，不够以空格补
+3.0putchar,scanf,getchar
+	putchar(48);//打印一个字符
+	scanf("%d",&a);//一定要用&取变量的地址，scanf会报错，用如下方式解决
+		1.#define _CRT_SECURE_NO_WARNINGS
+		2.#pragma warning(disable:4996)
+	getchar等到用户键盘输入的按键，只能得到一个字符，char a = 0; a = getchar()
+4.system:执行操作系统的命令或运行指定的程序，需要stdlib.h库函数
+5.系统命令
+	systeminfo:查看系统信息
+	msinfo32:系统信息
+	msra:远程协助
+	ncpa.cpl:网络连接
+	narrator:讲述人
+	nslookup:IP地址侦测器
+	odbcad32:odbc数据库管理器
+	netplwiz:高级用户控制面板
+	optionalfeatures:打开或关闭windows功能
+	cleanmgr:磁盘清理工具
+	compmgmt:计算机管理 
+	devmgmt:设备管理器 
+	desk.cpl屏幕分辨率
+	dfrgui:磁盘碎片整理程序
+	diskmgmt.msc:磁盘管理 
+	firewall.cpl:Windows防火墙
+	wf.msc：高级安全Windows防火墙(可设置入站出站规则)
+	inetcpl.cpl:Internet属性
+	intl.cpl:区域和语言(可更改输入法)
+	lusrmgr.msc:本地用户和组 
+	fsmgmt:共享文件夹管理器(也可使用命令net share查看已经共享的文件)
+	main.cpl:鼠标属性
+	mmsys.cpl:声音
+	osk:打开软键盘
+	Recdisc:创建系统修复光盘
+	powercfg.cpl:电源选项 
+	services.msc:打开本地服务
+	slui:Windows激活，查看系统激活信息
+	snippingtool:截图工具
+	soundrecorder：录音机
+	sysdm.cpl:系统属性 
+	syskey：系统加密
+	taskmgr：任务管理器
+	timedate.cpl：日期和时间 
+	UserAccountControlSettings用户账户控制设置(更改计算机通知)
+	utilman:轻松访问中心
+	wuapp：Windows更新
+	write：写字板
+	-----------------------------------
+	dir 列出文件目录 -s 列出子目录
+	md 创建目录
+	rd 删除目录
+	net user 查看有哪些用户
+	net user pillow 查看pillow帐户的属性
+	net localgroup administrators pillow /add 把pillow添加到管理员用户组
+	net start 查看开启了哪些服务
+	net start | find "Server"
+	net start/stop telnet 开启/停止telnet服务
+	netstat -an 查看端口的网络连接情况 | find "8080"
+	“DEL/A-S *.*”表示删除当前目录下除系统文件以外的所有文件（只是删除文件）
+	rmdir /s /Q 目录 /S删除目录及目录下的所有子目录和文件。
+	rd /s /q webDemo 删除目录及子目录
+	findstr "Hello" aa.txt 在aa.txt文件中寻找字符串hello
+	find 文件名 查找某文件
+　　title 标题名字 更改CMD窗口标题名字
+　　color 颜色值 设置cmd控制台前景和背景颜色；
+	0=黑、1=蓝、2=绿、3=浅绿、4=红、5=紫、6=黄、7=白、8=灰、9=淡蓝、A=淡绿、B=淡浅绿、C=淡红、D=淡紫、E=淡黄、F=亮白
+	regedit /s 注册表文件名 导入注册表；参数/S指安静模式导入，无任何提示；
+　　regedit /e 注册表文件名 导出注册表
+6.C语言返回值在windows与unix的不同
+	主函数return 0代表成功，return -1代表失败
+	linux中得到的数字除以16进制的100(0x100)才能得到前一个函数的返回值
+	在windows中可以直接得到前一个函数的返回值
+7.gcc参数
+	-o 指定生成的文件名，在windows下不指定生成.exe文件，在linux下不指定生成.out文件
+	-E 预编译 gcc -E -o a.e a.c
+	-S 转换成汇编语言 gcc -E -o c1.c c.c    gcc -S -o c.s c1.c
+		visual studio 将C转换成汇编：f9设置断点，f5调试，右键转汇编
+	-c 将代码编译成二进制的机器语言 gcc -c -o c.o c.c 
+	gcc -o c c.o 生成c可执行文件
+8.C语言的编译过程
+	预编译(.c)-->编译()-->连接(可执行文件)
+	预编译:把include包含的库文件替换到c文件中，同时将代码中的注释去掉
+9.<> 与""
+	<>:让C语言编译器去系统目录下寻找相关头文件
+	"":去用户当前目录下找相关头文件
+10.汇编转换
+	a = 1;
+	b = 2;
+	c = a+b;
+	__asm{ //嵌套汇编语言
+		mov a ,1
+		mov b ,2
+		mov eax ,a
+		add eax ,b
+		mov c ,eax
+	}
+11.使用system("notepad");会弹出黑框
+	#include <Windows.h>
+	WinExec("notepad",SW_NORMAL);//解决弹黑框问题
+12.RISC与CISC CPU架构
+	RISC精简指令集
+	CISC复杂指定集，一般讲x86架构的CPU都是复杂指定集，AMD,intel就是x86的，linux就是基于x86的操作系统
+13.计算机(运算器，控制器，寄存器)
+	cpu寄存器的位数，决定了cpu的位数。
+	8位:a
+	16位:al ah ax
+	32位:eax
+	64位:reax
+	cpu与操作系统的关系：64位的cpu可以装32位的系统，但32位的cpu装64位的系统就会出问题
+		32位的系统，是在32位的环境下编译的，64位的系统是在64位的环境下编译的
+14.常量
+	#define MAX 10 //定义一个常量，常量值不能修改，宏常量(在方法外)
+	const int a = 20;//定义了一个const常量(在方法中)
+	常量在定义的时候必须给一个初值
+	两种区别:
+	//TODO
+15.进制
+	printf("%d",010);//前面加0代表八进制，不加代表十进制
+	printf("%d",0x10);//前面加0x代表十六进制，或printf("%x",10);
+	C语言无法表达2进制
+16.sizeof求指定数据类型在内存中的大小，单位字节
+	sizeof(10); //4
+17.数据类型
+	short:短整形,2个字节
+	int:整形,4个字节(不论是什么系统都是4字节)
+	long:长整形，32位系统下4个字节，64位系统windows下4个字节，linux下8个字节
+	long long:8个字节
+	unsigned int/short/long/long long:无符号整数(都是正数)
+	char:一个字节
+	float:32位系统下是4个字节
+	double:32位系统下是8个字节
+	long double:
+18.把short赋值给int
+	short i = 2; int i1 = i;//无影响
+	short i = -2; int i1 = i;//保留符号位，剩下的用1补
+	0000 0000 0000 0010 //i  short
+	0000 0000 0000 0000 0000 0000 0000 0010 //i1  int
+	1111 1111 1111 1101 //i short
+	1111 1111 1111 1111 1111 1111 1111 1101 //i1 int
+	求以下的结果：
+	unsigned short a = 0;
+	a = a -1;
+	printf("%d\n",a);
+19.大端对齐与小端对齐
+	对于arm,intel这种x86构架的复杂指令，整数在内存中是倒者存放的，低地址放低位，高地址放高位。小端对齐。
+	但对于unix服务器的cpu更多是采用大端对齐的方式存放整数
+20.char
+	char c ;
+	c = 4;//整数4，4
+	c = '4';//字符4，52
+	不可打印的转义字符:
+	\a报警
+	\d退格
+	\n换行
+	\r回车
+	\t制表符
+	补码的符号位不动，其他位求反，最后整个数+1，得到原码
+21.volatile代表变量是可以被cpu指令之外的地方改变的,编译器就不会针对这个变量去优化代码。
+	int i = 0;
+	i = i+5;
+	i = i+10;
+	i = i + 30;
+	以上代码cpu会这样执行
+	int i = 0;
+	//i = i+5;
+	//i = i + 10;
+	//i = i + 30;
+	i = i + 45;
+	如果使用如下，cpu就不会优化，可在过程中改变i的值
+	volatile int i = 0;
+22.register，建议指令，而不是命令形的指令。
+	regedit int i = 0;//代表i在cpu寄存器中，而不是内存中
+23.字符串
+	字符串是内存中一段连续的char空间，以'\0'结尾
+24.运算符
+	左值:表示可以被更改的数据对象
+	右值:能赋给左值的量
+	常量只能做右值，因为常量不能被改变
+	逗号运算符：
+		逗号表达式先求逗号左边的值，然后求右边的值，整个表达式是逗号右边的值
+		int a = 2;int b = 3;int c = 4;int d = 5;
+		int i = (a= b ,c+d);//i = 9
+25.优先级
+	< > <= >=这四种相同，== != 这两种相同，但前四种大于后两种，且大于赋值
+26.goto语句
+	无条件地跳转到标号去执行。
+	int main(){
+		goto end;
+		printf("aaa");
+		end:
+		printf("bbb");
+		return 0;
+	}//aaa不会被打印出来
+27.设置桌面背景图片
+	SystemParametersInfoA(20,0,"D:\\temp\\1.jpg",3);//20代表设置系统桌面背景，3代表立即执行
+	sprintf(str,"D:\\temp\\%d.jpg",i);//格式化一个字符串
+	ShellExecuteA(NULL,"open","D:\\tmep\\a.mp3",0,0,SW_HIDE);
+28.字符串数组
+	char arr[100]={'a','b','c','d'};
+	char arr[100]="abcd";
+	char arr[]="abcd";//想下sizeof(arr)的值是几，5最后有一个0
+	char arr[100] = {0};
+	字符串与字符数组是一模一样的
+	C语言的编译器不会检查数组的下标是否有效果。
+	字符串一定是在内存中以0结尾的一个char数组。
+	char arr[5] = {0};
+	arr[0]='a';
+	arr[1]='b';
+	arr[2]='c';
+	arr[3]='d';
+	//arr[4]='e';//有和没有这句话，下面的打印结果不一样，如果赋值了那么字符串最后一个就不是0了。 
+	printf("%s",arr);
+	如果将一个字符串当作char处理，那么标准的ASCII字符是一个正数，汉字的第一个字节一定是负数。
+	while(arr[len++]);len--;//计算字符数组的长度
+	while(arr[len++]==' ');len--;//计算字符数组前面有几个空格
+	//注意，以上两个小技巧只针对字符数组，因为一个字符占一个字节。

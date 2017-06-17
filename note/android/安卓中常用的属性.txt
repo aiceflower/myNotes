@@ -1,0 +1,36 @@
+安卓中常用的属性：
+	android:layout_alignParentRight="true" 相对于父布局位置
+	android:password="true" 密码框
+	android:ellipsize="end" 当字符超过EditText的长度时，尾部显示省略号
+	android:layout_alignParentRight="true" 相对于父容器右侧对齐
+	android:layout_alignBottom="@id/news_image_iv" 同某一元素底部齐平
+	android:maxLines="2" 设置文本显示最大行数
+
+已用开源项目
+1.SmartImageView,用于展示图片资源，可直接多远程服务器上取
+2.asyncHttpClient,连接网络获取资源
+3.断点续传下载xUtils
+4.vitamio
+ffmpeg google	
+
+
+
+
+广播接收者：
+获取数据，设置数据
+	String number = getResultData();
+	setResultData("17951"+number);
+获取广播的事件类型
+	String action = intent.getAction();	
+	
+manager:
+SmsManager发送短信
+TelephonyManager电话管理者
+WindowManager窗口管理者
+fragmentManager fragment管理者
+notifactionManager通知管理者
+
+优化布局
+include
+merge
+viewStub

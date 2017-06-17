@@ -1,0 +1,66 @@
+数据字典：
+user_sys_privs系统权限
+user_tab_privs表权限
+user_col_privs控制到列的权限
+1.启动监听
+lsnrctl star 监听名(可省略)
+2.启动实例
+oradim -starup -sid orcl(实例名)
+3.授予权限
+grant create session to user;
+grant create table to user;
+grant unlimited tablespace to user;
+grant create session to public;授权给所有用户
+4.撤销权限
+revoke create table from user;
+5.查看用户权限
+select * from user_sys_privs;
+6.授予其他用户访问表的权限(表的拥有者可以授权)
+grant select(insert，drop,all,update) on mytab to lisi;
+revoke all on mytab from lisi;
+7.授权某一列
+grant update(name) on mytab to lisi;只能更新name字段
+update wangwu.mytab set name='lihuang' where id=1;
+关于控制到列只有插入和更新可以，查询和删除不可以，只能控制到行
+8.设置行宽
+set linesize 400;
+9.权限传递
+grant alter any table to lisi with admin option;这样李四可以授任何权限给其它用户
+grant select On mytab  to lisi with grant option;这样李四可以授查询权限给其它用户。
+
+--------------------------
+授予权限太麻烦用角色
+create role myrole;
+drop role myrole;
+grant myrole to lisi;
+有一些太大的权限如unlimited tablespace权限不能授予给角色
+
+create table 可以给自己创建表
+create any table  可以给任何用户创建表
+alter any table [alter table 没有] 
+drop any table [drop table 没有这个权限，能创建就能修改和删除]
+
+密码验证：操作系统验证，密码文件验证，数据库验证
+密码忘记：
+普通用户
+alter user scott identified by tiger
+sys用户
+1.删除密码文件，再生成密码文件
+在这个文件下删除：D:\oracle\produce\10.2.0\db_2\database\
+生成：orapwd file-D:\oracle\produce\10.2.0\db_2\database\PWDorcl.ora password=123456 entries=10
+
+linux下启动
+lsnrctl start 
+sqlplus /nolog
+conn  sys/oracle as sysdba
+startup
+windows下启动
+lsnrctl start
+oradim -starup -sid orcl 
+
+解锁
+alter user 用户名 account unlock[lock]
+用户口令即刻失效
+alter user 用户名 password expire
+删除用户
+drop user 用户名 [cascade]

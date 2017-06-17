@@ -1,0 +1,51 @@
+注：以下内容为Oracle数据库中的操作或PL/SQL操作
+
+-----oracle中-----------------------------------------------------------------
+1.查询oracle数据库中所有用户
+	select * from all_users;
+	查询当前登陆用户 show user;
+2.创建用户
+CREATE USER USER_NAME IDENTIFIED BY "PASSWORD";
+3.给用户受权
+GRANT create session TO USER_NAME;
+GRANT UNLIMITED   TABLESPACE   to USER_NAME;
+GRANT dba to USER_NAME;
+3.查看数据库是否启动
+select open_mode from v$database;
+-----PL/SQL中-----------------------------------------------------------------
+1.查看程序包
+	desc dbms_output;
+
+2. 判断与赋值
+	= 表示判断 := 表示赋值
+3.登陆用户
+sqlplus 用户名/密码@ip:端口/数据库名
+sqlplus  feelview/feelview@30.16.4.196:1521/feelview
+
+4.设置格式
+	a)更改显示名 column可简写为col
+		column col_name HEADING new_name;
+	b)设置结果显示格式
+		col username format a10;
+		字符型 a后面加长度
+		数值型格式  9代表一位 9999.9 一位小数 $9999.9 加美元符号
+	c)清除格式 col 字段名 clear; 如： col username clear;
+5.case...when语句
+	用法1：
+		case col_name 
+		when value1 then result1,
+		when value2 then result2,
+		...
+		[else result]
+		end;
+	用法1例：
+		select username , case username when 'aaa' then '计算机部门' when 'bbb' then '市场部门' else '其它部门' end as '部门' from emp; 
+	用法2：
+		case
+		when col_name = value
+		then result1,...[else] end;
+	用法2例：
+		select username , case  when username='aaa' then '计算机部门' when username='bbb' then '市场部门' else '其它部门' end as 部门  from emp; 
+6.decode函数
+	decode(column_name,value1,result1,...，defaultvalue);
+	例：select username,decode(username,'aaa','计算机部门','bbb','市场部门','其它部门') as 部门 from emp;

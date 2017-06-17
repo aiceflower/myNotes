@@ -1,0 +1,197 @@
+1.jQuery
+	(1)特点
+		利用选择器查找要操作的节点,然后将这些节点封装成一个jQuery对象.通过调用jQuery对象的方法或者属性来实现对底层被封装的节点的操作.
+		这样做的好处:
+			a.兼容性更好
+			b.代码更简单
+	(2)编程步骤(hello.html)
+		step1,利用选择器查找节点.
+		step2,调用jQuery对象的属性和方法.
+	(2)jQuery对象与dom对象之间的转换
+		1)dom 对象-->jQuery对象
+			$(dom对象)
+		2)jQuery对象-->dom对象
+			$obj.get(0)
+			$obj.get()[0]
+2.选择器
+	1)基本选择器(s1.html)
+		a) #id
+		b) .class
+		c) element
+		d) selector1,selector2...
+		e) *
+	2)层次选择器(s2.html)
+		a) selector1 selector2 后代(满足selector2)
+		b) selector1>selector2	只考虑子节点
+		c) selector1+selector2	下一个兄弟
+		d) selector1~selector2	下面所有兄弟
+	3)过滤选择器
+		a) 基本过滤(s3.html)
+			:first
+			:last
+			:even
+			:odd
+			:eq(index)
+			:lt(index)
+			:gt(index)
+			:not(selector)
+		b) 内容过滤(s4.html)
+			:contains(text)包含了指定文本
+			:empty　没有文本,也没有子节点
+			:parent　有文本或才有子节点
+			:has(selector)有符合这个选择器要求的后代的元素.
+		c)	可见性过滤(s5.html)
+			:visible 可见的元素
+			:hidden　隐藏的元素
+		d) 属性过滤(s6.html)
+			[attribute]
+			[attribute=value]
+			[attribute!=value]
+		e) 子元素过滤(s7.html)
+			:nth-child(index/even/odd)
+			注:下标从１开始的
+		f) 表单属性过滤(s8.html)
+			:enabled 可用
+			:disabled	禁用
+			:checked
+			:selected
+	4)表单选择器
+		:input
+		:text $(':text')
+		:password
+		:button
+		:submit
+		:reset
+		:image
+		:checked
+		:file
+		:hidden
+3.dom操作
+	(1)读取或者修改节点的html,文本,属性和value. dom/d1.html
+		a)html()
+		b)text()
+		c)attr()
+		d)val()
+	(2)创建
+		$(html)
+	(3)添加
+		1)append()作为最后一个孩子添加进来
+		2)prepend()作为第一个孩子添加进来
+		3)after()作为下一个兄弟添加进来
+		4)before()作为上一个兄弟添加进来
+	(4)删除
+		1)remove()
+		2)empty()
+	(5)将javascript和html分离
+		$(fn);
+		注:fn可以是一个函数名或者是一个匿名函数,比如
+			$(function(){
+			
+			});
+		等价于:
+			window.onload=function(){
+			};
+			即当整个页面加载完成,会执行该函数
+	(6)拷贝　(d6.html)
+		clone() 复制
+		clone(true)复制(同时复制事件处理代码)
+	(7)样式 (d7.html)
+		1)css()直接设置样式
+		2)addClass()和removeClass()追加和删除样式　要求参数是类选择器
+		3)hasClass()判断没有这个样式
+		4)toggleClass()样式的切换
+		5)attr()
+	(8)遍历
+	1)children()/children(selector) 子节点
+	2)siblings()/siblings(selector) 其它兄弟节点
+	3)parent() 父节点
+	4)next() /next(selector)下一个兄弟
+	5prev()	/prev(selector)上一个兄弟
+	6)find(selector)查找后代
+1.事件处理
+	(1)如何绑定事件处理代码
+		1)正式写法(e1.html)
+			$obj.bind(事件类型,事件处理函数);
+			比如:
+				$obj.bind('click',fn);
+		2)简写形式
+			比如
+				$obj.click(fn);
+	(2)如何获得事件对象(e2.html)
+		$obj.click(f1);
+		function f1(e){
+			e就是事件对象
+		}
+		注:
+			jQuery会对底层的事件对象作一个封装,这样兼容性更好
+	(3)事件对象的作用
+		1)找到事件源
+	(4)事件冒泡
+		子节点产生的事件会依次抛给相应的父节点.
+	(5)合成事件
+		1)hover(f1,f2):模拟鼠标停,其中f1处理mouseenter事件
+			f2处理mouseleave事件
+		2)toggle(f1,f2,f3...)模拟连续单击
+			其中f1处理第一次点击
+			其中f2处理第一次点击
+			其中f3处理第一次点击依此类推
+	(6)模拟事件
+		1)正式写法
+			$obj.trigger(事件类型);
+			比如
+				$obj.trigger('focus');
+		2)简写形式
+			$obj.focus();
+2.动画
+	(1)show()和hide()
+		1)作用
+			通过同时改变元素的宽度和高度来实现显示和隐藏
+		2)用法
+			$obj.show/$obj.hide(速度,[回调函数]);
+				注:
+					速度:可以用毫秒,也可以用
+					slow ,normal,fast.
+					回调函数:当动画完成之后,会执行回调函数.
+	(2)slideDown()和shideUp()
+		１)作用
+			通过改变元素的高度来实现显示和隐藏
+		２)用法
+			同上
+	(3)fadeIn()和fadeOut()
+		1)作用
+			通过改变元素的不透明度(opacity)来实现显示和隐藏.
+		2)用法
+			同上.
+	(4)animate()
+		1)作用:自定义动画
+		2)用法
+			$obj.animate({},执行时间,[回调函数])
+			注:
+				{}:是一个对象,描述了动画执行之后元素的样式.
+				执行时间:只能用毫秒数.
+3.类数组的操作
+	注:jQuery对象包含的那些节点.
+	(1)属性　length
+		返回jQuery对象包含的节点的个数
+	(2)方法
+		1)each(fn):遍历节点,其中fn是一个函数,用来处理被遍历的节点
+		2)eq(index):获取下标等于index的节点,然后再将这个节点封装成一个jQuery对象
+		3)get(index):获取下标等于index的节点.
+		4)index(obj/$obj):获得节点的下标.
+		5)get():返回一个由这些节点组成的数组.
+
+4.对ajax的支持
+	(1)load() order.jsp
+		1)作用:异步地向服务器发送请求,然后将服务器返回的数据直接添加到符合要求的节点之上.
+		2)用法
+			$obj.load(请求地址,[请求参数])
+			请求参数有两种格式:
+			第一种:请求字符串,比如
+				"username=sally&age=22"
+			第二种:对象,比如
+				{"username":"sally","age":22}
+		注:
+			如果有请求参数,并且请求参数采用第二种方式来发送,则load方法会发送post请求.
+	(2)$.get()和$.post()
+		１)
+	(3)$.ajax()

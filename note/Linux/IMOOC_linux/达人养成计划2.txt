@@ -1,0 +1,89 @@
+达人养成计划2
+1.vim
+vim相对于vi的提升:
+vim支持多级撤销
+vim可以跨平台运行
+vim支持语法高亮
+vim支持图形界面
+
+2.vi命令的模式
+命令模式
+插入模式
+底行模式
+多个文件切换：低行模式 :n :N :prev
+:ls 列出打开的所有文件
+/xxx向前搜索
+?xxx向后搜索	
+
+3.磁盘管理
+df 查看磁盘分区使用情况
+-l 仅显示本地磁盘，默认
+-a 显示所有文件系统使用情况
+-h 以1024为单位合适显示
+-H 以1000为单位合适显示
+-T 显示磁盘分区类型
+-t 显示手指定类型文件系统的磁盘分区	
+-x 不显示指定类型文件系统的磁盘分区
+应用：df -lhT -t ext4
+
+du统计磁盘上的文件大小
+-b 以byte为单位统计文件
+-k，-m,-h(1024),-H(1000)
+-s指定统计目标
+
+4.磁盘分区
+fdisk --可显示帮助
+-l 显示分区列表
+fdisk 设备名 --进入分区模式(交互模式)，可添加n，删除d，写入w，p查看已经分好的分区，m查看帮助
+
+5.分区模式
+MBR,以上4中用fdisk分区就为MBR
+MBR:主分区不能超过四个，单个分区最大为2TB
+GPT分区：几乎没有限制
+
+6.parted分区，可作MBR和GPT分区，fdisk只能做MBR分区
+parted
+选择设备 select 设备路径
+指定分区类型  mklabel gpt
+查看分区表类型 print all
+交互模式添加分区:
+添加 ：mkpart
+查看 : print
+命令模式添加分区：
+mkpart 分区名称 2000 3000  --这里的开始和结束是以M为单位，且分区名称不能省略
+删除分区：rm 分区编号
+改变分区单位：unit GB
+parted分区分完立即生效
+
+7.格式化
+mkfs.文件系统类型  设备名称 如：mkfs.ext3 /dev/sdb1
+或 mkfs -t 文件系统类型 设备名称 如：mkfs -t ext4 /dev/sdb2
+其中，MBR分区中只有主分区的扩展分区可以格式化，逻辑分区不能格式化 
+
+8.挂载
+mount 设备名 挂载点 如：mount /dev/sdb1 /mnt/imooc
+卸载
+umount 挂载点 如： mount /mnt/imooc
+以上挂载为临时挂载
+永久：
+vim /etc/fstab
+添加 
+设备名称    挂载点    文件系统类型    defaults    0  0
+如 ： /dev/sdb1 /mnt/imooc ext3   defaults 0 0
+
+9.添加swap分区
+a.建立一个普通分区
+b.修改分区类型的16进制编码
+c.格式化交换分区
+d.启用交换分区
+fdisk /dev/sdb2
+p 查看分区 
+t 修改分区编号  先选择一个分区，再输入编号（输入L可列出编号)82为swap分区编号
+格式化交换分区：mkswap 设备名  如：mkswap /dev/sdb6
+启用交换分区：swapon 设备名 如： swapon /dev/sdb6
+停止交换分区：swapoff /dev/sdb6
+
+10.添加磁盘需要
+分区--格式化--挂载 之后才能使用
+
+

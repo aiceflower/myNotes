@@ -1,0 +1,219 @@
+用户 
+	查看当前用户的缺省表空间 
+	SQL>select username,default_tablespace from user_users;
+	
+	查看当前用户的角色 
+    SQL>select * from user_role_privs;
+	
+	查看当前用户的系统权限和表级权限 
+	SQL>select * from user_sys_privs; 
+	SQL>select * from user_tab_privs;
+
+切换用户操作
+  A、先退出 再登陆
+    exit;退出。
+  1、登录命令 sqlplus system/system 直接登录
+  2、sqlplus
+     --提示输入用户名
+     --提示输入密码
+ B、也可以不退出直接在sql>操作中采用 conn scott/tiger  conn/用户名/密码切换用户
+
+创建用户命令
+ 	A、连接到用户SQL> conn system/root	
+	B、创建用户: SQL> create user scott identified by tiger;
+	C、切换用户:SQL> conn scott/tiger    //用户切换失败
+	Not logged on
+  	备注：出现用户没有session权限的提示.
+	所以应当分配session权限
+
+角色(一个角色包含多个权限)
+connect
+   create session
+   create table
+   ……
+resource 
+    对表空间使用权限
+    ……
+   grant connect,resource to scott;
+注意：1、对用户的创建,权限的分配,只有管理员才能够操作,普通用户不能实现.
+  2、Create user 用户名 identified by 密码;(不能是全数字)
+  3、grant create session,create table,resource to 用户名;//给用户分配权限
+  4、start  目录(D:/emp.sql);//注意该文件不能放在桌面 为什么呢(目录中不能包含空格否则会出现如下错误：
+SQL> start C:/a a a/emp.sql;
+Error reading file
+)
+
+
+完成操作案例：
+ SQL> conn system/red; //切换到system用户，密码是red
+Connected to Oracle Database 10g Express Edition Release 10.2.0.1.0 
+Connected as system
+SQL> create user redarmychen identified by redarmy; //创建用户并为用户设置密码为redarmy
+User created
+SQL>  grant connect,resource to redarmychen; //给用户授权 connect,resource
+Grant succeeded
+SQL> conn redarmychen/redarmy; //切换到新创建的用户中来
+Connected to Oracle Database 10g Express Edition Release 10.2.0.1.0 
+Connected as redarmychen
+SQL> start c:/emp.sql;  //导入外部sql文件的方式
+SQL> select * from tabs; //查询该用户下面的所有表
+SQL> select table_name from user_tables; //查询该用户下的所有的表的名称
+
+
+SQL Plus常见的命令
+l conn 切换连接用户 
+l desc 显示表结构 
+l host 执行操作系统命令 
+l start 执行文件系统SQL语句 
+l exit 退出 
+l col 格式化输出 
+l / 执行最近一条SQL或新定义过程 
+l startup 启动数据库实例 (DBA)
+l shutdown 关闭数据库实例 (DBA) 
+注意：
+startup shutdown必须是sys system用户才能够执行
+其它用户不能使用.并且此命令只能在sqlplus中执行.不能在客户端工具中使用。
+
+
+表 
+
+	查看用户下所有的表 
+	SQL>select * from user_tables; 
+
+	查看名称包含log字符的表 
+	SQL>select object_name,object_id from user_objects where instr(object_name,'LOG')>0; 
+
+	查看某表的创建时间 
+	SQL>select object_name,created from user_objects where object_name=upper('&table_name'); 
+
+	查看某表的大小 
+	SQL>select sum(bytes)/(1024*1024) as "size(M)" from user_segments 
+		where segment_name=upper('&table_name'); 
+
+	查看放在ORACLE的内存区里的表 
+	SQL>select table_name,cache from user_tables where instr(cache,'Y')>0;
+
+索引 
+
+	查看索引个数和类别 
+	SQL>select index_name,index_type,table_name from user_indexes order by table_name; 
+
+	查看索引被索引的字段 
+	SQL>select * from user_ind_columns where index_name=upper('&index_name'); 
+
+	查看索引的大小 
+	SQL>select sum(bytes)/(1024*1024) as "size(M)" from user_segments 
+		where segment_name=upper('&index_name'); 
+
+视图 
+
+	查看视图的名称 
+	SQL>select view_name from user_views; 
+
+	查看创建视图的select语句 
+	SQL>set view_name,text_length from user_views; 
+	SQL>set long 2000;                说明：可以根据视图的text_length值设定set long 的大小 
+	SQL>select text from user_views where view_name=upper('&view_name'); 		
+		
+同义词 
+
+	查看同义词的名称 
+	SQL>select * from user_synonyms;	
+
+约束条件 
+
+	查看某表的约束条件 
+	SQL>select constraint_name, constraint_type,search_condition, r_constraint_name 
+		from user_constraints where table_name = upper('&table_name'); 
+
+	SQL>select c.constraint_name,c.constraint_type,cc.column_name 
+		from user_constraints c,user_cons_columns cc 
+		where c.owner = upper('&table_owner') and c.table_name = upper('&table_name') 
+		and c.owner = cc.owner and c.constraint_name = cc.constraint_name 
+		order by cc.position; 
+
+存储函数和过程 
+
+	查看函数和过程的状态 
+	SQL>select object_name,status from user_objects where object_type='FUNCTION'; 
+	SQL>select object_name,status from user_objects where object_type='PROCEDURE'; 
+
+	查看函数和过程的源代码 
+	SQL>select text from all_source where owner=user and name=upper('&plsql_name'); 
+		
+查看数据库的SQL 
+
+查看表空间的名称及大小 
+
+    select t.tablespace_name, round(sum(bytes/(1024*1024)),0) ts_size 
+    from dba_tablespaces t, dba_data_files d 
+    where t.tablespace_name = d.tablespace_name 
+    group by t.tablespace_name; 
+
+查看表空间物理文件的名称及大小 
+
+    select tablespace_name, file_id, file_name, 
+    round(bytes/(1024*1024),0) total_space 
+    from dba_data_files 
+    order by tablespace_name; 
+
+查看回滚段名称及大小 
+
+    select segment_name, tablespace_name, r.status, 
+    (initial_extent/1024) InitialExtent,(next_extent/1024) NextExtent, 
+    max_extents, v.curext CurExtent 
+    From dba_rollback_segs r, v$rollstat v 
+    Where r.segment_id = v.usn(+) 
+    order by segment_name ; 
+
+查看控制文件 
+
+    select name from v$controlfile; 
+
+查看日志文件 
+
+    select member from v$logfile; 
+
+查看表空间的使用情况 
+
+    select sum(bytes)/(1024*1024) as free_space,tablespace_name 
+    from dba_free_space 
+    group by tablespace_name; 
+
+    SELECT A.TABLESPACE_NAME,A.BYTES TOTAL,B.BYTES USED, C.BYTES FREE, 
+    (B.BYTES*100)/A.BYTES "% USED",(C.BYTES*100)/A.BYTES "% FREE" 
+    FROM SYS.SM$TS_AVAIL A,SYS.SM$TS_USED B,SYS.SM$TS_FREE C 
+    WHERE A.TABLESPACE_NAME=B.TABLESPACE_NAME AND A.TABLESPACE_NAME=C.TABLESPACE_NAME; 
+
+查看数据库库对象 
+
+    select owner, object_type, status, count(*) count# from all_objects group by owner, object_type, status; 
+
+查看数据库的版本 
+
+    Select version FROM Product_component_version 
+    Where SUBSTR(PRODUCT,1,6)='Oracle'; 
+
+查看数据库的创建日期和归档方式 
+
+    Select Created, Log_Mode, Log_Mode From V$Database; 
+		
+		
+ORACLE用户连接的管理 
+
+	用系统管理员，查看当前数据库有几个用户连接：
+	SQL> alter system kill session 'sid,serial#'; 
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		

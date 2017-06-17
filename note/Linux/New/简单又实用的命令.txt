@@ -1,0 +1,106 @@
+1.查看id 
+	id root
+2.查看shell时间(root用户)
+	hwclock
+3.查看运行级别(root用户)
+	runlevel
+5.运行级别切换
+	字符-->图形 ：ctrl+shift+alt+f1-7
+	图形-->字符：alt+f1-7
+	从3级别到5级别：startx或init5
+	从5再到3：ctrl+alt+Backspace
+6.查看前一个命令是否正确执行
+	echo $?  --输出0代表执行正确
+7.快速进入刚创建的目录
+	!$:引用上一条命令的最后参数
+	cd !$
+8.清空用户密码
+	passwd -d 用户名
+9.锁定/解锁用户：
+	passwd -l 用户名 / passwd -u 用户名  或手工删除用户密码前的!!
+10.非交互式修改密码
+echo "passwd1"  | passwd --stdin 用户名  / echo test|passwd test --stdin
+11.防止别人攻击root
+禁用root再创建一个用户，设置uid和gid为0，即权限为root
+	1.passwd -l root 2.useradd -o -u 0 kele 3.usermod -g 0 kel 
+12.su 和 su -
+	区别su - 会切换环境变量
+13.修改文件目录拥有者
+	chown USER:GROUP 文件/目录
+14.进程前台到后台（还有一种screen的方式）
+ 命令 + &或ctrl+z
+15.进程后台到前台
+	1.jobs 查看后台进程  2.fg 进程号
+16.查看内存
+	free -m 以M显示
+17.对比文件内容是否相同	
+diff 文件一 文件二
+18.查看哪些用户登陆了系统
+	who
+19.为指定端口打开防火墙
+在/etc/sysconfig/iptables添加如下
+-A INPUT -p tcp -m tcp --dport 8080 -j ACCEPT
+20.查看系统类型
+a.uname -a   b.getconf LONG_BIT  c.arch  d.file /sbin/init
+21.查看内核版本
+	1. cat /proc/version  2.uname -r   3.uname -a
+22.查看linux版本
+ 1.lsb_release -a  2.cat /etc/issue
+23.改变用户登陆显示
+在环境变量中加入如下：export PS1='[\u@\h \W]\$'
+24.下载网页源码
+wget 网址
+25.修改主机名：
+hostname new_name
+26.查看文件大小
+查看文件大小：
+	ll -h 文件名
+	du -sh 文件名
+查看目录命令
+	du -sh 目录名
+	du -ch 目录名  --查看该目录及目录下所有文件大小
+	du -ch 目录名 | tail -n 1 --列出目录大小
+27.查看磁盘使用剩余空间情况
+df -hl
+df -hl 查看磁盘剩余空间
+df -h 查看每个根路径的分区大小
+du -sh [目录名] 返回该目录的大小
+du -sm [文件夹] 返回该文件夹总M数
+28.查看linux文件目录的大小和文件夹包含的文件数
+统计总数大小
+du -sh xmldb/
+du -sm * | sort -n //统计当前目录大小 并安大小 排序
+du -sk * | sort -n
+du -sk * | grep guojf //看一个人的大小
+du -m | cut -d "/" -f 2 //看第二个/ 字符前的文字
+查看此文件夹有多少文件 /*/*/* 有多少文件
+du xmldb/
+du xmldb/*/*/* |wc -
+29.sqlplus翻页插件
+rlwrap依赖于libtermcap-devel跟readline-devel
+rym -qa | grep libtermcap
+下载rlwrap
+http://utopia.knoware.nl/~hlub/rlwrap/rlwrap-0.37.tar.gz
+安装
+tar -xvf rlwrap-0.37.tar.gz
+cd rlwrap-0.37
+./configure && make && make check && make install
+使用
+rlwrap sqlplus / as sysdba
+30.临时访问linux目录
+	python -m SimpleHTTPServer 9999
+31.修改虚拟机内操作系统语言：
+ vi /etc/sysconfig/i18nLANG=”zh_CN.UTF-8”
+32.关机命令：
+a、halt 立刻关机
+b、poweroff 立刻关机
+c、shutdown -h now 立刻关机(root用户使用)
+d、init 0
+e、reboot ：重启
+f.logout 注销
+g、shutdown -r now ← 立刻关闭系统并重启
+h、shutdown -h 10 10分钟后自动关机
+如果是通过shutdown命令设置关机的话，可以用shutdown -c命令取消重启
+33.查看pillow 用户下与java相关的服务
+	ps -upillow | grep java
+34.w 查看登陆用户信息

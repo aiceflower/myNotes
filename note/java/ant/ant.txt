@@ -1,0 +1,193 @@
+1.ant
+-s 去上级目录寻找build.xml
+-f xxx.xml 使用其它生成文件，默认为build.xml
+-q 显示少量必要信息
+-v 输出更多提示信息
+-l xxx.log 将提示信息输出到指定文件
+-D<property>=<value>
+-Dbook=20dayforjava 覆盖生成文件中property为book的属性值
+其中value也可使用环境变量代替windows使用%java_home%，linux使用$java_home 
+-help 获取帮助信息
+
+2.ant使用中的生成文件build.xml的结构
+根元素<project.../>
+属性：
+default 指定默认的target
+basedir 指定项目的基准路径
+name 指定项目名
+description 指定项目的描述信息
+如：
+<?xml version="1.0" encoding="utf-8"?>
+<project name="struts2" description="demo" basedir="." default="">
+	...
+</project>
+生成目标<target.../>可以有多个
+属性
+name 指定target名称，必需
+depends 指定一个或多个target名，表示运行该target前应先运行指定的target
+if 指定一个属性名，仅当设置了该属性，才执行此target
+unless 同上相反，未设置该属性时...
+description 指定该target的描述信息
+
+生成文件结构：
+profect中包含多个target，每个target中包含多个任务
+3.ant任务分类：
+核心任务：ant自带任务，如<echo>
+可选任务：来自第三方任务，需要一个附加jar文件
+用户自定义任务：自己开发的任务
+4.project的两个重要子元素：
+property：定义一个或多个属性
+path：用于定义一个或多个文件和路径
+<property name="builddir" value="dd"/>
+获取：${builddir}
+使用$:用$$
+5.property的属性：
+name：需要设置的属性名
+value：需要设置的属性值
+resource：指定属性文件的资源名称，从该文件中读取属性名和属性值
+file：指定属性文件名
+ur：指定属性文件url
+environment：用于指定系统环境变量前缀，通过这种方式允许ant访问系统变量
+classpath：指定搜索属性文件的文件和路径集
+classpathref：指定上一个的引用
+如：
+<property environment="env"/>
+<echo>${env.java_home}</echo>
+6.path与classpath元素
+path是<project/>的子元素,用于被引用
+classpath是其它任务的子元素
+共同属性：
+pathelement:用于指定一个目录
+dirset：采用模式字符串的方式指定系列目录
+fileset：采用模式字符串的方式指定系列文件
+filelist：采用直接列出系列文件名的方式指定系列文件
+7.pathelement元素指定一个或多个目录，可以指定如下两个元素中的一个：
+path：指定一个或多个目录，或者jar，用:或;分开
+location：指定一个目录和jar文件
+<pathelement location="/path/to/file.jar:/path/to/file1;/path/to/file2"/>
+8.dirset指定多个目录集使用<dirset.../>元素，使用include和exclude来指定包含和不包含哪些目录
+<dirset dir="build">
+	<!--指定包含apps目录下的所有classes目录-->
+	<include name="apps/**/classes"/>
+	<!--排除目录中有Test的目录-->
+	<exclude name="apps/**/*Test*"/>
+</dirset>
+9.fileset 配置多个文件使用<filelist.../>也可使用file子元素来指定文件列表<file  name="foo.xml"/>
+dir:指定文件集里多个文件所有的基准路径，必需属性
+files:多个文件名列表，多个文件名之间以英文逗号(,)或空白隔开
+<filelist id="docfiles" dir="src" files="foo.xml,bar.xml t.xml"/>
+10.fileset元素
+dir:指定文件集里多个文件所有的基准路径，必需
+casesensitive：指定是否区分大小写，默认区分
+此外也可使用include和exclude来指定包含和不包含哪些文件
+<fileset dir="src" casesensitive="yes">
+	<!--包含所有.java的文件-->
+	<include name="**/*.java"/>
+	<exclude name="**/*Test*"/>
+</fileset>
+11.组合使用<path../>或<classpath../>组合
+<path id="classpath">
+	<!--定义classpath属性值所代表的路径-->
+	<pathelement path="${classpath}"/>
+	<!--定义lib路径下的所有*.jar文件-->
+	<fileset dir="lib">
+		<include name="**/*.jar"/>
+	</fileset>
+	<!--定义classes路径-->
+	<pathelement location="classes"/>
+	<!--定义build/apps路径下所有classes路径-->
+	<dirset dir="build">
+		<include name="apps/**/classes"/>
+		<exclude name="apps/**/*Test*/>
+	</dirset>
+	<!--定义res路径下的a.properties和b.xml文件-->
+	<filelist dir="res" files="a.properties,b.xml"/>
+</path>
+12.ant的任务(task)
+常用的核心task
+javac 用于编译一个或多个java源文件，srcdir指定源文件位置，destdir指定编译后class文件位置
+java 用于运行某个java类，classname指定运行哪个类
+jar 用于生成jar包，destfile指定所创建jar包的文件名
+sql 用于执行一条或多条sql语句，需要driver，url，userid和password等属性，src指定需要的sql脚本文件
+echo 输出字符串
+exec 执行操作命令，需要executable指定想执行的命令
+copy 复制文件或路径
+delete 删除文件或路径
+mkdir 创建文件夹
+move 移动文件或路径
+13.帮助文件位置
+%ANT_HOME%/docs/manual/CoreTasks 核心task
+%ANT_HOME%/docs/manual/OptionalTasks 可选task
+14.简单生成文件
+<?xml version="1.0" encoding="utf-8"?>
+<!--宝座生成文件的project根元素，默认的target为空-->
+<project name="antQs" basedir="." default="">
+	<!--定义三个简单属性-->
+	<property name="src" value="src"/>
+	<property name="classes" value="classes"/>
+	<property name="dest" value="dest"/>
+	<!--定义一组文件和目录集-->
+	<path id="classpath">
+		<pathelement path="${classes}"/>
+	</path>
+	<!--定义help target，用于输出该生成文件的帮助信息-->
+	<target name="help" description="打印帮助信息">
+		<echo>help -打印帮助信息</echo>
+		<echo>compile -编译java源文件</echo>
+		<echo>run -运行程序</echo>
+		<echo>build - 打包jar包</echo>
+		<echo>clean -清除所有编译生成的文件</echo>
+	</target>
+	<!--定义compile target,用于编译java源文件-->
+	<target name="compile description="编译java源文件">
+		<!--先删除classes属性所代表的文件夹-->
+		<delete dir="${classes}"/>
+		<!--创建classes所代表的文件夹-->
+		<mkdir dir="${classes}"/>
+		<!--编译java文件，编译后class文件放到classes属性所代表的文件夹内-->
+		<javac destdir="${classes}" debug="true" includeantruntime="yes"
+		deprecation="false" optimize="false" failonerror="true">
+			<!--指定需要编译的java文件所在位置-->
+			<src path="${src}"/>
+			<!--指定编译java文件所需要第三方类库所在位置-->
+			<classpath refid="classpath"/>
+		</javac>
+	</target>
+	<!--定义运行target-->
+	<target name="run" description="运行程序" depends="compile">
+		<!--运行lee.HelloTest类，其中fork指定启动另一个jvm来执行java命令-->
+		<java classname="lee.HelloTest" fork="yes" failonerror="true">
+			<classpath refid="classpath"/>
+			<!--运行java程序时传入2个参数-->
+			<arg line="参数1 参数2"/>
+		</java>
+	</target>
+	<!--定义build target用于打包jar文件-->
+	<target name="build" description="打包jar文件" depends="compile">
+		<!--先删除dest属性所代表的文件夹-->
+		<delete dir="${dest}"/>
+		<!--创建-->
+		<mkdir dir="${dest}"/>
+		<!--指定将classes属性所代表的文件夹下的所有*.classes文件都打包到app.jar中-->
+		<jar destfile="${dest}/app.jar" basedir="${classes}"
+			include="**/*.class">
+			<!--为jar包的清单文件添加属性-->
+			<manifest>
+				<attribute name="Main-Class" value="lee.HelloTest"/>
+			</manifest>
+		</jar>
+	</target>
+	<!--定义cleantarget，删除所有编译生成的文件-->
+	<target name="clean" description="清除所有编译生成的文件">
+		<!--删除两个目录，目录下的文件一并删除-->
+		<delete dir="${classes}"/>
+		<delete dir="${dest}"/>
+	</target>
+</project>
+===============
+执行
+ant help
+ant compile
+ant run
+ant build
+ant clean

@@ -1,0 +1,48 @@
+
+<!-- Department.hbm.xml -->
+<!-- Set<Employee> employees 属性，与Employee一对多  -->
+<set name="employees">
+	<key column="departmentId"/>
+	<one-to-many class="Employee"/>
+</set>
+
+
+<!-- Employee.hbm.xml -->
+<!-- Department department 属性，与Department的多对一 -->
+<many-to-one name="department" class="Department" column="departmentId"/>
+
+
+<!-- ======================================== -->
+<!-- Department.hbm.xml -->
+
+<!-- Department parent 属性，与（上级）Department的多对一 -->
+<many-to-one name="parent" class="Department" column="parentId"/>
+
+<!-- Set<Department> children 属性，与（下级）Department的一对多 -->
+<set name="children">
+	<key column="parentId"/>
+	<one-to-many class="Department"/>
+</set>
+
+
+
+---------------- department表结构 --------------
+id	 name	parentId
+----------------------------
+1	 xxx      <null>
+2    aaa		1
+3    bbb		1
+4	 ttt		2
+5	 uuu		2
+
+
+
+
+
+vim
+
+记事本
+EditPlus
+...
+
+Linux  -->  vi  --> vim

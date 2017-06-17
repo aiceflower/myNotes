@@ -1,0 +1,24 @@
+数值函数：
+round(n [,m])
+floor(n)
+ceil(n)
+abs(n)
+mod(m,n)
+sqrt(n)
+sin(n),asin(n)
+字符函数
+upper(char),lower(char)
+concat(char1,char2)
+substr(char,'[m,[n]])
+length(char)
+日期函数
+sysdate
+add_months()
+last_day()
+month_between(y1,y2)
+extract(date from datetime)
+转换函数
+to_char(date[,fmt[,params]])
+to_char([number[,fmt]])
+to_date([char[,fmt])
+to_number(char[,fmt])

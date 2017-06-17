@@ -1,0 +1,9 @@
+1.查询出需要修改用户的user#,这里的name需要大写
+select user#, name from user$ where name = 'USER_NAME'; 
+2.修改
+update user$ set name = 'FEELVIEW' where user# = 85; 
+3.这时候直接登陆会失败
+4.实际上不用重启数据库拉,你这样强制更新下.
+alter system checkpoint;
+alter system flush shared_pool; 
+5.再次登陆ok

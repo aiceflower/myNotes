@@ -1,0 +1,63 @@
+----------------------------------------------------------------------
+系统用户
+sys 
+system
+sysman
+scott tiger
+
+登陆Oracle
+[username/password] [@server] [as sysdba|sysoper]
+查看登陆用户
+show user
+dba_users数据字典
+
+启用scott用户 默认密码为tiger
+alter user scott account unlock;
+连接scott：connect scott/tiger 
+
+表空间分类:
+1.永久表空间
+2.临时表空间
+3.UNDO表空间
+
+数据字典：
+	表空间
+		dba_tablespaces管理员登陆来查看的数据字典
+		user_tablespaces用户登陆来查看的数据字典
+	用户
+		dba_users系统
+		user_users用户
+
+查看用户表空间：
+select tablespace_name from dba_tablespaces;系统用户
+select tablespace_name from user_tablespaces;普通用户
+查看默认表空间与临时表空间
+ select default_tablespace,temporary_tablespace from dba_users;
+ 
+设置默认表空间与临时表空间
+alter user username default|temporary tablespace tablespace_name;
+
+创建表空间
+create [temporary] tablespace tablespace_name tempfile|datafile 'abc.dbf' size xx
+
+create tablespace test1_tablespace datafile 'test1file.dbf' size 10M 创建表永久空间
+create temporary tablespace temptest1_tablespace tempfile 'tempfile1.dbf' size 10M 创建临时表空间
+
+查看表空间文件位置 dba_data_files永久  dba_temp_files临时
+select file_name from dba_data_files where tablespace_anme = 'test1_tablespace';
+
+修改表空间
+修改表空间状态
+alter tablespace tablespace_anme online|offline
+alter tablespace tablespace_anme read only | read write设置读写状态，必需是online
+
+修改数据文件
+alter tablespace test1_tablespace add datafile 'test2_file.dbf' size 10M;
+删除数据文件
+alter tablespace test1_tablespace drop datafile 'test2_file.dbf';不能删除创建表空间时第一个数据文件，如果要删除就要把表空间删除掉
+
+复制表数据
+创建表时复制：
+create table new_table as select * from old_table;
+添加表时复制：
+insert into table_new [col1,col2]  select [col1,col2] [*] from old_table;

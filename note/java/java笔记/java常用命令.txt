@@ -1,0 +1,37 @@
+一、javac命令
+	用法：javac <选项> <源文件> 
+		-classpath <路径>：指定用户类文件的位置。
+		如：
+		javac -classpath .;jar01.jar;jar02.jar;……;jarN.jar class_name.java
+二、java命令
+	java com.nsfc.hello（带包的	.class文件）
+三、jar命令 jar cvf test.jar test
+		随着JDK安装，在JDK安装目录下的bin目录中存在一个可执行文件，Windows下文件名为jar.exe，Linux下文件名为jar。它的运行需要用到JDK安装目录下lib目录中的tools.jar文件。jar命令行格式为：
+		jar {ctxu}[vfm0M] [jar-文件] [manifest-文件] [-C 目录] 文件名
+		其中{ctxu}是jar命令的子命令，每次jar命令只能包含一个子命令，这些子命令含义如下。
+		-c：创建新的JAR文件包。
+		-t：列出JAR文件包的内容列表。
+		-x：展开JAR文件包的指定文件或者所有文件。
+		-u：更新已存在的JAR文件包（添加文件到JAR文件包中）。
+		[vfm0M]中的选项可以任选，也可以不选，它们是jar命令的选项参数。
+		-v：生成具体报告并打印到标准输出。
+		-f：指定JAR文件名，通常这个参数是必须的。
+		-m：指定需要包含的MANIFEST清单文件。
+		-0：只存储，不压缩，这样产生的JAR文件包会比不用该参数产生的体积大，但速度更快。
+		-M：不产生所有项的清单（MANIFEST〕文件，此参数会忽略-m参数。
+		[jar-文件]：即需要生成、查看、更新或者解开的JAR文件包，它是-f参数的附属参数。
+		[manifest-文件]：即MANIFEST清单文件，它是-m参数的附属参数。
+		[-C 目录]：表示转到指定目录下去执行这个jar命令的操作。它相当于先使用cd命令转到该目录下，再执行不带-c参数的jar命令，它只能在创建和更新JAR文件包的时候使用。
+		文件名：指定一个文件/目录列表，这些文件/目录就是要添加到JAR文件包中的文件/目录。假如指定了目录，那么jar命令打包的时候会自动把该目录中的所有文件和子目录打入包中。
+		使用JDK的jar命令打包，会自动在压缩包中生成一个META-INF目录，其中有一个MANIFEST.MF文件。
+		使用jar命令进行如下压缩：
+		jar cf test.jar test
+四、文档生成命令
+	1.一个包
+		javadoc -d docDir nameOfPackage
+	2.多个包
+		javadoc -d docDir nameOfPackage1,nameOfPackage2...
+	3.默认包
+		javadoc -d docDir *.java
+五、打war包
+	jar   cvf   temp.war  *

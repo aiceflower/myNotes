@@ -1,0 +1,10 @@
+openssl加密解密：
+openssl enc -e -des3 -a -in /etc/passwd -out /passwd.des3  --加密
+openssl enc -d -des3 -a -in /passwd.des3 -out /etc/passwd  --解密
+比对文件：保证数据的完整性
+	1.diff 文件一 文件二
+	2.md5sum 查看两个文件的哈希值是否一样
+查看哈希值：
+	md5sum
+	sha1sum
+数据不可否认性：加证书

@@ -1,0 +1,9 @@
+卸载mysql服务
+1.源码包安装，直接删除安装文件，及相关文件
+2.rpm安装
+	rpm -qa | grep mysql
+	rpm -e 包名 --nodeps(卸载相关软件包)
+	find / -name mysql 查找并删除
+	
+修改mysql服务密码
+mysqladmin -uroot -p password root

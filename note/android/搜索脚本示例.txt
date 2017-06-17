@@ -1,0 +1,25 @@
+type=user
+count=100
+speed=1.0
+start data >> 
+
+LaunchActivity(com.example.script,.MainActivity)
+UserWait(2000)
+DispatchPointer(10,10,0,100,100,1,1,-1,1,1,0,0)
+DispatchPointer(10,10,1,100,100,1,1,-1,1,1,0,0)
+DispatchString(test)
+UserWait(1000)
+DispatchPress(66)
+UserWait(10000)
+DispatchPointer(10,10,0,400,100,1,1,-1,1,1,0,0)
+DispatchPointer(10,10,1,400,100,1,1,-1,1,1,0,0)
+UserWait(6000)
+注：
+1.启动app
+   2.点击输入框
+   3.输入查询词
+   4.点击回车
+   5.点击搜索按钮
+   6.等待结果的出现
+   7.点击clear按钮
+  

@@ -1,0 +1,101 @@
+extra策略：
+与 lazy=“true” 类似. 主要区别是增强延迟检索策略能进一步延迟 Customer 对象的 orders 集合代理实例的初始化时机：
+•	当程序第一次访问 orders 属性的 iterator() 方法时, 会导致 orders 集合代理类实例的初始化
+•	当程序第一次访问 order 属性的 size(), contains() 和 isEmpty() 方法时, Hibernate 不会初始化 orders 集合类的实例, 仅通过特定的 select 语句查询必要的信息, 不会检索所有的 Order 对象
+
+
+----------------------
+
+懒加载：
+	也叫延迟加载，不是在执行获取操作时马上生成SQL，而是在第一次使用时生成SQL。
+	分成两种：
+		类级别的：
+			<class ... lazy="true/false">
+		属性级别的：
+			<set/list/map/bag ... lazy="...">
+			<many-to-one ... lazy="...">
+			<one-to-one ... lazy="...">
+	在使用懒加载特性时，可能会有LazyInitializationException异常：
+		原因：	
+			真正的去获取数据时，Session已经没有了。
+		解决办法：
+			方式一：让Session在真正加载后再关闭。
+			方式二：或是在Sessoin关闭前执行Hibernate.initialize(department.getEmployees());
+		
+
+HashMap		Hashtable
+
+
+
+不管是一级缓存，还是二级缓存，都地在使用OID的获取对象时才有效。
+	get()
+	load()
+对于Query.list()默认不会使用缓存，哪怕写成where id=1也不会使用缓存。
+
+
+
+Update \____ 不会通知Session缓存。
+Delete /	 通知二级缓存
+
+
+
+// ==============================================
+
+
+class TxFilter implements Filter{
+
+	puboic void doFilter(request, response, chain){
+		session = sf.openSession();
+		Utils.threadLocal.set(session); // 绑定到当前线程上
+		try{
+			tx = session.beginTransaction();
+			chain.doFitler(); // 放行
+			tx.commit();
+		}catch(e){
+			tx.rollback();
+			throw e;
+		}finallay{
+			session.close();
+			Utils.threadLocal.remove(); // 移除
+		}
+
+	}
+
+}
+
+
+class UserDao{
+	
+	public void saveUser(User user){
+		session = Utils.threadLocal.get();
+		session.save(user);
+	}
+}
+
+// ==============================================
+
+class TxFilter增强 implements Filter{
+
+	puboic void doFilter(request, response, chain){
+		session = sf.getCurrentSession();
+		try{
+			tx = session.beginTransaction();
+			chain.doFitler(); // 放行
+			tx.commit();
+		}catch(e){
+			tx.rollback();
+			throw e;
+		}
+
+	}
+}
+
+class UserDao增强{
+	
+	public void saveUser(User user){
+		session = sessionFactory.getCurrentSession();
+		session.save(user);
+	}
+}
+
+

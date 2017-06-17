@@ -1,0 +1,62 @@
+1.循环：反复的执行一段相同或相似的代码
+		 * 2.循环三要素：
+		 *   1）循环变量的初始化
+		 *   2）循环的条件（以循环变量为基础）
+		 *   3）循环变量的改变（向着循环结束变）
+		 *   循环变量：在循环过程中改变的那个量
+２.输出生成的数组
+		System.out.print("生成的数组为："+Arrays.toString(arr));	
+3, * JAVA中的字符串对象为不变对象，意思是字符串对象
+ * 创建后，内容不能改变，若想改变内容必须创建新对象。
+ * 
+ * JAVA使用字符串常量池来缓存通过字面量创建的字符串对象，并重用它们。
+ 4,
+	  重写应满足:
+	 * 任何时候，对于非空引用x，都应做到
+	 * x.equals(null)返回false
+	 * 自反性：x.equals(x) 返回true
+	 * 对称性：x.equals(y)返回true,y.equals(x)也应当返回true
+	 * 传递性：x.equals(y)为true,y.equals(z)也为true, 那么x.equals(z)就应当为true
+	 * 一致性：若当前对象x参与equals比较的属性没有发生过改变，那么多次调用x.equals(y)返回值应当一致。
+5,Calendar -> Date * Date getTime()
+ Date -> Calendar * void setTime(Date date)
+ ６，获取某个时间分量所允许的最大值//查看今年一共多少天
+int days = calendar.getActualMaximum(		Calendar.DAY_OF_YEAR );
+７，Date->String
+		 SimpleDateFormat提供了一个方法:
+		 String format(Date date)
+８，集合提供了统一的遍历方式:迭代器
+ * 使用迭代器遍历集合要遵循：“问取删”的顺序，
+ 其中删除不是必须的
+ ９，	/*集合转换为数组
+		 * 推荐使用下面这中方式转换。
+		 * 参数给定的数组若可以使用就使用，若存不下
+		 * 集合中的元素，会创建一个同类型数组并返回。
+		 */
+		String[] array 
+			= c.toArray(new String[c.size()]);
+１０，ArrayList:数组实现，利于查询不利于增删
+ * LinkedList:链表实现，利于增删，不利于查询
+ * 
+ * List集合是可重复集，且有序，特点是可以根据下标操作 * 元素，这一点和数组很相似。
+ １１，Collections的sort方法有一个要求:
+		 * 要排序的List集合中的元素必须是可以比较
+		 * 大小的。java提供了一个接口Comparable，
+		 * 只有实现了该接口的类才具有可比性。才可以
+１２，遍历所有的key * Set keySet()
+Set<String> keySet = map.keySet();
+		 遍历每一组键值对Set entrySet()
+Set<Entry<String,Integer>> entrySet
+							= map.entrySet();
+遍历所有的value
+		 * Collection values()
+Collection<Integer> values
+							= map.values();
+１３，1.变量的作用域:
+		 *    从变量的声明开始到包含它最近的大括号结束
+		 
+		 * 写出Xml的步骤：
+		 * １：创建一个Document对象，表示文档内容
+		 * ２：向Document中添加一个元素（根元素）
+		 * ３：向根元素中按照层级结构组建整个xml内容
+		 * ４：通过XMLWriter将Document写出完成工作

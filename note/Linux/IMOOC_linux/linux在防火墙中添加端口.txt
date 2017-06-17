@@ -1,0 +1,22 @@
+一.Linux下开启/关闭防火墙命令
+1) 永久性生效，重启后不会复原
+开启： chkconfig iptables on
+
+关闭： chkconfig iptables off
+
+2) 即时生效，重启后复原
+
+开启： service iptables start
+
+关闭： service iptables stop
+
+例：添加8080商品
+/sbin/iptables -I INPUT -p tcp --dport 8080 -j ACCEPT #8080为指定端口
+
+/etc/init.d/iptables restart #重启防火墙以便改动生效
+
+/etc/rc.d/init.d/iptables save #将更改进行保存
+
+也可在文件中直接添加
+/etc/sysconfig/iptables
+-A INPUT -p tcp -m tcp --dport 8080 -j ACCEPT

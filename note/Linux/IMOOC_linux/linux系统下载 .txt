@@ -1,0 +1,7 @@
+适合oracle的linux系统
+http://ftp.heanet.ie/mirrors/oracle-linux/
+ftp://ftp5.gwdg.de/pub/linux/oracle
+ftp://ftp5.gwdg.de/pub/linux/oracle/OL6/U4/x86_64/
+
+ubuntu下载
+http://releases.ubuntu.com/

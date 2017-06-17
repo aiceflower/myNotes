@@ -1,0 +1,39 @@
+1，简单的查询
+2，带上过滤条件的（可以使用别名）：Where
+3，带上排序条件的：Order By
+4，指定select子句（不可以使用select *）
+	可以使用new语法，指定把查询出的部分属性封装到对象中
+5，执行查询，获得结果（list、uniqueResult、分页 ）
+6，方法链
+
+
+1，聚集函数
+2，分组
+3，连接查询 / HQL是面向对象的查询
+4，查询时使用参数
+	方式一：使用'?'占位
+	方式二：使用变量名
+5，使用命名查询
+6，update与delete，不会通知Session缓存
+	在update或delete后，需要refresh(obj)一下以获取最新的状态
+	
+
+
+
+
+
+
+
+
+
+正确：String hql = "SELECT e FROM Employee e"; 
+错误：String hql = "SELECT * FROM Employee e"; 	
+
+
+正确：String hql = "SELECT e.name,COUNT(e.name) FROM Employee e WHERE id<=10 GROUP BY e.name HAVING COUNT(e.name)>1";
+错误：String hql = "SELECT e.name,COUNT(e.name) c FROM Employee e WHERE id<=10 GROUP BY e.name HAVING c>1 ORDER BY c DESC";
+
+
+[inner] join 
+left [outer] join
+right [outer] join

@@ -1,0 +1,46 @@
+1.写一个脚本，执行后，打印一行提示“Please?input?a?a text"，要求用户输入数值，然打印出该文本，然后再次要求用户输入数值。直到用户输入"end"停止
+#!/bin/bash
+#删除变量var
+unset var
+#直到var为end的时候退出
+until  [ "$var" = "end" ]
+#将正确或错误输出，输出到回收站
+#> /dev/null 2>&1
+#执行操作
+do
+ echo "Please input a text (input end to exit): "
+#读取用户输入
+ read var
+ if [ $var != "end" ]
+ then
+        echo this text is : $var
+2.写一个脚本，可以根据参数文件名，以正确的参数调用tar来解压缩tar.gz或tar.bz2文件。
+#!/bin/bash
+#截取掉输入参数中tar.之前的内容,包括tar.
+case ${1##*.tar.} in
+bz2)
+  tar jxvf $1
+  echo ${1##*.tar.};;
+gz)
+  tar zxvf $1 ;;
+*)
+  echo "wrong file type"
+esac
+3.输入两个数判断两个数的大小
+#!/bin/bash
+echo -n Please input a numer:
+read a
+echo -n Please input another number:
+read b
+if [ $a -gt $b ] >>/dev/null 2>&1
+then
+  echo $a 大于 $b
+elif [ $a -lt $b ] >>/dev/null 2>&1
+then
+  echo $a 小于 $b
+elif [ $a -eq $b ] >>/dev/null 2>&1
+then
+  echo $a 等于 $b
+else
+  echo "您的输入有误！"
+fi

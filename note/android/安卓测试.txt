@@ -1,0 +1,97 @@
+1.为什么需要开展压力测试
+	1.提高产品的稳定性
+	2.提交产品的留存率
+2.什么时候开展压力测试
+	首轮功能测试通过后
+	下班后的夜间
+3.查看手机与电脑是否建立连接
+	adb devices
+4.发送压力指令
+	adb shell monkey 1000
+5.测试计算器
+	1.获取app包含
+		linux：
+		adb logcat | grep START
+		windows:
+		adb logcat | find 	/i "START"
+	2.给指定的包打压力
+		adb shell monkey -p com.android.calculator2 1000 
+6.monkey高级参数
+	--throttle 间隔时间
+	adb shell monkey -p com.android.calculator2 --throttle 100(间隔时间) 1000(次数)
+	--seed 指定随机生成数的seed值,可让两次执行的随机操作一样(可实现结果回现)
+	adb shell monkey -p com.android.calculator2 -s 100 1000 
+7.触摸事件
+	--pct-touch 100 后面的数是占的百分比
+	-v 显示过程
+	adb shell monkey -v -p com.android.calculator2 --pct-touch 100 100 
+8.设置动作事件百分比
+	--pct-motion <percent>
+	adb shell monkey -v -p com.android.calculator2 ----pct-motion 100 100
+	adb shell monkey -v -p com.android.calculator2 --pct-touch 50 --pct-motion 30 100 （这里的两个百分比加起来没有100，则剩下的由系统随机指定）
+9.主要导航事件
+	设定主要导航事件的百分比，兼容中间键，返回键，菜单键
+	adb shell monkey --pct-majornav <percent>
+10.系统导航事件
+	设定系统导航事件的百分比，HOMME,BACK,拨号，音量键
+	adb shell monkey --pct-syskeys <percent>
+11.启动activity事件
+	设定启动activity的事件百分比
+	adb shell monkey --pct-appswitch <percent>
+12.不常用事件
+	adb shell monkey --pct-anyevent <percent>
+13.崩溃事件(crash)
+	忽略崩溃事件
+	adb shell monkey --ignore-crashes <event-count>
+14.超时事件(anr)
+	忽略超时事件
+	adb shell monkey --ignore-timeouts <event-count>
+	anr类型的异常存放位置/data/anr 下的traces.txt
+15.查看异常信息 ,异常信息后跟的有seed，如果指定ignore的话出现异常有会有seed值
+16.monkey script 测试脚本
+   adb shell monkey -f <scriptFile> <event-count>
+   脚本命令
+   1.DispatchTrackball 命令 轨迹球事件
+   DispatchTrackball(long downtime,long eventide,int action,float x,float y,float pressure,float size,int metastate,float xprecision,float yprecision,int device,int edgeflags)
+   只需要关注三个参数int action,float x,float y 其它的给默认值
+   action 0代表按下，1代表弹起，x和y代表坐标点（坐标可使用uiautomatorviewer获取）
+   一次0加上一次1代表一次点击事件
+   2.DispatchPointer 点击事件
+   DispatchPointer(long downtime,long eventide,int action,float x,float y,float pressure,float size,int metastate,float xprecision,float yprecision,int device,int edgeflags)
+   3.DispatchString 输入字符串事件
+    DispatchString(String text)
+   4.LaunchActivity
+	LaunchActivity(package,Activity)
+   5.UserWait等待事件
+    UserWait(1000)
+   6.DispatchPress 按下键值
+	DispatchPress(int keycode) #keycode 66 回车键
+17.实例，搜索框搜索
+   1.启动app
+   2.点击输入框
+   3.输入查询词
+   4.点击回车
+   5.点击搜索按钮
+   6.等待结果的出现
+   7.点击clear按钮
+   例：
+   type=user
+   count=100
+   speed=1.0
+   start data >> 
+   
+   LaunchActivity(com.example.script,com.example.script.MainActivity)（通过这种方式启动activity需要在清单文件中的activity中设置属性,android:exported="true",否则外部无法启动）
+   UserWait(2000)
+   DispatchPointer(10,10,0,100,100,1,1,-1,1,1,0,0)
+   DispatchPointer(10,10,1,100,100,1,1,-1,1,1,0,0)
+   DispatchString(test)
+   UserWait(1000)
+   DispatchPress(66)
+   UserWait(10000)
+   DispatchPointer(10,10,0,400,100,1,1,-1,1,1,0,0)
+   DispatchPointer(10,10,1,400,100,1,1,-1,1,1,0,0)
+   UserWait(6000)
+   注：执行脚本需要把脚本push到手机中
+   执行:
+   adb shell monkey -f /data/local/tmp/test.script 10 
+18.monkeyDevice API(自己搜索学习)

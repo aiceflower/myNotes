@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>JavaScript</title>
+		<meta charset='utf-8'/>
+		<style>
+			div,p,span{
+				width:100px;
+				height:30px;
+				margin:10px;
+				border:2px dashed black;
+			}
+		</style>
+		<script>
+			onload = function(){
+				each(getClass('c3',getClass('c1')),function(){
+					this.style.backgroundColor='yellow';
+				});
+				var node = document.querySelector("#d1");
+				console.log(node);
+				console.log(node.dataset);
+			};
+			//自定义getElementsByClassName
+			var myGetClass = function(className,results){
+				results = results || [];
+				var tags = document.getElementsByTagName('*');//获取所有的标签
+				
+				each(tags,function(i,v){
+					if((' '+v.className+' ').indexOf(' '+className+' ')!=-1){//小技巧
+						results.push(v);
+					}
+				});
+				return results;
+			}
+			//获取class
+			var getClass = function(className,results){
+				results = results||[];
+				results.push.apply(results,myGetClass(className));
+				return results;
+			};
+			
+			
+			var each = function(arr,fn ){
+				for( var i = 0; i < arr.length; i++){
+					if( fn.call(arr[i],i,arr[i]) === false){
+						break;
+					}
+				}
+			};
+			
+			
+		</script>
+		
+	</head>
+	<body>
+		<div id="d1" class="c1" data-name="local" data-age="13" demo="test"></div>
+		<div id="d2" class="c1"></div>
+		<p id="p1" class="c2"> </p>
+		<p id="p2" class="c3"></p>
+		<span>进而城喷枪</span>
+		<div id="get" class='c1'></div>
+	</body>
+</html>

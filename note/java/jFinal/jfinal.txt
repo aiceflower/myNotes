@@ -1,0 +1,59 @@
+主要是对比以前用三大框架有哪些方便的地方说出来就好啦
+蛮好用的哈 比struts 少了配置文件  方便
+看文档-->实践-->收集记录-->整理记录-->PPT
+极速开发
+快速实现curd
+
+1.首页
+在这里也谈不上分享，大家对jfinal肯定比我熟悉，我只是谈一下这段时间学习jfinal及对它的一点认识，
+有什么错误或是遗漏的地方希望大学能够给我指证出来，这样也能帮助我进一步地学习。
+2.目录
+2.什么是jfinal
+  JFinal 是基于 Java 语言的极速 WEB + ORM 框架，其核心设计目标是开发迅速、代码量少、学习简单、功能强大、轻量级、易扩展。
+  在拥有Java语言所有优势的同时再拥有ruby、python、php等动态语言的开发效率。
+3.jfinal的发展
+JFinal 项目开发始于2011年初，作者詹波。项目开源于2012年3月。到现在已经有5年了。
+jfinal开源以来深受广大开发者欢迎，目前采用JFinal框架开发的用户群迅速壮大，
+有很多使用jfinal的商业化互联网项目已经上线了。
+4.jfinal的架构
+4.1 空间架构
+ Handler、Interceptor、Controller、Render、Plugin
+ 每个部分都是基于接口实现的，支持完整的自定义，使用灵活，扩展性强。
+ 对于jfinal项目来说，主要的配置都是在一个配置类中完成的，这个配置类要继承JFinalConfig，实现JFinalConfig的5个抽象方法
+ public void configConstant(Constants me) {}
+ 此方法用来配置 JFinal 常量值
+public void configRoute(Routes me) {}
+此方法用来配置 JFinal 访问路由
+public void configPlugin(Plugins me) {}
+此方法用来配置 JFinal 的 Plugin
+public void configInterceptor(Interceptors me) {}
+此方法用来配置 JFinal 的全局拦截器
+public void configHandler(Handlers me) {}
+4.2 逻辑架构
+ Http
+ 包括HttpServletRequest、HttpServletResponse，即客户端请求与响应
+ Filter 
+ 所有请求的拦截器，相当于是一个闸口
+ Handler
+ 请求处理器，是对所有请求的公共处理，在这里我们可以做权限控制、安全验证等。
+ Action
+ 动作处理器，也是链式的，先执行拦截器，最后执行具体方法。
+ Model
+ 模型层。在这个层面包括实体模型的定义、DB+ActiveRecord模式数据库操作的支持、从请求中解析出对应参数构造Model实例，可以把它看成是DAO。
+ Render
+ 渲染层。负责将服务端的数据组装成客户端需要的数据格式，然后response到客户端。支持多种视图的渲染：FreeMark、Jsp、VELOCITY以及自定义。
+ 整体流程：
+
+5.jfinal的优点
+ MVC架构，设计精巧，使用简单
+ 零配置，无xml
+ 独创Db + Record模式，灵活便利
+ ActiveRecord支持，使数据库开发极致快速
+ AOP支持，拦截器配置灵活，功能强大
+ Plugin体系结构，扩展性强
+ 多视图支持，支持FreeMarker、JSP、Velocity
+ 体积小仅248K，且无第三方依赖
+
+6.我的实习收获
+整个空间架构   由Handler、Interceptor、Controller、Render、Plugin五大部分组成。每个部分都是基于接口实现的，支持完整的自定义，使用灵活，扩展性强。
+框架的逻辑架   构非常简单，就是一个经典的MVC模式演化、大致分成以下6个步骤:

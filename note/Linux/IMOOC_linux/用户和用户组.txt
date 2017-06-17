@@ -1,0 +1,47 @@
+用户和用户组
+
+1./etc/group 存储当前系统中所有用户组信息
+Group      :      x      :      123      ：      abc,def,xyz
+组名称       组密码点位符     组编号            组用户列表
+root编号为0
+1-499组编号为系统预留组编号,安装软件越早，分配的越小，软件或服务
+500-~  为用户手动创建用户组
+密码点位符为X
+
+2./etc/gshadow 存储当前系统中用户组的密码信息，与/etc/group内容一一对应
+Group      :      *      :               ：      abc,def,xyz
+组名称        组密码        组管理者             组用户列表
+
+3./etc/passwd 存储当前系统中所有用户的信息
+- user      :    X     :    123     :   456     :   xxxxx    :   /home/user  :  /bin/bash
+用户名        密码点位符    用户编号   组编号      用户注释信息   用户主目录    shell类型
+
+4./etc/shadow  存储当前系统中所有用户的密码信息
+-user     :vf;/zuid   .....::::
+用户名      密码   
+
+5.用户和用户组命令
+添加用户组：groupadd 组名 如：grouppadd sex，groupadd -g 888 boss
+删除用户组：groupdel market 
+修改组编号groupmod -g 668 market 
+修改用户组：groupmod -n market sex 
+添加用户：useradd -g 用户组 用户，user -d /home/xxx imooc(创建用户时分配文件) 
+删除用户：
+修改用户：usermod -c 注释内容 用户 ，usermod -l new用户 old用户，usermod -d /home/xxx 用户名 
+修改用户所属用户组：usermod -g 新用户组 旧用户组
+禁止用户登陆，只能root用户登陆，创建一个文件即可 
+touch /etc/nologin
+
+属于多个用户组：gpasswd -a 用户  用户组，删除：gpasswd -d用户 用户组
+切换组：newgrp boss ,如果有组密码，则需要输入
+
+useradd -g group1 -G group2 ,,group3...
+设置组密码：gpasswd 组名称 
+
+其它命令：
+切换用户 ： su 用户名 
+whoami ：显示用户名
+id 用户名 ：显示指定用户信息
+groups 用户名 ：显示用户所在的用户组
+chfn 用户 ：设置用户详细资料
+finger 用户 ：显示用户详细信息

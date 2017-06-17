@@ -1,0 +1,1240 @@
+怎么提高数据库查询效率：
+1）select 不要用 *
+2）加索引
+3)创建视图
+4)避免迪卡尔积
+
+ctrl+shift+o 加载当前代码要用的包
+Book4:
+-----------------------------------------------------------
+day01: 
+	File creatNewFile() 创建文件  delete() 删除文件/目录  exists() 判断文件/目录是否存在
+	       mkdir()创建目录  mkdirs()
+		file.isDirector()判断文件是否是目录
+		file.isFile()判断文件是否是一个标准文件
+		File[] f =file.listFiles()返回一个抽象路径名数组，这些路径名表示此抽象路径名表示的目录中的文件。
+		FileFilter 接口过滤器
+		
+
+字节数据读写：RandomAccessFile 读写一个字节  读写一个字符窜
+		字符窜转字节 str.getBytes();
+		字节数组转成字符窜  new String(buf,0,len,"gbk");
+
+
+day02:	
+	RandomAccessFile 的读写“r”只读模式  “rw”读写模式
+		void write(); int read(); int read(Byte b[]); close();
+		long getFilePointer();获取当前RandomAccessFile指针。
+		void seek(long pos);移动当前指针。
+		int skipBytes(int n);将指针从当前跳过n个字节。返回实际跳过的字节数，为附属则不跳过任何字节。
+		
+IO流：		字节流（低级流） 处理流（高级流/过滤流）
+
+IS与OS	 InputStream：所有字节输入流的父类 
+		 OutputStream：所有字节输出流的父类
+	
+文件流:(低级流)	FileInputStream	
+		FileOutputStream 默认模式和追加模式 
+	
+缓冲流(高级流)：	BufferedInputStream BufferedOutputStream   void flush();
+
+对象流（高级流）：    ObjectOutputStream 用来序列化 ObjectInputStream用来反序列化  Serializable 想要序列化必须要实现此接口，自定义的引用类型变量也要实现才能序列化
+transient 用来瘦身的
+
+字符流：
+	Writer字符输出流的父类
+	Reader字符输入流的父类
+
+字符转换流：
+	InputStreamReader 字符输入流（可以设置字符集）
+InputStreamReader(InputStream in ,String charsetName)(指定字符集和默认字符集)
+	OutputStreamWriter 字符输出流（可以设置字符集）
+OutputStreamWriter（OutputStream outp ,String charsetName）(指定字符集和默认字符集两种构造方法)	
+
+day03:
+	 write reader
+	OutputStreamWriter   OutputStreamReader  直接写出字符窜  两种构造方法
+	转码操作 将utf-8转换成gbk 
+
+PrintWriter  具有自动行刷新的缓冲字符输出流
+	缓冲字符输入流  BufferedReader  		
+	缓冲字符输出流	BufferedWriter 
+
+	流的链接
+	自己写一个键盘输入
+
+	异常：  String str = null;
+		System.out.println(str.length());//会出现空指针异常 
+	软引用搜索一下有什么用。  java面试宝典题
+	
+	1.请简述final,finally,finalize分别是什么？
+ 	 finalize:该方法定义在Object中定义的方法。当该类的对象不被
+	任何引用变量指向时，会被GC回收，在回收前会被调用。
+
+	测试throw
+
+
+day04:
+	throws :申明方法可能会抛出异常
+	RuntimeException 非检测异常。
+	e.printStackTrace()输出执行堆栈信息  自带输出
+	e.getMessage()  需要println();输出。
+	e.getCause() 需要println();输出。
+	
+	throw关键字
+  用于主动抛出一个异常。
+  通常两种情况我们会抛出异常。而不是自己解决。
+  1.当遇到满足语法要求，但是不符合业务逻辑要求
+ 	时，我们可以抛出异常，让调用者解决。
+  2.当前代码遇到异常，但是不负责解决，而是应当
+  将异常反馈给调用者时，会抛出异常。
+	自定义异常     描述年龄不合法异常。
+
+
+多线程：进程与线程区别？
+	Thread类   Runnable接口
+
+	Thread t =Thread.currentThread()
+	获取运行当前代码片段的线程
+
+	获取线程信息：
+	long getID():返回该线程的标识符
+	String getName():返回该线程的名称
+	int getPriority():返回线程优先级
+	Thread.state getState():获取线程的状态
+	boolean isAlive():测试线程是否处于活动状态
+	boolean isDaemon():测试线程是否是守护线程
+	boolean isInterrupted():测试线程是否已经中断
+
+	线程优先级 :
+	void setPriority(int priority)
+	Thread.MIN_PRIORITY
+	Thread.MAX_PRIORITY
+	Thread.NORM_PRIORITY
+
+day05:
+
+	守护线程（后台线程，当所有前台线程结束后守护线程被强制结束）GC就是运行在一个守护线程上的。
+	void setDaemon(boolean):
+
+	一个方法的局部内部类中要使用该方法的其他局部变量，这个变量必须是final的
+
+	Thread.sleep();会抛出InterruptException
+	Thread.yield();让当前线程让出运行时间片
+	void join();用于等待当前线程结束。
+
+同步锁：
+	synchronized 两种加锁方式
+1.同步代码块:
+	synchronized(需要锁的对象){需要同步的语句}
+2.同步方法:将synchronized添加到方法上。
+	    public synchronized void A(){}
+
+	wait()		notify();
+	当调用那个对象的obj.wait();和obj.notify()方法时必须
+	把这个对象锁起来。
+	eg: synchronized(obj){
+		obj.wait();	
+	}
+	另一个同理。
+
+
+day 06:
+  
+  TCP    socket Serversocket
+
+  UDP
+  
+day 07:
+
+  XML:
+    第一行：
+    <? xml version = "1.0" encodeing = "utf-8" ?>
+  
+  根元素：不被其它元素包围的标签。
+  根标签有且只能有一个  如：
+    <a>  </a>
+    <p> 
+    <div>
+    </div>
+    </p>
+    这里a与p 平级 有两个根标签就不行
+  
+  实体引用：
+    &lt;  <
+    &gt;  >
+    &amp: &
+    &apos; '
+    &quot; "
+  
+  CDATA段
+  <![CDATA[
+  文本
+  文本
+  ]]>
+  <!-- 文本－－!>
+  
+  
+  XML解析方式：
+  
+    SAX（simple API for XML)
+    DOM（Document Object Model,文档对象模型）
+    
+      SAXReader 读取XML文档
+      Document 的getRootElement
+      
+  
+  
+  day 08
+    
+    XPath:
+  
+  /——------------------->分隔符
+  /step/step/...---------->绝对路径必须用“/”起首
+  step/step/...----------->相对路径不使用“/”起首
+  .  --------------------->表示当前节点
+  ..  -------------------->表示当前节点的父节点
+  
+  nodename  -------------->表示选择该节点的所有子节点
+  
+  /     ------------------>表示选择根节点
+  //   --------------->表示选择任意位置的某个节点
+  ＠    ------------------>表示选择某个属性
+  
+  /bookstore  ------------>选取根节点bookstore,这是绝对路径写法
+  bookstore/book --------->选取所有属于bookstort的子元素的book元素这是相对路径写法
+  //book   ------------>选取所有book子元素，而不管它在文档中的位置
+ bookstore//book--------->选取所有属于bookstore元素的后代的book元素，而不管它位于bookstore之下的什么位置
+ //@long    ----------->选取所有名为lang的属性
+ 
+ 谓语：
+ /bookstore/book[1]:选取bookstort的第一个book子元素
+ /bookstore/book[last()]:选取bookstort的最后一个book子元素
+ /bookstore/book[last()-1]:选取bookstort的倒数第二个book子元素
+  /bookstore/book[position()<3]:选取bookstort的前两个book子元素
+  //title[@lang]:表示选择所有具有long属性的title节点
+  //title[@lang='eng']:表示选择所有long 属性的值等于eng的title节点
+  
+  /bookstore/book[price]:表示选择bookstore的book子元素，且被选中的book元素必须带有price子元素
+  /bookstore/book[price>35.00]:表示选择bookstore的book子元素,且被选中的book元素的price子元素
+  /bookstore/book[price>35.00]/title:表示在上例结果集中，选择title子元素
+  /bookstore/book/price[.<35.00]:表示选择值大于35的"/bookstore/book"的price子元素
+  
+  
+  通配符：
+  ＊ 表示匹配任何元素节点
+  ＠＊ 表示匹配任何属性值
+  
+  node()表示匹配任何类型的节点
+  
+  /*
+  //* 选择文档中的所有元素节点
+   */
+  /*/* 表示选择所有第二层的元素节点
+  /bookstore/* 表示选择bookstore的所有元素子节点 
+  //title[@*]表示选择所有带有属性的title元素
+  */
+  
+ 用xpath查找需要引入jaxen-xx-xx.jar
+ 
+ Document提供了一个对xpath检索的方法：
+  List selectNodes(String xpath)  传入xpath路径，获取相应的信息
+ 
+
+Book5: ORACLE
+  
+  unit1:
+  
+    SQL : 结构化查询语言  (这里面的字符串区分大小写)
+    
+      关系数据库：一对一、一对多、多对多。这里的关系是两张表中数据之间的关系而不是表与表之间的关系。主                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+	
+	
+	DDL:
+	
+      数据类型：number(p,s) p:数字的总位数 s:小数点后面的位数
+	注：p是总位数不是小数点前的位数
+	char 表示固定长度的字符类型常被定义成char(n)形式，n表示占用的字节数
+	最大长度是2000字节
+	
+	varchar:变长字符 格式varchar(n)用多少占多少最多占用n 
+	最大长度为4000字节
+	varchar2  oracle 专用 各varchar一样
+	
+	data ：用于定义日期时间的数据 长度：7个字节  默认格式：DD－MON－RR
+	
+	  DESC :查看表结构  desc employee
+	  
+	 DROP TABLE表名：删除给定的表	如：drop tabke employee
+	 
+	 default 关键字 ：数据库中，无论表中的字段是什么类型在插入数据时
+	 只要没有指定该字段对应的值，默认为null。若希望指定特殊的默认值，可以使用default关键字
+	 例如：gender char(1) default 'M ',
+	 还有一点需要注意，数据库中字符串是用引号括起来的，而且内容区分大小写。
+	 SQL语句本身不区分大小写。
+	 
+	 not null	非空必需给值 如：name varchar2 not null
+	 not null 与 default 通常只能写一个
+	 
+	 修改表名：	rename employee_pillow to myemp_pillow
+	 
+	 增加列：
+	 alter table myemp_pillow（表名）
+	 add(hiredata date default sysdate)（字段，多条用，隔开）
+	 向表中添加新字段需要要注意的是，只能向表的末尾追加新的字段
+	 而不能在现有字段中间插入新的字段
+	 
+	 删除列：
+	 alter table 表名 drop（ 列名）
+	 alter table myemp_pillow drop (job);
+	 
+	 修改列名：
+	 alter table table_name rename column old_column_name to new_column_name;
+	 alter table myemp_pillow rename column job to job1;
+	 修改列：
+	 alert table myemp_pillow
+	 modify(job varchar2(40) default 'clerk');
+	 修改字段时注意
+	 
+	 DML:
+	 向表中插入数据：
+	 insert语句：
+	 插入：
+	 insert into table_name[(列名1，列名2....)]
+	 values(value1,value2,......);
+	 插入日期格式：
+	 默认日期格式：‘DD－MON－RR’
+	 insert into myemp_pillow
+	 (id , name , job , birth)
+	 values
+	 (
+	 1003,'donna','MANAGER' ,TO_DATE('2009-09-01','YYYY-MM-DD'
+	 );
+	 
+	 提交：COMMIT 将内存中的数据提交来硬盘
+	 回退：将内存中的数据清除
+	 不管是提交还是回退，当前事务都结束了
+	 
+	 更新表中的数据：
+	 update语句：
+	 更新：
+	 update table_name
+	 SET 字段＝value 
+	 where condition
+	 
+	 update myemp
+	 set salary = 8000
+	 where name='rose'
+	 rose 区分大小写
+	 如果没有where 就改变全表的数据
+	 
+	 
+	 删除表中数据 (用于删除记录)
+	 drom用于删除表
+	 delete [from] table_name [where condition]
+	 例如：
+	 delete from myemp_pillow 
+	 where name='rose'
+	 
+	 truncate  将表中数据全部删除
+	 truncate与delete区别
+	 truncate 无条件删除表中所有语句，不能回退
+	 delete 可以带where 条件 可以回退
+	 
+	 
+	 
+unit2:
+	 字符串类型
+	 char   varchar2 
+	 char(10)  等价于 char(10 byte) 10个字节
+	 指定单位为字符
+	 char(10 char) 20个字节
+	 varchar2 指定字符同char
+	 
+	 long  clob
+	 
+	 
+	字符串函数：
+
+	 查寻：
+	 
+	 select * from emp_pillow 
+	 select ename,job,sal from emp_pillow  返回三列
+	 
+	 
+	 concat函数：
+	 select concat(ename ,job ) emp_pillow  返回一列(只能有两个字段)
+	 concat 嵌套
+	  concat concat(concat(ename, ':'),sal) FROM emp_pillow 
+	  
+	  
+	  ||:
+	  多个字符串连接
+	  select ename || ':' || job || ':' || sal from emp_pillow
+	  
+	  
+	  length(char):
+	  select ename, length(ename) from emp_pillow 
+	  select ename length(ename) from emp_pillow
+	  
+	  
+	  upper  lower   initcap :
+	  select 
+	  upper('helloworld'),转大写
+	  lower('HELLOWORLD'),转小写
+	  initcap('HELLO WORLD')转单词首字母大写，单词之间用空格隔开
+	  FROM dual
+	  from中的表不和任何表产生关系时保用伪表
+	  dual 伪表 实际没有这张表 满足语法要求
+	  应用：
+	  select * from emp_pillow
+	  where lower(ename) = lower('Scott')
+	  查询ename 中叫scott的信息不管大小写
+	  
+	  
+	  trim  ltrim  rtrim ：
+	  select trim('e' from 'eeeeliteeeee')
+	  from dual
+	  trim 去掉两边重复字符（只能是单个字符）
+	  格式：trim('e' from 'eeeeliteeeee')
+	  ltrim 去掉左边 格式 ltrim(目标字符串，需要去掉的字符(可以是多个字符)） 
+	  ltrim('eseseslistesesesse','es') 只要包含es中一个都会去掉不一定非要连着
+	  rtrim 去掉右边 同上
+	  
+	  
+	  lpad rpad :
+	  补位函数
+	  lpad 左补 LPAD（char1 , n ,char2) 
+	  lpad (sal , 10 ,'$') 显示n 位
+	  rpad 同上
+	  
+	  
+	  substr
+	  获取字符串
+	  substr('thinking in java',1,3)从第一个开始取3 个
+	  substr('thinking in java',5,2)从第五个开始取2个
+	  substr('thinking in java',0,3)从第一个开始取3个
+	  substr('thinking in java',-4,4) 取到的是 java 超了取到末尾
+	   substr('thinking in java',-4)  从－4取到末尾
+	  数据库中从1 形如不是0，如果写0也是从第一个开始
+	  
+	  instr :
+	  instr(char1 ,char2[,n[,m]])
+	  select instr( 'Doctor Who','Who')返回8 大小写要一致
+	  select instr('thinking in java','in',4,2) 从第4个开始找第2次出现的位置
+	  
+	  
+	  数值类型：
+	  number(p,s) p 最大为38，即取值 范围1－38
+	  
+	  
+	  数值函数：
+	  
+	  round:
+	  四舍五入：
+	  select round(55.678，2）  55.68
+	  select round(55.678,-1)   60
+	  select round(55.678,-2)  100
+	  
+	  
+	  trunc:
+	  截取
+	  select trunc(55.678，2）  55.67
+	  select trunc(55.678）     55
+	  select trunc(55.678，-1）  50
+	  select trunc(55.678，-2）  0
+	  与select的不同就是没有四舍五入
+	  
+	  mod :
+	  求余数
+	  mod(m,n)
+	  select ename,sal,mod(sal,1000) from emp_pillow
+	  若n为0则返回m
+	  
+	  
+	  ceil  floor :
+	  ceil : 向上取整
+	  ceil(45.6)  	46
+	  floor: 向下取整
+	  floor(45.6) 	45
+	  
+	  
+	  日期类型：
+	  
+	  日期关键字：
+	  sysdate 当前系统时间
+	  select SYSDATE FROM DUAL
+	  
+	  
+	  systimestamp
+	  返回系统当前系统日期和时间，精确到毫秒
+	  
+	  
+	  日期转换函数：
+	  to_date(char[,fmt[,mlsparams]])
+	  char:要转换的字符串
+	  fmt:格式
+	  nlsparams:指定日期语言
+	  SELECT ename,job,hiredate
+	  FROM emp_pillow
+	  WHERE hiredate>TO_DATE('1981-01-01','YYYY-MM-DD')
+	  
+	  日期之间可以相减，差为天数
+	  
+	  to_char
+	  将其它类型的数据转换为字符
+	  to_char(data[,fmt[,nlsp]]
+	  SELECT TO_CHAR(SYSDATE,'YYYY-MM-DD HH24:MI:SS')FROM DUAL
+	  select to_char(
+	  to_date('51-08-08','RR-MM-DD'),'YYYY-MM-DD')
+	  FROM DUAL
+	  返回1951年
+	  
+	  
+	  日期常用函数：
+	  
+	  last_day（date）
+	  返回日期date所在月的最后一天
+	  select last_day(date) from dual
+	  
+	  add_months(date,i)
+	  返回日期date加上i个月后的日期值
+	  SELECT ADD_MONTHS(HIREDATE,20*12)
+	  FROM emp_pillow
+	  
+	  months_between(date1,date2)算的是date1-date2
+	  返回的是两个日期之间的相差月份
+	  
+	  next_day(date , char) 
+	  返回date日期数据的下一个周几，周几是由参数char来决定的
+	  即离现在最近的还没有过的周几
+	  比如今天为周四  next_day(sysdate,3) 是下周三，因为这个周三已经过了
+	  1表示周日，2 表示周一。。。只能是1－7
+	  
+	  
+	  least  greatest
+	  least(expr1[,expr2[expr3]]...)返回最小的值，参数类型要一样，可传很多参数
+	  greatest 同上(返回最大值)  如果类型不一样从第二个以后就转为第一个，转不了报错
+	  
+	  
+	  extract(date from datetime)
+	  从参数datetime中提取参数date指定的数据，比如年、月、日
+	  select extract(hour from timestamp '2008-10-10 10:10:10')
+	  from dual提取出来的是小时
+	  
+	  空值操作：
+	  
+	  null：两种插入方式，显式，隐式
+	  is null:判断是空
+	  is not null:判断不是空
+	  
+	  空植函数：
+	  null与字符串拼接，等于什么也没做  是字符串
+	  null与数字运算结果为null
+	  
+	  nvl(a1,a2)将null值转变为非null值
+	  nvl(a1,0)如果第一个数为空则返回第二个数若不为空则返回第一个数
+	  select ename,sal,comm,sal+nvl(comm,0) from emp_pillow
+	  
+	  nvl2(a1,a2,a2)
+	  判断a1是否为null 如果不是null返回a2如果是返回a3
+	  
+	  SELECT TO_CHAR(SYSDATE,'YYYY"年"MM"月"DD"日" HH24"时"MI"分"SS"秒"')
+FROM DUAL  	将系统时间转为指定格式
+	  
+	  
+unit3:
+	  基本查询语句：
+	  
+	  from 子句：
+	  select <.....> from table
+	 select 用于指定要查询的列 
+	 from 指定要从哪个表中查询
+	 
+	 
+	  字段加别名：
+	  当我们查询的字段中含有表达式或者函数，那么该字段在查询出的结果
+	  集中的字段就是该函数或者表达式，这样可读性差，我们可以使用别名来发送。
+	  SELECT ename as ID,TO_CHAR(hiredate,'YYYY-MM-DD')  不了 FROM emp_pillow
+	  不了 就是别名，前面可以加as 用空格隔开，不能用 ， 
+	  如果别名中含有空格且区分大小写
+	  
+	  
+	  where 子句 
+	  限制查询结果
+	  SELECT ename,sal,job FROM emp_pillow 
+	  WHERE job = 'SALESMAN';
+	  
+	  
+	  查询条件：
+	  
+	  使用 >,<,>=,<=,!=,<> ,=
+	  不等有  "< >"和“ ！＝”两种，建议使用<>
+	  SELECT ename,sal,hiredate FROM emp_pillow
+	  WHERE hiredate >TO_DATE('1985-1-1','YYYY-MM-DD')
+	  
+	  
+	  使用 and , or 关键字
+	  SELECT ename,sal ,job FROM emp_pillow
+	  WHERE sal > 1000 or job = 'CLERK';
+	  and 优先级高于 or  要组合可以加括号
+	  
+	  
+	  使用like条件（模糊查询）
+	  like要借助两个通配符
+	  % ：表示0到多个字符
+	  _ ：标识单个字符
+	  SELECT ename FROM emp_pillow 
+	  WHERE ename LIKE '_A%';
+	  
+	  使用in 和not in 
+	  比较操作符in(list)用来取出符合列表范围中的数据
+	  list表示值列表，当列表或表达式匹配于列表中的任何
+	  一个值时条件为TRUE，该条记录则被显示出来
+	  可以认为是一个范围比较，只不过范围是指定的值
+	  SELECT ename,job,deptno FROM emp_pillow 
+	  WHERE deptno not in (10,20)
+	  not取出不符合中此列表中的数据记录
+	  
+	  
+	  between ...and....
+	  用来查询符合某个值域范围条件的数据
+	  select ename,sal , form emp_pillow 
+	  where sal between 1500 and 3000;
+	  
+	  
+	  is null 和is not null
+	  SELECT ename,sal, comm FROM emp_pillow
+	  WHERE comm IS  NOT NULL;
+	  
+	  any 和 all
+	  any 和all不能单独使用，需要配合单行比较操作符
+	  >,>=,<,<=一起使用。
+	  >any: 大于最小
+	  <any: 小于最大
+	  >all:	大于最大
+	  <all: 小于最小
+	  
+	  查询条件中使用表达式和函数
+	  SELECT ename,sal,job FROM emp_pillow 
+	  WHERE sal*12>30000;条件是表达式
+	  SELECT ename,sal,job FROM emp_pillow 
+	  WHERE ename=UPPER('ward');
+	  条件是函数
+	  
+	  使用distinct过滤重复
+	  SELECT  DISTINCT job FROM emp_pillow 
+	  distinct必须紧根在select 之后
+	  SELECT DISTINCT deptno, job FROM emp_pillow 
+	  查询每个部门的职位去掉重复值
+	  
+	  
+	  排序：
+	  order by :(null为最大值 )
+	 对数据按一定规进行排序操作
+	 desc:降序 (desc还有一种意义就是查看表结构  desc employee）
+	 asc:升序 默认
+	  SELECT  ename,sal,deptno FROM emp_pillow
+	  ORDER BY sal DESC ,deptno
+	  先sal降序再按deptno升序
+	  order by 必须写在SELECT的最后面
+	  
+	  聚合函数：
+	  
+	  
+	  max 和 min
+	  聚合函数又叫做组函数，它是用于统计的,将多个值进行运算得出一个结果
+	  SELECT MAX(sal),MIN(SAL) FROM emp_pillow 查最高工资和最最低工资
+	  
+	  avg和sum
+	  SELECT AVG(sal),SUM(sal) FROM emp_pillow 
+	  忽略null值
+	  
+	  count
+	  用来计算表中的记录条数（忽略null值）
+	  select count(*)  from emp_pillow
+	  
+	  分组：
+	  将某个字段的值相同的记录看做一组，然后可以用于统计数据使用，为聚合函数服务
+	  在select语句中不在聚合函数上的其它字段，必须出现在group by 上
+	  
+	  group by 子句：
+	  SELECT MAX(sal) ,MIN(sal),trunc(AVG(sal)),SUM(sal) ,job
+	  FROM emp_pillow
+	  GROUP BY job
+	  
+	  having子句
+	  用来对分组后的结果进一步限制
+	  必须 跟在group by 后面，不能单独存在，可以使用组函数
+	  SELECT MAX(sal) ,trunc(AVG(sal)),MIN(sal),SUM(sal) ,deptno
+	  FROM emp_pillow
+	  GROUP BY deptno
+	  having avg(sal)>2000
+	  having 的语句可以不出现在查询中即：AVG(sal)可不不在select中
+	  
+	  查询语句的执行顺序：
+	  1.from 子句：执行顺序为从后往前、从右到左
+	      数量较少的表尽量放在后面
+	  2.where子句：执行顺序为自下而上、从右到左
+	      将能过滤掉最大数量记录的条件写在where子句的最右
+	  3.group by 执行顺序从左往右分组
+	      最好在group by 前使用where 将不需要的记录在group by 之前过滤掉 
+	  4.having子句：消耗资源
+	      尽量不使用，having会在检索出所有记录之后才对结果进行过滤，需要排序等操作
+	  5.select 子句：少使用＊号，尽量取字段名称
+	      oracle在解析的过程中，通过查询数据字典将＊号依次转换成所有的列名，消耗时间
+	  6.order by 子句：执行顺序为从左到右排序，消耗资源
+	  
+	  
+	  SQL关联查询：
+	  
+	  关联查询：查询的数据从多张表中得到。
+		    关联查询必须要写链接条件。
+		    N张表进行链接查询，至少要有N－1个链接条件
+	  
+	  关联基础：
+	  笛卡尔积：做关联操作的第个表的每一行都和其它表的第一行做组合，假设两个表的记录
+	  条数分别是X和Y，笛卡尔积将返回X＊Y条记录
+	  关联查询不指定连接条件就会出现笛卡尔积，实际中要避免这种情况的出现，
+	  通常笛卡尔积没意义。
+	  
+	  等值连接：
+	  select ename,sal,job,dname,loc from emp_pillow,dept_pillow
+	  where emp_pillow.deptno = dept_pillow.deptno
+	  在from子句中加别名可以简化书写如：from emp_pillow e,dept_pillow d
+	  可以加过虑条件，但是要满足连接条件，所以连接条件要与过虑条件用and相连
+	  SELECT e.ename,e.sal,e.job,d.dname,d.loc ,e.deptno FROM emp_pillow e,dept_pillow d
+	  WHERE e.deptno = d.deptno AND job='MANAGER'
+	  
+	  
+	  内连接：
+	  from 表A join 表B on（关联关系）
+	  内连接返回所有满足条件的记录
+	  SELECT e.ename,d.dname
+	  FROM emp_pillow e JOIN dept_pillow d
+	  ON (e.deptno = d.deptno)
+	  WHERE e.job='MANAGER'
+	  
+	  
+	  外连接：
+	左外连接：from emp e left outer join dept d on(e.deptno=d.deptno) 左边全显示，右边没有补null
+	右外连接：from emp e right outer join dept d on(e.deptno=d.deptno)  同上
+	全外连接：from emp e full outer join dept d on(e.deptno=d.deptno)  哪边有显示哪边没有的补null
+	
+	传统方法左右外连接：
+	哪边补null哪边写(+)没有全外连接
+	SELECT e.ename,d.dname
+	FROM emp_pillow e ,dept_pillow d
+	WHERE d.deptno(+) = e.deptno（+）
+	
+	自连接:
+	保存数据相同但是数据间双存在上下面关系，而且层级不确定。
+	SELECT  e.ename,m.ename
+	FROM emp_pillow e,emp_pillow m
+	WHERE e.mgr=m.empno(+)
+	
+unit4:
+	高级查询：
+	
+	子查询：嵌入其他 SQL语句中的查询语句
+	通常是为了外层SQL提供数据支持的，子查询不仅可以用在查询
+	语句中，也可以用在DDL，DML中
+	但是在查询语句中使用子查询最频繁
+	SELECT deptno ,ename
+	FROM emp_pillow
+	WHERE deptno=(
+	SELECT deptno 
+	FROM emp_pillow
+	WHERE ename='KING'
+	) 
+	DDL中创建表使用子查询
+	creat table tendept as select * from  emp_pillow where deptno=10
+	DML使用子查询
+	delete from emp_pillow
+	where deptno=(
+	select deptno from emp_pillow where ename=' king')
+	
+	子查询分类：
+	单行单列： 返回一行数据
+	多行单列： 返回多行数据
+	多行多列： 返回多行多列数据
+	
+	返回一行用 ＝
+	返回多行用 in() not in() >all <any 
+	
+	exists:
+	
+	
+	having中的子查询
+	SELECT MAX(sal) ,MIN(sal) 
+	  FROM emp_pillow 
+	  group by deptno
+	  HAVING MIN(sal)>
+	  (
+	  SELECT MIN(sal)
+	  FROM emp_pillow 
+	  WHERE deptno =30)
+
+	from中的子查询：
+	SELECT e.sal ,e.deptno,e.ename 
+	  FROM emp_pillow e ,(
+	  SELECT AVG(sal) avg_sal,deptno
+	  FROM emp_pillow 
+	  GROUP BY deptno) z
+	  WHERE z.deptno= e.deptno 
+	  AND e.sal>z.avg_sal
+	  多列子查询常被看作一张表，出现在FROM子句中（内视图）
+
+	  子查询在select部分
+	  SELECT e.ename, e.sal, (SELECT d.dname FROM dept_pillow d
+	  WHERE d.deptno = e.deptno) deptno 
+	  FROM emp_pillow e
+
+	
+	  分页查询：
+	  我们为什么要分页：
+	  1：节省资源
+	  2：
+	  
+	  rownum:
+	  被称作伪列，用于返回标识行数据顺序的数字。
+	  由于在使用ROWNUM编号的过程中不能进行>判断，所以我们可以 先编
+	  号，然后将查询的结果集当作一张表看待，再进行按照范围取数据。
+	  SELECT *
+	  from(
+	  SELECT ROWNUM  r,ename,job,saL
+	  FROM emp_pillow
+	  )
+	  WHERE r BETWEEN 6 AND 10 
+	  这里ROWNUM是一个关键字所以要取一个别名
+	  
+	  分页与order by 
+	  若有在分页的过程中有排序的需求时，由于编号是在查询
+	  的过程中做的，由于排序是在后做的，这会导致行号
+	  出现混乱，所以我们应当先进行一次排序，在排序
+	  的结果基础上再进行编号就可以解决该问题了
+	  
+	  oracle 中的分页查询是靠两次子查询完成的。
+	  先排序，再编号，最后取范围。
+	  范围是有一个算法的：
+	  pageSize:每页的条目数
+	  page:第几页
+	  min = (page-1)*pageSize+1
+	  max = page*pageSize
+	  
+	  decode函数：
+	  SELECT ename,job,sal,
+	  DECODE(job,'MANAGER',sal*1.2,
+	  'ANALYST',sal*1.1,
+	  'SALESMAN',sal*1.05,
+		 sal
+	  ) bonus
+	  FROM emp_pillow;
+	  如果没有匹配到时返回最后一个default如果没有 提供default
+	  将返回null。
+	  
+	  case: 与decode功能相似
+	    SELECT ename,job,sal,
+	  CASE job WHEN 'MANAGER' THEN sal*1.2
+	  WHEN 'ANALYST' THEN sal*1.1
+	  WHEN 'SALESMAN' THEN sal*1.05
+	  ELSE sal END bonus 
+	  FROM emp_pillow
+	  
+	  
+	  decode 在分组函数中的应用 (将job中的一些分组，但是用GROUP BY 实现不了）
+SELECT COUNT(*),DECODE(job,
+                'MANAGER','vip',
+                'ANALYST','vip',
+                'other')
+FROM emp_pillow
+GROUP BY DECODE(job,
+                'MANAGER','vip',
+                'ANALYST','vip',
+                'other')
+                
+                可以按照自己指定的顺序排序通过decode
+                SELECT deptno,dname,loc
+FROM dept_pillow
+ORDER BY DECODE(dname,'OPERATIONS',1,
+'ACCOUNTING',2,'SALES',3);
+
+	排序函数：
+	row_number:
+	根据给定的字段分组，再按照给定的字段排序，
+	然后生成组内连续且唯一的数字。
+	row_number() over(partition by col1 order by col2)
+	表示根据col1分组，在组内根据col2排序
+	rank:
+	生成不连读不唯一（在有重复值的情况）
+	相同数据返回相同的排名，但是下一位，延后
+	dense_rank()
+	连续但是不唯一
+	row_number()  rank()   dense_rank()格式一样，结果有不同之处
+	
+		
+	集合操作：
+		
+	 union 、 union all并 
+	 union :会自动去掉合并后重复记录，对查询结果排序
+	 union all ：返回两个结果集中的所有行，不去重复，不排序
+	 SELECT ename,job,sal FROM emp_pillow
+WHERE job = 'MANAGER'
+UNION/union all
+SELECT ename,job,sal FROM emp_pillow
+WHERE sal>2500;
+	intersect  交
+	 获得两个结果交集，以第一列的数据做升序排列
+	 minus 差
+	获取两个结果的差集（第一个结果减第二个结果）
+	以上所有的查询顺序必须一样
+		
+	高级分组函数：
+	rollup :
+	group by rollup(a,b,c)
+	对rollup的列从右到左以一次少一列的方式进行分组直到
+	所有列都去掉后的分组（也就是全表分组）
+	对于n个参数的rollup，有n＋1次分组
+	SELECT year_id ,month_id,day_id,SUM(sales_value)
+	FROM salespillow
+	GROUP BY 
+	ROLLUP(year_id,month_id,day_id)
+	
+	cube：
+	group by cube(a,b,c)
+	对cube的每个参数，都可以理解为取值为参与分组和不参与分组两个
+	值的一个维度，所有维度取值组合的集合，就是分组后的集合
+	对于n 个参数的cube，有2^n次分组
+	SELECT year_id ,month_id,day_id,SUM(sales_value)
+	FROM salespillow
+	GROUP BY CUBE(year_id,month_id,day_id)
+	ORDER BY year_id,month_id,day_id
+	
+	grouping sets:
+	指定所需的分组(把需要分组的用括号括起来再用逗号隔开)
+	可以包含重复的分组
+	SELECT year_id , month_id ,day_id,SUM(sales_value)
+FROM salespillow
+GROUP BY 
+GROUPING SETS((year_id,month_id,day_id),(year_id,month_id))
+
+unit5:
+    
+	视图：
+	视图（VIEW）也被称作虚表，是一组数据的逻辑表示。
+	视图对应于一条SELECT语句，结果集被赋予一个名字，即视图名字。
+	视图本身并不包含任何数据，它只包含映射到基表的一个查询语句，当
+	基表数据发生变化，视图数据也随之变化。
+	
+	创建视图：
+	create view 视图名 as 要查询的内容（查询语句）
+	
+	视图种类：（按对应子查询种类分）
+	SELECT 语句是基于单表建立的，且不包含作保函数运算、
+	表达式或分组函数，叫做简单视图，是视图基表的子集。
+	SELECT 语句同样是基于单表，但包含了单行函数表达式
+	分组函数或GROUP BY 子句，叫做复杂视图。
+	SELECT 语句是基于多个表的，叫做连接视图
+	
+	视图的作用：
+	简化复杂查询、限制数据访问。
+	
+	创建视图是有权限的：
+	权限： grant create view to tarena
+	grant 何种权限 to 权限给谁
+	
+	对视图进行ＤＭＬ操作：
+	视图本身并不包含数据，只是基表数据的逻辑映射
+	当对视图执行ＤＭＬ操作时，实际上是对基表的ＤＭＬ操作
+	对视图执行ＤＭＬ操作规则：
+	简单视图能够执行ＤＭＬ操作，下列情况除外：在基表中定义了非空列，但简单视图对就的ＳＥＬＥＣＴ语句并没有包含这个非空列，导致这个非空列对视图不可见，这时无法对视图执行ＩＮＳＥＲＴ操作
+	ＤＥＬＥＴＥ操作时，只能删除现有视图里能查到的记录
+	如果视图定义中包含了函数、表达式、分组语句、ＤＩＳＴＩＮＣＴ关键字或ＲＯＷＮＵＭ伪列，不允许执行ＤＭＬ操作
+	ＤＭＬ操作不能违反基表的约束条件
+	
+	创建具有check option 约束的视图
+CREATE OR REPLACE VIEW v_emp_pillow
+AS
+SELECT empno no ,ename name,sal salary,deptno dno
+FROM emp_pillow
+WHERE deptno = 10
+WITH CHECK OPTION
+
+	创建具有read only约束的视图
+	with check option 与with read only 只写一个就行了
+	
+	CREATE OR REPLACE VIEW v_emp_pillow
+AS
+SELECT empno eno,ename name,sal salary ,deptno dno
+FROM emp_pillow
+WHERE deptno=10
+WITH READ ONLY
+
+	和视图相关的数据字典：
+	user_objects
+	user_views
+	user_tables
+	user_update_columns
+	SELECT object_name FROM user_objects
+	 WHERE object_NAME LIKE  UPPER('%pillow')
+	  SELECT object_name FROM user_objects
+	  WHERE object_type = 'VIEW'
+	
+	object_type  object_name
+	view_name 
+	table_name
+	
+	复杂视图：
+	创建复杂视图
+	CREATE VIEW v_emp_spillow
+	AS
+	SELECT d.deptno  ,d.dname ,MAX(e.sal) max_sal,
+	MIN(e.sal) min_sal,AVG(e.sal) avg_sal ,SUM(e.sal) sum_sal
+	FROM emp_pillow e,dept_pillow d
+	WHERE e.deptno = d.deptno
+	GROUP BY d.deptno ,d.dname
+	
+	删除视图：
+	drop view view_name
+	DROP VIEW v_emp_pillow
+	
+	
+	序列：
+	序列：sequence 是一种用来生成唯一数字值的数据库对象
+	主键：非空且唯一
+	
+	创建序列：
+	create sequence [schema.]sequence_name
+	[start with i] [increment by j]
+	[maxvalue m | nomaxvalue]
+	[minvalue n | nominvalue]
+	[cycle | nocycle] [cache p | nocache]
+	
+	CREATE SEQUENCE emp_seq_pillow
+	START WITH 100
+	INCREMENT BY 10 ;
+	
+	使用序列：
+	nextval:获取序列的下个值  不可逆，不可回退
+	currval:获取序列的当前值
+	select emp_seq_pillow.nextval from dual 下个值
+	select emp_seq_pillow.currval from dual	当前值
+	应用：
+	insert into emp_pillow(
+	empno,ename,sal,job,deptno)
+	values(
+	emp_seq_pillow.nextval,'JACK',5000,'CLERK',10)
+	
+	删除序列：
+	drop sequence emp_seq_pillow
+	
+	索引：
+	索引是一种允许直接访问数据表中某一数据行的树型结构
+	、为了提高𣑺效率而引入，是独立球场表的对象，可以存放
+	在与表不同的表空间（tablespace)中
+	索引记录中存有索引关键字和指向表中数据的指针（地址）
+	对索引进行的I/O操作比对表进行操作要少很多
+	索引一量被建立就将被Oracle系统自动维护，查询语句
+	中不用指定使用哪个索引
+	索引是一种提高查询效率的机制
+	Oracle B－tree索引的结构
+	
+	创建索引：
+	create ［unique］index 索引名 on 表名（字段名）
+	CREATE INDEX idx_emp_pillow_ename ON emp_pillow(ename)
+	经常用ename作为过虑条件，或order by 就给它加索引
+	
+	复合索引：
+	create index idx_emp_pillow_job_sal on emp_pillow(job,sal)
+	给函数加索引：
+	create index idx_emp_pillow_upper 
+	on emp_pillow(upper(ename))
+	
+	修改索引：
+	alter index idx_empx_upper rebuild
+	
+	删除索引：
+	drop index idx_empx_upper 
+	
+	使用索引提升查询效率
+	原则：
+	1.不要在数据量小的表上建立索引
+	2.尽量不要在经常作DML操作的表上加索引
+	3.为经常出现在where子句中的列创建索引
+	4.为经常出现在order by 、distinct后面的字段建立索引。
+	    如果是复合索引，索引的字段顺序要和这些关键字后面
+	    的字段顺序一致。
+	5.为经常作为表的连接条件的列上创建索引
+	6.限制表上的索引数目，索引并不是越多越好
+	7.删除很少被使用的－不合理的索引
+	
+	
+	约束：
+	约束的类型：
+	非空约束(not null) NN 列级约束
+	唯一性约束(unique) UK
+	主键约束(primary key) PK
+	外键约束(foreigh key) FK
+	检查约束(check)  CK
+	
+	非空约束：
+	not null
+	非空约束用于确保字段值不为空
+	
+	建表时添加非空约束
+	
+	修改表时添加非空约束
+	ALTER TABLE employees_pillow
+	MODIFY(eid NUMBER(6) NOT NULL)
+	
+	取消非空约束
+	ALTER TABLE employees_pillow
+	MODIFY (eid NUMBER(6) NULL)
+	
+	唯一性约束：
+	unique
+	当给表的某个列定义了唯一约束条件，该列的值不允许
+	重复，但允许是null值
+	
+	CREATE TABLE employees1_pillow(
+	eid NUMBER(6) UNIQUE,(列级约束）
+	name VARCHAR2(30),
+	email VARCHAR2(50),
+	salary NUMBER(7,2),
+	hiredate DATE,
+	CONSTRAINT employees1_pillow_email_uk UNIQUE(email))（表级约束）
+	
+	添加唯一性约束：
+	alter table employees1_pillow
+	add constraint employees_name_uk_pillow unique(name)
+	
+	 主键约束：
+	 主键(primary key)约束条件从功能上看相当
+	 于非空(not null)且唯一(unique)组合
+	 
+	 添加主键约束：
+	 CREATE TABLE employees2_pillow(
+	eid NUMBER(6) PRIMARY KEY,
+	name VARCHAR2(30),
+	email VARCHAR2(50),
+	salary NUMBER(7,2),
+	hiredate DATE 
+	);
+	建表后创建主键约束条件：（表级约束）
+	ALTER TABLE employees3_pillow
+        ADD CONSTRAINT  employees3_eid_pillow_pk PRIMARY KEY (eid);
+
+	主键选取的原则：
+	1）主键应是对系统无意义的数据
+	2）永远也不要更新主键，让主键队一唯一标识一行之外再
+	无其他的用途
+	3）主键不尖包含动态变化的数据，如时间戳
+	4）主键应自动生成，不要人为干预，以免使它带有队了唯一
+	标识一行以外的意义
+	5）主键尽量建立在单列上
+	
+	UUID : 
+	32位不重复字符串
+	oracle 中生成UUID的方式
+	select sys_guid() from dual  
+	
+	java中生成uuid
+	java.util.uuid
+	String uuid = UUID.randomUUID().toString();
+	
+	外键约束：
+	外键约束的意义：
+	外键约束条件定义在两个表的字段或一个表的两个字段
+	上，用于保证相关两个字段的关系。
+	dept表：主表或父表
+	emp表：从表或子表
+	
+	外键约束对一致性的维护：
+	外键约事条件包括两个方面为数据约束：
+	1）从表上定义的外键的列值，必须从主表被参照的列值中选
+	取，或值为null
+	2）当主表参照的值被从表参照时，主表的该行记录不允许被删除。
+	
+	
+	检查约束：
+	检查约束(check)约束条件用来强制在字段上的每个值都要满足
+	check中定义的条件。
+	当定义了check约束的列新增或修改数据时，数据必须
+	符合check约束条件定义的条件。
+	
+	添加检查约束条件：
+	ALTER TABLE employees3_pillow
+	ADD CONSTRAINT employees3_pilloe_salary_check 
+	CHECK (salary>2000)
+	插入数据时当插入2000以上的可以2000以下的就不以
+	修改也一样
+	
+	
+Book6:JDBC
+
+	unit1:
+	JDBC:Java Dagabase Connectivity 
+	Jvaa 访问数据库的解决方案。
+	希望用相同的方式访问不同的数据库，以实现与具体数据库无关的Jzva
+	操作界面。
+	Jdbc定义一套标准接口，即访问数据库的通用API，不同的数据库厂商根据
+	各自数据库的特点去实现这些接口
+	
+	 * 使用JDBC连接数据库的基本操作流程：
+	 1：加载驱动类
+	  2：与数据库建立连接
+ 	 * 3：执行SQL语句
+ 	 * 4：处理结果集
+ 	 * 5：关闭连接
+	1， 
+	 Class.forName("oracle.jdbc.driver.OracleDriver");
+	2，
+	conn = DriverManager.getConnection("jdbc:oracle:thin:@192.168.55.254:1521:tarena"
+	"gg2014","gg2014");
+	3，
+	Statement state = conn.createStatement();
+	4,
+	ResultSet rs = state.executeQuery(sql);
+	
+	用到的接口：
+	Collection  cnn = DriverManager.getConnection();
+	Statement cnn.createStatement();
+	ResultSet  state.
+	
+	7839,KING,PRESIDENT,5000,10
+7788,SCOTT,ANALYST,3000,50
+7698,BLAKE,MANAGER,2850,30
+7782,CLARK,MANAGER,2450,10
+7844,TURNER,SALESMAN,1500,30
+
+	Connection 中的事务操作
+	自己控制事务
+	cnn.setAutoCommit(false);
+	提交事务：
+	cnn.commit();
+	回退事务：
+	cnn.rollback();
+	state.execute();
+	state.executeUpdate();
+	state.executeQueue();
+	执行批处理：
+	state.executeBatch();
+	
+	state.addBatch(sql);
+	
+	statement 适合处理静态sql语句
+	处理动态sql就用preparedStatement
+	可滚动结果集
+	
+	数据结果的元数据
+	ResultSet rs = state.executeQuery(sql);
+	ResultSetMetaData rsmd = rs.getMetaData();
+	
+	
+	DAO数据访问对象
+	建立在数据库呼业务层之间，封闭所有对数据库的访问
+	目的：数据访问逻辑和业务逻辑分开
+	
+
+	
+	

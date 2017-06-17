@@ -1,0 +1,21 @@
+问题:
+1.给Service注入Dao的时候，setUserDao写成了setDao  无法注入类错误
+2.hql语句中from User写成以from user;not mapperd
+总结：
+service或dao中注入方法的时候，方法名应为set加上需要注入的属性名；
+hql语句中from后面跟的是映射的类名而不是表名，对类名为首字母大写
+hibernate的配置属性中
+<prop key="hibernate.format_sql">true</prop>格式化sql语句默认为false
+<prop key="hibernate.show_sql">true</prop>在控制台显示sql默认为false
+
+struts2
+3.没有引入taglib标签就使用，结果页面没反应
+4.使用重定向
+<result name="logout" type="redirectAction">index</result>不要忘记写type
+
+//页面获取数据，从get方法中获取，从session中获取，从值栈中获取
+从var中获取需要#
+从session中获取需要#
+从值栈中获取不需要#
+从get方法中获取不需要#
+从值栈中的属性中获取需要#，如pb.page

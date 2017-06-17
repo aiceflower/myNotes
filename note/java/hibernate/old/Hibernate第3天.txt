@@ -1,0 +1,69 @@
+
+
+
+class Session{
+
+	private Map<Serializable, Object> cache; // 缓存
+
+	public Object get(.., id){
+		Object obj = cache.get(id);
+		if(obj == null){
+			obj = "select * from xxx whereid=?";
+			cache.put(id, obj);
+		}
+		return obj;
+	}
+
+}
+
+
+
+
+0000 0000
+
+1111 1111
+
+0011 0110  --> 
+
+
+事务隔离级别
+数字类型的常量值。
+session.refresh()方法。
+在Hibernate中指定事务隔离级别。
+
+
+
+单向关联：
+	单向一对多。
+	单向多对一。
+	单向多对多。
+	单向一对一（只能做从有外键方到无外键方的单向关联）
+
+
+
+
+【精华】* 今天天气好【楼主】
+	【1楼】：是的，今天天气好。
+	【2楼】：北京还是很冷。
+	...
+	...
+
+* Hibernate使用教程。
+
+* JDBC使用方法
+
+
+
+一个实体
+	文章：id, title, content, parentArticle, ...
+
+两个实体：
+	主帖：id, title, content, 所属板块。
+	回帖：id, title, content, 所属的主帖。
+
+
+
+SELECT e.id,e.name,d.name FROM employee e inner join department d on e.departmentId=d.id;
+SELECT e.id,e.name,d.name FROM employee e left outer join department d on e.departmentId=d.id;
+SELECT e.id,e.name,d.name FROM employee e right outer join department d on e.departmentId=d.id;
+

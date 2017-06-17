@@ -1,0 +1,17 @@
+启动监听
+lsnrctl start
+如果安装都正常
+进入到安装目录启动
+/grg/oracle/OracleHome/network/admin/
+再启动
+
+
+
+启动oracle服务
+$ sqlplus "/as sysdba"
+
+原本的画面会变为
+SQL>
+
+接着请输入
+SQL> startup

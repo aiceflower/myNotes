@@ -1,0 +1,4 @@
+select 'drop table '||table_name||';' 
+from cat 
+where table_type='TABLE';
+以上语句查询出所有删除表的语句，执行即可。

@@ -1,0 +1,72 @@
+1.选择器
+	1.通配符 *
+	2.标签 p 
+	3.id	#demo
+	4.类选择器 .c1
+	5.复合选择器
+		h3.title h3下有类title的标签
+		h3#d1 h3下有id为d1的标签
+		后代选择器：
+			.c1 li 类c1下的所有li标签，实际是上从右向左查找，先找到所有的li再找类为c1的元素
+		并集选择器：
+			div,h1 用逗号隔开
+		子元素选择器
+			div > li 只会选择儿子
+		属性选择器：
+			h1[id][class] h1中拥有id属性,且有class属性的标签
+			h1[id="d1"] h1中id为d1的标签
+	6.伪类选择器
+		:link	未被访问，默认
+		:visited 被访问过的
+		:hover 鼠标悬停
+		:active 被点击
+		:focus 拥有焦点
+		LoVe HAte原则，先l再v再h再a顺序
+	7.伪元素
+		:first-line 第一行
+		:first-litter 首字母
+		:first-child 第一个儿子
+		:before 元素前
+		:after 	元素后
+			#d3:before,#d3:after{ content:"-------"} //只有before跟after有content属性,before跟after是行内元素
+2.选择器的优先级
+	内联>大于内部>id>类
+	1.继承的样式>浏览器默认样式
+	2.通配符>继承样式
+	3.标签样式>通配符样式
+	4.类样式>标签样式
+	5.id样式>类样式
+	6.行内样式>id样式
+	复合选择器比较,按如下排列，再从前往后比较
+		行内,ID,类,标签
+3.display
+	none 不被显示
+	block 行内变块
+	inline 块变行内
+	inline-block 按行内排版，但可设置宽高
+4.display:none与visibility:hidden区别
+	前者不显示，不占用空间
+	后者不显示，占用空间
+5.颜色的表示形式
+	1.单词 blue red
+	2.16进制 #ffffff
+	3.rgb rgb(255,255,255) rgb(10%,20%,100%)
+	4.rgba rgba(255,255,255,)
+6.文字间距
+	letter-spacing:30px;
+7.文字装饰
+	text-decoration:none;//去掉a的下划线
+	none 无装饰
+	underline 下划线
+	overline 上划线
+	line-through 删除线
+	可赋多值
+	text-indent 首行缩进，只能设置块级标签
+	white-space 空白符处理
+		normal 默认值,空格，空行无效，满行后自动换行
+		pre 预格式化，空格，空行原样显示
+		nowrap 空格，空行无效，强制文本不能换行，超出不换行，出现滚动条 
+	word-break 自动换行
+		none 浏览器默认换行规则，不打断单词显示
+		break-all 允许在单词内换行
+		keep-all 只能在半角空格或连字符处换行

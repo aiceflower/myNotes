@@ -1,0 +1,35 @@
+一、jQuery为未来元素添加事件
+
+$(document).on("click","#id",function(){
+	alert(this.innerHTML);
+})
+
+二、页面一加载就执行的几种方法
+
+#方式一：整个页面的document全部加载完成以后执行，如果加载资源时间较长，不利于用户体验。
+window.onload=function(){
+	alert("style one");
+};
+#方式二：仅仅只需要加载所有的DOM结构，在浏览器把所有的HTML放入DOM tree之前就执行js效果。
+$(document).ready(function(){
+	alert('style two');
+});
+#方式三：
+$(function(){
+	alert("style three");
+});
+
+三、jQuery之DOM对象还是jQuery对象
+1.选择器获取的是jQuery对象,如$("#test")、$(this).find("div.test")。
+2.jQuery的each方法获取的子项为DOM对象
+	如:
+	$("div").each(function(index,item){
+		console.log(item instanceof jQuery);//false
+	}
+
+四、DOM对象与jQuery对象互换
+1.DOM换jQuery
+	$(dom对象);
+2.jQuery换DOM
+	$obj.get(0);
+	$obj.get()[0];

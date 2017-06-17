@@ -1,0 +1,58 @@
+1.让tomcat列出web应用根路径下的所有页面
+	打开tomcat的conf目录下的web.xml修改<init-param>中的参数为true
+2.让tomcat部署多个应用
+	在tomcat的conf目录下的server.xml中复制文件中的<service>元素，并修改其端口
+3.tomcat控制台
+	status:监控服务器状态
+	manager:可以部署、监控web应用
+4.manager控制台用户密码配置
+	tomcat的conf目录下的tomcat-users.xml 
+	<!--增加一个角色，指定角色名即可-->
+	<role rolename="manager-gui"/>
+	<!--增加一个用户，指定用户名，密码，角色即可-->
+	<user username="admin" password="admin" roles="manager-gui"/>
+5.tomcat部署应用的几种方式
+	1.利用tomcat的自动部署：将web应用复制到tomcat的webapps下
+	2.利用控制台部署：在deploy directory or war file located on server下输入如下内容
+		Context Path : /feelview
+		war or directory url: D:/grgbanking/FEELViewPlus/webapp
+		这种方式需要配置manager用户并登陆，才可以在页面配置，这种方式相当于第一种方式，把web应用复制到webapps下
+	3.增加自定义的web部署文件
+		在tomcat的conf目录下新建Catalina目录，再在其下新增localhost目录，然后在localhost目录下
+		新建一个名字的xml文件--部署web应用的配置文件，该文件的主文件名将被作为web应用的虚拟路径。
+		如在localhost下增加一个dd.xml，内容如下
+		<Context docBase="D:/grgbanking/FEELViewPlus/webapp" debug="0" privileged="true"></Context>
+		这样重启tomcat即可访问应用：http://ip:port/dd
+	4.修改server.xml部署web应用
+		<Context path="/hello" docBase="C:\Users\pillow\Desktop\grg\project\webDemo" debug="0" privileged="true"></Context>
+		这种方式说是不推荐，会破坏tomcat系统文件
+6.配置tomcat的数据源	
+	tomcat5.5内置了dbcp数据源，并提供两种配置文件
+	1.全局数据源，所有的web应用都可以访问
+	2.局部数据源，单个应用可以访问
+		修改用户配置文件，如上面的dd.xml 
+		<Context docBase="D:/grgbanking/FEELViewPlus/webapp" debug="0" privileged="true">
+		//jndi,java Naming Directory Interface java命令和目录接口 ，听起来很专业，其实就是为某个java对象起一个名字
+			<!--name指定数据源在窗口中的jndi名
+			dirverClassName指定连接驱动
+			url指定数据库服务的url
+			username用户名
+			password密码
+			maxActive数据源最大活动连接数
+			maxIdle指定数据库池中最大的空闲连接数
+			maxWait指定数据库池中最大等待获取连接的客户端-->
+			<Resource name="jdbc/dstest" auth="Container"
+				type="javax.sql.DataSource"
+				dirverClassName="oracle.jdbc.driver.OracleDriver"
+				url="jdbc:oracle:thin:@10.1.140.186:1521:FEELVIEW"
+				username="feelview"
+				password="feelview"
+				maxActive="5"
+				maxIdle="2"
+				maxWait="10000"/>
+		</Context>
+7.eclipse添加插件之扩展安装
+	在eclipse安装目录下新建links目录，在其中新建xxx.link文件，添加如下内容
+	path=<pluginPath>
+	在pluginPath路径下新建eclipse文件夹，在将插件的plugins,features目录复制到eclipse目录下重启即可
+	卸载插件只需要将对应的link文件删除即可

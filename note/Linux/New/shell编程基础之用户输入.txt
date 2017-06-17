@@ -1,0 +1,106 @@
+1.获取用户输入的参数
+$0 程序名
+$1 第一个参数
+$2 第二个参数
+...
+$9 第九个参数
+${10}第十个参数
+${11}第十一个参数
+注：10以前直接用数字，10以后需要用大括号
+2.获取文件名
+默认$0获取整个脚本的路径(如果是绝对路径的话)
+使用name=$(basename $0)来获取文件名
+3.在使用参数之前先用test判断参数是否存在
+之一：
+if [ -n "$1" ]
+之二：
+$# 判断输入参数的个数
+4.对所有参数的快速访问
+$*和$@
+$*将所有的参数当成单个参数
+$@将单独处理每一个参数
+运行如下例子可知
+for var in "$@";do echo $var;done
+for var in "$*";do echo $var;done
+5.使用shift来移动参数
+默认往前移动一位 ,$1 值被删除，$0的值不变
+可使用shift 2来多位移动
+例：
+#!/bin/bash
+count=1
+while [ -n "$1" ]
+do
+  echo "parameter #$count = $1"
+  count=$[ $count +1  ]
+  shift
+done
+6.使用case可以实现命令参数 如 ls -a
+
+7.getopt
+命令格式
+getopt options optstring parameter
+在optstring中列出需要在脚本中用到的每个命令行选项字母，在需要参数的字母前面加上冒号
+如：getopt ab:cd  -a -b test1 -cd test2 test3
+如果指定了不存在的选项默认会产生一个错误信息，可以屏蔽用-q 选项
+getopt -q ab:cd ...
+8.在脚本中使用getopt
+set -- `getopt -q ab:cd "$@"`
+例：
+#!/bin/bash
+set -- `getopt -q ab:cd "$@"`
+while [ -n "$1" ]
+do
+  case "$1" in 
+  -a) echo  Found the -a option ;;
+  -b) param=$2
+   echo Found the -b option param value $param 
+   shift;;
+  -c) echo Found the -c option;;
+  -d) echo Found the -d option;;
+  --)shift 
+     break;;
+   *) echo $1 is not an option ;;
+   esac
+   shift 
+  done 
+  count=1
+  for param in "$@"
+  do 
+	echo "Param #$count : $param "
+	count=$[$count +1]
+done 
+运行./aaa.txt  -a -b teste -cd test2 test3
+但有一个问题，使用还空格的参数
+./aaa.txt  -a -b teste -cd "test2 test3"运行结果一样
+9.getopts
+命令同getopt，需要加参数就在字母后面加冒号，需要屏蔽错误就在最前面加冒号
+getopts :ab:cd 
+两个环境变量：
+OPTARG:如果选项要跟一个参数值，OPTARG就是这个值
+OPTION:保存了参数列表中getopts 正在处理的参数值
+例：
+#!/bin/bash
+while getopts :ab:c opt
+do
+  case "$opt" in
+  a) echo "Fond -a option" ;;
+  b) echo "Fond -b option,with value $OPTARG";;
+  c) echo "Fond -c option" ;;
+  *) echo "Unknown option: $opt";;
+  esac
+done
+        
+getopts好用的功能：
+1.可以在参数值中包含空格 ./aaa.txt -b -a "test1 test2 " 
+2.将字母和参数值放在一起使用  ./aaa.txt -abtest1
+3.将命令行上找到的所有的未定义的选项统一输出成问号 ./aaa.txt -d 输出：Unknown option: ?
+
+
+10.获得用户输入
+read
+read -p 直接在read命令行指定提示符
+read 超时： -t 秒数,超时返回非零状态码
+-n选项配合数字1,当用户输入一个字母后不用回车就可以继续了  read -n1 -p "do you want to Continue [Y/N]" answer
+read -s 以隐藏方式输入
+读取文本内容：（read读到内容返回0，读不到返回非零）
+cat /etc/passwd | while read line ; do echo $line ;done 

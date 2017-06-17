@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>JavaScript</title>
+		<script>
+			/*
+			var Person = function (){}
+			var extend = function(o1,o2){
+				for(var k in o2){
+					o1[k]=o2[k];
+				}
+			}
+			extend(Person.prototype,{
+				run:function (){console.log('我能跑了')},
+				eat:function (){console.log('我能吃了')},
+				sayHello:function (){console.log('我吃好了')}
+			})*/
+			//改良
+			var Person = function(){}
+			Person.prototype.extend=function(o1){
+				for(var k in o1){
+					this[k]=o1[k];
+				}
+			}
+			
+			Person.prototype.extend({
+				run:function (){console.log('我能跑了')},
+				eat:function (){console.log('我能吃了')},
+				sayHello:function (){console.log('我吃好了')}
+			})
+			
+			var p1 = new Person();
+			var p2 = new Person();
+			p1.run();
+			p1.eat();
+			p1.sayHello();
+			p2.run();
+			p2.eat();
+			p2.sayHello();
+			
+		</script>
+	</head>
+	<body>
+		<h1>深拷贝与浅拷贝</h1>
+	</body>
+</html>

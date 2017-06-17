@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>抽奖</title>
+		<style type="text/css">
+			body { 
+				background-color: #000;
+				font-size:13px;
+			}
+			.rect { 
+				width: 60px; /*每个单元格宽度*/
+				height: 18px; /*单元格高度*/
+				border: 1px solid red; 
+				line-height:20px;
+				text-align: center;
+				font-size:10px;/*字体大小*/
+				float: left; 
+				margin: 2px 2px; /*单元格间距*/
+				color: #fff;/*字体颜色*/
+			}
+			#container{ 
+				width:1200px; /*总宽度*/
+				margin: 30px auto 10px; 
+				border:1px dashed blue; 
+			}
+			.clear {
+				clear:both;
+			}
+			#button{
+				width:300px;
+				height:30px;
+				border:1px solid green;
+				border-radius:5px;
+				color:#fff;
+				background-color:green;
+				font-size:14px;
+				line-height:30px;
+				text-align:center;
+				margin:0 auto;
+				cursor:pointer;
+			}
+			#button:active{
+				background-color:lightgreen;
+			}
+			.select{
+				background-color:yellow;
+				color:#000;
+			}
+		</style>
+		<script type="text/javascript" id="data">	
+			/*
+				张三 	李四没 	赵六	麻七	胡八	
+				无法	原因	利益	你的	完全	
+				融入	是你处	，或	利益	没有	
+				团队	阻碍	者人工	，或	共在同		
+				的最	了人	家阻	你和	利益	
+				根本	家的	碍了	人家	点，	
+				张三 	李四没 	赵六	麻七	胡八	
+				无法	原因	利益	你的	完全	
+				融入	是你处	，或	利益	没有	
+				团队	阻碍	者人工	，或	共在同	
+				张三 	李四没 	赵六	麻七	胡八	        		
+				无法	原因	利益	你的	完全	
+				融入	是你处	，或	利益	没有	
+				团队	阻碍	者人工	，或	共在同		
+				的最	了人	家阻	你和	利益	
+				根本	家的	碍了	人家	点，	
+				张三 	李四没 	赵六	麻七	胡八	
+				无法	原因	利益	你的	完全	
+				融入	是你处	，或	利益	没有	
+				团队	阻碍	者人工	，或	共在同		
+				张三 	李四没 	赵六	麻七	胡八	
+				无法	原因	利益	你的	完全	
+				融入	是你处	，或	利益	没有	
+				团队	阻碍	者人工	，或	共在同		
+			*/
+		</script>	
+		<script>
+			var J = {
+				id:function(idName){
+					return document.getElementById(idName);
+				},
+				getData:function(idName){
+					var node = this.id(idName),
+						txt;
+					txt = node
+							.innerHTML
+							.replace( /\/\*|\*\//g,"")
+							.replace( /\s+/g," " )
+							.trim();
+					node.parentNode.removeChild( node );
+					return txt.split(' ');
+				},
+				cFrag:function(){
+					return document.createDocumentFragment();
+				},
+				cElem:function(name){
+					return document.createElement(name);
+				}
+			}
+			onload = function (){
+				//添加数据
+				var list = J.getData('data'),
+					docfrag = J.cFrag(),
+					nodes = [],i,clearNode;
+				for( i=0;i<list.length;i++){
+					var div = J.cElem('div');
+					div.innerHTML= list[i];
+					div.className = 'rect';
+					docfrag.appendChild(div);
+					nodes.push(div);
+				}
+				//清除浮动
+				J.id('container').appendChild(docfrag);
+				clearNode = J.cElem('div');
+				clearNode.className = 'clear';
+				J.id('container').appendChild(clearNode);
+				
+				//绑定定时器
+				var start = false,interval,select;
+				
+				J.id('button').onclick = function(){
+					if(start){//滚动
+						clearInterval(interval);
+						this.innerHTML = ' 点 击 ';
+					}else{	//停止
+						interval = setInterval(function(){
+							if(select) select.className= 'rect';
+							var i = parseInt(Math.random()*1000)%list.length;
+							
+							select = nodes[i];
+							select.className += ' select';
+						},5);
+						this.innerHTML = ' 停 止 ';
+					}
+					start = !start;
+				};
+			};
+		</script>
+	</head>
+	<body>
+		<div id = "container"></div>
+		<div id="button">点 击</div>
+	</body>
+</html>

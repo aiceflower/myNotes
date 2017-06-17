@@ -1,0 +1,58 @@
+hashCode()
+equals() 
+
+new String("aa") == new String("aa")
+			equals()
+
+
+1，一般我们自己用时，只使用equals()方法，用于判断两个对象是否是业务上等价的。
+2，在重写equals()方法时，强烈推荐也要重写hashCode()方法，因为有的集合用到了hashCode()来提高效率。
+	equals为true的对象的hashCode值一定要一样。 
+	equals为false的对象的hashCode值尽量不一样。
+3，可以使用工具自动生成hashCode()与euqals()方法。
+
+
+
+
+public class TestEquals {
+
+	@Test
+	public void test() throws Exception {
+		Set<User> set = new HashSet<User>();
+
+		// User user = new User(1);
+		// set.add(user);
+		// set.add(user);
+
+		set.add(new User(1));
+		set.add(new User(1));
+		set.add(new User(1));
+
+		System.out.println(set.size());
+	}
+
+	@Test
+	public void test2() throws Exception {
+		System.out.println("aa" == "aa"); // true
+		System.out.println(new String("aa") == new String("aa")); // false
+		System.out.println("aa" == new String("aa")); // false
+
+		System.out.println("aa".equals(new String("aa"))); // true
+	}
+
+	@Test
+	public void test3() throws Exception {
+		Set<User> set = new HashSet<User>();
+
+		User user = new User(); // id = 0
+		set.add(user);
+
+		// session.save(user); // id = 5
+		user.setId(5);
+		set.add(user); // user.hashCode() == eltOldhashCode;
+
+		// set.add(user);
+		System.out.println(set.size());
+	}
+}
+

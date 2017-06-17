@@ -1,0 +1,62 @@
+创建bean
+	通过构造器创建bean 			id	class
+	通过静态工厂创建bean　　　id class factory-method
+	通过实例工厂创建bean　　　
+		1.选创建一个工厂bean 再创建实例
+		2.id bean-factory factory-method
+容器启动时会创建所有的单例bean
+bean的作用域(scope属性)
+	singleton,prototype,request,response
+bean的生命周期
+	init-method 初始化回调方法
+	destroy-method 销毁回调 仅单例有效
+IOC Inversion of Control
+	-->依赖注入DI[dependency injection](spring采用)
+		|-->Setter注入(调用无参构造器或无参static工厂方法实例化bean
+			|-->　<property name="" value=""/>
+		|-->构造器注入	(调用带参的构造器来实例化bean
+			|-->	<constructor-arg index="" value/ref=""/>
+	-->依赖查找
+IOC是一种思想,而DI是实现IOC的主要技术途径
+自动装配(autowire)
+	no , byName , byType , constructor , autodetect
+bean参数值注入
+	注入基本值--><value>值</value> 或　value属性两种方式
+	注入bean对象-->　内部注入　,外部注入(Setter注入)
+	注入集合-->内部注入和引用注入
+	注入表达式
+组件扫描
+	-->指定扫描路径(即开启组件扫描)
+		<context:component-scan base-package="">
+	-->在需要扫描的组件类前加注解标记
+		@Component,@Named,@Repository,@Service,@Controller
+组件作用域
+	@Scope (默认单例)
+初始化和销毁回调的控制
+	@PostConstruct
+	@PreDestroy
+指定依赖注入关系
+	@Autowired/@Qualifier(Setter注入和构造器注入)
+	@Resource(只有Setter注入)
+注入Spring表达式
+	@Value
+	
+spring MVC
+	接收请求参数:
+		HttpServletRequest获取
+			优:
+				直接
+			缺:
+				需要自己处理数据类型转换
+		@RequestParam注解接收
+			优:
+				参数类型自动转换
+			缺:
+				可能出现类型转换异常
+		自动机制封装成bean对象
+			定义实体,属性名与请求参数名相同
+	向页面传值
+		HttpServletRequest和Session
+		ModelAndView对象
+		ModeMap参数对象/ModelMap/Model
+		@ModelAttribute

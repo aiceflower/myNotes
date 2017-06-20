@@ -1,0 +1,12 @@
+一、修改eclipse左半边project Explorer字体大小
+在eclipse的plugins\org.eclipse.ui.themes_1.0.1.v20141126-1957\css下的文件中
+windows:e4_default_win7.css
+mac:e4_default_mac.css
+添加如下信息
+#org-eclipse-jdt-ui-PackageExplorer Tree,
+#org-eclipse-ui-navigator-ProjectExplorer Tree,
+#org-eclipse-ui-views-ContentOutline Tree,
+#PerspectiveSwitcher ToolBar {
+	font-size: 14px; 
+	background-color: rgb(204,238,205); 
+}

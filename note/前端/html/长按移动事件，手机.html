@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title></title>
+<style>
+* {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+body {
+	position: absolute;
+	background: #ccc;
+}
+
+.div2 {
+	position: relative;
+	width: 200px;
+	height: 200px;
+	background: #fff;
+}
+
+.outer-border {
+	border: 1px solid red;
+}
+</style>
+
+<script>
+	window.onload = function() {
+		var oDiv2 = document.getElementById("div2");
+		oDiv2.style.top = "800px";
+		oDiv2.style.left = "300px";
+		var isdrag = false;
+		var NowLeft, disX,NowTop, disY,isCurrent,isFirst = true;
+
+		var timeout = undefined;
+		//开始
+		oDiv2.addEventListener('touchstart', function(e) {
+			e.preventDefault();
+			timeout = setTimeout(function(e) {
+				if (isFirst) {//只有是第一次移动的时候才触发
+					isdrag = true;
+					vibration();
+					thismousedown(e);
+				}
+			}, 800,e);
+		}, false);
+		
+		//移动
+		oDiv2.addEventListener('touchmove', thismousemove);  
+		
+		//结束
+		oDiv2.addEventListener('touchend', function(e) {
+			clearTimeout(timeout);
+			isdrag = false;
+			isFirst = true;
+		}, false);
+		/*触摸事件*/
+		function thismousedown(e) {
+			var initLeft = parseInt(oDiv2.style.left);
+			var initTop = parseInt(oDiv2.style.Top);
+			NowLeft = parseInt(oDiv2.style.left + initLeft);
+			NowTop = parseInt(oDiv2.style.top + initTop);
+			disX = e.touches[0].pageX;
+			disY = e.touches[0].pageY;
+			return false;
+		}
+
+		/*移动事件*/
+		function thismousemove(e) {
+			if (isFirst&&isdrag) {
+				isFirst = false;//判断是不是第一次移动
+			}
+			if (isdrag) {//是否可以移动
+				oDiv2.style.left = NowLeft + e.touches[0].pageX - disX + 'px';
+				oDiv2.style.top = NowTop + e.touches[0].pageY - disY + 'px';
+				return false;
+			}
+		}
+
+		//震动
+		function vibration() {
+			if (navigator.vibrate) { 
+				navigator.vibrate(1000); 
+			}else if (navigator.webkitVibrate) { 
+				navigator.webkitVibrate(1000); 
+			}else if(navigator.mozVibrate){ 
+				navigator.mozVibrate(1000); 
+			}else if(navigator.msVibrate){ 
+				navigator.msVibrate(1000); 
+			}else{
+				alert("不支持震动")
+			}
+		}
+	}
+</script>
+</head>
+<body>
+	<div id="div2" class="div2"></div>
+</body>
+</html>

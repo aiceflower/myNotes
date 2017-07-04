@@ -1,3 +1,5 @@
 1.java÷¥––dos√¸¡Ó
 	Process p = Runtime.getRuntime().exec("nbtstat -A " + ip);
 	p.getInputStream();
+2.º”‘ÿproperties
+new Properties().load(getClass().getClassLoader().getResourceAsStream(filePath));

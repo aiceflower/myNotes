@@ -1,0 +1,12 @@
+一、字符串转json
+	var p = '{"name":"张三","age":18,"phone":"18772958901"}';
+	1. var user = eval('('+p+')');
+	2. var $user = jQuery.parseJSON(p);//只能解析标准的json字符串
+	3. var ju = JSON.parse(p);//只能解析标准的json字符串
+		
+二、json转字符串
+	var str = JSON.stringify(jsonObj);
+三、数组转JSON
+	var jsonStr = JSON.stringify(arr);
+	var jsonObj = JSON.parse(jsonStr);
+		

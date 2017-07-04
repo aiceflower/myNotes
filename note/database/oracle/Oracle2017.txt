@@ -1,0 +1,6 @@
+一、查看oracle的实例名
+1.select name from v$database;
+2.show parameter instance;
+3.show parameter instance_name;
+4.select instance_name from v$instance;
+二、查看环境变量：set oracle_sid

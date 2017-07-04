@@ -1,0 +1,146 @@
+1.判断浏览器是不是ie
+function isIe(){
+	if(navigator.userAgent.match(/msie/i)){
+		return true;
+	}else{
+		return false;
+	}
+}
+2.阻止输入空格
+function (cls){
+	for(var i = 0;i<arguments.length;++i){
+		$(arguments[i]).keydown(function(e){
+			//console.log("code:"+e.keyCode+" value:"+String.fromCharCode(e.keyCode));
+			if(e.keyCode == 32)
+			return false;
+		});
+	}
+}
+3.绑定事件
+function bindEvent(cls){
+	$(cls).bind({
+		copy : function(){//复制
+			console.log('copy behaviour detected!');
+		},
+		paste : function(){//粘贴
+			console.log('paste behaviour detected!');
+		},
+		cut : function(){//剪切
+			console.log('cut behaviour detected!');
+		},
+		"keydown":function(){//按下键盘 
+			console.log("keydown");
+		},
+		"keyup":function(){//抬起键盘
+			console.log("keyup");
+		},
+		"keypress":function(){//按压键盘
+			console.log("keypress");
+		},
+		mousedown:function(e){
+			switch(e.which){
+				case 1:
+					console.log("单击鼠标左键");
+					break;
+				case 2:
+					console.log("单击鼠标中键");
+					break;
+				case 3:
+					console.log("单击鼠标右键");
+					break;
+			};
+		},
+		dblclick:function(e){//双击
+			console.log(e.which);
+		},
+		resize:function(3){//窗口大小改变事件
+			console.log("width:"+$(this).width+" height:"+$(this).heigth);
+		}
+	});
+}
+4.鼠标单击双击事件冲突解决
+function conflict(cls){
+    var timer = null;
+	$(cls).bind("click.a", function () { //单击事件,click.a代表单击鼠标左键
+		clearTimeout(timer);
+		timer = setTimeout(function () { //在单击事件中添加一个setTimeout()函数，设置单击事件触发的时间间隔
+			console.log("单击鼠标左键");
+		}, 300);
+	})
+	$(cls).bind("dblclick.a", function () { //双击事件
+		clearTimeout(timer); //在双击事件中，先清除前面click事件的时间处理
+		console.log("双击击鼠标左键");
+	})
+}
+5.平滑到页面顶部
+function animateSlow(){
+	$("a[href=#top]").click(function(){
+		$("html,body").animate({scrollTop:0},"slow");
+		return false;
+	});
+}
+6.根据名字获取地址栏的参数
+function GetQueryString(name)
+{
+	var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+	var r = window.location.search.substr(1).match(reg);
+	if(r!=null)return  unescape(r[2]); return null;
+}
+8.重写trim方法（默认的trim方法在IE8及以下版本不兼容）
+String.prototype.trim = function() {
+	return this.replace(/(^\s*)|(\s*$)/g, "");
+}
+String.prototype.ltrim = function() {
+	return this.replace(/(^\s*)/g, "");
+}
+String.prototype.rtrim = function() {
+	return this.replace(/(\s*$)/g, "");
+}
+9.格式化日期
+function format(date,fmt) { 
+    var o = {
+        "M+": date.getMonth() + 1, //月份 
+        "d+": date.getDate(), //日 
+        "h+": date.getHours(), //小时 
+        "m+": date.getMinutes(), //分 
+        "s+": date.getSeconds(), //秒 
+        "q+": Math.floor((date.getMonth() + 3) / 3), //季度 
+        "S": date.getMilliseconds() //毫秒 
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+};
+10.阻止事件冒泡
+function stopPropagation(event) { //阻止事件冒泡
+    if (event.stopPropagation) {
+	    // 针对 Mozilla 和 Opera   
+	    event.stopPropagation();
+    } else if (window.event) {
+	    // 针对 IE   
+	   window.event.cancelBubble = true;
+    }
+}
+11.禁止右键
+$(document).bind("contextmenu",function(e){
+	return false;
+});
+12.千位分隔符
+	function thousand(str){
+		return str.replace(/(?!^)(?=([0-9]{3})+$)/g,',');//(?!^)不能在开始位置替换
+	}
+13.手机震动
+function vibration(){
+   navigator.vibrate = navigator.vibrate
+		   || navigator.webkitVibrate
+		   || navigator.mozVibrate
+		   || navigator.msVibrate;
+
+   if (navigator.vibrate) {
+	   console.log("支持设备震动！");
+   }else{
+		console.log("不支持");
+   }
+   navigator.vibrate([500, 300, 400,300]);[震动时间，停止时间，震动时间，停止时间………..]
+}

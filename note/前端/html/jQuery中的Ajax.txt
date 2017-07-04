@@ -44,3 +44,11 @@ $.ajax({
 
 总结:如果参数中没有中文，又想直接用json ,那就推荐$.getJSON,如果有中文 那就采用$.post或者$.ajax。
 
+//POST或GET的错误处理
+$.post("url",{requestData}).success(function(responseData){
+	console.log("success"+responseData);
+}).complete(function(){
+	console.log("complete");
+}).error(function(){
+	console.log("error");
+});

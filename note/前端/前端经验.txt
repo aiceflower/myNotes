@@ -1,0 +1,7 @@
+1.去除input框历史记录：
+autocomplete="off"
+2.提交数据
+style="display:none" 		隐藏，提交,不占空间
+type="hidden" 		 		隐藏，提交,不占空间
+disabled=”disabled"     	显示，不可用 ，不提交，占空间
+style="visibility:hidden" 	不显示，提交，占空间

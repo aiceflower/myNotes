@@ -35,3 +35,5 @@
 		javadoc -d docDir *.java
 五、打war包
 	jar   cvf   temp.war  *
+六、设置虚拟机运行大小，转存快照
+set JAVA_OPTS=-Xms10m -Xmx10m  -XX:+HeapDumpOnOutOfMemoryError  -XX:HeapDumpPath=c:\jakarta-tomcat\webapps

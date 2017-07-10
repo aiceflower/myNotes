@@ -1,0 +1,32 @@
+1.数组转字符串    var str = JSON.stringify(arr);
+2.数组转对象
+ a.转字符串
+ b.JSON.parse(str);
+3.返回上一层
+	window.history.go(-1);  //返回上一页
+    window.history.back();  //返回上一页
+    //如果要强行刷新的话就是：window.history.back();location.reload();
+    window.location.go(-1); //刷新上一页
+4.其它刷新
+<a href="javascript:history.go(-1)">返回上一页</a> 
+<a href="javascript:location.reload()">刷新当前页面</a> 
+<a href="javascript:" onclick="history.go(-2); ">返回前两页</a> 
+<a href="javascript:" onclick="self.location=document.referrer;">返回上一页并刷新</a> 
+<a href="javascript:" onclick="history.back(); ">返回上一页</a> 
+5.Javascript刷新页面的几种方法： 
+a，history.go(0) 
+b，location.reload() 
+c，location=location 
+d，location.assign(location) 
+e，document.execCommand('Refresh') 
+f，window.navigate(location) 
+g，location.replace(location) 
+h，document.URL=location.href 
+6.自动刷新页面的方法: 
+a.页面自动刷新：把如下代码加入<head>区域中 
+<meta http-equiv="refresh" content="10"> 
+10指每隔10秒刷新一次页面. 
+b.页面自动跳转：把如下代码加入<head>区域中 
+<meta http-equiv="refresh" content="10;url=http://www.baidu.com">
+<body onload="opener.location.reload()"> 开窗时刷新 
+<body onUnload="opener.location.reload()"> 关闭时刷新 11.js使用正则//创建正则//1. var reg = /reg/; 出现的都是元字符，不能进行字符拼接,可直接写\d，编译时创建//2. var reg = new RegExp(reg); //可进行字符拼接,需要写\\d，运行时创建//匹配模式创建正则//1. var reg = /reg/g;//2. var reg = new RegExp(reg,'g');//RegExp方法//1.test()方法：该方法用于检测一个字符串是否匹配某个模式；//返回布尔值//2.exec()方法: 该方法用于检索字符串中的正则表达式的匹配。//返回匹配的数组(默认只返回第一个匹配结果)，没有为null//返回值包含的属性 1）input：整个被查找的字符串的值； 2）index：匹配结果所在的位置（位）； 3）lastInput：下一次匹配结果的位置； 4）arr：结果值，arr[0]全匹配结果，arr[1,2...]为表达式内()的子匹配，由左至右为1,2...。//3.compile()方法：用于改变RegExp,也可以添加或删除第二个参数。//String操作正则方法//1.match()方法：使用正则表达式模式对字符串执行查找，//返回匹配的数组，没有为null（需要转义）//2.replace(reg,rel)方法：替换，如果reg为字符串则只会替换一次，如果为正则，则替换所有符合规则的//3.search()方法：//4.split()方法：//修饰符// global(g) 全局匹配// ignoreCase(i) 忽略大小写// multiline(m) 多行匹配// y // u //特殊元字符// \b[\B]匹配[非]单词开始或结束位置// \s[\S]匹配任意[非]空白符//特性//1.懒惰性(默认)：每次匹配只会匹配符合规则的第一个，后面的不会匹配（加修饰符可解决）//2.贪婪性(默认): 匹配尽可能多的字符(在量词元字符后加"?"可解决)[?：在普通元字符后表示0~1次，在一个量词的元字符后表示取消贪婪性]//正则分组//1.\0代表全部匹配，\1代表和第一个分组出现一模一样的内容//2.捕获性分组 $+编号(外),或 \+编号(内),RegExp.$1//3.非捕获性分组 在小括号中加?: (?:\d+)//零宽断言(又叫环视)//非捕获性分组:(?:pattern) 根没有括号一样 'abcd(?:e)'匹配abcde//1.顺序肯定环视:(?=pattern) abc(?=200),匹配abc200中的abc,不匹配abc300中的abc//2.顺序否定环视:(?!pattern) abc(?!200),匹配abc300中的abc,不匹配abc200中的abc//3.逆序肯定环视:(?<=pattern) (?<=abc)200,匹配abc200中的200,不匹配abd200中的200//4.逆序否定环视:(?<!pattern) (?<!abc)200,匹配abd200中的200,不匹配abc200中的200

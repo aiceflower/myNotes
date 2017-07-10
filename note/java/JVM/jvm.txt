@@ -163,3 +163,65 @@ G1收集器的运作：
 了MaxTenuringThreshold才能晋升老年代，如果在Survivor空间中相同年龄所有对象大小的总
 和大于Survivor空间的一半，年龄大于或等于该年龄的对象就可以直接进入老年代，无须等
 到MaxTenuringThreshold中要求的年龄。
+
+
+JAVA工具命令：
+1.jps 虚拟机进状况工具(列出正在运行的虚拟机进程，并显示虚拟机执行主类)
+  -q 只输出LVMID，省略主类的名称
+  -m 输出虚拟机启动时传递给主类的参数
+  -l 输出主类的全名，如果进程执行的是jar包，输出jar路径
+  -v 输出虚拟机进程启动时JVM参数
+2.jstat 虚拟机统计信息监视工具(监视虚拟机各种运行状态信息)
+  格式：jstat[option vmid[interval[s|ms][count]]]
+  远程：[protocol：][//]lvmid[@hostname[：port]/servername]
+  jstat-gc 2764 250 20  :每250毫秒查询一次进程2764垃圾收集状况，一共查询20次：
+3.jinfo：Java配置信息工具(实时地查看和调整虚拟机各项参数)
+	jinfo -sysprops 4816 虚拟机进程的System.getProperties（）的内容打印出来
+	jinfo -flag [+|-]name或者-flag  name=value修改一部分运行期可写的虚拟机参数值。
+4.jmap：Java内存映像工具(jmap：Java内存映像工具)
+	jmap -dump:format=b,file=C:\kuaizhao.bin 4816 转存快照
+	其它方式拿快照：
+	第2章中用过的-XX：+HeapDumpOnOutOfMemoryError参数，可以让虚拟机在OOM异常出
+现之后自动生成dump文件，通过-XX：+HeapDumpOnCtrlBreak参数则可以使用[Ctrl]+[Break]
+键让虚拟机生成dump文件，又或者在Linux系统下通过Kill-3命令发送进程退出信号“吓唬”一
+下虚拟机，也能拿到dump文件
+5.jhat：虚拟机堆转储快照分析工具
+	jhat c:\kuaizhao.bin 
+	浏览器输入：http://localhost：7000/
+6.jstack：Java堆栈跟踪工具(生成虚拟机当前时刻的线程快照)
+	-F 当正常输出的请求不被响应时，强制输出线程无依堆栈
+	-l 除堆栈外，显示关于锁的附加信息
+	-m 如果调用到本地方法的话，可以显示C\C++的堆栈
+7.故障处理工具
+	jconsole，VisualVM（官方）
+	JProfiler、YourKit（非官方）
+
+类文件结构：
+1.Class文件格式
+采用一种类似于C语言结构体的伪结构来存储数据，这种伪结构中只有两种数据类型：无符号数和表
+无符号数属于基本的数据类型，以u1、u2、u4、u8来分别代表1个字节、2个字节、4个
+字节和8个字节的无符号数
+表是由多个无符号数或者其他表作为数据项构成的复合数据类型，所有表都习惯性地
+以“_info”结尾
+格式
+类型			名称				 	数量			      	作用	
+u4				magic					1 						(魔数)确定这个文件是否为一个能被虚拟机接受的Class文件(很多文件都使用魔数进行身份识别，主要地基于安全方面的考虑)0xCAFEBABE（咖啡宝贝）
+u2				minor_version			1						次版本号
+u2				major_version			1						主版本号
+u2				constant_pool_count		1						常量池入口Class
+文件结构中只有常量池的容量计数是从1开始，常量池主要存放：字面量和符号引用
+cp_info			constant_pool 			constant_pool_count-1 	
+u2				access_flags			1						访问标志
+u2				this_class				1						类索引
+u2				super_class				1						父类索引
+u2				interface_count			1						接口索引
+u2				interfaces				interface_count			接口索引集合
+u2				fields_count			1						字段表，描述
+接口或类中申明的变量
+field_info		fields					fields_count			额外信息
+u2				methods_count			1						方法表
+method_info		methods 				methods_count			
+u2				attributes_count        1						属性表集合
+attribute_info	attributes 				attributes_count
+2.分析class文件字节码工具
+javap -verbose TestClass

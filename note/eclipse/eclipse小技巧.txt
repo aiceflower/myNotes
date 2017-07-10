@@ -18,6 +18,10 @@ test alt+/ 快速写测试方法
 	搜索collapse(折叠)、expand(展开)，配置相应的快捷键
 三、行字符
 Preferences->Java->Code Style->Formatter 中修改 width:默认80
+四、jkd添加源码
+windows->perferences->java->Installed JREs
+选择jdk->edit->选择rt.jar->source attachment configuration
+编码规范：
 四、语句限定
 if,for,while,case,switch,default等语句自占一行，且执行语句无论多少都加{}
 五、相对独立的程序块之间，变量说明之后必需加空格

@@ -6,4 +6,9 @@ new Properties().load(getClass().getClassLoader().getResourceAsStream(filePath))
 3.Mybatis返回结果是map的时候，如果对应的value为null则在对应的返回结果中不对返回对应的key
 4.获取当前路径（class文件所在路径）
 	String currentDir =  KTRRun.class.getResource("").getPath();
-5.date_format(now(),'%Y%m%d%h%i%s') mysql时间转字符串
+5.获取用户目录
+System.getProperty("user.dir");
+6.mysql时间转字符串
+	date_format(now(),'%Y%m%d%h%i%s') 
+7.获取系统类型
+	String os = System.getProperty("os.name").toLowerCase()

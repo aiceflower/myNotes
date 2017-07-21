@@ -56,3 +56,20 @@
 	path=<pluginPath>
 	在pluginPath路径下新建eclipse文件夹，在将插件的plugins,features目录复制到eclipse目录下重启即可
 	卸载插件只需要将对应的link文件删除即可
+8.tomcat中的库文件
+在Tomcat目录结构中，有3组目录（“/common/*”、“/server/*”和“/shared/*”）可以存放
+Java类库，另外还可以加上Web应用程序自身的目录“/WEB-INF/*”，一共4组
+在/common目录中：类库可被Tomcat和所有的Web应用程序共同使用。
+在/server目录中：类库可被Tomcat使用，对所有的Web应用程序都不可见。
+在/shared目录中：类库可被所有的Web应用程序共同使用，但对Tomcat自己不可见。
+在/WebApp/WEB-INF目录中：仅此Web应用程序使用，对Tomcat和其他Web应用程序都不可见。
+9.tomcat类加载器(后面的类加载器对应加载8中各目录下库)
+                                        --> Catalina类
+(Bootstrap)		  (Application)		   /  (CatalinaClassLoader)
+启动类-->扩展类-->应用程序类-->Common类
+      (Extension)   (CommonClassLoader)\ (SharedClassLoader)
+                                        --> Shared类-->WebApp类-->Jsp类
+                                              (WebAppClassLoader) (JasperLoader)
+其中每个web应用对应一个WebAppClassLoader,每个jsp文件对应一个Jsp类加载器	
+10.如果tomcat中有10个spring的应用程序，把spring中的库放到common下，那spring中的库是如何调用各自应用中的类(打破了双亲委派原则)
+ 使用线程上下文类加载器，这个类加载器可以通过java.lang.Thread类的setContextClassLoader()进行设置。服务通过这个类加载器去加载所需的类。也就是父类加载器请求子类加载器去完成类加载的动作。这种行为实际上就是打通了双亲委派模型的层次结构来逆向使用类加载器										

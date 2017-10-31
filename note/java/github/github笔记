@@ -10,7 +10,16 @@ git add 日记
 git commit -m 增加了一个文件
 5.同步内容到github
 git push 
-二、常用设置
+6.强制推送本地的替换服务端, 所以三思后行。
+git push -u origin -f
+7.git分支
+创建 加上-b创建并切换
+git branch (-b) dev
+切换
+git checkout dev
+查看
+git branck	
+二、常用设置		
 修改配置内容.git/config
 git config --global user.name [username]
 git config --global user.email [email]
@@ -40,7 +49,7 @@ git config --global user.email [email]
 
 八、git克隆部分文件或目录
 $ mkdir druid
-$ cd druid  
+$ cd druid 			 
 $ git init // 初始化空仓库
 $ git remote add -f origin https://github.com/alibaba/druid.git // 关联远程地址
 $ git config core.sparsecheckout true // 开启Sparse Checkout模式

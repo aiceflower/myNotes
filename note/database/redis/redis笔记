@@ -1,0 +1,51 @@
+一、安装redis
+1.下载wget http://download.redis.io/releases/redis-4.0.0.tar.gz
+2.解压 tar -zxvf redis-4.0.0.tar.gz
+3.安装 make
+二、启动服务
+1. 运行 sh redis-4.0.0/src/redis-server
+2.指定配置 sh redis-4.0.0/src/redis-server redis.conf
+三、配置
+redis.conf			
+bind 127.0.0.1 只能本地回环连接，注释掉该行可非本地连接
+protected-mode (yes是)是否启动保护模式，如果启动需要给客户端设置密码才能用程序访问
+daemonize 是否以守护进程方式启动(yes是)
+
+四、登陆
+ redis-cli -h 192.168.1.103 -p 6379 -a password
+ 五、常用命令
+ cluster info 查看集群状态
+
+注册redis集群
+./redis-trib.rb  create --replicas 1 192.168.1.104:6379 192.168.1.104:6380 192.168.1.104:6381 192.168.1.104:6382 192.168.1.104:6383 192.168.1.104:6384 
+
+跳转：
+cd /Users/alonglamp/soft/redis-4.0.0/src
+
+启动：
+./redis-server ../redis_cluster/6379/redis.conf 
+./redis-server ../redis_cluster/6380/redis.conf 
+./redis-server ../redis_cluster/6381/redis.conf 
+./redis-server ../redis_cluster/6382/redis.conf 
+./redis-server ../redis_cluster/6383/redis.conf 
+./redis-server ../redis_cluster/6384/redis.conf 
+
+修改：
+	
+vi +69 ../redis_cluster/6380/redis.conf
+vi +69 ../redis_cluster/6381/redis.conf
+vi +69 ../redis_cluster/6382/redis.conf
+vi +69 ../redis_cluster/6383/redis.conf
+vi +69 ../redis_cluster/6384/redis.conf
+
+连接客户端：
+./redis-cli -h 192.168.1.104 -p 6379
+./redis-cli -h 192.168.31.127 -p 6380
+./redis-cli -h 192.168.31.127 -p 6381
+./redis-cli -h 192.168.31.127 -p 6382
+./redis-cli -h 192.168.31.127 -p 6383
+./redis-cli -h 192.168.31.127 -p 6384
+
+更换集群时，删除src目录下的
+appendonly.aof dump.rdb nodes-port.conf
+然后重新注册集群

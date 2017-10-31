@@ -1,0 +1,41 @@
+eclipse使用功能备份
+
+一、常用快捷键
+1.删除一行/多行
+ctrl+d
+2.
+二、常用技巧功能
+1.导入Maven项目
+import-->Maven-->Existing Maven Project...
+2.添加插件
+a)在线
+help-->eclipse MarketPlace然后find需要安装的功能,安装即可
+b)离线
+下载离线包,help-->Install New Software-->Add 选择本地离线包安装
+3.设置/取消自动编译
+Project-->Build Automatically
+4.设置Maven版本
+a)windows-->preference-->Maven-->Installations-->Add(选择本地maven)
+b)windows-->preference-->Maven-->User settings-->User settings(选择本地maven配置文件settings.xml)
+5.eclipse添加svn忽略文件
+打开Window->Preferences->Team->Ignored Resources, 点击Add Pattern按钮，添加要忽略为文件或文件夹
+忽略target文件夹：*/target/*
+忽略.classpath文件 *.classpath
+6.eclipse默认打开程序设置
+windows-->preference-->Genral-->Editors-->File Associatior add add
+7.设置eclipse断点，默认打开视图
+windows-->preference-->Run/Debug-->Perspectives
+三、常遇问题
+1.无法执行maven命令报如下错误
+-Dmaven.multiModuleProjectDirectory system property is not set. Check $M2_HOME environment variable and mvn script match.
+解决：
+1.配置M2_HOME系统环境变量
+2.在windows-->preference-->java-->Installed Jres中
+选择对应的jdk，选择edit，然后在Default VM arguments中输入如下内容：
+-Dmaven.multiModuleProjectDirectory=$M2_HOME
+四、惹人烦的功能
+1.eclipse启动弹出如下弹框
+Please allow Subclipse team to receive anonymous usage statistics for this Eclipse intance(info)
+解决：
+windows-->preference-->Genral-->Startup and Shutdown
+去掉Subclipse Usage Reporting 

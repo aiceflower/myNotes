@@ -1,0 +1,12 @@
+springBoot笔记
+一.配置文件
+1.yml无法通过@PropertySource注解来加载配置文件，但加载到内存中是有序的
+2.支付PlaceHolder方式 ${...}和SpEl #{...}
+3.使用随机数
+${random.value} 随机字符串
+${random.int} 随机int
+${random.long}
+${random.int(10)} 10以内随机整数
+${random.int[10,20]} 10～20随机整数
+4.spring.profiles.active=dev设置哪个配置文件被加载
+5.springBoot使用特殊的属性加载顺序，可使用外部配置文件代替内部配置文件

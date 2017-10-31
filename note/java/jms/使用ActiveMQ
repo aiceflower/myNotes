@@ -1,0 +1,52 @@
+一、使用ActiveMQ
+1.下载安装ActiveMQ
+http://archive.apache.org/dist/activemq/apache-activemq/5.8.0/apache-activemq-5.8.0-bin.zip
+2.解压然后启动
+bin\win64\activemq.bat 直接启动
+bin\win64\InstallService.bat 以服务方式启动
+http://127.0.0.1:8161  admin/admin访问activeMQ服务
+3.编写代码
+1)通过连接工场创建连接,通过连接创建会话session
+ConnectionFactory-->Connection-->Session
+2)通过会话创建生产者,消费者,及消息
+session-->MessageProducer
+session-->MessageConsumer
+session-->Message
+3)由生产者发送消息到目的地Destination(队列，主题)，消费者接收消息
+producer.send(message);
+consumer.setMessageListener(message){}
+二、JMS（不是一个服务，只是一个java的API规范）
+java消息服务，是一个java平台关于面向消息中间件的API用于在两个应用程序之间或分布式系统中发送消息，进行异步通信
+三、AMQP
+是一个提供统一消息服务的应用层标准协议，基于此协议的客户端与消息中间件可传递消息。
+四、对比
+JMS是一个Java API，不跨语言,消息类型TextMessage,MapMessage,ByteMessage,StreamMessage,ObjectMessage,Message
+AMQP是一个协议，跨语言，消息类型为byte[]
+五、常用的消息中间件
+ActiveMQ,跨语言，JAVA优先
+RabbitMQ，跨语言
+Kafka，高吞吐量的分布式发布订阅消息系统（日志存储服务），JAVA优先
+六、JMS的相关概念
+提供者：实现JMS规范的消息中间件服务器
+客户端：发送或接收消息的应用程序
+生产者与消费者：创建并发送消息的客户端
+消费者与订阅者：接收并处理消息的客户端
+消息：应用程序之间传递的数据内容
+消息模式：在客户端之间传递消息的方式，JMS中定义了主题和队列两种模式
+七、两种模式
+队列模型：
+客户端包括生产者与消费者，队列中的消息只能被一个消费者消费，消费者可以随时消费队列中的消息（相于卖火车票）
+主题模型：
+客户端包括发布者与订阅者，主题中的消息被所有订阅者消费，消费者不能消费订阅之前就发送的主题中的消息，先预定后消费（订报纸）
+八、JMS编码接口
+ConnectionFactory用于创建连接的消息中间件连接工厂
+Connection代表应用程序和消息服务之间的通信链路
+Destination批消息发布和接收的地点，包括队列或主题
+Session表示一个单线程的上下文，用于发送与接收消息
+MessageConsumer由会话创建，用于接收发送到目标的消息
+MessageProducer由会话创建，用于发送消息到目标
+Message在消费者与生产者之间传送的对象，消息头，一组消息属性，一个消息体
+九、使用Spring集成JMS连接ActiveMQ
+ConnectionFactory用于管理连接的工厂，Spring提供的连接池，SingleConnectionFactory和CachingConnectionFactory
+JmsTemplage用于发送和接收消息的模板类，Spring提供的线程安全的可在整个应用中使用
+MessageListener消息监听器

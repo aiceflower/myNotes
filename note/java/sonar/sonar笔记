@@ -1,0 +1,10 @@
+1.sonar安装
+a.下载离线包
+https://bintray.com/sonarsource/SonarLint-for-Eclipse/releases/2.0.0/view
+b.eclipse安装
+help-->install new software...
+2.eclipse sonar图标含意
+!(红) 阻塞
+上箭头(红) 严重
+上尖括号(红)  主要
+下箭头(绿) 提示

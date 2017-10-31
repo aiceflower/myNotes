@@ -1,0 +1,40 @@
+docker学习笔记:
+一、常用命令
+1.拉取一个镜像
+docker pull [options] name[:tag]
+docker pull hello-world
+2.查看本机有哪些镜像
+docker images [options] [repository[:tag]]
+3.运行docker容器
+docker run [options] image[:tag] [command] [args...]
+docker run -d nginx 在后台运行
+4.查看docker运行程序
+docker ps 
+5.停止运行
+docker stop 进程名或id
+6.删除docker容器
+docker rm mysql1
+7.重启容器
+docker restart mysql1
+5.进入容器内部
+docher exec -it id\容器名 shell
+docker exec -it 44f bash
+二、docker镜像位置
+1. http://c.163.com
+2.https://hub.docker.com/
+三、docker网络
+网络类型：bridge 
+		host 
+		none
+端口映射:
+docker run -d -p 8080:80 nginx
+-P  映射所有端口给个随机端口
+四：制作自己的镜像
+1.创建Dockerfile
+from 基础镜像的名字
+MAINTAINER 所有者名字 邮箱...
+COPY jpress.war /usr/local/tomcat/webapps 
+2.docker build -t jpress .
+3.启动(这里会用到 tomcat mysql自己安装完成jpress镜像制作)
+4.创建mysql 
+docker run -d -p 3336:3306 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=jpress mysql

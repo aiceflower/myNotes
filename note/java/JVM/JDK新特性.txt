@@ -7,13 +7,60 @@
 6.可变参数
 7.forEach循环
 8.内省
+详细：
+1.自动拆装箱
+Java有基本数据类型，在这些基本数据类型周围又有包装类。通常，编程人员需要将一种类型转换成另一种。
+如： int a = new Integer(1);
+    int b = new Integer(1).intValue();
+2.枚举
+枚举是一组常量值，相对于常量类型有更好的可读性，
+可限定方法传入的参数类型
+运行效率高
+3.静态导入      
+静态导入使代码更易读。
+当时使用静态导入，我们无需为常量名，静态方法，前缀类名就能使用这些常量
+4.泛型
+将运行时异常提前到了编译期。
+获取集合中元素时无需强制类型转换。
+5.线程池
+线程池的基本思想还是一种对象池的思想，开辟一块内存空间，里面存放了众多（未死亡）的线程，池中线程执行调度由池管理器来处理。当有线程任务时，从池中取一个，执行完成后线程对象归池，这样可以避免反复创建线程对象所带来的性能开销，节省了系统的资源。
+有关Java5线程新特征的内容全部在java.util.concurrent下面
+Java5的线程池分好多种：固定尺寸的线程池、可变尺寸连接池。
+6.可变参数
+适用于参数个数不确定，类型确定的情况，java把可变参数当做数组处理。
+可变参数必须位于最后一项。
+位于变量类型和变量名之间，前后有无空格都可以；
+调用可变参数的方法时，编译器为该可变参数隐含创建一个数组，在方法体中一数组的形式访问可变参数。
+7.for each循环
+简化书写，可读性高
+用于遍历数组与集合[需要实现Iterable接口]
+8.内省
+内省(Introspector)是Java 语言对Bean类属性、事件的一种缺省处理方法。
+例如类 A 中有属性 name, 那我们可以通过 getName,setName 来得到其值或者设置新的值。通过 getName/setName 来访问 name 属性，这就是默认的规则。
+9.元数据
+java注解就是元数据
+
+
 二、JDK1.6
+1.Desktop类和SystemTray类
+2.使用JAXB2来实现对象与XML之间的映射
+3.StAX
+4.使用Compiler API
+5.轻量级Http Server API
+6.插入式注解处理API(Pluggable Annotation Processing API)
+7.用Console开发控制台程序
+8.对脚本语言的支持
+9.Common Annotations
+
+详细：
 1.增加了Desktop类和SystemTray类
 	1）Desktop
 	可以用关联应用程序来打开文件，
 	启动用户默认浏览器来显示指定的URI，
 	打开邮件，
 	打印文档;
+	2）SystemTray
+	表示桌面的系统托盘
 2.JAXB(Java Architecture for XML Binding)[用于XML绑定的Java体系结构]
 可以将一个Java对象转变成为XML格式，反之亦然。
 3.StAX(利用拉模式解析xml文档)
@@ -23,3 +70,183 @@ Compiler API结合反射功能就可以实现动态的产生Java
 代码并编译执行这些代码，有点动态语言的特征。
 5.JDK1.6 提供了一个简单的Http Server API，据此我们可以构建
 自己的嵌入式Http Server，它支持Http和Https协议
+6.插入式注解处理API(Pluggable Annotation Processing API)
+插入式注解处理API提供一套标准API来处理Annotations
+7.用Console开发控制台程序
+java.io.Console 类专用来访问基于字符的控制台设备.你的程序如果要与Windows下的cmd或者Linux下的Terminal交互,就可以用Console类代劳. 
+8.对脚本语言的支持
+提供了ScriptEngine支持其它脚本语言 如： ruby,groovy,javascript
+ScriptEngine engine=
+new ScriptEngineManager().getEngineByName("javascript"); 
+//ruby grooby php...
+9.Common Annotations
+Common annotations原本是Java EE 5.0规范的一部分，现在SUN把它的
+一部分放到了java SE 6.0中，为其他相关的Java技术定义一套公共的Annotation是有价值的，可以避免重复建设的同时，也保证java se和Java EE 各种技术的一致性.
+如：@Resource，@Resources
+
+三、jdk1.7
+1.对集合类的语言支持 
+2.自动资源管理 
+3.增强的对通用实例创建（diamond）的类型推断 
+4.数字字面量下划线支持 
+5.switch中使用string
+6.二进制字面量
+7.简化的可变参数调用 
+8.新增一些取环境信息的工具方法
+
+详细：
+1 对集合类的语言支持 
+List<String> list = ["item"]; 
+Set<String> set = {"item"}; 
+Map<String, Integer> map = {"key" : 1}
+这些集合是不可变的。
+注：亲测不支持
+2 自动资源管理 
+try 
+(
+BufferedReader br = new BufferedReader(new FileReader(path)
+) { 
+     return br.readLine(); 
+  } 
+对于try语句块内的资源可以不用关闭。
+为了支持这个行为，所有可关闭的类将被修改为可以实现一个Closable（可关闭的）接口。 
+3 增强的对通用实例创建（diamond）的类型推断 
+类型推断是一个特殊的烦恼，下面的代码： 
+ Map<String, List<String>> anagrams = new HashMap<String, List<String>>(); 
+
+通过类型推断后变成： 
+ Map<String, List<String>> anagrams = new HashMap<>(); 
+这个<>被叫做diamond（钻石）运算符，这个运算符从引用的声明中推断类型。 
+4 数字字面量下划线支持 
+很长的数字可读性不好，在Java 7中可以使用下划线分隔长int以及long了，
+如： 
+   int one_million = 1_000_000; 
+   运算时先去除下划线，如：1_1 * 10 = 110，120 – 1_0 = 110 
+5 switch中使用string 
+ 1.5以前你在switch中只能使用byte，short，char，int
+ 1.5时增加enum
+ 1.7时可以使用string了，底层实际将string转换为int（对应的hashCode）
+ long 在所有的版本中都是不支持的
+
+6 二进制字面量 
+你现在可以使用0b前缀创建二进制字面量： 
+int binary = 0b1001_1001; 
+你可以使用二进制字面量这种表示方式，并且使用非常简短的代码，可将二进制字符转换为数据类型，如在byte或short。 
+  byte aByte = (byte)0b001;    
+  short aShort = (short)0b010;   
+7 简化的可变参数调用
+当程序员试图使用一个不可具体化的可变参数并调用一个*varargs* （可变）方法时，编辑器会生成一个“非安全操作”的警告。 JDK 7将警告从call转移到了方法声明(methord declaration)的过程中。
+将警告从调用区转移到了声明期。
+8.新增一些取环境信息的工具方法
+File System.getJavaIoTempDir()  // IO临时文件夹    
+File System.getJavaHomeDir() // JRE的安装目录    
+File System.getUserHomeDir() // 当前用户目录    
+File System.getUserDir() // 启动java进程时所在的目录    
+注：这些方法在jdk1.8已经不存在了
+可使用System.getProperties(“user.dir”)代替。
+
+四、jdk8
+1.接口的默认方法
+Java 8允许我们给接口添加一个非抽象的方法实现，只需要使用default关键
+字即可，这个特征又叫做扩展方法
+interface Formula {
+    //默认方法
+    default double sqrt(int a) {
+        return Math.sqrt(a);
+    }
+    //静态方法
+    static int getZ(){
+		return 2;
+	}
+}     
+默认方法可以被重写，静态方法不可以被重写，default与static不可共用。
+
+2.Lambda 表达式，（也称为闭包）
+Lambda允许把函数作为一个方法的参数（函数作为参数传递进方法中），或者把代码看成数据：函数式程序员对这一概念非常熟悉。
+Collections.sort(names, (String a, String b) -> {
+    return b.compareTo(a);
+});
+更简单的写法：
+Collections.sort(names, (String a, String b) -> b.compareTo(a));
+对于函数体只有一行代码的，你可以去掉大括号{}以及return关键字，但是你还可以写得更短点：
+Collections.sort(names, (a, b) -> b.compareTo(a));
+比较对象中的字段。
+int：
+Collections.sort(list,(u1,u2)->Integer.compare(u1.getAge(), u2.getAge()));		
+string：
+Collections.sort(list, (u1,u2) -> u1.getName().compareTo(u2.getName()));
+
+这个例子使我们学到了java8中Lambda表达式的书写方式： 
+(参数) -> 表达式 
+(参数) -> 语句 
+(参数) -> { 语句 } 
+如果只是打印信息 () -> System.out.println("test");
+
+
+stream用法：
+map:
+Stream<Integer> map = list.stream().map((u1)->u1.getAge()+2);
+filter:
+  <User> startsWithJ = (n) -> 	
+	n.getName().startsWith("a");  
+Predicate<User> fourLetterLong = (n) -> 
+	n.getName().length() > 4;  
+Stream<User> filter = 
+	list.stream().filter(startsWithJ.and(fourLetterLong));
+foreach:
+  list.forEach((name)->System.out.println(name.getName()));
+mapToInt:
+	ntSummaryStatistics stats = lists.stream().mapToInt((x) -> x).summaryStatistics(); 
+stats.getMax());//最大值  
+stats.getMin();//最小值  
+stats.getSum();//和  
+stats.getAverage();//平均值
+distinct:
+List<Integer> distinct = numbers.stream().map( i ->i*i).distinct().collect(Collectors.toList());
+
+注：
+函数式接口契约：
+函数式接口就是一个具有一个方法的普通接口。像这样的接口，可以被隐式转换为lambda表达式。增加@FunctionalInterface，防止出错。
+@FunctionalInterface 注解，编译器如果发现你标注了这个注解的接口有多于一个抽象方法的时候会报错的。可以有多个默认方法。
+默认方法与静态方法并不影响函数式接口的契约，可以任意使用：
+
+3.重复注解机制
+重复注解机制本身必须用@Repeatable注解。
+
+4.扩展注解的支持
+Java 8扩展了注解的上下文。现在几乎可以为任何东西添加注解：局部变量、泛型类、父类与接口的实现，就连方法的异常也能添加注解。
+
+5.Stream
+最新添加的Stream API（java.util.stream） 把真正的函数式编程风格引入到Java中。这是目前为止对Java类库最好的补充，
+
+6.Date/Time API (JSR 310)
+Clock Clock.systemUTC();
+LocaleDate LocalDate.now();LocalDate.now(clock);
+LocalTime LocalTime.now();LocalTime.now(clock);
+LocalDateTime LocalDateTime.now();LocalDateTime.now(clock);
+ZonedDateTime ZonedDateTime.now();ZonedDateTime.now(clock);
+
+Duration,在秒与纳秒级别上的一段时间。Duration使计算两个日期间的不同变的十分简单
+final LocalDateTime from = LocalDateTime.of( 2014, Month.APRIL, 16, 0, 0, 0 );
+final LocalDateTime to = LocalDateTime.of( 2015, Month.APRIL, 16, 23, 59, 59 );
+final Duration duration = Duration.between( from, to );
+System.out.println( "Duration in days: " + duration.toDays() );
+System.out.println( "Duration in hours: " + duration.toHours() );
+
+7.Base64
+Base64编码已经成为Java类库的标准。
+Base64.getEncoder().encodeToString(
+text.getBytes( StandardCharsets.UTF_8 ) );
+Base64类同时还提供了对URL、MIME友好的编码器与解码器（Base64.getUrlEncoder() / Base64.getUrlDecoder(), Base64.getMimeEncoder() / Base64.getMimeDecoder()）。
+
+8.并行（parallel）数组
+Java 8增加了大量的新方法来对数组进行并行处理。
+ Arrays.parallelSetAll( arrayOfLong, index -> 
+ ThreadLocalRandom.current().nextInt( 1000000 ) );
+Arrays.parallelSort( arrayOfLong );    
+
+9.并发（Concurrency）
+在新增Stream机制与lambda的基础之上，在java.util.concurrent.ConcurrentHashMap中加入了一些新方法来支持聚集操作。同时也在java.util.concurrent.ForkJoinPool类中加入了一些新方法来支持共有资源池（common pool）
+
+10.类依赖分析器jdeps
+jdeps是一个很有用的命令行工具。它可以显示Java类的包级别或类级别的依赖。它接受一个.class文件，一个目录，或者一个jar文件作为输入。jdeps默认把结果输出到系统输出（控制台）上。

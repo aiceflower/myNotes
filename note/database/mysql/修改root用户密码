@@ -1,0 +1,16 @@
+
+修改mysql数据库root用户密码的几种方式
+1.知道root密码可以登陆
+使用root用户登陆然后执行 set password for root@localhost= password('new_password')
+2.知道root密码可以登陆
+使用root用户登陆修改mysql数据库表user中authentication_string（或password字段，然后再 flush privileges
+use mysql; 
+update user u set authentication_string = password('123456') where u.user = 'root';
+flush privileges;
+3.知道root密码未登陆
+mysqladmin -uroot -pold_passowrd password new_password;
+mysqladmin -uroot -proot password 123456;
+4.不知道root用户密码
+打开一个窗口，执行：mysqld --skip-grant-tables；
+这时再开一个窗口来登录mysql：mysql -u root；
+然后使用上面的方式来修改root用户的密码。	

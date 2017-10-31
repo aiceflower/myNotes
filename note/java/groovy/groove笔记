@@ -1,0 +1,80 @@
+groovy笔记
+
+一、groovy与java的区别
+1.分号是可选的
+2.会自动添加get/set方法
+3.最后一个表达式的值会做为返回值
+4.可使用点号获取属性
+5.空对象使用==不会抛出空指针异常
+
+二、groovy高效特性
+//groovy 高效特性
+//1.可选的类型定义
+def version = 1
+
+//2 assert 在任何地方都可使用assert
+//assert version == 2
+
+//3 括号是可选的
+//println(version)
+//println version
+
+//4 字符串的几种写法
+//仅仅是一个字符串
+def s1 = 'groovy'
+//可插入变量
+def s2 = "gradle version is ${version}"
+//可以换行
+def s3 = '''my
+name
+is groovy
+'''
+//println s1
+//println s2
+//println s3
+
+//5 集合api
+//list,默认类型为ArrayList
+def list = ["ant","maven"]
+//添加元素
+list << "gradle"
+assert  list.getClass() == ArrayList
+
+assert list.size() == 3
+
+//map  默认为 LinkedHashMap
+def map = ['ant':2000,'maven':2004]
+map.gradle = 3009//添加元素
+//获取元素可使用点号与字符串
+println map.ant
+println map['maven']
+println map.getClass()
+
+//6 闭包, 主要用于传入方法
+def c1 = {
+    v ->
+        print v
+}
+
+def c2 = {
+    println 'hello'
+}
+//这里的closure不能引入其它的包，会报错
+/*
+def method1(closure closure){
+    closure('param')
+}
+
+def method2(closure closure){
+    closure()
+}
+
+method1(c1)
+
+method2(c2)*/
+
+
+三、构建脚本
+//构建脚本中默认都有一个Project实例的
+默认作用域都是project
+

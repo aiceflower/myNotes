@@ -8,3 +8,6 @@ $HOME/.bash_history
 /etc/sysconfig/network-scripts/ifcfg-eth0
 5.修改系统运行级别
 /etc/inittab 
+6.修改vi默认设置参数
+/etc/vimrc
+~/.vimrc

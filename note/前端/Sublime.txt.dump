@@ -1,0 +1,46 @@
+一、快捷键
+alt+- 上一个光标处
+alt+shift+- 下一个光标处
+Ctrl+D：选择单词，重复可增加选择下一个相同的单词
+Ctrl+M：跳转到对应括号
+Ctrl+R：前往 method
+Ctrl+L：选择行，重复可依次增加选择下一行
+Ctrl+Shift+M：选中当前括号内容，重复可选着括号本身
+Ctrl+Shift+Enter：在当前行前插入新行
+Ctrl+Enter：在当前行后插入新行
+Ctrl+K+B：开关侧栏
+Ctrl+Shift+P：打开命令面板
+Ctrl+P：搜索项目中的文件
+Ctrl+G：跳转到第几行
+Ctrl+W：关闭当前打开文件
+ctrl+Shift+W：关闭所有打开文件
+ctrl+shift+t:打开上一次关闭的文件
+
+二、技巧设置
+1.设置软连接在命令行打开文件目录
+ln -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl subl
+在path路径下设置
+打开文件 subl 路径
+2.恢复默认配置
+所有的用户自定义信息都存放在
+/Users/alonglamp/Library/Application Support/Sublime Text 3/Packages/User下，替换即可
+3.收起打开侧边栏sidbar C+k+b
+放大缩小:C+'+/-'
+4.设置所有快捷键：
+shift+C+p  key Bindings
+5.查看操作的命令名，用于修改其快捷键
+C+~ 输入sublime.log_commands(True) 然后执行相应的操作会记录
+6.安装包位置
+/Users/alonglamp/Library/Application Support/Sublime Text 3/Packages/UserPackage\ Control.sublime-settings 
+常用安装包：
+"AdvancedNewFile", 创建层级目录或文件 alt+C+n 可使用tab自动补全
+"BracketHighlighter",
+"Codecs33",
+"ColorPicker",
+"ConvertToUTF8",
+"Emmet",
+"GBK Support",
+"Git",
+"Package Control",
+"Pretty JSON",
+"RailsCasts Colour Scheme"

@@ -40,7 +40,9 @@ C+~ 输入sublime.log_commands(True) 然后执行相应的操作会记录
 "ConvertToUTF8",
 "Emmet",
 "GBK Support",
-"Git",
+"Git", 
 "Package Control",
 "Pretty JSON",
 "RailsCasts Colour Scheme"
+7.使用git
+shift+C+p git add -->git commit -->输入描述-->C+w-->git push

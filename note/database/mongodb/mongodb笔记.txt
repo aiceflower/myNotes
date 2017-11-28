@@ -1,0 +1,102 @@
+mongodb笔记.txt
+1.下载源码
+github上下载mongodb的源码，如2.6.5版本
+2.编译
+解压下载的zip进入到源码目录
+scons all (-j 8 指定cpu核数，加速编译)
+3.编译后的文件
+mongod 服务
+mongo连接客户端
+mongoimport 导入
+mongoexport 导出
+mongodump 导入二进制
+mongostore 导出二进制
+mongooplog 操作日志
+4.配置文件,自己创建
+mongod.conf
+port = 12345
+dbpath = data
+logpath = log/mongod.log
+fork = true //后台进程
+5.启动服务
+./bin/mongod -f conf/mongod.conf
+numactl --interlevel=all bin/mongod -f conf/mongod.conf
+6.关闭服务
+连接时：db.shutdownServer();[使用admin用户关闭 use admin]
+或: kill -15 ...
+7.基本操作
+show dbs 查看当前数据库
+show collections查看集合名
+show tables查看表
+use 数据库 切换数据库
+db.dropDatabase() 删除数据库
+db.test_collection.insert({"name":"zhangsan"})数据写入. db.集合名.insert(json)进行数据写入
+db.test.find(json);查找，支持skip,limit,sort
+db.test.find().skip(3).limit(2).sort({x:1})
+可以使用js语法插入多条数据
+db.test.update({x:1},{x:99})将x为1的数据更新为99,前一个参数为查询，后一个为更新
+更新部分字段:
+db.test.insert({x:1,y:2,z:3})
+db.test.update({x:1},{$set{y:5}})使用$set，更新部分字段
+db.test.update({x:1},{y:5},true)如果查询的数据不存在则插入一条
+默认更新只会更新查询的第一条数据。
+更新多条：
+db.test.update({x:1},{$set{x:2}},false,true)
+字段含义:		
+1.查询条件
+2.更新内容，为了安全只能用set
+3.是否插入更新
+4.是否全部更新
+删除：默认删除查找的所有数据
+db.test.remove()必需传参数
+db.test.drop()删除表
+8.索引
+db.test.getIndexes()查看索引
+db.test.ensureIndex({x:1}) 1为正向排序，-1为逆向排序，创建索引
+需要在使用数据库之前就创建索引，如果有很多数据会严重影响创建索引的效率
+1）索引的种类
+
+_id索引 默认
+
+单键索引 db.test.insert({x:1})
+
+多键索引 db.test.insert({x:[1,2,3,4,5]})
+
+复合索引 db.test.ensureIndex({x:1,y:1})
+
+过期索引 db.test.ensureIndex({time:new Date()	},{expireAfterSeconds:10}),一段时间后索引会过期，相应的数据也会被删除，存放在过期索引中的值必需是指定的时间类型,不能使用时间戳
+
+全文索引 
+ 创建
+db.test.ensureIndex({key:"索引字段"})
+db.test.ensureIndex({key_1:"索引字段"}，key_2:"索引字段")
+db.test.ensureIndex({"$**":"索引字段"})所有字段
+ 使用
+db.test.find({$text:{$search:"aa bb"}}) 默认或查询包含aa或bb
+db.test.find({$text:{$search:"aa bb -cc"}})包含aa或bb但不包含cc
+db.test.find({$text:{$search:"\"aa\" \"bb\""}}) 使用与查询加双引号但要使用转义符
+ 相似度 {score:{$meta:"testScort"}}
+db.test.find({$text:{$search:"aa bb"}},{scort:{$meta:"testScore"}}).sort({scort:{$meta:"testScore"}})
+全文索引使用限制：
+每次查询只能指定一个$test
+$text查询不能出现在$nor查询中
+如果包含了$text，hint不再起作用
+不支持中文	
+索引的属性：
+name：db.test.ensureIndex({m:1},{name:"test_index"}),db.test.dropIndex({name:"test_index"})
+唯一性：db.test.ensureIndex({m:1},{unique:true})
+稀疏性：db.test.ensureIndex({m:1},{sparse:true})
+db.test.find({m:{$exists:true}})
+.hint("test_indes")强制使用索引
+
+地理位置索引
+分为 2d 与
+2d:
+db.test.ensureIndex({"w":"2d"})
+位置表示方式:[经度([-180,180])，纬度（[-90,90]）]
+查询:db.test.find({w:{$near:[1,1],$maxDistance:10}})
+near平面查找,maxDistance最远距离
+形状表示:
+$box 矩形 {$box:[<x1>,<y1>],[<x2>,<y2>]}
+$center 圆形 {$center:[[<x1>,<y1>],r]}
+$polygon 多边形 {$polygon:[[<x1>,<y1>],[<x2>,<y2>],[<x3>,<y3>]..]}

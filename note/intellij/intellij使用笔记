@@ -44,6 +44,11 @@ alt+f8 弹出表达式计算窗口
 12.idea 添加本地jar包依赖
 File –> Project Structure ->Moudules –> Dependencies -> + jars or...
 
+13.创建资源目录
+1.先创建一个普通目录
+2.打开project strcture (ctrl+alt+shift+s)
+3.选择modules 对应的项目 sources 刚创建的目录，右键 Resources		
+
 2.快捷键
 Alt + Ctrl + S	打开Settings
 Alt + Enter	快速修复

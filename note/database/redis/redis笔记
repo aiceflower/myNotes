@@ -21,31 +21,3 @@ daemonize 是否以守护进程方式启动(yes是)
 
 跳转：
 cd /Users/alonglamp/soft/redis-4.0.0/src
-
-启动：
-./redis-server ../redis_cluster/6379/redis.conf 
-./redis-server ../redis_cluster/6380/redis.conf 
-./redis-server ../redis_cluster/6381/redis.conf 
-./redis-server ../redis_cluster/6382/redis.conf 
-./redis-server ../redis_cluster/6383/redis.conf 
-./redis-server ../redis_cluster/6384/redis.conf 
-
-修改：
-	
-vi +69 ../redis_cluster/6380/redis.conf
-vi +69 ../redis_cluster/6381/redis.conf
-vi +69 ../redis_cluster/6382/redis.conf
-vi +69 ../redis_cluster/6383/redis.conf
-vi +69 ../redis_cluster/6384/redis.conf
-
-连接客户端：
-./redis-cli -h 192.168.1.104 -p 6379
-./redis-cli -h 192.168.31.127 -p 6380
-./redis-cli -h 192.168.31.127 -p 6381
-./redis-cli -h 192.168.31.127 -p 6382
-./redis-cli -h 192.168.31.127 -p 6383
-./redis-cli -h 192.168.31.127 -p 6384
-
-更换集群时，删除src目录下的
-appendonly.aof dump.rdb nodes-port.conf
-然后重新注册集群

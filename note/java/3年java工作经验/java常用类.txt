@@ -1,0 +1,25 @@
+一、Object
+1.registerNatives:将Java层的方法名和本地函数对应起来，方便执行引擎在执行字节码时根据这些对应关系表来调用C/C++函数,可以看成将字符串映射到函数指针.
+2.finalize：当对象被回收时调用
+二、Integer
+1.Integer.IntegerCache:	包含了int可能值的Integer数组，默认范围是[-128,127]
+通过-Djava.lang.Integer.IntegerCache.high=500就可以改变缓存值的最大值[-128,500]
+2.parseInt(str,radix);将字符串转换为int类型。进制数从2-36
+耗时：除法比乘法和右移耗时，乘法比右移和加法耗时。
+3.toString(i,radix);转换为指定进制的字符串形式，进制不在2-36则转换为10进制
+4.valueOf(int|s|s,radix);
+获取Integer对象，在缓存范围内则直接取，不在则new
+5.decode(s);解码字符串为int，0x或#转换为16进制，0开头转换为8进制
+6.xxxValue();转换成对应类型
+7.toUnsignedLong(int)和toUnsignedString(int|i,radix)	无符号转换
+转换成无符号long型
+8.bitCount(i);计算2进制数中1的个数
+9.highestOneBit(i);返回i的二进制中最高位的1，其他全为0的值。
+10.lowestOneBit(i);最低位1，其他全为0的值.
+11.numberOfLeadingZeros(i);
+返回i的二进制从头开始有多少个0。i为0的话则有32个0。（以总长为32位计算）
+12.numberOfTrailingZeros(i);返回i的二进制从尾开始有多少个0。(以具体位数)
+13.toHexString和toOctalString方法转换为对应进制的string
+三、Boolean
+1.在Java的世界中只要全局存在两个Boolean对象即可，实例化出多余的Boolean对象仍然能正确表示布尔值，只是会浪费一些空间和影响时间性能。
+2.HashCode; 即true返回1231而false返回1237。

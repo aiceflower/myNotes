@@ -18,11 +18,12 @@ int b = 1<<2;//4
 int c = 1<<3;//8
 int d = 1<<4;//16
 int key = a | b;//多个数可用|连接
+9.修改jar包中的文件
+unzip xx.jar
+修改...
+jar -cvfm META-INF/MANIFEST.MF ./*
 
-boolean isA = (key & a) == a;
-boolean isB = (key & b) == b;
-boolean isC = (key & c) == c;
-boolean isD = (key & d) == d;
+	
 System.out.println("isA:"+isA+",isB:"+isB+",isC:"+isC+",isD:"+isD);
 a b 为true其它为false
 

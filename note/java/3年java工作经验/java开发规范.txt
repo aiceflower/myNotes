@@ -1,0 +1,84 @@
+java开发规范：
+1.包名统一使用单数形式，点分隔间有且仅有一个英语单词
+2.service/dao方法命名：
+A) Service/DAO层方法命名规约
+ 1） 获取单个对象的方法用get作前缀。 
+ 2） 获取多个对象的方法用list作前缀。 
+ 3） 获取统计值的方法用count作前缀。 
+ 4） 插入的方法用save/insert作前缀。 
+ 5） 删除的方法用remove/delete作前缀。
+ 6） 修改的方法用update作前缀。 
+B) 领域模型命名规约
+ 1） 数据对象：xxxDO，xxx即为数据表名。
+ 2） 数据传输对象：xxxDTO，xxx为业务领域相关的名称。
+ 3） 展示对象：xxxVO，xxx一般为网页名称。
+ 4） POJO是DO/DTO/BO/VO的统称，禁止命名成xxxPOJO。 
+3.不允许任何魔法值（即未经预先定义的常量）直接出现在代码中。 
+4.long或者Long初始赋值时，使用大写的L，不能是小写的l
+5.if/for/while/switch/do等保留字与括号之间都必须加空格。 
+6.任何二目、三目运算符的左右两边都需要加一个空格。 
+7.左小括号和字符之间不出现空格；同样，右小括号和字符之间也不出现空格
+8.采用4个空格缩进，禁止使用tab字符。 
+9.注释的双斜线与注释内容之间有且仅有一个空格。
+10.方法参数在定义和传入时，多个参数逗号后边必须加空格。 
+11.避免通过一个类的对象引用访问此类的静态变量或静态方法，无谓增加编译器解析成本，直接用类名来访问即可。 
+12.不能使用过时的类或方法。 
+13.所有的POJO类属性必须使用包装数据类型,RPC方法的返回值和参数必须使用包装数据类型,所有的局部变量使用基本数据类型。 
+14定义DO/DTO/VO等POJO类时，不要设定任何属性默认值。 
+15.构造方法里面禁止加入任何业务逻辑，如果有初始化逻辑，请放在init方法中。 
+16.POJO类必须写toString方法。
+17.类内方法定义的顺序依次是：公有方法或保护方法 > 私有方法 > getter/setter方法。 (多个同名方法按顺序放置在一起)
+18.循环体内，字符串的连接方式，使用StringBuilder的append方法进行扩展。 
+19.只要重写equals，就必须重写hashCode。 
+20.ArrayList的subList结果不可强转成ArrayList
+21.使用集合转数组的方法，必须使用集合的toArray(T[] array)，传入的是类型完全一样的数组，大小就是list.size()。 
+22.集合初始化时，指定集合初始值大小。 
+23.获取单例对象需要保证线程安全，其中的方法也要保证线程安全。 
+24.线程资源必须通过线程池提供，不允许在应用中自行显式创建线程。 
+25.SimpleDateFormat 是线程不安全的类，一般不要定义为static变量，如果定义为static，必须加锁，或者使用DateUtils工具类。如果是JDK8的应用，可以使用Instant代替Date，LocalDateTime代替Calendar，DateTimeFormatter代替SimpleDateFormat
+26.在一个switch块内，都必须包含一个default语句并且放在最后，即使空代码。 
+27.在if/else/for/while/do语句中必须使用大括号。即使只有一行代码
+28.避免采用取反逻辑运算符。！
+29.下列情形，需要进行参数校验：
+ 1） 调用频次低的方法。
+ 2） 执行时间开销很大的方法。此情形中，参数校验时间几乎可以忽略不计，但如果因为参数错误导致中间执行回退，或者错误，那得不偿失。
+ 3） 需要极高稳定性和可用性的方法。
+ 4） 对外提供的开放接口，不管是RPC/API/HTTP接口。 
+ 5） 敏感权限入口。 
+30.下列情形，不需要进行参数校验
+ 1） 极有可能被循环调用的方法。
+ 2） DAO的参数校验，可以省略。 
+ 3） 被声明成private只会被自己代码所调用的方法
+31.类、类属性、类方法的注释必须使用Javadoc规范
+32.所有的类都必须添加创建者和创建日期。 
+33.所有的枚举类型字段必须要有注释，说明每个数据项的用途。 
+34.防止NPE，是程序员的基本修养，注意NPE产生的场景：    
+ 1）返回类型为基本数据类型，return包装数据类型的对象时，自动拆箱有可能产生NPE。 反例：public int f() { return Integer对象}， 如果为null，自动解箱抛NPE。
+ 2） 数据库的查询结果可能为null。
+ 3） 集合里的元素即使isNotEmpty，取出的数据元素也可能为null。
+ 4） 远程调用返回对象时，一律要求进行空指针判断，防止NPE。
+ 5） 对于Session中获取的数据，建议NPE检查，避免空指针。
+ 6） 级联调用obj.getA().getB().getC()；一连串调用，易产生NPE。 
+ 正例：使用JDK8的Optional类来防止NPE问题。 
+35.避免出现重复的代码（Don’t Repeat Yourself），即DRY原则。 
+36.异常日志
+if (logger.isDebugEnabled()) { //判断，占位符
+ logger.debug("Processing trade with id: {} and symbol : {} ", id, symbol); 
+} 
+logger.error(各类参数或者对象toString + "_" + e.getMessage(), e);
+37.避免重复打印日志，浪费磁盘空间，务必在log4j.xml中设置additivity=false。 
+<logger name="com.taobao.dubbo.config" additivity="false"> 
+37.单元测试中不准使用System.out来进行人肉验证，必须使用assert来验证。 
+38.CSRF(Cross-site request forgery)跨站请求伪造是一类常见编程漏洞。
+39.1表示是，0表示否
+
+ 
+
+
+
+
+
+
+
+
+

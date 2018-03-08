@@ -1,0 +1,22 @@
+一、idea开启热加载
+1.、CTRL + SHIFT + A --> 查找make project automatically --> 选中
+2.CTRL + SHIFT + A --> 查找Registry --> 找到并勾选compiler.automake.allow.when.app.running
+3.<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-devtools</artifactId>
+    <optional>true</optional>
+</dependency>
+4.以上三步可使用热加载，如未成功可使用以下解决
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <configuration>
+                <fork>true</fork>//该配置必须
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
+或禁用缓存Chrome，开发者模式-->
+NetWork --> Disable Cache(while DevTools is open)

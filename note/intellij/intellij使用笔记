@@ -1,3 +1,5 @@
+激活：
+http://idea.lanyus.com/
 intellij使用技巧
 一、常用快捷键
 1.代码自动补全tab
@@ -45,11 +47,11 @@ alt+f8 弹出表达式计算窗口
 File –> Project Structure ->Moudules –> Dependencies -> + jars or...
 
 13.创建资源目录
-1.先创建一个普通目录
-2.打开project strcture (ctrl+alt+shift+s)
-3.选择modules 对应的项目 sources 刚创建的目录，右键 Resources		
+	1.先创建一个普通目录
+	2.打开project strcture (ctrl+alt+shift+s)
+	3.选择modules 对应的项目 sources 刚创建的目录，右键 Resources		
 
-2.快捷键
+二、快捷键
 Alt + Ctrl + S	打开Settings
 Alt + Enter	快速修复
 Ctrl + Shift + U	大小写切换
@@ -94,3 +96,39 @@ ctrl+alt+l
 ctrl+p 显示方法参数
 Ctrl＋F7可以查询当前元素在当前文件中的引用，然后按F3可以选择
 CTRL+ALT+F12  资源管理器打开文件夹 	
+ctrl+shift+c复制类的全路径
+
+三、代码注释
+	1.类注释
+	preference-->Editor-->File and Code Template-->files-->Class
+	/**
+	 * 
+	 * 开发公司：grgits.com
+	 * 版权：grgits.com
+	 *
+	 * @description ${DESCRIPTION}  
+	 *
+	 * @author hjfu5 
+	 *
+	 * @email  hjfu5@grgbanking.com
+	 *
+	 * @time ${DATE} ${TIME} 
+	 *
+	 * @version 1.0 
+	 * 
+	 */
+	2.方法注释
+	preference-->Live Template-->+-->Edit variables
+	*
+ 	* @describe: $DESC$
+ 	* @author: hjfu5
+ 	* @time: $CREAT_DATE$ $CREAT_TIME$
+ 	$PARAM$
+ 	$RETURN$
+ 	*/
+
+   PARAM:
+   groovyScript("def result=''; def params=\"${_1}\".replaceAll('[\\\\[|\\\\]|\\\\s]', '').split(',').toList(); for(i = 0; i < params.size(); i++) {result+= ((i == 0)?'':'\\t ') + '* @param ' + params[i] + ((i < params.size() - 1) ? '\\n\\b' : '')}; return result.trim()", methodParameters())
+   RETURN:
+   groovyScript("def returnType = \"${_1}\"; def result = '* @return:' + returnType; return result;", methodReturnType())
+

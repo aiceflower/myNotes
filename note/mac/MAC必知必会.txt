@@ -9,4 +9,17 @@
  输入法:空格
  隐藏/显示Dock:alt+d
 
- 3.安装Alfred	
+ 3.安装Alfred
+ 4.在finder上显示文件路径
+ 打开终端执行：
+ defaults write com.apple.finder _FXShowPosixPathInTitle -bool YES
+ 复制路径：option+command+c
+ 5.在终端中打开finder
+ open path
+ 6.让终端显示更具色彩
+1.让ls,grep 显示颜色在.bash_profile中加入如下
+alias ls='ls -G'
+alias ll='ls -l'
+alias grep='grep --color'
+2.在~/.vimrc文件中加入,没有该文件就创建它
+syntax on

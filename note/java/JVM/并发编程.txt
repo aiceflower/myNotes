@@ -1,0 +1,92 @@
+一线程基础
+1.线程安全：当多个线程访问某一个类（对象或方法）时，这个类始终都能表现出正确的行为，，那么这个类（对象或方法）就是线程安全的。
+2.synchronized:可以在任意对象及方法上加锁，而加锁的这段代码称为"互斥区"或"临界区"
+3.一个线程执行包含synchronized的方法时，一定要先拿到锁，然后才能进入synchronized包含的代码中。
+4.synchronzed取得的是对象的锁，而不是把一段代码(方法)当作锁，哪个线程执行synchronized的方法，就持有该方法对应的对象的锁，每个对象都有一把锁。
+5.在静态方法上加synchronized，表示锁定class类，独占.class类，不是对象锁。
+6.多个线程多个锁：多个线程，每个线程都可以拿到自己指定的锁，分别获得锁后执行synchronized方法体的内容(对象锁)
+7.同步：同步就是共享，如果不是共享就没有必要同步。
+8.同步的目的就是为了线程安全，对于线程安全来说，需要满足两个特性：原子性(同步)，一致性。
+9.对一个对象的方法加锁的时候需要考虑业务的整体性，为setValue/getValue方法同时加锁，保证的原子性，不然会出现业务错误，没法保证一致性(脏读)，设值时间长，多个线程取值，还没设值完就取了，取的是之前的数据而不是我设值之后的数据，因为这个时候还没有设值完成。
+10.synchronized锁重入：
+a：当一个线程得到了一个对象的锁以后，再次请求该对象的synchronized方法时，还可以获取该对象的锁。一个对象有多个同步方法（执行一个同步方法时，调用另一个同步方法）
+b:对于子父类的synchronized方法，也可以得到相应的锁.子父类都有synchronized的方法，调用子类同步方法的时候再调用父类的同步方法，也可以获得锁。
+11.synchronized遇到异常会释放锁。
+12.storm分布式计算
+13.存储过程中在for循环中写begin，end才能做exception(异常处理)，不写不能做exception
+14.synchronized可以加任意对象的锁(synchronized代码块),尽量不要用字符串去加锁。最后不要改变锁，改变对象changLock(不支持同步改变字符串),modifyLock(改变对象的属性，不影响同步)
+15.volatile:主要作用是使变量在多个线程间可见。没有volatile时想实现多个线程可见，需要在变量上加锁，效率低。
+16.jdk1.5后jdk对每个线程会创建主线程中变量的副本，以加快线程的执行速度。使用了volatile关键字后，当变量改变时，强制去主内存中取值。
+17.volatile所修饰的变量不具有原子性，可以使用AtomicInteger（可实现可见与原子性）来保证。
+18.volatile相当于轻量级的synchronized(可实现原子性)
+19.netty底层使用了大量的volatile,mina线程框架
+20.Atomicxxx 只能保证一个方法的原子性，不能保证多个方法(在一个方法执行多次addAndGet)的原子性，
+21.wait/notify方法实现线程间通信，这两个方法都是Object对象的方法，wait和notify必需配合synchronized使用，wait释放锁，notify不释放锁
+22.CountDoownLatch可实现实时通知。await(),countDown().
+23.TimeUtil.SECONDS.sleep(2);睡2秒
+24.ThreadLocal多线程间并发访问变量的解决方案，不提供锁，以空间换时间的手段，为每个线程提供变量的独立副本，以保障线程安全。
+25.Collections.synchronizedxxx,用于返回线程安全的集合。
+26.并发容器
+ConcurrentHashMap（segment段，对每个段加锁，每个段相当于一个HashTable，最高支持16个段)
+ConcurrentSkipListMap可以排序,类似TreeMap
+CopyOnWriteArrayList
+CopyonWriteArraySet
+Queue
+ConcurrentLinkedQueue,高并发的非阻塞队列
+LinkedBlockingQueue，阻塞队列，无界
+ArrayBlockingQueue，阻塞队列，有界
+SynchronousQueue不能添加元素，先take,再add,不把元素添加到容器，而是直接传给调用taker的线程2
+PriorityBlockingQueue基于优先级的队列,装入的元素必需实现Comparable接口，实现算法，来决定优先级。，添加的时候不排序，等take()的时候排序，是一个无界的队列
+DelayQueue有一定延迟时间的queue,到时间了才能取，网吧上网的例子。
+Copy-On-Write写时复制，当执行写操作(添加，修改，删除)时，将当前容器进行copy，最好在读多，写上的情况下使用。如果写比较多，需要加锁。
+27.三种设计模式
+Future:起一个线程做耗时操作，直接返回假对象，在使用时才获取真实返回结果，相当于异步操作。jdk并发包下有其实现，可直接使用。
+Master-Worker:两类进程协作工作：Master负责接收和分派任务，Worker负责处理任务。当各个Worker处理完成后，将结果返回给Master，由Master归纳总结。将一个大任务分解为若干小任务，并行执行，提高系统吞吐量。
+生产者与消费者,配合线程池使用，需要实现Runnable接口
+28.获取线程状态thread.getValue.getState() ==Thread.State.TEPMINATED
+获取当前机器的线程数。Runtime.getRuntime().avaliableProcessors();
+29.线程池
+Executors.
+	newFixedThreadPool();返回一个固定数量的线程池。
+	newSingleThreadExecutor()创建一个线程的线程池，若空闲则执行，若没有空闲则暂缓在任务队列中。
+	newCachedThreadPool();根据实际情况调整线程个数的线程池。不限制最大线程数量，无任务不创建线程，空闲线程在60秒后回收。
+	newScheduledThreadPool();
+30.自定义线程池：
+publec ThreadPoolExecutor(
+int corePlllSixe,//核心线程数量
+int maximumPoolSize,//最大线程数量
+long keepAliveTime,//空闲存活时间
+TimeUnit unit,//时间单位
+BlockingQueue<Runnable> workQueue,//线程存放队列
+ThreadFactory threadFactory,
+RejectedExecutionHandler handler//拒绝执行的方法
+)｛...}
+31.concurrent.util常用类
+
+CountDownLatch
+await();countDown();//监听初始化操作,如连接zookeeper,连接好后才能使用.没连接前先让主线程await连接好后，countDown。
+
+CyclicBarrier
+所有线程准备好后才一起启用，如跑步，所有运动员都准备好后才开始跑。
+CountDownLatch:一个线程等待，其它线程发通知，然后执行这个线程。针对一个线程
+CyclicBarrier:多个线程参与阻塞，全部await后才执行各自的线程。针对多个线程。
+
+Future:
+FutureTask<Callable> 使用线程池的submit方法，或execute方法。
+executor.submit(future).get();这个get方法异步地去获取线程的执行结果，如果处理完返回null
+
+Semaphore:信号量
+适合高并发访问，对系统访问量进行评估，限制。
+相关概念：
+PV(page view) 网站访问量
+UV(unique visitor)访客，一台电脑，一般一天一个ip的电脑只记录一次
+QPS(query per second)每秒查询数。代表系统业务繁忙程度。
+RT(response time)请求响应时间。用户体验
+并发解决三个层面：网络nginx分流，限流,服务拆分业务分流，java信号量限流
+32.锁
+ReentrantLock重入锁,使用完后一定要释放。可看CopyOnWriteArrayList的add方法
+Condition:相当于wait,notify
+lock.newCondition()[可创建多个]。await()，siignal()
+ReentrantReadWriteLock读写锁,适合读多写少的线程。readLock();writeLock();
+读读共享，写写互斥，读写互斥。
+33.高并发框架disruptor

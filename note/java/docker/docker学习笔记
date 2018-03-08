@@ -1,24 +1,60 @@
 docker学习笔记:
+零、经验
+0.常用参数
+-d 后台运行
+-a 列出全部
+-q 列出id
+-o 指定输出文件
+-p 端口映射
+
+1.docker run/rm 把镜像转换为容器/删除容器 (docker run = docker create + docker start)
+2.docker start/stop 启动/停止容器
+3.docker save/load 备份或恢复镜像
+4.docker export/import 备份或恢复容器(但是在恢复的时候备份的容器变成了none的镜像)
+5.save备份镜像,export备份容器，但恢复的时候都是镜像，save会保存历史信息和元数据，export则会清除。
+6.使用import恢复的镜像需要跟命令才能正常运行(原命令可用docker ps 查看 COMMOND列)
+7.一个镜像可以运行多个容器
+
 一、常用命令
 1.拉取一个镜像
 docker pull [options] name[:tag]
 docker pull hello-world
-2.查看本机有哪些镜像
+2.看本机有哪些镜像
 docker images [options] [repository[:tag]]
+(-a 全部 -q 列出id)
 3.运行docker容器
 docker run [options] image[:tag] [command] [args...]
 docker run -d nginx 在后台运行
 4.查看docker运行程序
-docker ps 
+docker ps (-a 全部 -q 列出id)
 5.停止运行
 docker stop 进程名或id
 6.删除docker容器
-docker rm mysql1
-7.重启容器
+docker rm 容器id (多个用空格分开)
+docker rm $(docker ps -a -q) (全部)
+7.删除docker镜像
+docker rmi 镜像id (或镜像名:tag,多个用空格分开)
+docker rmi $(docker images -a -q) (全部)
+8.重启容器
 docker restart mysql1
-5.进入容器内部
-docher exec -it id\容器名 shell
-docker exec -it 44f bash
+9.进入容器内部
+docher exec -it id\容器名 /bin/bash
+docker exec -it 44f /bin/bash
+10.查看容器的端口映射主机的哪个端口
+docker port 容器id 容器端口
+docker ps 
+11.备份
+docker save -o path/*.tar 镜像名(多个用空格分开)
+docker save -o ~/nginx_tomcat.tar nginx tomcat
+docker export nginx > nginx_export.tar (使用-o 或 >)
+12.恢复
+docker load -i ~/nginx.tar (save方式备份的)
+cat nginx_export.tar | docker import - nginx_export:latest(export方式备份的)
+docker import  nginx_export.tar nginx_new（另一种导入命令)
+13.镜像与容器转换
+docker commit <container-id> <image-name> 把一个正在运行的容器变成一个新的镜像
+docker run -d nginx 即运行容器，把一个镜像变成一个容器 
+
 二、docker镜像位置
 1. http://c.163.com
 2.https://hub.docker.com/

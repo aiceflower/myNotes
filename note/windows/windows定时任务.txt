@@ -1,0 +1,15 @@
+windows定时任务
+创建定时任务两种方式：
+方式一:开始菜单-->任务计划程序，创建任务，指定对应的批处理程序
+方式二:dos输入如下：
+schtasks /create /tn taskName /tr c:\test.bat /sc minute
+（每分钟执行一次test.bat批处理）
+create  创建新的计划任务
+/tn      指定任务的名称（例子里任务名称为：koto2k）
+/tr      指定任务运行的程序或命令。
+/sc      指定计划类型。
+         类型有效值之一(参数)：once  指定任务在指定的日期和时间运行一次。
+/st      以 hh:mm:ss 24 小时格式指定时间。默认值是命令完成时的当前本地时间。/st 参数只对于 minute、hourly、daily、weekly、           monthly 和 once 计划有效。它只对于 once 计划是必需的。
+/ed      指定任务计划运行的最后日期。此参数是可选的。它对于 ONCE、ONSTART、ONLOGON 或 ONIDLE 计划无效。
+         默认情况下，计划没有结束日期。 
+/sd      以 mm/dd/yyyy 格式指定任务启动的日期。默认值是当前日期。/sd 参数对于所有的计划有效，但只对于 once 计划是必需的。

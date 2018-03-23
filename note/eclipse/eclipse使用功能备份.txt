@@ -8,6 +8,7 @@ ctrl+d
 1.导入Maven项目
 import-->Maven-->Existing Maven Project...
 2.添加插件
+安装easy shell插件
 a)在线
 help-->eclipse MarketPlace然后find需要安装的功能,安装即可
 b)离线

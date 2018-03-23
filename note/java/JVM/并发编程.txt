@@ -25,20 +25,27 @@ b:对于子父类的synchronized方法，也可以得到相应的锁.子父类�
 22.CountDoownLatch可实现实时通知。await(),countDown().
 23.TimeUtil.SECONDS.sleep(2);睡2秒
 24.ThreadLocal多线程间并发访问变量的解决方案，不提供锁，以空间换时间的手段，为每个线程提供变量的独立副本，以保障线程安全。
+	作为一套与锁无关的线程安全的解决方案。在高并发量或竞争激烈的情况下，可在一定程度上减少锁竞争。
 25.Collections.synchronizedxxx,用于返回线程安全的集合。
 26.并发容器
-ConcurrentHashMap（segment段，对每个段加锁，每个段相当于一个HashTable，最高支持16个段)
+ConcurrentHashMap（segment段，对每个段加锁，每个段相当于一个HashTable，最高支持16个段),多线程时减小锁的粒度，从而降低锁竞争的一种方案。
+	里面的共享变量使用volatile修饰，第一时间获取修改内容，性能很好。
 ConcurrentSkipListMap可以排序,类似TreeMap
-CopyOnWriteArrayList
+CopyOnWriteArrayList，读写分离，高并发读无锁，写时有锁。写时建立副本[读时读原来的数据]，写完指向新副本
 CopyonWriteArraySet
 Queue
-ConcurrentLinkedQueue,高并发的非阻塞队列
-LinkedBlockingQueue，阻塞队列，无界
-ArrayBlockingQueue，阻塞队列，有界
-SynchronousQueue不能添加元素，先take,再add,不把元素添加到容器，而是直接传给调用taker的线程2
-PriorityBlockingQueue基于优先级的队列,装入的元素必需实现Comparable接口，实现算法，来决定优先级。，添加的时候不排序，等take()的时候排序，是一个无界的队列
-DelayQueue有一定延迟时间的queue,到时间了才能取，网吧上网的例子。
-Copy-On-Write写时复制，当执行写操作(添加，修改，删除)时，将当前容器进行copy，最好在读多，写上的情况下使用。如果写比较多，需要加锁。
+  |
+  |----	ConcurrentLinkedQueue,高并发的非阻塞队列，头先加入，尾后加入，（先进先出）不允许为null
+        :add()和offer(),两者是加入元素在ConcurrentLinkedQueue中没区别
+		 poll()和peek(),取头元素，前者会删除元素，后者不会
+  |---- BlockingQueue
+			  |
+			  |---- LinkedBlockingQueue，阻塞队列，无界，不必初始化长度
+			  |---- ArrayBlockingQueue，阻塞队列，有界，new对象必须初始化长度，
+			  |---- SynchronousQueue不能添加元素，先take,再add,不把元素添加到容器，而是直接传给调用take的线程2
+			  |---- PriorityBlockingQueue基于优先级的队列,装入的元素必需实现Comparable接口，实现算法，来决定优先级。，添加的时候不排序，等take()的时候排序，是一个无界的队列
+			  |---- DelayQueue有一定延迟时间的queue,到时间了才能取，网吧上网的例子。
+Copy-On-Write（COW）[读写分离，写时加锁]写时复制，当执行写操作(添加，修改，删除)时，将当前容器进行copy，最好在读多，写上的情况下使用。如果写比较多，需要加锁。
 27.三种设计模式
 Future:起一个线程做耗时操作，直接返回假对象，在使用时才获取真实返回结果，相当于异步操作。jdk并发包下有其实现，可直接使用。
 Master-Worker:两类进程协作工作：Master负责接收和分派任务，Worker负责处理任务。当各个Worker处理完成后，将结果返回给Master，由Master归纳总结。将一个大任务分解为若干小任务，并行执行，提高系统吞吐量。
@@ -46,6 +53,7 @@ Master-Worker:两类进程协作工作：Master负责接收和分派任务，Wor
 28.获取线程状态thread.getValue.getState() ==Thread.State.TEPMINATED
 获取当前机器的线程数。Runtime.getRuntime().avaliableProcessors();
 29.线程池
+当任务被创建的时候，如果有空闲线程则分配一个线程去处理任务，如果没有空闲线程，则把任务放到Queue中，等待线程执行完成，如果Queue满，则执行设置的拒绝策略。
 Executors.
 	newFixedThreadPool();返回一个固定数量的线程池。
 	newSingleThreadExecutor()创建一个线程的线程池，若空闲则执行，若没有空闲则暂缓在任务队列中。
@@ -63,10 +71,14 @@ RejectedExecutionHandler handler//拒绝执行的方法
 )｛...}
 31.concurrent.util常用类
 
-CountDownLatch
+CountDownLatch：
+	使一个线程等待其他线程完成各自的工作后再执行，应用程序的主线程希望在负责启动框架服务的线程已经启动所有的框架服务之后再执行。
+	CountDownLatch是通过一个计数器来实现的，计数器的初始值为线程的数量。每当一个线程完成了自己的任务后，计数器的值就会减1。
+当计数器值到达0时，它表示所有的线程已经完成了任务，然后在闭锁上等待的线程就可以恢复执行任务。
 await();countDown();//监听初始化操作,如连接zookeeper,连接好后才能使用.没连接前先让主线程await连接好后，countDown。
 
 CyclicBarrier
+多个线程使用的是同一个CyclicBarrier[创建时指定线程数量]，所有的线程都barrier.await();后才同时继续执行自己的纯程。
 所有线程准备好后才一起启用，如跑步，所有运动员都准备好后才开始跑。
 CountDownLatch:一个线程等待，其它线程发通知，然后执行这个线程。针对一个线程
 CyclicBarrier:多个线程参与阻塞，全部await后才执行各自的线程。针对多个线程。
@@ -84,9 +96,16 @@ QPS(query per second)每秒查询数。代表系统业务繁忙程度。
 RT(response time)请求响应时间。用户体验
 并发解决三个层面：网络nginx分流，限流,服务拆分业务分流，java信号量限流
 32.锁
-ReentrantLock重入锁,使用完后一定要释放。可看CopyOnWriteArrayList的add方法
-Condition:相当于wait,notify
+ReentrantLock重入锁【比synchronized更灵活(同一个lock可以创建多个Condition)，1.8之前比synchronized效率高】,使用完后一定要释放。可看CopyOnWriteArrayList的add方法
+Condition:相当于wait,notify，用于线程之间的通信
 lock.newCondition()[可创建多个]。await()，siignal()
-ReentrantReadWriteLock读写锁,适合读多写少的线程。readLock();writeLock();
+ReentrantReadWriteLock读写锁,适合读多写少的线程。
+	ReadLock readLock = rwLock.readLock();
+	WriteLock writeLock = rwLock.writeLock();
 读读共享，写写互斥，读写互斥。
 33.高并发框架disruptor
+24.MQ
+	1.生产者生产数据到MQ，消费者去MQ上取数据
+	2.MQ实现了消息堆积能力的容器，来缓解消费服务器的压力。
+	3.消息堆积能力：生产者生产数据快，消费者消费不过来，把数据堆积到MQ中
+	4.如果消费数据快，但生产或者传输数据慢，可采用tcp直连的方式(netty或mina)，如传输文件

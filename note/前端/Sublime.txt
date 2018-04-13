@@ -1,39 +1,39 @@
-Ò»¡¢¿ì½İ¼ü
-alt+- ÉÏÒ»¸ö¹â±ê´¦#!/usr/bin/env 
-alt+shift+- ÏÂÒ»¸ö¹â±ê´¦id est laborum.
-Ctrl+D£ºÑ¡Ôñµ¥´Ê£¬ÖØ¸´¿ÉÔö¼ÓÑ¡ÔñÏÂÒ»¸öÏàÍ¬µÄµ¥´Ê
-Ctrl+M£ºÌø×ªµ½¶ÔÓ¦À¨ºÅ
-Ctrl+R£ºÇ°Íù method
-Ctrl+L£ºÑ¡ÔñĞĞ£¬ÖØ¸´¿ÉÒÀ´ÎÔö¼ÓÑ¡ÔñÏÂÒ»ĞĞ
-Ctrl+Shift+M£ºÑ¡ÖĞµ±Ç°À¨ºÅÄÚÈİ£¬ÖØ¸´¿ÉÑ¡×ÅÀ¨ºÅ±¾Éí
-Ctrl+Shift+Enter£ºÔÚµ±Ç°ĞĞÇ°²åÈëĞÂĞĞ
-Ctrl+Enter£ºÔÚµ±Ç°ĞĞºó²åÈëĞÂĞĞ
-Ctrl+K+B£º¿ª¹Ø²àÀ¸
-Ctrl+Shift+P£º´ò¿ªÃüÁîÃæ°å
-Ctrl+P£ºËÑË÷ÏîÄ¿ÖĞµÄÎÄ¼ş
-Ctrl+G£ºÌø×ªµ½µÚ¼¸ĞĞ
-Ctrl+W£º¹Ø±Õµ±Ç°´ò¿ªÎÄ¼ş
-ctrl+Shift+W£º¹Ø±ÕËùÓĞ´ò¿ªÎÄ¼ş
-ctrl+shift+t:´ò¿ªÉÏÒ»´Î¹Ø±ÕµÄÎÄ¼ş
+ï»¿ä¸€ã€å¿«æ·é”®
+alt+- ä¸Šä¸€ä¸ªå…‰æ ‡å¤„#!/usr/bin/env 
+alt+shift+- ä¸‹ä¸€ä¸ªå…‰æ ‡å¤„id est laborum.
+Ctrl+Dï¼šé€‰æ‹©å•è¯ï¼Œé‡å¤å¯å¢åŠ é€‰æ‹©ä¸‹ä¸€ä¸ªç›¸åŒçš„å•è¯
+Ctrl+Mï¼šè·³è½¬åˆ°å¯¹åº”æ‹¬å· 
+Ctrl+Rï¼šå‰å¾€ method
+Ctrl+Lï¼šé€‰æ‹©è¡Œï¼Œé‡å¤å¯ä¾æ¬¡å¢åŠ é€‰æ‹©ä¸‹ä¸€è¡Œ
+Ctrl+Shift+Mï¼šé€‰ä¸­å½“å‰æ‹¬å·å†…å®¹ï¼Œé‡å¤å¯é€‰ç€æ‹¬å·æœ¬èº«
+Ctrl+Shift+Enterï¼šåœ¨å½“å‰è¡Œå‰æ’å…¥æ–°è¡Œ
+Ctrl+Enterï¼šåœ¨å½“å‰è¡Œåæ’å…¥æ–°è¡Œ
+Ctrl+K+Bï¼šå¼€å…³ä¾§æ 
+Ctrl+Shift+Pï¼šæ‰“å¼€å‘½ä»¤é¢æ¿
+Ctrl+Pï¼šæœç´¢é¡¹ç›®ä¸­çš„æ–‡ä»¶
+Ctrl+Gï¼šè·³è½¬åˆ°ç¬¬å‡ è¡Œ
+Ctrl+Wï¼šå…³é—­å½“å‰æ‰“å¼€æ–‡ä»¶
+ctrl+Shift+Wï¼šå…³é—­æ‰€æœ‰æ‰“å¼€æ–‡ä»¶
+ctrl+shift+t:æ‰“å¼€ä¸Šä¸€æ¬¡å…³é—­çš„æ–‡ä»¶
 
-¶ş¡¢¼¼ÇÉÉèÖÃ
-1.ÉèÖÃÈíÁ¬½ÓÔÚÃüÁîĞĞ´ò¿ªÎÄ¼şÄ¿Â¼
+äºŒã€æŠ€å·§è®¾ç½®
+1.è®¾ç½®è½¯è¿æ¥åœ¨å‘½ä»¤è¡Œæ‰“å¼€æ–‡ä»¶ç›®å½•
 ln -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl subl
-ÔÚpathÂ·¾¶ÏÂÉèÖÃ
-´ò¿ªÎÄ¼ş subl Â·¾¶
-2.»Ö¸´Ä¬ÈÏÅäÖÃ
-ËùÓĞµÄÓÃ»§×Ô¶¨ÒåĞÅÏ¢¶¼´æ·ÅÔÚ
-/Users/alonglamp/Library/Application Support/Sublime Text 3/Packages/UserÏÂ£¬Ìæ»»¼´¿É
-3.ÊÕÆğ´ò¿ª²à±ßÀ¸sidbar C+k+b
-·Å´óËõĞ¡:C+'+/-'
-4.ÉèÖÃËùÓĞ¿ì½İ¼ü£º
+åœ¨pathè·¯å¾„ä¸‹è®¾ç½®
+æ‰“å¼€æ–‡ä»¶ subl è·¯å¾„
+2.æ¢å¤é»˜è®¤é…ç½®
+æ‰€æœ‰çš„ç”¨æˆ·è‡ªå®šä¹‰ä¿¡æ¯éƒ½å­˜æ”¾åœ¨
+/Users/alonglamp/Library/Application Support/Sublime Text 3/Packages/Userä¸‹ï¼Œæ›¿æ¢å³å¯
+3.æ”¶èµ·æ‰“å¼€ä¾§è¾¹æ sidbar C+k+b
+æ”¾å¤§ç¼©å°:C+'+/-'
+4.è®¾ç½®æ‰€æœ‰å¿«æ·é”®ï¼š
 shift+C+p  key Bindings
-5.²é¿´²Ù×÷µÄÃüÁîÃû£¬ÓÃÓÚĞŞ¸ÄÆä¿ì½İ¼ü
-C+~ ÊäÈësublime.log_commands(True) È»ºóÖ´ĞĞÏàÓ¦µÄ²Ù×÷»á¼ÇÂ¼
-6.°²×°°üÎ»ÖÃ
+5.æŸ¥çœ‹æ“ä½œçš„å‘½ä»¤åï¼Œç”¨äºä¿®æ”¹å…¶å¿«æ·é”®
+C+~ è¾“å…¥sublime.log_commands(True) ç„¶åæ‰§è¡Œç›¸åº”çš„æ“ä½œä¼šè®°å½•
+6.å®‰è£…åŒ…ä½ç½®
 /Users/alonglamp/Library/Application Support/Sublime Text 3/Packages/UserPackage\ Control.sublime-settings 
-³£ÓÃ°²×°°ü£º
-"AdvancedNewFile", ´´½¨²ã¼¶Ä¿Â¼»òÎÄ¼ş alt+C+n ¿ÉÊ¹ÓÃtab×Ô¶¯²¹È«
+å¸¸ç”¨å®‰è£…åŒ…ï¼š
+"AdvancedNewFile", åˆ›å»ºå±‚çº§ç›®å½•æˆ–æ–‡ä»¶ alt+C+n å¯ä½¿ç”¨tabè‡ªåŠ¨è¡¥å…¨
 "BracketHighlighter",
 "Codecs33",
 "ColorPicker",
@@ -44,9 +44,36 @@ C+~ ÊäÈësublime.log_commands(True) È»ºóÖ´ĞĞÏàÓ¦µÄ²Ù×÷»á¼ÇÂ¼
 "Package Control",
 "Pretty JSON",
 "RailsCasts Colour Scheme"
-7.Ê¹ÓÃgit
-shift+C+p git add -->git commit -->ÊäÈëÃèÊö-->C+w-->git push
-8.ÉèÖÃ³£ÓÃÄ£°å
+7.ä½¿ç”¨git
+shift+C+p git add -->git commit -->è¾“å…¥æè¿°-->C+w-->git push
+8.è®¾ç½®å¸¸ç”¨æ¨¡æ¿
 tools-->developer-->new snippet
-ÔÚCDATAÖĞĞ´Ä£°åÄÚÈİÊ¹ÓÃ${n:Ä¬ÈÏÖµ}µÄĞÎÊ½Ğ´¹â±êÍ£ÁôÎ»ÖÃ${2:snippet}
-tabTrigger£¬ÎªÉèÖÃ´¥·¢´Ê¡£
+åœ¨CDATAä¸­å†™æ¨¡æ¿å†…å®¹ä½¿ç”¨${n:é»˜è®¤å€¼}çš„å½¢å¼å†™å…‰æ ‡åœç•™ä½ç½®${2:snippet}
+tabTriggerï¼Œä¸ºè®¾ç½®è§¦å‘è¯ã€‚
+9.å°†sublimeæ·»åŠ åˆ°windowså³é”®
+	1.æ‰“å¼€æ³¨å†Œè¡¨regedit
+	2.HKEY_CLASSESS_ROOT --> * -->  Shellï¼Œä¸‹é¢æ–°å»ºé¡¹ï¼Œå‘½åä¸ºEdit with Sublime Text3
+	3.åœ¨é¡¹â€œEdit with Sublime Textâ€ä¸‹æ–°å»ºå­—ç¬¦ä¸²å€¼ï¼Œå‘½åä¸ºIconï¼Œå€¼ä¸º filePath\sublime_text.exe,0 [0å‰è¾¹çš„æ˜¯sublime textåœ¨ä½ ç”µè„‘ä¸Šçš„å®‰è£…ä½ç½®]
+	4.åœ¨é¡¹â€œEdit with Sublime Textâ€ä¸‹æ–°å»ºé¡¹Commandï¼ŒCommandé¡¹ä¸‹é»˜è®¤å€¼ä¿®æ”¹ä¸º filePath\sublime_text.exe %1
+10.åŒä¸ŠæŠŠä»¥ä¸‹å†…å®¹å¤åˆ¶å¹¶ä¿å­˜åˆ°æ–‡ä»¶ï¼Œé‡å‘½åä¸ºï¼šsublime_addright.regï¼Œç„¶ååŒå‡»å°±å¯ä»¥
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\*\shell\SublimeText3]
+
+@="ç”¨ SublimeText3 æ‰“å¼€"
+
+"Icon"="C:\\Program Files\\Sublime Text 3\\sublime_text.exe,0"
+
+[HKEY_CLASSES_ROOT\*\shell\SublimeText3\command]
+
+@="C:\\Program Files\\Sublime Text 3\\sublime_text.exe %1"
+
+[HKEY_CLASSES_ROOT\Directory\shell\SublimeText3]
+
+@="ç”¨ SublimeText3 æ‰“å¼€"
+
+"Icon"="C:\\Program Files\\Sublime Text 3\\sublime_text.exe,0"
+
+[HKEY_CLASSES_ROOT\Directory\shell\SublimeText3\command]
+
+@="C:\\Program Files\\Sublime Text 3\\sublime_text.exe %1"

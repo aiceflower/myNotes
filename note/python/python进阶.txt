@@ -1,0 +1,168 @@
+一、函数式编程
+	1.特点
+		不是纯函数式编程:允许有变量
+		支持高阶:函数也可以作为变量传入
+		支持闭包:有了闭包就能返回函数
+		有限度地支持匿名函数
+	2.函数名其实就是指向函数的一个变量，可以改变
+	3.高阶函数：能够接收函数作为参数的函数
+二、python函数
+	0.基本函数
+		1)int():转换为整数,float():转换为浮点数
+		2)cmp(1,2):比较两个字符串大小
+		3)isinstance(k,type):判断k是否为type类型
+	1.高阶函数
+		1)map()：它接收一个函数 f 和一个 list，并通过把函数 f 依次作用在 list 的每个元素上，得到一个新的 list 并返回。
+				map()函数不改变原有的 list，而是返回一个新的 list
+		2)reduce():接收的参数和 map()类似，一个函数 f，一个list，但行为和 map()不同，reduce()传入的函数 f 必须接收两个参数，
+					reduce()对list的每个元素反复调用函数f，并返回最终结果值。(如计算list所有元素之和)
+					reduce()还可以接收第3个可选参数，作为计算的初始值。初始值与list第一个元素计算，然后再和list其它元素计算
+		3)filter():接收一个函数 f 和一个list，这个函数 f 的作用是对每个元素进行判断，返回 True或 False,返回结果为true的list集合
+		4)sorted():对list进行排序，可值入一个比较函数，实现自定义比较
+		5).返回函数
+			1.返回函数与返回值
+			def myabs():
+				return abs   # 返回函数
+			def myabs2(x):
+				return abs(x)   # 返回函数调用的结果，返回值是一个数值
+			2.返回函数可以把一些计算延迟执行。在调用"返回函数"的时候才执行函数
+				闭包的特点是返回的函数还引用了外层函数的局部变量，所以，要正确使用闭包，就要确保引用的局部变量在函数返回后不能变。
+				既返回函数不要引用任何循环变量，或者后续会发生变化的变量。
+				 
+		6)像这种内层函数引用了外层函数的变量（参数也算变量），然后返回内层函数的情况，称为闭包（Closure）。
+			希望一次返回3个函数，分别计算1x1,2x2,3x3:
+				def count():
+					fs = []
+					for i in range(1, 4):
+						def f():
+							 return i*i
+						fs.append(f)
+					return fs
+				f1, f2, f3 = count()
+				你可能认为调用f1()，f2()和f3()结果应该是1，4，9，但实际结果全部都是 9（请自己动手验证）。
+				原因就是当count()函数返回了3个函数时，这3个函数所引用的变量 i 的值已经变成了3。由于f1、f2、f3并没有被调用，所以，此时他们并未计算 i*i，当 f1 被调用时：
+		7)匿名函数 
+			关键字lambda 表示匿名函数，冒号前面的 x 表示函数参数。 如：lambda x: x * x 
+			匿名函数有个限制，就是只能有一个表达式，不写return，返回值就是该表达式的结果。
+			返回函数的时候，也可以返回匿名函数。
+		8)装饰器decorator
+			1.接收一个函数，对其包装，返回新函数
+			2.调用
+				1) g1 = new_fn(f1)
+					print g1(5)
+				2) f1 = new_fn(f1) 把装饰结果赋值给原函数
+					print f1()
+			3.python内置@语法简化装饰器调用
+				1)@new_fn 简化2中2)的书写
+				2)@log 打印日志
+				3)@performance 性能检测
+				4)@transaction 数据库事务
+				5)@post('/register') URL路由
+		9)偏函数
+			functools.partial就是帮助我们创建一个偏函数的
+			int2 = functools.partial(int, base=2)
+			functools.partial可以把一个参数多的函数变成一个参数少的新函数，少的参数需要在创建时指定默认值，这样，新函数调用的难度就降低了。
+	2.string
+		1)lower/upper 转换大小写
+		2)capitalize 首字母大写，其它小写
+		3)strip(k) 删除字符串开头结尾为k的字符，如果k为空则为去空格
+		4)替换：'Student:%s,%s,%s:' % (self.name,self.gender,self.score)
+	3.math
+		1)绝对值：abs()
+		2)开平方：sqrt()
+	4.time
+		1.格式化time time.strftime('%Y-%m-%d',time.localtime(time.time()))
+		2.
+三、python模块和包
+	1.区分包和普通目录
+		包下面有一个_init_.py,每层都要有
+	2.导入模块
+		1)import math
+		2)from math import pow, sin, log 只用这几个函数
+		3)导入包冲突(起别名) 
+			from math import log
+			from logging import log as logger 
+	3.动态导入模块
+		1.StringIO 是纯Python代码编写的，而 cStringIO 部分函数是 C 写的，因此 cStringIO 运行速度更快。
+		2.ImportError错误，我们经常在Python中动态导入模块：
+			try:
+				from cStringIO import StringIO
+			except ImportError:
+				from StringIO import StringIO
+	4.使用__future__ 要“试用”某一新的特性，就可以通过导入__future__模块的某些功能来实现。
+		from __future__ import division
+	5.安装第三方模块
+		1.使用pip安装
+			pip install web.py
+四、面向对象编程
+	1.类与实例
+		class Person:
+			pass
+		z3 = Person()
+		l4 = Person()
+	2.数据封装(默认实例化会执行__init__方法)
+		class Person:
+			def __init__(self,name):
+				self.name = name
+		p1 = Person("z3")
+		p2 = Person("l4")
+	3.接收任意关键字参数
+		def __init__(self,**kw):
+			self.__dict__.update(kw)
+	4.访问限制
+		Python对属性权限的控制是通过属性名来实现的，如果一个属性由双下划线开头(__)，该属性就无法被外部访问。
+		但是，如果一个属性以"__xxx__"的形式定义，那它又可以被外部访问了，以"__xxx__"定义的属性在Python的类中被称为特殊属性，有很多预定义的特殊属性可以使用，通常我们不要把普通属性用"__xxx__"定义。
+	5.定义类属性(只有一份)
+		定义:
+			class Person(object):
+				address = 'Earth'
+				def __init__(self, name):
+					self.name = name
+		访问:
+			print Person.address
+	6.实例属性于类属性冲突
+		当实例属性和类属性重名时，实例属性优先级高，它将屏蔽掉对类属性的访问。如果没有实例属性，则会找类属性
+	7.实例方法(第一个参数self)
+		def fn_get_grade(self):
+			...
+	8.动态添加方法(方法也是属性，使用types.MethodType)
+		p1 = Person('Bob', 90)
+		p1.get_grade = types.MethodType(fn_get_grade, p1, Person)
+		给一个实例动态添加方法并不常见，直接在class中定义要更直观。	
+	9.类方法(第一个参数为类本身，通常命名为cls)
+		 @classmethod
+		def how_many(cls):
+			...
+	10.继承
+		class Student(Person):
+			def __init__(self, name, gender, score):
+				super(Student, self).__init__(name, gender)
+				self.score = score
+		注：一定要用 super(Student, self).__init__(name, gender) 去初始化父类，否则，继承自 Person 的 Student 将没有 name 和 gender。
+	11.多态
+	12.多重继承
+	13.获取对象的信息
+		1.isinstance() 判断它是否是某种类型的实例
+		2. type() 函数获取变量的类型
+		3.可以用 dir() 函数获取变量的所有属性
+		4. getattr() 和 setattr( )获取和设置
+	14.对象的特殊方法[定义在class中，不需要直接调用，python中的某些函数或操作符会调用对应的特殊方法]
+		1.用于print的 __str__
+			def __str__(self):
+				...
+		2.用于len的 __len__
+		3.用于cmp的 __cmp__
+		4.用于int的 __int__
+		5.用于float的 __float__
+		6.一个类实例也可以变成一个可调用对象，只需要实现一个特殊方法__call__()。
+			def __call__(self, friend):
+				print 'My friend is %s...' % friend
+		...
+		4.需要编写用到的特殊方法
+		5.有关联的特殊方法必须实现
+			__getattr__
+			__setattr__
+			__delattr__
+	15.限制添加属性
+		__slots__是指一个类允许的属性列表
+		 __slots__ = ('name', 'gender', 'score')

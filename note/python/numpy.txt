@@ -1,0 +1,108 @@
+一、Numpy是Python中用于科学计算的核心库。它提供了高性能的多维数组对象，以及相关工具。
+二、数组
+	0)常用方法数组a,numpy as np
+		1. a.shape 数组类型
+		2. a.dtype 数据类型
+		3. np.reshape(v,(3,1)) 将长度为三的一维数组，转换为三行一列的二维数组[一行三列的矩阵转换为三行一列的矩阵]
+		4.np.arange(3)产生一个包含0,1,2的数组 np.arange(3,7) 3,4,5,6
+		5.产生随机数
+			np.random.uniform(3,4)产生3-4之间的随机小数
+		5.np.tile(x,(r,c) 将矩阵x在行上重复r次，在列上重复c次
+		6.x.argsort() 对x的每一行进行排序，返回所引矩阵
+		  x.argsort(axis=0) 列
+	1)创建数组
+		import numpy ny 
+		1.a = np.array([1, 2, 3]) #Create a rank 1 array[可指定数组数据类型，np.array([1, 2], dtype=np.int64) ]
+		2.b = np.array([[1,2,3],[4,5,6]])  # Create a rank 2 array
+		3.c = np.zeros((2,2))  # Create an array of all zeros
+		4.d = np.ones((1,2))   # Create an array of all ones
+		5.e = np.full((2,2), 7) # Create a constant array
+		6.f = np.eye(2)        # Create a 2x2 identity matrix[单位矩阵]
+		7.g = np.random.random((2,2)) # Create an array filled with random values[随机数填充]
+		8.h = np.empty_like(x)   # Create an empty matrix with the same shape as x
+	2)访问数组
+		1.切片访问：
+			
+			a = np.array([[1,2,3,4], [5,6,7,8], [9,10,11,12]])
+			
+			1.和Python列表类似，numpy数组可以使用切片语法。因为数组可以是多维的，所以你必须为每个维度指定好切片。
+				b = a[:2, 1:3]  # [横切,竖切]
+			2.可同时使用整型和切片语法来访问数组。但是，这样做会产生一个比原数组低阶的新数组。
+				row_r1 = a[1, :]    # 第一行 shape为一维  row_r1.shape
+				row_r2 = a[1:2, :]  # 第二行 shape为二维
+		2.整型数组访问
+			
+			a = np.array([[1,2,3], [4,5,6], [7,8,9], [10, 11, 12]])
+			
+			1.访问或构建新数组
+				print a[[0, 1, 2], [0, 1, 0]] a[0,0] ,a[1,1] ,a[2,0]
+			2.选择或者更改矩阵中每行中的一个元素
+				b = np.array([0, 2, 0, 1])
+				print a[np.arange(4), b]   #打印 a[0,0],a[1,2],a[2,0],a[3,1]
+				a[np.arange(4), b] += 10   #将上述a中的四个元素分别加10
+		3.布尔型数组访问
+		
+			a = np.array([[1,2], [3, 4], [5, 6]])
+			
+			1.下面bool_idx为一个bool类型的矩阵与a对应，a中对应元素大于2则bool_idx中对应元素为True
+				bool_idx = (a > 2)
+				print a[bool_idx]
+			2.简化上两步操作
+				print a[a > 2] 
+		4.指定数组数据类型
+			a = np.array([1.1,2.2])
+			b = np.array([1.1, 2.2], dtype=np.int64) #取每个元素的整数部分
+			b = np.array(a,dtype=np.int64)
+	3)数组计算
+		
+		x = np.array([[1,2],[3,4]], dtype=np.float64)
+		y = np.array([[5,6],[7,8]], dtype=np.float64)
+
+		1.加
+			print x + y
+			print np.add(x, y)
+		1.减
+			print x - y
+			print np.subtract(x, y)
+		3.乘
+			print x * y
+			print np.multiply(x, y)
+		4.除
+			print x / y
+			print np.divide(x, y)
+		5.开方
+			np.sqrt(x)
+		6.矩阵相乘
+			x.dot(y)
+			np.dot(x,y)
+		7.求和
+			np.sum(x) #对所有元素求和
+			np.sum(x,axis=0) #对每一列求和
+			np.sum(x,axis=1) #对每一行求和
+		8.求平均值[用法同sum]
+			np.mean(x)
+		9.转置
+			x.T
+			np.transpose(x)
+	4)广播Broadcasting
+		广播是一种强有力的机制，它让Numpy可以让不同大小的矩阵在一起进行数学计算。
+		1.将向量加到矩阵的每一行(但是当x矩阵非常大，利用循环来计算就会变得很慢很慢)
+			x = np.array([[1,2,3], [4,5,6], [7,8,9], [10, 11, 12]])
+			v = np.array([1, 0, 1])
+			y = np.empty_like(x)
+			for i in range(4):
+				y[i, :] = x[i, :] + v
+			print y 
+		2.解决上术速度慢
+			1.将向量变为矩阵
+				vv = np.tile(v, (4, 1))
+			2.将两个矩阵相加
+				y = x + vv  # Add x and vv elementwise
+		3.Numpy广播机制可以让我们不用创建vv，就能直接运算
+			y = x + v
+		4.对两个数组使用广播机制要遵守下列规则：
+			如果数组的秩不同，使用1来将秩较小的数组进行扩展，直到两个数组的尺寸的长度都一样。
+			如果两个数组在某个维度上的长度是一样的，或者其中一个数组在该维度上长度为1，那么我们就说这两个数组在该维度上是相容的。
+			如果两个数组在所有维度上都是相容的，他们就能使用广播。
+			如果两个输入数组的尺寸不同，那么注意其中较大的那个尺寸。因为广播之后，两个数组的尺寸将和那个较大的尺寸一样。
+			在任何一个维度上，如果一个数组的长度为1，另一个数组长度大于1，那么在该维度上，就好像是对第一个数组进行了复制。

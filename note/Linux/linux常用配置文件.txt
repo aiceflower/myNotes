@@ -1,13 +1,42 @@
-1.系统编码
-/etc/sysconfig/i18n 
-2.sudo权限
-/etc/sudoers 
-3.用户历史命令
-$HOME/.bash_history
-4.ip配置文件
-/etc/sysconfig/network-scripts/ifcfg-eth0
-5.修改系统运行级别
+linux 常用配置文件 redhat系列
+1.网卡配置文件位置
+/etc/sysconfig/network-scripts/ifcfg-x   [x为网卡名称]
+2.DNS路径
+/etc/resolv.conf
+3.当前系统版本的详细信息
+/etc/redhat-release
+4.修改history记录的命令的个数
+/etc/profile 文件中HISTSIZE的值
+$HOME/.bash_history [命令存放位置]
+5.修改主机名称
+/etc/hostname 修改里面的内容
+6.配置本地yum源
+/etc/yum.repos.d/
+	1)在上述目录下创建一个以.repo结尾的文件输入如下内容[先要挂载光盘]
+	[rhel-media] ：Yum软件仓库唯一标识符，避免与其他仓库冲突。
+	name=linuxprobe：Yum软件仓库的名称描述，易于识别仓库用处。
+	baseurl=file:///media/cdrom：提供的方式包括FTP（ftp://..）、HTTP（http://..）、本地（file:///..）。
+	enabled=1：设置此源是否可用；1为可用，0为禁用。
+	gpgcheck=1：设置此源是否校验文件；1为校验，0为不校验。
+	gpgkey=file:///media/cdrom/RPM-GPG-KEY-redhat-release：若上面参数开启校验，那么请指定公钥文件地址。
+	
+	配置网络yum源
+	wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+	sed -i  's/$releasever/7/g' /etc/yum.repos.d/CentOS-Base.repo
+	yum clean all 
+7.配置用户sudo权限
+	/etc/sudoers
+	使用visudo命令进行修改
+8.永久写稿挂载信息文件
+	/etc/fstab
+	/dev/cdroom /media/cdroom iso9660 defaults 0 0   [光驱]
+	/dev/sdb2 swap swap defaults 0 0                 [交换分区]
+	/dev/sdb1 /newFS xfs defaults 0 0                [主分区]
+9.系统编码
+/etc/locale.conf   [rhel7]
+/etc/sysconfig/i18n  [rhel7之前]
 /etc/inittab 
-6.修改vi默认设置参数
+10.修改vi默认设置参数
+/etc/vim/vimrc
 /etc/vimrc
 ~/.vimrc

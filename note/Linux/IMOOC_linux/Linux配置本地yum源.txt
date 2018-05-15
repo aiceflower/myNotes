@@ -1,0 +1,13 @@
+/etc/yum.repos.d/
+1)在上述目录下创建一个以.repo结尾的文件输入如下内容[先要挂载光盘]
+[rhel-media] ：Yum软件仓库唯一标识符，避免与其他仓库冲突。
+name=linuxprobe：Yum软件仓库的名称描述，易于识别仓库用处。
+baseurl=file:///media/cdrom：提供的方式包括FTP（ftp://..）、HTTP（http://..）、本地（file:///..）。
+enabled=1：设置此源是否可用；1为可用，0为禁用。
+gpgcheck=1：设置此源是否校验文件；1为校验，0为不校验。
+gpgkey=file:///media/cdrom/RPM-GPG-KEY-redhat-release：若上面参数开启校验，那么请指定公钥文件地址。
+
+配置网络yum源
+wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+sed -i  's/$releasever/7/g' /etc/yum.repos.d/CentOS-Base.repo
+yum clean all 

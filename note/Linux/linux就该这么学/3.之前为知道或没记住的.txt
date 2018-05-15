@@ -1,0 +1,99 @@
+1.用户与linux系统的交互
+	用户 -->  程序或服务 -->　系统调用接口  --> 内核 --> 硬件
+	计算机硬件是由运算器、控制器、存储器、输入/输出设备等共同组成的，而让各种硬件设备各司其职且又能协同运行的东西就是系统内核。
+	Linux系统的内核负责完成对硬件资源的分配、调度等管理任务。
+	Shell一个命令行工具。Shell（也称为终端或壳）充当的是人与内核（硬件）之间的翻译官，用户把一些命令“告诉”终端，它就会调用相应的程序服务去完成某些工作。
+2.top
+3.uptime
+	用于查看系统的负载信息
+	当前系统时间、系统已运行时间、启用终端数量以及系统在最近1分钟、5分钟、15分钟内的压力情况
+4.who
+	用于查看当前登入主机的用户终端信息
+5.sosreport
+	用于收集系统配置及架构信息并输出诊断文档
+6.tr
+	用于替换文本文件中的字符 tr [原始字符] [目标字符] 
+	例:echo hello | tr [a-z] [A-Z] 将hello转换为大写，也可与cat等命令联合使用
+	-c或——complerment：取代所有不属于第一字符集的字符； 
+	-d或——delete：删除所有属于第一字符集的字符；    echo 'hello worl321d' |tr -d '0-9'
+	-s或--squeeze-repeats：把连续重复的字符以单独一个字符表示； echo hellllllo worrrld | tr -s 'lr'
+	-t或--truncate-set1：先删除第一字符集较第二字符集多出的字符。
+7.stat
+	用于查看文件的具体存储信息和时间等信息，格式为“stat 文件名称”
+8.cut
+	按“列”提取文本字符 
+	cut -d: -f1 /etc/passwd 
+	head -n 2 /etc/passwd | cut -d / -f 1
+9.touch
+	创建文件或修改文件时间(读取时间和修改时间)
+	touch -d "2017-05-04 15:44" test.txt 
+10.dd
+	复制数据块或备份设备
+	if 输入文件名称
+	of 输出文件名称
+	dd if=/dev/cdrom of=RHEL-server-7.0-x86_64-LinuxProbe.Com.iso 光驱设备中的光盘制作成iso格式的镜像文件 
+11.at
+	设置定时任务
+	at 11:30
+	at> systemctl restart httpd
+	at> ctrl + d 结束
+	或 echo 'systemctl restart httpd' | at 11:30
+	查看 at -l 
+	删除 atrm 3(任务号)
+12.chattr命令
+	命令用于设置文件的隐藏权限，
+	参数	作用
+	i	无法对文件进行修改；若对目录设置了该参数，则仅能修改其中的子文件内容而不能新建或删除文件
+	a	仅允许补充（追加）内容，无法覆盖/删除内容（Append Only）
+	S	文件内容在变更后立即同步到硬盘（sync）
+	s	彻底从硬盘中删除，不可恢复（用0填充原文件所在硬盘区域）
+	A	不再修改这个文件或目录的最后访问时间（atime）
+	b	不再修改文件或目录的存取时间
+	D	检查压缩文件中的错误
+	d	使用dump命令备份时忽略本文件/目录
+	c	默认将文件或目录进行压缩
+	u	当删除该文件后依然保留其在硬盘中的数据，方便日后恢复
+	t	让文件系统支持尾部合并（tail-merging）
+	x	可以直接访问压缩文件中的内容
+	chattr +a testfile
+	chattr -a testfile
+13.lsattr命令
+	查看文件的隐藏权限
+14. setfacl
+	管理文件的ACL规则，基于普通文件或目录设置ACL其实就是针对指定的用户或用户组设置文件或目录的操作权限。
+	setfacl -Rm u:pillow:rwx /root
+	针对目录文件需要使用-R递归参数；针对普通文件则使用-m参数；如果想要删除某个文件的ACL，则可以使用-b参数
+	查看acl权限 ls 最后面的. 变成了+号
+15.getfacl 
+	查看acl权限  getfacl 文件名称
+16.磁盘容量配额
+	1.开启quota磁盘容量配额支持，默认未开启 vim /etc/fstab 在/boot 的那一行defaults后面加上 'uquota' [defaults,uquota  rhel7之前使用usrquota]
+	2.xfs_quota命令是一个专门针对XFS文件系统来管理quota磁盘容量配额服务而设计的命令
+		-c参数用于以参数的形式设置要执行的命令
+		-x参数是专家模式，让运维人员能够对quota服务进行更多复杂的配置。
+		xfs_quota -x -c 'limit bsoft=3m bhard=6m isoft=3 ihard=6 pillow' /boot 硬盘使用量的软限制和硬限制分别为3MB和6MB；创建文件数量的软限制和硬限制分别为3个和6个。
+	3.edquota命令用于编辑用户的quota配额限制
+		-u 针对哪个用户进行设置
+		-g参数表示要针对哪个用户组进行设置
+		 edquota -u pillow 然后修改如下对应内容
+		 Filesystem blocks soft hard inodes soft hard
+		 /dev/sda1   6144  3072 8192   1     3    6
+15.网络配置
+	1.nmtui
+	2.nmcli
+		1)nmcli connection show [网卡名] 查看网络状态
+16.sshd服务
+	/etc/ssh/sshd_config   sshd服务的配置信息
+	上述文件参数及作用：
+	Port 22	默认的sshd服务端口
+	ListenAddress 0.0.0.0	设定sshd服务器监听的IP地址
+	Protocol 2	SSH协议的版本号
+	HostKey /tc/ssh/ssh_host_key	SSH协议版本为1时，DES私钥存放的位置
+	HostKey /etc/ssh/ssh_host_rsa_key	SSH协议版本为2时，RSA私钥存放的位置
+	HostKey /etc/ssh/ssh_host_dsa_key	SSH协议版本为2时，DSA私钥存放的位置
+	PermitRootLogin yes	设定是否允许root管理员直接登录
+	StrictModes yes	当远程用户的私钥改变时直接拒绝连接
+	MaxAuthTries 6	最大密码尝试次数
+	MaxSessions 10	最大终端数
+	PasswordAuthentication yes	是否允许密码验证
+	PermitEmptyPasswords no	是否允许空密码登录（很不安全）

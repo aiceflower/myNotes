@@ -1,0 +1,9 @@
+1.重置root用户密码[忘记密码的情况下,正常情况下root用户登陆passwd修改即可]
+	1)启动系统按e键
+	2)在linux 16 这一行的最后加 rd.break
+	3)按ctrl+x 进入紧急救援模式
+	4)输入以下命令
+		mount -o remount, rw /sysroot    #让/sysroot 为读写模式[默认单用户为只读模式]
+		chroot /sysroot   #change root directory 用来在指定的根目录下运行指令
+		passwd
+2.

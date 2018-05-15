@@ -73,4 +73,4 @@ a b 为true其它为false
 				return InnerSingleton.single;
 			}
 		}
-15.TimeUtil.SECONDS.sleep(2);睡2秒
+15.TimeUnit.SECONDS.sleep(2);睡2秒

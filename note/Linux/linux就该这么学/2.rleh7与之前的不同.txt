@@ -1,0 +1,20 @@
+1.rleh7采用systemd初始化进程服务，因此也没有了“运行级别”这个概念
+2.想要将系统默认的运行目标修改为“多用户，无图形”模式操作如下
+ln -sf /lib/systemd/system/multi-user.target /etc/systemd/system/default.target
+3.rleh7使用systemctl命令来管理服务  #之前使用service、chkconfig等命令来管理系统服务，具体如下
+	1) systemctl管理服务的启动、重启、停止、重载、查看状态等常用命令
+	System V init命令（RHEL 6系统）		systemctl命令（RHEL 7系统）			  作用
+		service foo start				systemctl start foo.service			启动服务
+		service foo restart				systemctl restart foo.service		重启服务
+		service foo stop				systemctl stop foo.service			停止服务
+		service foo reload				systemctl reload foo.service		重新加载配置文件（不终止服务）
+		service foo status				systemctl status foo.service		查看服务状态
+	2) systemctl设置服务开机启动、不启动、查看各级别下服务启动状态等常用命令
+	System V init命令（RHEL 6系统）	systemctl命令（RHEL 7系统）						作用
+		chkconfig foo on			systemctl enable foo.service				开机自动启动
+		chkconfig foo off			systemctl disable foo.service				开机不自动启动
+		chkconfig foo				systemctl is-enabled foo.service			查看特定服务是否为开机自启动
+		chkconfig --list			systemctl list-unit-files --type=service	查看各个级别下服务的启动与禁用情况
+4.防火墙服务由 iptables 修改为 firewalld
+5.linux采用XFS做为文件系统
+	XFS是一种高性能的日志文件系统，最大可支持的存储容量为18EB

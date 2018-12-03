@@ -1,0 +1,681 @@
+1.命名空间
+定义：
+namespace namespaceA{
+	int a = 20;
+	namespace namespaceB{
+		struct Teacher{
+		char name[32];
+		int age;
+		}
+	}
+}
+使用：
+using namespace namespaceA;
+	namespaceA::a;
+2.输入输出
+cout << "out";//标准输出  
+<< endl;//\n回车
+cin >> in; //标准输入
+3.c与c++的区别
+	1)定义一个类相当于定义一个数据类型(固定大小内存块的别名)，是一个抽象的概念，不会给你分配内存。
+		用数据类型定义变量的时候才分配内存。
+	2)c++编译器是如何处理多个对象的
+	3)经典错误
+		class Cicle{
+		public:
+			double r;
+			double pi=3.1415926;
+			double area = pi * r * r;//这句话在初始化的时候执行，此时r是一个随机值。
+		}
+	4)objective-c 用于ios系统
+	5)c++
+		iostream.h 速度慢，早期版本
+		iostream	速度快
+	6)register的变化
+		register关键字请求"编译器"将局部变量存储于寄存器中。
+		C语言中无法获得register变量地址
+		c++编译器有自己的优化，不使用register也可能做优化
+		c++中可以获取register变量的地址
+	7)struct关键字类型的增强
+		在c语言中使用struct定义的类型需要在前加struct，在c++中可以不用加
+		struct 与class完成的功能是一样的
+	8).c++中变量和函数都必需有类型，c语言中的默认类型在c++中不成立
+		f(i) //c语言中可以，c++中不可以
+		g(){} //c语言中认为是多参函数
+		c语言中 int f()表示任意参数返回int，int f(void)表示无参返回int
+		在c++中int f()与int f(void)具有相同意义
+	9).新增的Bool类型
+		1.只有0和1，非0为1
+	10).三目运算符的增强
+		(a<b?a:b) = 10;//c语言中错误，表达式返回值,c++中返回的是一个变量本身
+		&(a<b?&a:&b) = 10;//在c语言中完成c++中三目的工作
+	11)const
+		const基础：
+			const int a; int const a;//一样
+			const int *c;//指向的内存空间不能被修改，即值不能修改
+			int *  const d;//指向不能修改
+			const int * const e;//值和指向都不能变
+			const好处：提高代码可读性，提高效率，能清楚的分清参数的输入输出特性。
+		区别：
+			c语言中const是一个冒牌货
+			const a = 10;
+			int *p = NULL;
+			p = (int *)&a;
+			*p = 20;//在c语言中可间接赋值，在c++中不可以
+			c++编译器把常量放在符号表中(key-value形式)，对常量进行取地址是重新开辟空间
+			c++中const可能分配内存也可能不分配(定义一个const变量时不分配)，在取地址或是，定义全局const常量被其它文件引用时分配。
+			编译器编译期间分配。
+		const与#define的异同：...
+	12)引用
+			给变量（内存编号）另起一个别名
+			int a = 10;
+			int &b = a;//建立引用(c++语法范畴，不能用c语言的语法思考它)，修改a与b的值效果一样
+			int &c;//报错，普通引用必需初始化
+			引用能达到指针的效果。
+			引用在c++内部是一个常量指针实现的Type &name -> Type * const name;
+		分类：
+			普通引用：
+				int a = 10;
+				int &b = a;//这种修改a和修改b效果一样
+			常引用：
+				int x = 20;
+				const int &y = x;//让变量引用只读属性，不能通过y去修改x了
+			常引用的初始化：
+				1）用变量初始化常引用,如上用变量x去初始化常引用y
+				2）用字面量初始化常引用
+					int &m = 40;//报错，引用是给内存取别名，字面量没有内存
+					const int &m = 40;//这样就可以了(会分配一个地址)
+13.c++对c的函数的扩展
+	1)inline内联函数
+		使用内联函数来代替宏代码片段。
+		1.必需和实现写在一块 inline int myfun(int a){...}
+		2.c++编译器直接将函数体插入函数调用的地方
+		3.无普通函数调用时额外的开销(压栈、跳转、返回)
+		4.内联函数由编译器处理，宏由预处理器处理
+		5.内联中不能有循环语句，不能有过多的条件判断，否则无效
+	2)函数参数
+		1.可以有默认参数 int fun(int a = 2){}
+		2.有默认参数，则右边的必需都是默认参数
+		3.函数占位参数，函数调用时必需写够参数 int fun(int a,int b ,int){...}
+7.类型检测增强
+	c语言中：
+	int g_a;
+	int g_a = 100;//不报错，c++中报错
+8.类
+	1)封装
+		封装的含义：
+		1.把属性和方法进行封装
+		2.对属性和方法进行访问控制
+		3.访问控制关键字
+			public:可以类外访问
+			private:只能在类的内部访问
+			protected:在类的内部使用或子类中使用
+	2)struct与class的区别
+		struct能实现与类相同的功能
+		struct默认属性是public的
+	3)类的申明与实现分开
+		申明:MyTeacher.h文件中
+			#program once  //只包含一次
+			class MyTeacher{
+				private:
+					int m_age;
+					char m_name[32];
+				public:
+					void setAge(int age);
+					int getAge();
+			}
+		实现:MyTeacher.cpp中 
+			#include "MyTeacher.h"
+			void MyTeacher::setAge(int age){
+				m_age = age;
+			}
+			int MyTeacher::getAge(){
+				return m_age;
+			}
+	4)构造函数
+		如果未定义编译器会自动创建一个默认的构造函数
+		构造函数的调用：
+		1.无参调用
+			Test t1;
+			Test t1();//这种不是调用无参，使用时报错。
+		2. 有参调用
+			Test t2(1);//编译器自动调用
+			Test t3 = 2;//编译器自动调用
+			Test t4 = Test(3);//程序员手工调用
+		3. 
+	5)析构函数
+		1)c++中可定义一个特殊的成员函数清理对象，这个函数就是析构函数
+		2)析构函数没有参数也没有任何返回类型的申明
+			~Test(){
+				cout << "我是析构函数" << endl;
+			}
+		3)析构函数在对象被销毁时自动调用
+	6)赋值构造函数(copy构造函数)
+		//如果未定义编译器会提供默认copy构造函数
+		1)形式
+			Test(const Test& obj){
+				cout << "我是copy构造函数" << endl;
+			}
+		2)说明
+			用一个对象初始化另一个对象.
+			Test t1(1,2);//Test有两个参数的构造函数，这样创建对象
+			Test t2 = t1;//用t1初始化t2,会调用copy构造函数，可自定义初始化工作
+			// Test t2(t1);//这也是用t1去初始化t2
+			Test t3(2,3);
+			t3 = t1;// t1给t3赋值，同初始化是不同的概念
+		3)copy构造函数的几种调用方式
+			1.Test t2 = t1;
+			2.Test t2(t1);
+			3.函数的参数为对象时，调用函数会执行函数的copy构造函数
+				f(Test a){}
+				会把实参传给形参，会用到copy构造函数
+			4.函数返回值是对象的时候，return的时候会调用对象的copy析构函数
+				实际上是用返回的对象创建了一个新的匿名对象。
+				函数中待返回的对象是局部的，所以不能直接返回(设计者考虑的)
+				接收匿名对象：
+					1. Test t4 = g();//g()函数返回Test，这时候匿名对象被扶正，
+						这次不再调用copy构造函数。
+						//会考虑到这是第一种调用copy构造函数形式，但不会执行copy构造函数
+						匿名函数不会被析构
+					2.Test t4(1,2);
+						t4 = g();//这种情况匿名函数会被析构
+	7)深拷贝与浅拷贝
+		1)浅拷贝问题
+			对于copy构造函数，c++默认提供的是栈拷贝
+			浅拷贝，只是复制了对象的地址，两个对象指向同一块内存空间。
+			第二个对象析构时报错。因为内存空间已经被第一个对象析构了。
+		2)深拷贝，解决浅拷贝问题
+			在copy函数中自己实现深拷贝，拷贝内存中的内容到新内存。
+			Name(const Name& obj){
+				int len = obj.len;
+				p = (char*)malloc(len+1);
+				strcopy(p,obj.p);
+			}
+		3)等号赋值也是浅拷贝，需要手动重载等号操作
+			Test t1(1,2);
+			Test T2;
+			t2 = t1;//这个操作也是浅拷贝，两个对象析构的时候也会出现浅拷贝问题
+				//这种赋值还会出现内存泄漏，t2原来指向的内存没有释放
+	8)组合对象出现问题
+		class A{
+		public:	
+			A(int _a){
+				a = _a;
+			}
+		private:
+			int a;
+		
+		}
+		class B{
+		public:
+			B(int _b){
+				b = _b;
+			}
+		private:
+			int b;
+			A a1;
+		}
+		以上情况创建B的对象是报错，没有合适的机会初始化A对象[A为有参构造]。
+		解决：
+			B(int _b):a1(_b){//创建B时给a1初始化 
+			
+			}
+	9)构造函数的初始化列表
+		一个类中组合另一个对象.
+		先执行组合对象的构造函数，如果组合多个，按定义顺序执行，不是按初始化顺序执行
+		析构函数执行顺序与构造函数相反。
+	10)c++内存的申请与释放
+		c语言函数: 		malloc free
+		c++操作符:	new    delete
+		new 基础类型 数组 复杂类型
+		1.分配基础类型
+			c:
+			int *p = (int *)malloc(sizeof(int));
+			*p = 10;
+			free(p);
+			c++:
+			
+			int *p = new int;
+			*p = 20;
+			delete p;
+			
+			int *p = new int(30);
+			delete p;
+		2.分配数组
+			c:
+			int *p = (int *)malloc(sizeof(int) * 10);//int [10]
+			p[0] = 1;
+			free(p);
+			c++:
+			int *pArray = new int[10];
+			pArray[1] = 2;
+			delete [] pArray;//数组不要忘记[]
+		3.分配对象
+			c:
+			Test *p = (Test *)malloc(sizeof(Test));
+			free(p);
+			c++:
+			Test *p = new Test(1);
+			delete p;
+		4.new能执行类的构造函数，delete能执行类的析构函数
+		  malloc和free不执行函数
+		5.new与delete深入
+			malloc和free只会分配和释放内存不会执行类的构造和析构函数
+			new和delete不仅会分配内存，还会执行函数。
+			new可以动态控制对象的生命周期
+	11)static关键字
+		1.静态成员变量所有对象共享
+		2.静态成员函数,调用
+			obj.f();
+			ClassName::f();
+	12)变量的存储
+		1.普通成员变量存储于对象中，与struct有相同的内存布局和字节对齐方式。
+		2.静态成员变量存储于全局数据区中。
+		3.成员函数存储于代码段中
+		4.代码如何获取哪个对象调用函数的，每个函数隐藏了一个this指针
+	13)const修饰函数
+		1.const的位置没有关系，以下都可
+			const void f(){}
+			void const f(){}
+			void f() const{}
+		2.const修改的是谁？
+			void f(Test *const this){}//本来是这样的
+			void f(const Test *const this){}//加const修饰函数后，实际是这样的
+			const修饰的是this指针指向的内存空间，所以此时不能修改成员变量。
+	14)全局函数与成员函数互转
+		1.全局函数转换为成员函数去掉this指针参数
+		2.成员函数转成全局函数添加上this指针参数
+		这里的this指针参数带*  f(Test *t){}
+		返回对象本身 return *this; this代表 &t1 ,*this代表 *(&t1)又回到了t1
+9.友元函数与友元类
+	友元函数：
+		1.友元函数作用
+			外部修改类的私有属性
+		2.友元函数破坏了c++的封装性
+		3.使用形式
+			//申明位置与public private无关，申明与外部函数必需一样
+			friend void modifyTest(Test *t);//类的内部，把modifyTest变成类Test的好朋友
+			void modifyTest(Test *t){//类的外部，如果不是友元无法修改私有属性。
+				t ->a = 100;
+			}
+	友元类：
+		1.若B类是A类的友元类，则B类的所有成员函数都是A类的友元函数
+			friend class B;//在A类中申明B是A的好朋友，在B类中可以访问A类的私有属性
+		2.友元类通常被设计为一种对数据操作或类之间传递消息的辅助类
+	出现原因：
+		1.有些场景下需要修改类的私有属性
+		2.java中编译后生成字节码，可以分析字节码，修改类的私有属性
+		3.c++中编译成汇编，c++程序员很难去操作汇编，所以开了个后门friend去修改类的私有属性
+10.运算符重载
+	1).出现原因：
+		c++编译器不知道用户自定义数据类型如果进行运算符操作。
+	2).运算符重载本质是一个函数，运算符函数是一种特殊的函数或友元函数
+	3).实现,两种方式都可以
+		0.步骤
+			1.承认操作符重载是一个函数，定义函数名为operator++
+			2.分析函数参数，根据左右操作数的个数operator++(Test &t)
+			3.分析函数返回值 Test& operator++(Test &t)返回它自身
+		1.二元操作符 + - 等
+			1).全局函数
+				friend Test operator+(Test &t1,Test &t2);//需要在类中申明友元
+				Test operator+(Test &t1,Test &t2){}//实现t1+t2的操作
+				Test t3 = operator+(t1,t2);//t1+t2
+			2).类成员函数:
+				Test operator-(Test &t){}
+				Test t3 = t1.operator-(t2);//t1 + t2
+		2.一元操作符 ++ -- 等
+			1.前置++ -- //返回元素
+				1).全局函数
+					friend Test& operator++(Test &t1);//需要在类中申明友元
+					Test& operator++(Test &t){
+						t.a ++; //先++后返回
+						return t;
+					}//实现++t的操作
+				2).成员函数
+					Test& operator--(){
+						this->a --;
+						return *this;
+					}
+			2.后置++ --
+				1).全局函数
+					friend Test operator++(Test &t,int);//需要有一个占位符否则不能与前置++构成重载
+					Test operator++(Test &t,int){
+						Test tmp = t;//先返回后++
+						t.a ++;
+						return tmp;
+					}
+				2).成员函数
+					Test operator--(int){
+						Test tmp = *this;
+						this ->a--;
+						return tmp;
+					}
+	4).不能重载的运算符 . :: .* ?: sizeof
+	5).对于cout<<操作符的重载(相当于java中的toString)
+		friend ostream& operator<<(ostream &out,Test &t);//在Test类中申明友元
+		ostream& operator<<(ostream &out,Test &t){
+			out<<t.a<<endl;
+			return out;
+		}
+		注：成员调用
+			cout.operator<<(t);//这种方式需要修改ostream类的源码，不可行
+			所以对于<<操作符只能使用全局函数实现重载，即友元函数的使用场景。
+	6)友元函数重载操作符注意
+		常用用于运算符左右操作类型不同的情况
+			Test t(3);
+			t = t +3;//可用成员函数
+			t = 3 +t;//需要用友元试实现，即全局函数
+		在第一个参数需要隐式转换，用友元方式重载
+		不能用友元实现的重载 = () [] ->
+	7)重载等号=操作符
+		1.先释放旧的内存空间
+		2.根据大小分配内存，做赋值操作
+		3.返回一个引用
+		Test operator=(Test &obj){
+			if(this->m_p!=NULL){
+				delete [] m_p;
+				m_len = 0;
+			}
+			this ->m_len = obj.m_len;
+			this ->m_p = new char[m_len];
+			strcopy(m_p,obj.m_p);
+			return *this;
+		}
+	8)一般不建议重载&&和||操作符
+		&&和||操作符内部实现了短路规则，重载无法实现短路规则。
+11.继承
+	1.语法 
+		class Child:public/private/protected Parent{}
+	2.说明
+		子类拥有父类的所胡成员变量和函数
+		子类是一种特殊的父类
+		子类对象可以当作父类对象使用
+		子类可以拥有父类没有的方法和属性
+	3.派生类的访问控制
+		public继承：父类的成员在子类中保持原有访问级别
+		private继承：父类成员在子类中变成private成员
+		protected继承：父类中的public 变成protected
+						父类中的private仍为private
+						父类中的protected仍为protected
+	4.三看原则
+		1)看调用语句在子类内部还是外部
+		2)看子类如何从父类继承(public,protected,private)
+		3)看父类中的访问级别(public,protected,private)
+	5.访问控制设计原则
+		1)需要被外部使用设为public
+		2)只能在内部使用设为private
+		3)在当前类和子类使用设为protected
+	6.类型兼容原则
+		1)父类引用可以指向子类对象
+		2)可以用子类对象初始化父类对象
+	7.继承的构造与析构
+		在子类对象构造时，需要调用父类构造函数对其继承而来的成员变量初始化
+		在子类对象析构时，需要调用父类析构函数对其继承而来的成员变量清理
+	8.函数调用原则
+		1.子类对象创建时先调用父类构造函数
+		2.父类构造函数执行完毕，再执行子类构造函数
+		3.父类的构造函数有参时，需要在子类构造函数中显示调用父类构造函数
+		4.析构函数调用顺序与构造函数相反
+	9.继承与组合混搭下构造与析构调用
+		先调用父类构造，再调用组合构造，再调用自己构造
+		析构顺序与构造顺序相反
+	10.子类与父类同名变量或函数
+		默认执行子类属性和函数
+		stu.Teacher::age = 25;//调用父类Teacher中的属性age
+		stu.Techer::getAge();//调用父类Teacher中的函数getAge
+	11.static关键字
+		static关键字遵守派生类的访问控制
+		定义静态变量时，需要在函数中初始化 int A::a = 100;
+		这句话不仅仅是赋值，告诉c++编译器要分配内存，我们在继承类中用到了a，否则会报错。
+	12.多继承
+		class C:public A,public B{}
+12.多态
+	1)多态是在运行期间根据具体对象类型决定函数调用
+	2.virtual
+		在父类函数中加virtual可实现上述需求(默认都调用父类)
+		virtual在父类函数中写了后，在子类中可写可不写，子类都有，一般写上，可读性高。
+	3.多态的思想
+		封装：突破了c函数的概念,用类做函数参数的时候，可以调用对象的属性和方法
+		继承：子类可以复用父类的成员
+		多态：可以使用未来
+	4.实现多太的三个条件
+		1.要有继承
+		2.要有虚函数重写
+		3.用父类指针(引用)指向子类对象
+		多太是设计模式的基础，多态是框架的基础
+	5.多态的理论基础
+		1.静态联编，c++编译器根据类型去执行函数，在编译阶段已经决定了函数的调用
+		2.动态联编，使用virtual关键字，迟绑定，在运行时根据对象具体类型执行不同对象的函数，实现多态现象。
+	6.虚析构函数
+		1.使用场景
+			把子类扔给父类，想使用父类去释放子类的资源时用到
+			用delete释放资源的时候，如果析构函数不是多态的，不会调用子类析构函数，从而出现内存泄漏
+	7.多态原理剖析
+		1.当类中申明虚函数的时候，编译器会在类中申明一个虚函数表，每个类一个表
+		2.虚函数表是一个存储类成员函数指针的数据结构
+		3.虚函数表由编译器自动生成与维护
+		4.存虚函数的时候每个对象都有一个指向虚函数表的指针(vptr指针)
+		5.执行时编译器确定函数是否为虚函数，如果不是编译器直接确定，静态链编
+			如果是，编译器根据对象的vptr指针所指的对象的虚函数表中查找函数并调用(查找和调用在运行时完成，实现动态链编)
+		6.执行函数多态时c++编译器不需要知道参数对象是子类对象还是父类对象，根据vptr指针，寻址查找，这样也会降低效率。
+	8.vptr指针的初始化过程
+		1.初始化子类构造时先执行父类的构造函数，此时子类的vptr指针先指向父类的虚函数表
+			父类构造执行完毕，执行子类构造函数，子类vptr指针指向子类虚函数表
+		2.现象
+			在父类的构造函数中调用虚函数，创建子类对象的时候会发生多态吗。
+			创建子类对象先执行父类构造函数，父类调用虚函数，此时不会发生多态，原理如1
+	9.子类与父类指针步长不一样问题
+		1.子类类型和父类类型所占内存大小不一样
+		2.父类指针指向子类对象时如果对指针进行++或--操作的时候(指针++ --操作的是步长，即类型所占内存大小)，会出现错误。
+		3.多态是用父类指针指向子类对象 和父类步长++是两个不同的概念。
+13.重载重写重定义
+	1.重载必需在同一个类中进行，在编译时期根据参数类型和个数决定函数调用
+	2.重写发生在父类与子类之间，父类与子类之间有完全相同的函数原型
+	3.如果加上virtual声明后能够产生多态(如果不加叫重定义)
+14.子父类之间无法构成重载
+	1.父类有三个参数的func
+	2.子类中有一个参数的func和两个参数的func
+	3.使用子类调用三个参数的func时报错，它只会在子类中查找，无法构成重载
+	4.需要加上父类的域名，显示调用
+15.纯虚函数
+	1.形式
+		virtual 返回类型 函数名(参数)=0;
+	2.一个函数纯虚函数的类称为抽象类
+		class Shape{
+			public:
+				virtual void getArea() = 0;//纯虚函数
+		}
+16.数组指针
+	1.定义一个数组类型
+	2.定义一个指针数组类型
+	3.定义一个指向数组类型的指针 数组类型的指针
+	void main(){
+		int a[10];//a代表数组首元素地址，&a代表整个数组地址，a+1 4与&a+1 40步长不一样
+		{//定义一个数组类型
+			typedef int (myTypeArray)[10];//
+			myTypeArray myArray;
+			myArray[0] = 1;
+		}
+		{//定义一个指针数组类型
+			typedef int (*PTypeArray)int[10];
+			PTypeArray myPArray;//步长 sizeof(int) *10 
+			myPArray = &a;
+			(*myPArray)[0] = 20;//操作数组元素，这是二级指针，还原不一级指针
+		}
+		{//定义一个指向数组类型的指针 
+			int (*MyPointer)[10];//变量，告诉编译器给我分配内存
+			MyPointer = &a;
+			(*MyPointer)[0] = 40;//
+		}
+	}
+17.函数指针（作用：把函数的参数，返回类型提前做了约定）
+	1.定义一个函数类型
+	2.定义一个函数指针类型
+	3.定义一个函数指针 指向一个函数的入口地址
+	int add(int a,int b){
+		return a+b;
+	}
+	void main(){
+		add(1,2);//函数名就是函数的入口地址
+		{//1
+			typedef int (MyFuncType)(int a,int b);//指向两个参数的函数
+			MyFuncType *myFunc = null;//定义了一个指针，指向某一个函数
+			myFunc = &add;
+			myFunc(3,4);//间接调用add函数
+			
+			myFunc = add;//细节 这样也可以，逐渐完善
+			myFunc(3,4);
+		}
+		{//2
+			typedef int (*MyPointerFunc)(int a,int b);//相当于 int *a = null;
+			MyPointerFunc myPointer;//定义一个指针
+			myPointer = add;
+			myPointer(5,6);
+		}
+		{//3
+			int (*MyPointerFunc)(int a,int b);//定义一个变量
+			MyPointerFunc = add;
+			MyPointerFunc(7,8);
+		}
+	}
+18.函数模板
+	1.形式
+		//template告诉编译器，我要开始泛型编程了，看到T不要随便报错
+		template <typename T>//多个用逗号隔开
+		void swap(T &a, T &b){
+			T c;
+			c = a;
+			a = b;
+			b = c;
+		}
+		swap<int>(3,2);//显示类型调用
+		swap('a','b');//自动类型推导
+	2.普通函数与函数模板重载
+		1.模板调用将严格按照类型进行匹配，不会进行类型转换
+		2.普通函数可以进行类型转换
+		3.谁匹配强先调用谁， 完全匹配>隐式转换后匹配>不匹配
+		4.调用规则
+			普通函数与模板函数都符合先调用普通，
+			想强制调用模板加空限制swap<>(1,2);
+			如果模板能产生一个更好的匹配，则调用模板,普通函数需要隐式类型转换的情况。
+		5.函数模板原理
+			1.根据模板和函数调用，动态生成符合调用的函数
+			2.如果有多种类型，则调用时每种类型都生成对应的函数，如果有了则不再生成
+			3.相当于编译器帮我们把写多份的工作给做了
+			4.经过两次编译实现:
+				第一次在申明的地方根据模板编译，进行一些检查
+				第二次根据调用进行编译
+				然后把编译后的代码放进xx.s文件中(汇编)
+19.类模板
+	1.单个模板类形式
+		template <typename T>//typename可换成class
+		class A{
+			public:
+				A(T a){
+					this -> a = a;
+				}
+			private:
+				T a;
+		}
+		//模板类==>具体的类==>定义具体的变量
+		A<int> a1(10);//使用，需要给定具体类型
+	2.模板派生普通类
+		//从模板类派生时，需要具体化模板类，编译器要知道父类的类型是什么样子的
+		//需要知道大小，知道如何分配内存
+		class B:public A<int> {...}
+	3.模板类派生模板类
+		template <typename T>
+		class C:public A<T>{
+			public:
+				C(T a):A<T>(a){
+					this ->a = a;
+				}
+			private:
+				T a;
+		}
+	4.模板类中的static变量
+		每种类型的类使用自己的static变量
+20.c++编译过程
+	hello.c -> 
+	hello.i ->//预处理器，宏定义，进行宏展开
+	hello.s ->//编译器，变成汇编文本
+	hello.o ->//汇编器
+	hello.exe ->//链接器压成exe
+21.函数写在类的外部
+	1.友元函数提出去的时候报错
+		二次编译时,第一次生成的函数头，与第二次生成的函数头不一样
+		friend ostream & operator<< <T> (ostream &out,Complex &c);
+		//在申明处加 <T>
+22.类型转换
+	double dpi = 3.14;
+	int d = (double)dpi;//c语言类型转换
+	int d1 = static_cast<int>(dpi);//静态类型转换，编译时编译器会做类型检查	
+	int d2 = dpi;//c语言中隐式类型转换均可使用static_cast<>()转换
+	char *p = "hello";
+	int *i = NULL:
+	//char * ==> int* 这里不能用static_cast转换
+	i = reinterpret_cast<int *>(p);//重新解释转换，不同类型之前强制类型转换
+	//总结：通过static_cast和reinterpret_cast包含所有强制类型转换
+	//dynamic_cast用在子类和父类之间多态类型转换，运行时类型识别
+	//const_cast 去const属性，去除变量的只读属性，这种情况要清楚的知道这块内存空间是可以改变的
+	//如果是不可改变会发生错误，如 char *myp = "abcde";//不可改变，指针指向的空间是常量，char arr[] = "abcde";//可改变
+23.异常
+	1.演示
+		void divide(int x,int y){
+			if (y == 0){
+				throw x;//抛出int类型异常
+			}
+			cout<< "rst:" x/y<<endl;
+		}
+		int main(){
+			try{
+				divide(4,2);
+				divide(10,0);
+			}catch(int x){//捕获int类型异常
+				...
+			}catch(...){//接收不知道什么类型的异常
+				...
+			}
+		}
+	2.若有异常则通过throw操作创建一个异常对象并抛出
+		捕捉是按照类型进行匹配，不是按照参数进行匹配
+	3.栈解旋
+		进入到try语句中的所有语句，当发生异常时，会把当前栈中的对象析构。
+	4.异常接口申明
+		为了加强程序的可读性，可以函数申明中列出可能抛出的所有异常，之后函数能具只能抛出指定类型异常。
+		int func()throw (int,char){}
+		如果不申明则可抛出任何异常int func(){}
+		不抛任何类型的异常 int func()throw(){}
+	5.异常类型或异常变量的生命周期
+		抛出异常对象时把抛出的对象复制给异常接收对象e,处理结束后先析构e再析构抛出的对象
+		使用引用接收异常catch(TestException &e){}会使用抛出的异常，不复制，但这两种接收方式不能共存	
+		指针和元素/引用可写在一起catch(TestException *e){}，但正常抛出接收不到，这里要抛地址可以接收throw &(TestException()) 或是net TestException;
+		综合，使用&e捕获最好
+	6.标准异常库
+		Exception(基类) --->
+24.流
+	1.体系结构
+					ios 
+				   /    \
+			istream     ostream
+			/	   \    /     \  
+		ifstream  iostream    ofstream
+					 |
+				  fstream
+	2.cin
+		get()//获取一个字符
+		get(一个参数)//读一个字符
+		get(三个参数)//读一个字符串
+		getline()//读取一行
+		ignore(n)//忽略n个字符
+		peek()//检查是否有数据，有数据则读出，无数据则阻塞
+		putback()//把数据再还回去
+	3.cout
+		flush()//
+		put()//输出一个字符
+		write(*p,len)//输出指定长度
+		width()//设置输出宽度
+		fill('*')//不够width的填充*
+		setf(标记)//
+		使用控制符
+		cout << setw(30)<<setfill('*')<<endl;//全局函数，在iomanip中

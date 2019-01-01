@@ -1,0 +1,231 @@
+0.时常看一遍c中的关键字
+auto
+const
+default
+exterm
+register
+signed
+struct
+typedef
+unsigned
+union
+volatile
+
+_Bool
+_Complex
+_Imaginary
+inline
+restrict
+
+_Alignas
+_Alignof
+_Atomic
+_Generic
+_Noreturn
+_Static_assert
+_Thread_local
+0.1一些注意事项
+	1)使用数学函数的时候用gcc编译要加 -lm参数
+
+1.数据类型
+	1)基本类型：它们是算术类型，包括两种类型：整数类型和浮点类型。
+	2)枚举类型：它们也是算术类型，被用来定义在程序中只能赋予其一定的离散整数值的变量。
+	3)void 类型：类型说明符 void 表明没有可用的值。
+	4)派生类型：它们包括：指针类型、数组类型、结构类型、共用体类型和函数类型。
+	注：数组类型和结构类型统称为聚合类型。函数的类型指的是函数返回值的类型。
+2.数据表示与转换
+	1)以0b开头为2进制，0b11101101。
+	2)整数默认为10进制，小数默认为双精度
+	3)浮点数赋给整型，该浮点数小数被舍去；整数赋给浮点型，数值不变，但是被存储到相应的浮点型变量中；
+3.左值和右值
+	1)左值：指向内存位置的表达式被称为左值表达式。左值可以出现在赋值号的左边或右边。
+	2)右值：术语右值指的是存储在内存中某些地址的数值。右值是不能对其进行赋值的表达式，也就是说，右值可以出现在赋值号的右边，但不能出现在赋值号的左边。
+4.定义常量
+	1)使用 #define 预处理器。 #define LENGTH 10
+	2)使用 const 关键字。 const int  LENGTH = 10;
+5.存储类
+	1)auto		:所有局部变量默认的存储类,auto 只能用在函数内，即 auto 只能修饰局部变量。
+	2)register	:用于定义存储在寄存器中而不是 RAM 中的局部变量。这意味着变量的最大尺寸等于寄存器的大小（通常是一个词），且不能对它应用一元的 '&' 运算符（因为它没有内存位置）。
+				 寄存器只用于需要快速访问的变量，比如计数器。还应注意的是，定义 'register' 并不意味着变量将被存储在寄存器中，它意味着变量可能存储在寄存器中，这取决于硬件和实现的限制。
+	3)static	:使用 static 修饰局部变量可以在函数调用之间保持局部变量的值。当 static 修饰全局变量时，会使变量的作用域限制在声明它的文件内。static 是全局变量的默认存储类.
+	4)extern	:用于提供一个全局变量的引用，全局变量对所有的程序文件都是可见的。
+6.杂项运算符
+	sizeof()	返回变量的大小。
+	&	返回变量的地址。	&a
+	*	指向一个变量。	*a
+	? :	条件表达式
+7.判断
+	C 语言把任何非零和非空的值假定为 true，把零或 null 假定为 false。
+8.函数
+	在函数声明中，参数的名称并不重要，只有参数的类型是必需的，因此下面也是有效的声明 int max(int, int);
+	当您在一个源文件中定义函数且在另一个文件中调用函数时，函数声明是必需的。在这种情况下，您应该在调用函数的文件顶部声明函数。
+	当局部变量被定义时，系统不会对其初始化。定义全局变量时，系统会自动对其初始化。
+9.结构体
+	1.定义
+		struct tag { 
+			member-list
+			member-list 
+			member-list  
+			...
+		} variable-list ;
+		在一般情况下，tag、member-list、variable-list 这 3 部分至少要出现 2 个;
+		struct  {int a;} s1;
+		struct SIMPLE{ int a;};
+		struct SIMPLE t1, t2[20], *t3;//使用
+		第一个和第二声明被编译器当作两个完全不同的类型，即使他们的成员列表是一样的，如果令 t3=&s1，则是非法的。
+	2.创建新类型
+		typedef struct{int a;char b;} Simple2;
+		Simple2 u1, u2[20], *u3; //使用
+	3.指针指向结构体 调用 ->
+10.位域
+	1.形式
+		类型说明符 位域名: 位域长度 
+	2.例
+		struct bs{
+			int a:8;
+			int  :2;//位域可以是无名位域，这时它只用来作填充或调整位置。无名的位域是不能使用的
+			int c:6;
+		}data;
+	3.使用
+		位域变量名.位域名
+		位域变量名->位域名
+		赋值不能超过该位域的允许范围
+		结构体中成员变量分配的空间是按照成员变量中占用空间最大的来作为分配单位,同样成员变量的存储空间也是不能跨分配单位的,如果当前的空间不足,则会存储到下一个分配单位中。
+	3.占用长度
+		typedef struct t1{
+			char x;
+			int y;
+			double z;
+		}T1; //占16
+
+		typedef struct t2{
+			char x;
+			double z;
+			int y;
+		}T2;//占24
+		原则一：结构体中元素按照定义顺序存放到内存中，但并不是紧密排列。从结构体存储的首地址开始 ，每一个元素存入内存中时，它都会认为内存是以自己的宽度来划分空间的，因此元素存放的位置一定会在自己大小的整数倍上开始。
+		原则二： 在原则一的基础上，检查计算出的存储单元是否为所有元素中最宽的元素长度的整数倍。若是，则结束；否则，将其补齐为它的整数倍。
+		T1: 若从第 0 个字节开始分配内存，则 T1.x 存入第 0 字节，T1.y 占 4 个字节，由于第一的 4 字节已有数据，所以 T1.y 存入第 4-7 个字节，T1.z 占 8 个字节，由于第一个 8 字节已有数据，所以 T1.z 存入 8-15 个字节。共占有 16 个字节。
+		T2: 若从第 0 个字节开始分配内存，则 T1.x 存入第 0 字节，T1.z 占 8 个字节，由于第一的 8 字节已有数据，所以 T1.z 存入第 8-15 个字节，T1.y 占 4 个字节，由于前四个 4 字节已有数据，所以 T1.z 存入 16-19 个字节。共占有 20 个字节。此时所占字节不是最宽元素（double 长度为 8）的整数倍，因此将其补齐到 8 的整数倍，最终结果为 24。
+
+测试实例：
+11.共用体
+	1.说明
+		允许您在相同的内存位置存储不同的数据类型。
+		您可以定义一个带有多成员的共用体，但是任何时候只能有一个成员带有值。
+	2.定义
+		union [union tag]
+		{
+		   member definition;
+		   member definition;
+		   ...
+		   member definition;
+		} [one or more union variables];
+		union tag 是可选的，每个 member definition 是标准的变量定义
+		最后一个分号之前，您可以指定一个或多个共用体变量，这是可选的。
+	3.例
+		union Data
+		{
+		   int i;
+		   float f;
+		   char  str[20];
+		} data;
+		共用体占用的内存应足够存储共用体中最大的成员。
+	4.定义与访问共用体成员
+		使用 union 关键字来定义共用体类型的变量。union Data data; 
+		data.i = 10;
+12.typedef
+	1.为类型取一个新的名字。
+		typedef unsigned char BYTE;//标识符 BYTE 可作为类型 unsigned char 的缩写
+	2.为用户自定义的数据类型取一个新的名字.
+		typedef struct Simple{int a;char b;} Simple2;
+		使用：
+		struct Simple s1;
+		Simple2 s2;
+		//这两种方式不可互换，即名字与别名有区别。
+	3.typedef vs #define
+		typedef 仅限于为类型定义符号名称，#define 不仅可以为类型定义别名，也能为数值定义别名，比如您可以定义 1 为 ONE。
+		typedef 是由编译器执行解释的，#define 语句是由预编译器进行处理的。
+		#define TRUE  1
+13.输入输出
+	1.标准文件
+		标准文件	文件指针	设备
+		标准输入	stdin		键盘
+		标准输出	stdout		屏幕
+		标准错误	stderr		您的屏幕
+	2.函数
+		输入：
+			scanf()从标准输入（键盘）读取并格式化，以空白字符结束
+			int getchar(void) 从屏幕读取下一个可用的字符，并把它返回为一个整数。
+			char *gets(char *s) 从 stdin 读取一行到 s 所指向的缓冲区，直到一个终止符或 EOF。
+		输出：
+			printf()发送格式化输出到标准输出
+			int putchar(int c) 把字符输出到屏幕上，并返回相同的字符。
+			int puts(const char *s) 把字符串 s 和一个尾随的换行符写入到 stdout。
+14.文件读写
+	1.函数 
+		打开: FILE *fopen( const char * filename, const char * mode );
+		关闭: int fclose( FILE *fp );
+		写入: int fputc( int c, FILE *fp );
+			  int fputs( const char *s, FILE *fp );
+			  size_t fread(void *ptr, size_t size_of_elements, size_t number_of_elements, FILE *a_file);//二进制块写入
+		读取: int fgetc( FILE * fp );
+			  char *fgets( char *buf, int n, FILE *fp ); //读取一行
+			  char *fscanf( FILE *fp, int n, char *buf );//遇到空格结束
+			  size_t fwrite(const void *ptr, size_t size_of_elements, size_t number_of_elements, FILE *a_file);//二进制块读取
+	    移动：int fseek(FILE *stream, long offset, int whence);
+		注： 只有用 r+ 模式打开文件才能插入内容，w 或 w+ 模式都会清空掉原来文件的内容再来写，a 或 a+ 模式即总会在文件最尾添加内容，哪怕用 fseek() 移动了文件指针位置。
+	2.mode模式
+		r	打开一个已有的文本文件，允许读取文件。
+		w	打开一个文本文件，允许写入文件。如果文件不存在，则会创建一个新文件。在这里，您的程序会从文件的开头写入内容。如果文件存在，则该会被截断为零长度，重新写入。
+		a	打开一个文本文件，以追加模式写入文件。如果文件不存在，则会创建一个新文件。在这里，您的程序会在已有的文件内容中追加内容。
+		r+	打开一个文本文件，允许读写文件。
+		w+	打开一个文本文件，允许读写文件。如果文件已存在，则文件会被截断为零长度，如果文件不存在，则会创建一个新文件。
+		a+	打开一个文本文件，允许读写文件。如果文件不存在，则会创建一个新文件。读取会从文件的开头开始，写入则只能是追加模式。
+		如果处理的是二进制文件，则需使用下面的访问模式来取代上面的访问模式：
+		"rb", "wb", "ab", "rb+", "r+b", "wb+", "w+b", "ab+", "a+b"
+15.C 预处理器
+	1.说明：C 预处理器只不过是一个文本替换工具而已，它们会指示编译器在实际编译之前完成所需的预处理。
+	2.重要指令
+		#define	定义宏
+		#include	包含一个源代码文件
+		#undef	取消已定义的宏
+		#ifdef	如果宏已经定义，则返回真
+		#ifndef	如果宏没有定义，则返回真
+		#if	如果给定条件为真，则编译下面代码
+		#else	#if 的替代方案
+		#elif	如果前面的 #if 给定条件不为真，当前条件为真，则编译下面代码
+		#endif	结束一个 #if……#else 条件编译块
+		#error	当遇到标准错误时，输出错误消息
+		#pragma	使用标准化方法，向编译器发布特殊的命令到编译器中
+	3.预定义宏
+		__DATE__	当前日期，一个以 "MMM DD YYYY" 格式表示的字符常量。
+		__TIME__	当前时间，一个以 "HH:MM:SS" 格式表示的字符常量。
+		__FILE__	这会包含当前文件名，一个字符串常量。
+		__LINE__	这会包含当前行号，一个十进制常量。
+		__STDC__	当编译器以 ANSI 标准编译时，则定义为 1。
+	4.预处理器运算符
+		一个宏通常写在一个单行上。但是如果宏太长，一个单行容纳不下，则使用宏延续运算符（\）
+		#define  message_for(a, b)  \
+			printf(#a " and " #b ": We love you!\n")
+		字符串常量化运算符（#），把一个宏的参数转换为字符串常量
+		#define  message_for(a, b)  \
+			printf(#a " and " #b ": We love you!\n")
+16.头文件
+	1.引用
+		#include <stdio.h> //引用系统头文件
+		#include "my.h" //引用自定义头文件
+	2.只引用一次头文件
+		#ifndef HEADER_FILE
+		#define HEADER_FILE
+		#endif
+17.强制类型转换
+	1.(type_name) expression
+	2.整数提升(算术转换)
+		char/short -> int -> unsigned int -> long -> unsigned long -> long long -> unsigned long long -> float -> double -> long double
+		算术转换不适用于赋值运算符、逻辑运算符 && 和 ||
+18.内存管理
+	void *calloc(int num, int size);在内存中动态地分配 num 个长度为 size 的连续空间，并将每一个字节都初始化为 0。所以它的结果是分配了 num*size 个字节长度的内存空间，并且每个字节的值都是0。
+	void free(void *address); 该函数释放 address 所指向的内存块,释放的是动态分配的内存空间。
+	void *malloc(int num); 在堆区分配一块指定大小的内存空间，用来存放数据。这块内存空间在函数执行完成后不会被初始化，它们的值是未知的。
+	void *realloc(void *address, int newsize); 该函数重新分配内存，把内存扩展到 newsize。

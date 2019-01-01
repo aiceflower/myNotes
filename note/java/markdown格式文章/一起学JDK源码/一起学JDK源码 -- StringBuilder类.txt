@@ -1,0 +1,69 @@
+---
+date: 2018-10-18 09:11
+status: public
+title: 一起学JDK源码 -- StringBuilder类
+---
+
+StringBuilder从类名语义上来说String构建者，用来创建String的。在java开发中经常用到String处理字符串，但String对象是一个常量，一旦创建后不能改变，所以无法对其进行修改操作，对String对象的操作，实际上是不断的创建新的String对象。为了使字符串可以改变，java引入了可变的字符串StringBuild类。
+
+#### 定义：
+```
+public final class StringBuilder extends AbstractStringBuilder implements java.io.Serializable, CharSequence{}
+```
+StringBuilder继承自[AbstractStringBuilder](https://www.jianshu.com/p/77e82f324144)类，是final类型的，不能再被其它类继承。实现了Serializable和CharSequence接口。
+### 构造方法:
+#### 无参构造方法：
+```
+    public StringBuilder() {
+        super(16);
+    }
+```
+无参构造方法，调用了父类的构造方法，初始容量为16个字符.
+#### String参数构造方法:
+```
+    public StringBuilder(String str) {
+        super(str.length() + 16);
+        append(str);
+    }
+```
+一个String参数的构造方法，初始容量为字符串长度加16个字符.
+#### CharSequence参数构造方法：
+```
+    public StringBuilder(CharSequence seq) {
+        this(seq.length() + 16);
+        append(seq);
+    }
+```
+CharSequence参数的构造方法，同String参数的构造方法类似。
+### 其它方法：
+#### writeObject:
+```
+    private void writeObject(java.io.ObjectOutputStream s)
+        throws java.io.IOException {
+        s.defaultWriteObject();
+        s.writeInt(count);
+        s.writeObject(value);
+    }
+```
+在进行序列化的时候保存StringBuilder对象的状态到一个流中。
+#### readObject：
+```
+    private void readObject(java.io.ObjectInputStream s)
+        throws java.io.IOException, ClassNotFoundException {
+        s.defaultReadObject();
+        count = s.readInt();
+        value = (char[]) s.readObject();
+    }
+```
+反序列化时从流中获取StringBuild对象序列化之前的状态。
+#### toString:
+``` 
+    public String toString() {
+        // Create a copy, don't share the array
+        return new String(value, 0, count);
+    }
+```
+返回StringBuilder对象的字符串形式，创建了一个新的字符串对象，代码注释说了创建一个副本，而不要去共享这个内部维护的数组，因为返回的是String对象，不可变的，如果返回了数组的共享，在改变StringBuilder对象时，String对象的内容随之改变，这就破坏了String对象的不可变性。
+
+StringBuilder类中其它的方法都是重写了父类中的方法，调用了父类的实现。具体实现可查看基父类[AbstractStringBuilder](https://www.jianshu.com/p/77e82f324144)，这里就不再列出了。需要注意一点的是StringBuilder是线程不安全的，在单线程程序中使用效率会高很多。在多线程程序中要慎用。
+

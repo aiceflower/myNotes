@@ -68,13 +68,10 @@ if (logger.isDebugEnabled()) { //判断，占位符
 logger.error(各类参数或者对象toString + "_" + e.getMessage(), e);
 37.避免重复打印日志，浪费磁盘空间，务必在log4j.xml中设置additivity=false。 
 <logger name="com.taobao.dubbo.config" additivity="false"> 
-37.单元测试中不准使用System.out来进行人肉验证，必须使用assert来验证。 
-38.CSRF(Cross-site request forgery)跨站请求伪造是一类常见编程漏洞。
-39.1表示是，0表示否
-
- 
-
-
+38.单元测试中不准使用System.out来进行人肉验证，必须使用assert来验证。 
+39.CSRF(Cross-site request forgery)跨站请求伪造是一类常见编程漏洞。
+40.1表示是，0表示否
+41.在任何使用new Thread()的地方优先使用Executor
 
 
 

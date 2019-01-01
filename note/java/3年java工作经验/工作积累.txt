@@ -74,3 +74,50 @@ a b 为true其它为false
 			}
 		}
 15.TimeUnit.SECONDS.sleep(2);睡2秒
+16.java中不是面向对象的两种体现
+    1.基本数据类型
+    2.static
+17.组合与聚合
+    组合：体现的是一种contains-a的关系，整体与部分间的关系，但此时整体与部分是不可分的，人有一个眼睛
+    聚合：体现的是整体与部分、拥有的关系，即has-a的关系，has 不是 must has，a可以有b，也可以没有。
+          a是整体，b是部分，整体与部分之间是可分离的。
+18.内存映射
+    当对较大文件操作时，由于文件太大而不能放入内存。有了内存映射我们就可以假定整个文件都放在内存
+    而且完全可以把它当作一个大数组来访问。
+    使用 MappedByteBuffer out = new RandomAccessFile("test.data","rw").getChannel().map(FileChannel.MapMode.READ_WRITE,0,length);
+19.finally中的方法一定会执行吗？
+    以下两种情况finally中的方法不会执行
+    1.在finally之前调用了System.exit()
+    2.所有非后台线程终止时，后台线程会突然终止。如果此时后台线中有finall，也不会执行。
+20.java创建线程的几种方式
+    1.继承Thread类
+    2.实现Runnable接口
+    3.实现Callable接口new Thread(new FutureTask<>(new CallableImpl())).start();
+    4.实现Callable接口Executors.newCachedThreadPool().submit(new CallableImpl());//有返回值的线程
+21.join与yield
+    关于Thread.join(waitTime)，原线程等待join进来的线程执行结束或等待时间到后继续执行。
+    Thread.yield()方法作用是：暂停当前正在执行的线程对象，并执行其他线程。
+    yield()从未导致线程转到等待/睡眠/阻塞状态，在大多数情况下，
+    yield()将导致线程从运行状态转到可运行状态，但有可能没有效果。
+22.新线程中抛出的异常在主线程中无法捕获到。
+    解决：
+        1.创建自己的线程处理类，实现Thread.UncaughtExceptionHandler接口
+        2.创建自己的线程工厂，实现ThreadFactory
+        3.创建线程池时传递自己创建的线程工厂
+        以上操作后，线程中抛出的异常将被自己的线程处理类处理（需要为每个线程单独设置处理器）
+        如果代码中处处使用相同的异常处理器，可在Thread中设置静态域，并将这个处理器设置为默认未捕获异常处理器
+        Thread.setDefaultUncaughtExceptionHandler(new MyUncaughtExceptionHandler());
+        设置完成后再创建线程池
+23.内部类
+    1.内部类是一个编译时的概念，一旦编译成功，就会成为完全不同的类。
+    2.内部类使得多重继承的解决方案变得完整。接口解决了部分问题，而内部类有效地实现了“多重继承”。
+    3.内部类分类：成员、局部、静态、匿名内部类。
+24.避免死锁
+    1.加锁顺序
+    2.加锁时限(需要自己实现)
+    3.死锁检查
+    http://ifeve.com/deadlock-prevention/
+25.获取对象的内存地址
+	默认Object的hashCode方法返回对象的内存地址，但该方法有时被重写。
+	System.identityHashCode(obj);用这个方法可获取对象的内存地址。
+

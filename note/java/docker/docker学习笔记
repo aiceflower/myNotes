@@ -14,7 +14,17 @@ docker学习笔记:
 5.save备份镜像,export备份容器，但恢复的时候都是镜像，save会保存历史信息和元数据，export则会清除。
 6.使用import恢复的镜像需要跟命令才能正常运行(原命令可用docker ps 查看 COMMOND列)
 7.一个镜像可以运行多个容器
-
+零、安装
+1.安装系统工具
+yum install -y yum-utils device-mapper-persistent-data lvm2
+2.添加软件源
+yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+3.更新yum缓存
+yum makecache fast
+4.安装 Docker-ce（docker-ee是收费的）
+yum -y install docker-ce
+5.启动
+systemctl start docker
 一、常用命令
 1.拉取一个镜像
 docker pull [options] name[:tag]

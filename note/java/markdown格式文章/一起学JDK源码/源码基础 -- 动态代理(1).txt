@@ -1,0 +1,84 @@
+---
+date: 2018-09-28 16:29
+status: public
+title: '源码基础 -- 动态代理(1)'
+---
+
+对于Spring和MyBatis这两个框架我们基本都用过。也在网上了解到Spring的AOP和MyBatis的Mapper的原理就是java的动态代理机制，今天我们就来了解下JDK的动态代理。
+
+### 基础知识
+#### 1.什么是代理
+代理，也叫代理模式，是常用设计模式的一种。
+官方定义：对其他对象提供一种代理从而控制对这个对象的访问。就是，代理类 代理 被代理类，来执行被代理类里的方法。
+个人理解：代理就是委托的意思，本来一件事你自己可以做，但是你不想做，或是现在没时间做，你委托给别人，找个人来帮你做。
+#### 2.JDK动态代理和CGLIB代理
+区别：JDK动态代理只能对实现了接口的类生成代理，而不能针对类，CGLIB是针对类实现代理，主要是对指定的类生成一个子类，覆盖其中的方法（继承），从这里可以看出，CGLIB不能对申明为final的类，或是final方法实行代理。
+场景：Spring中的Bean实现接口时，使用的是JDK的动态代理，当Bean没有实现接口时，使用CGlib代理。
+效率：CGLib底层采用ASM字节码生成框架，使用字节码技术生成代理类，在JDK1.6以前要比使用JDK动态代理效率高。但是JDK1.7以后逐步对JDK动态代理进行了优化，效率要高于CGLIB代理。
+
+### 代理实现
+```
+//1.先定义一个代理接口
+public interface SayHello {
+    void sayHello(String name);
+}
+//2.定义一个类，实现上述接口，并实现其方法
+public class SayHelloImpl implements SayHello {
+    @Override
+    public void sayHello(String name) {
+        System.out.println("hello : " + name);
+    }
+}
+//使用动态代理时，我们需要定义一个位于代理类与委托类之间的中介类
+//3.定义一个代理处理类，需要实现InvocationHandler接口
+public class SayHelloInvocationHandler implements InvocationHandler {
+    private  Object target;
+    public SayHelloInvocationHandler(Object target){
+        this.target = target;
+    }
+    //运行代理类中的方法时，实际上都会执行这个方法
+    @Override
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        return method.invoke(target, args);
+    }
+}
+//4.测试
+public class ProxyTest {
+    public static void main(String[] args) {
+        //中介类
+        SayHelloInvocationHandler handler = new SayHelloInvocationHandler(new SayHelloImpl());
+        //生成代理对象
+        SayHello sayHello = (SayHello)Proxy.newProxyInstance(ProxyTest.class.getClassLoader(), new Class[]{SayHello.class}, handler);
+        sayHello.sayHello("zhangsan");
+    }
+}
+```
+实现起来很简单，但有没有考虑过一个问题，本来就有了实现类，直接调用实现类就好了，为什么要用代理。也有人会拿现实中的例子来举例，张三要取快递，但是他现在很忙就委托李四帮忙取。别闹了，java中的对象有忙的时候吗，不行咱就再new一个出来。
+### 动态代理是用来干嘛的呢？
+我的理解有两层含义。一：在原有功能不变的基础上，给需要代理的方法增加统一功能，如增加日志处理(如spring的AOP)，数据采集等。二：动态生成接口的实现类(如MyBatis的Mapper代理)
+#### 一、增加功能
+```
+ @Override
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        System.out.println("do before.");
+        method.invoke(target, args);
+        System.out.println("do end.");
+        return null;
+    }
+```
+这样给被代理类的所有方法都增加了新的功能。也可加一些判断逻辑只给指定方法增加新功能。
+#### 二、生成接口实现类
+```
+//在需要代理的接口出现前(即先有该方法，后有代理接口)该方法的逻辑已经定型，可通过反射获取methon的信息，返回值，方法名方法参数等，当然方法体是需要在这里实现的。或是获取接口的信息，可通过构造方法传入接口的类类型。
+public Object sayHello(Method method, Object[] args){
+        System.out.println("hello:"+method.getName() + "..." + args[0]);
+        return null;
+    }
+    @Override
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        sayHello(method,args);//在这里调用代理实现方法
+        return null;
+    }
+```
+注意，这种情况不能直接执行 method.invoke(target, args);此时该方法只是接口中的方法，并没有方法的实现。需要执行特定逻辑，如这里的sayHello方法，方法的信息(方法名，返回值，参数，注释等)都可以通过method获取。这种方式代理的方法一般都有特定的统一逻辑，他会限定你使用特定的注解，或是使用指定规则的方法名，他会预先根据设定的这些规则生成方法的实现逻辑，如MyBatis的Mapper，需要使用规则的方法名，或是指定注解。其功能都是固定的对数据的增删改查等，通过注解或方法名来判断具体的增删改查，但这些逻辑在需要代理的接口定义前就已经确定了。
+当然获取class和method的原信息需要使用java的反射机制，然后再根据这些原数据信息，实现对应的逻辑，达到动态实现类和方法的目的。

@@ -1,3 +1,13 @@
+易错点：
+1.创建对象时 A a;调用的是无参 A a();为错误调用
+2.创建对象时new创建的是引用需要用指针接收，且调用时用"->"
+3.const修饰函数返回值，对于值返回值无影响，对于指针返回值需要用常指针接收
+3.friend 只能在类中使用，friend void outmethod(A *a); friend class B;在B的任何方法中可操作A的私有成员
+4.创建结构体和类后要有分号
+5.对象创建的几种方式 A a(1); A a = 1; A a = A(1); 这三种在栈中分配系统管理释放，用点调用 A *a = new A(1);这一种在堆中分配自己释放delete
+6.组合多个对象时，按定义顺序执行，不是按初始化顺序执行
+7.不能重载的运算符 . :: .* ?: sizeof
+8.文件操作 <iostream> <fstream> eof()
 1.命名空间
 定义：
 namespace namespaceA{
@@ -277,8 +287,10 @@ cin >> in; //标准输入
 		1.const的位置没有关系，以下都可
 			const void f(){}
 			void const f(){}
+			以上两种一样修饰返回值，如果返回值是指针，则必需用const指针接收，如果是值有无const效果一样。
 			void f() const{}
-		2.const修改的是谁？
+			修饰函数，不能修改类的成员，这时成员是只读的。
+		2.const修改的是谁？这里的const指的是修饰函数的const
 			void f(Test *const this){}//本来是这样的
 			void f(const Test *const this){}//加const修饰函数后，实际是这样的
 			const修饰的是this指针指向的内存空间，所以此时不能修改成员变量。
@@ -294,7 +306,7 @@ cin >> in; //标准输入
 		2.友元函数破坏了c++的封装性
 		3.使用形式
 			//申明位置与public private无关，申明与外部函数必需一样
-			friend void modifyTest(Test *t);//类的内部，把modifyTest变成类Test的好朋友
+			friend void modifyTest(Test *t);//类的内部，把modifyTest变成类Test的好朋友，friend只能在类中使用
 			void modifyTest(Test *t){//类的外部，如果不是友元无法修改私有属性。
 				t ->a = 100;
 			}
@@ -422,7 +434,7 @@ cin >> in; //标准输入
 	10.子类与父类同名变量或函数
 		默认执行子类属性和函数
 		stu.Teacher::age = 25;//调用父类Teacher中的属性age
-		stu.Techer::getAge();//调用父类Teacher中的函数getAge
+		stu.Teacher::getAge();//调用父类Teacher中的函数getAge
 	11.static关键字
 		static关键字遵守派生类的访问控制
 		定义静态变量时，需要在函数中初始化 int A::a = 100;

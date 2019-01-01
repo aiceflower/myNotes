@@ -1,0 +1,26 @@
+1.改变Integer中的值
+	public static void main(String[] args) {
+        Integer a = 1;
+        Integer b = 2;
+        System.out.printf("a=%s,b=%s\n", a,b);//a=1,b=2
+        swap(a,b);
+        System.out.printf("a=%s,b=%s\n", a,b);//a=2,b=1
+    }
+
+    private static void swap(Integer a, Integer b) {
+        int temp = a.intValue();
+        try {
+            Field field = Integer.class.getDeclaredField("value");
+            field.setAccessible(true);
+            field.set(a, b);
+            field.set(b, new Integer(temp));
+        }catch (Exception e) {
+        }
+    }
+
+2.关于Arrays.asList方法
+    public void testAsList(){
+        int[] a = {2,3,45,6};
+        //Integer[] b = {298,3,45,6};
+        System.out.println(Arrays.asList(a).contains(2));
+    }

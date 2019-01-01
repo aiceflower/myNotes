@@ -1,0 +1,143 @@
+---
+date: 2018-05-18 16:41
+status: public
+title: '一起学JDK源码 -- Object类'
+---
+
+今天我们一起来看下Object类的源码，为什么先看Object类呢，所有的java程序员都知道，Object类是所有其它类的父类，从继承的层次来看它就是最顶层根，所以它也是java中唯一 一个没有父类的类。看了Objec类中的方法后就知道，这里面的方法在任何一个java类中都可以使用。
+
+####  在看Object类之前先了解下本类中用到的一些java中共用的概念：
+
+1.一个类被加载的时候会先执行静态代码块中的内容，也就是static{}主的内容，静态只能调用静态
+2.native 修饰方法为本地方法，这些方法不是由java语言编写，通常由C、C++语言编写，当我们追踪源码时看到有native标识的方法是，在java层面上就到头了。
+3.在java规范中接口中的方法没有方法体，抽象类中的方法方法体为空，本地方法方法需要被省略。
+4.被final修饰的方法，子类不可重写该方法
+5.protected修饰的方法只能在本类或是子类中调用
+6.方法名称相同，参数不同是java多态的体现，如本类中wait方法
+
+#### registerNatives方法:
+```
+ private static native void registerNatives();
+ static {
+   registerNatives();
+}
+```
+&emsp;&emsp;registerNatives是一个本地方法，它被static修饰，而且在静态代码块中，所以Object类加载的时候会先执行registerNatives方法,registerNatives方法会进行一些跟系统有关的方法调用，而这个方法的实现就在java.dll中，里面会根据不同系统来执行不同的底层操作。
+
+#### getClass方法:
+```
+	public final native Class<?> getClass();
+```	
+&emsp;&emsp;getClass方法是一个本地方法，被final修饰子类不能够重写，通过该方法或以获取类的元数据和方法信息。它能够获取一个类的定义信息，然后使用反射去访问类的全部信息，包括函数和字段。
+
+#### hashCode方法:
+```	
+	public native int hashCode();
+```	
+&emsp;&emsp;hashCode是一个本地方法，该方法返回一个int类型的数值，对于包含容器类型的程序设计语言来说，基本上都会涉及到hashCode。在Java中也一样，hashCode方法的主要作用是为了配合基于散列的集合一起正常运行，这样的散列集合包括HashSet、HashMap以及HashTable等。
+
+#### equals方法:
+```
+    public boolean equals(Object obj) {
+        return (this == obj);
+    }
+```	
+&emsp;&emsp;equals是一个非本地方法，用于比较两个对象是否相等，判断逻辑也十分简单，直接==比较,这里的==比较的是对象的引用，也就是"地址值",我们自定义对象的时候，一般情况下我们需要重写equals方法(可以看到该方法没有被final修饰)，来使用我们自己的比较逻辑。
+比如我们定义一个People类，我们的判断逻辑肯定是如果两个是的ID相等，那么这两个人就是同一个人。
+
+
+#### clone方法;
+```	
+	protected native Object clone() throws CloneNotSupportedException;
+```	
+&emsp;&emsp;clone是一个本地方法，被protected修饰，只能在本类或其子类中调用(当然所有的类都是Object的子类，所以在任何类中都可调用这个方法)，该方法主要实现对象的克隆功能，根据该对象生成一个相同的新对象，我们常见的类的对象的属性如果是原始类型则会克隆值，但如果是对象则会克隆对象的地址。Java的类要实现克隆则需要实现Cloneable接口，可以看到该方法会抛出一个CloneNotSupportedException异常，如果没有实现Cloneable接口而调用了clone方法，系统就会抛出这个异常。
+
+#### toString方法
+```
+    public String toString() {
+        return getClass().getName() + "@" + Integer.toHexString(hashCode());
+    }
+```	
+&emsp;&emsp;toString方法是一个非本地方法。逻辑是获取class名称加上@再加上十六进制的hashCode。当我们用System.out.println()输出对象的时候实际上会调用对象的toString方法(原因可查看文章最后，本来想添加一个锚点的，但是简书好像不支持，或是谁有好的方法可在评论里告诉我下) ，所以我们如果我们想看到自定义的输出信息时可以重写对象的toString方法。
+
+#### notify方法
+```
+	public final native void notify();
+```	
+&emsp;&emsp;notify是一个本地方法，被final修饰，所以不可被重写，此方法用来唤醒单个线程(如果不明白的话可以搜一个java线程相关的内容)。
+
+#### notifyAll方法:
+```
+	public final native void notifyAll();	
+```	
+&emsp;&emsp;与notify方法类似，只是notifyAll唤醒的是所有的线程。
+
+#### wait(long timeout)方法:
+```
+	public final native void wait(long timeout) throws InterruptedException;
+```	
+&emsp;&emsp;wait是一个本地方法，被final修饰，wait方法的作用是让线程等待，指定的时长(timeout单位是毫秒，如果时长为0那么休眠时间将不再生效)，即让当前线程等待，直到调用了notify或是notifyAll方法或是指定的时长已经过去。该方法可以抛出中断异常。
+	
+#### wait(long timeout, int nanos)方法:
+```
+	public final void wait(long timeout, int nanos) throws InterruptedException {
+        if (timeout < 0) {
+            throw new IllegalArgumentException("timeout value is negative");
+        }
+
+        if (nanos < 0 || nanos > 999999) {
+            throw new IllegalArgumentException(
+                                "nanosecond timeout value out of range");
+        }
+
+        if (nanos > 0) {
+            timeout++;
+        }
+
+        wait(timeout);
+    }	
+```
+&emsp;&emsp;该方法本质上还是调用了wait(timeout)方法，只不过是更好的控制了时间，nanos为纳秒， 1毫秒 = 1000 微秒 = 1000 000 纳秒,如果超出时间限制timeout小于0，或是超出了nanos的范围则会抛出异常，如果nanos大于0，则等待时间会增加1毫秒。
+
+#### wait方法:
+```	
+	public final void wait() throws InterruptedException {
+        wait(0);
+    }	
+```
+&emsp;&emsp;此方法实际上调用的是wait(int timeout)方法只不过timeout传的是0，这就意味着休眠时间有再生效，只有调用了notify或是notifyAll方法，线程才会被唤醒。
+
+#### finalize方法:
+```
+	protected void finalize() throws Throwable { }
+```	
+&emsp;&emsp;java的垃圾回收机制大家想必都了解过一点，这个方法用于当对象被回收时调用，Object的finalize方法默认是什么都没有做，如果子类需要在对象被回收时执行一些逻辑处理，则可以重写finalize方法。
+
+至此java的Object类大家都看明白了，等等，还有一点，getClass、hashCode、equals、clone、toString、finalize这些方法放在Object中都很好理解，wait、notify、notifyAll这些方法是用来操作线程为什么定义在Object类中。因为这些方法是配合java的synchronized锁来一起使用的，而锁的对象是任意的，既然被锁的对象是任意的，就意味着任意对象都可以调用这些方法，那么这些方法当然应该被定义在Object类中了。看来java的创造者考虑的还是挺全面的。
+
+
+#### 为什么说System.out.println()输出对象的时候会调用对象的toString方法:
+&emsp;&emsp;在System类中我们可以看到有一个out属性，类型是PrintStream：
+```
+public final static PrintStream out = null;
+```
+&emsp;&emsp;再看PrintStream的println方法,会调用String.valueOf方法将对象转换为String类型：
+```
+public void println(Object x) {
+	String s = String.valueOf(x);
+	synchronized (this) {
+		print(s);
+		newLine();
+	}
+}
+```
+&emsp;&emsp;而在String类的valueOf方法中：
+```
+public static String valueOf(Object obj) {
+	return (obj == null) ? "null" : obj.toString();
+}
+```
+&emsp;&emsp;如果对象不是null的话，返回的是对象的toString()方法。
+&emsp;&emsp;所以System.out.println()输出对象的时候会调用对象的toString方法
+
+[查看所有目录](http://aiceflower.farbox.com/post/qi-xue-jdkyuan-ma/-qi-xue-jdkyuan-ma-kai-pian#main)

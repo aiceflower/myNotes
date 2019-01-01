@@ -1,0 +1,166 @@
+一.vim常用配置
+set nu  "设置显示行号
+set backspace=2 "能使用backspace回删
+syntax on "语法检测
+set ruler "显示最后一行的状态
+set bg=dark "背景色设置
+set hlsearch "高亮度反白
+set laststatus=2 "两行状态行+一行命令行
+set cindent "设置c语言自动对齐
+set t_Co=256 "指定配色方案为256
+set mouse=a "设置可以在VIM使用鼠标
+set tabstop=4 "设置TAB宽度
+set history=1000 "设置历史记录条数
+set nocompatible "设置不兼容
+"PATHOGEN配置
+execute pathogen#infect()
+filetype plugin on "允许插件
+filetype plugin indent on "启动智能补全
+
+highlight clear SpellBad "关闭烦人的拼写检查提示"
+
+
+
+二、常用操作
+1.常用命令
+%	跳转到配对的括号去
+[[	跳转到代码块的开头去(但要求代码块中'{'必须单独占一行)
+gd	跳转到局部变量的定义处
+''	跳转到光标上次停靠的地方, 是两个', 而不是一个"
+mx	设置书签,x只能是a-z的26个字母
+`x	跳转到书签处("`"是1左边的键)
+>	增加缩进(如 > h/l),"x>"表示增加以下x行的缩进 (如 3> j/k)
+<	减少缩进,"x<"表示减少以下x行的缩进
+2.vim格式化代码 
+	全部格式化 : gg=G
+	对当前行格式化(缩进): ==
+	对以下多行格式化(倍数操作): [count] ==
+	选择多行后, 执行 等号命令 =
+3.查看头文件
+	到头文件名字，输入gf
+4.NERDTree操作
+    创建文件或目录：ma
+
+三、插件安装
+1.安装vim
+	1)下载 wget ftp://ftp.vim.org/pub/vim/unix/vim-7.4.tar.bz2
+	2)解压 tar -jxvf vim-7.4.tar.bz2
+	3)安装 
+		./configure --prefix=/home/xxx/programs/vim74 --enable-pythoninterp --enable-python3interp --enable-gui=no --enable-cscope --enable-multibyte --enable-fontset
+		make & make install 
+	4)映射
+		ln -s vim74/bin/vim /usr/bin/vim
+	
+2.安装中文帮助插件
+	1)下载：vimcdoc-2.1.0.tar.gz
+	http://vimcdoc.sourceforge.net/  选择 Latest platform independent tarball, including an Linux/BSD installation script
+
+	2)解压 tar -zxvf vimcdoc-2.1.0.tar.gz
+	3)安装
+	执行 ./vimcdoc.sh -i
+	4)使用
+	进入vim,命令模式下输入 :help
+	 set helplang=en/cn  "设置帮助模式
+	 set encoding=utf-8  "设置编码
+3.安装ctags
+	安装：
+	1)下载 https://sourceforge.net/projects/ctags/files/ctags/
+	2)解压安装 tar  ./configure make make install 
+	3)在待使用ctags的源码目录(src父目录) 生成tags文件  ctags -R 
+	4)使用在源文件中指定 set tags= tags文件路径
+	使用：
+		ctrl + ]  跳转到函数或变量的定义处 (ctrl + 0 返回跳转前的位置) [不会生成局部变量的索引,可使用gd]
+		* 定位至当前光光标所指单词的下一次出现的地方
+		# 定位至当前光光标所指单词的上一次出现的地方
+		n 定位至跳至已被标记出的单词下一次出现的地方
+		shift+n 定位至跳至已被标记出的单词上一次出现的地方
+4.安装taglist（整理显示变量或函数）
+	安装：
+		1)下载 https://sourceforge.net/projects/vim-taglist/files/vim-taglist/4.6/
+		2) 解压移动  将对应目录下的文件移动到 ~/.vim/ 对应目录下 (plugin ,doc)
+		3)使用Tlist
+			f1 查看帮助
+			o : 在新建代码窗口中跳转到标签列表窗口中光标所在标签定义处
+			p : 代码窗口中内容跳转至标签定义处，光标保持在标签列表窗口中
+			t : 在Vim新标签窗口中跳转至标签定义处。如文件已经在Vim标签窗口中打开，则跳转至此标签窗口
+			s : 切换标签排序类型(按名称序或出现顺序)
+			x : 扩展/收缩标签列表窗口
+			+ : 展开折叠节点*(同zo)
+			- : 折叠结点*(同zc)
+			* : 展开所有结点(同zr)
+			= : 折叠所有节点(同zm)
+			q : 退出
+		4)配置 
+			在.vimrc中加 
+			let Tlist_Show_One_File=1 "显示一个文件
+			let Tlist_Exit_OnlyWindow=1 "Tlist是最后一个窗口时退出vim
+			let Tlist_Sort_Type="name" "使taglist以tag名排序,默认按文中出现顺序排序
+			let Tlist_Auto_Open=1 "启动vim自动打开Tlist
+5.安装winmanager管理文件
+	1)下载 https://www.vim.org/scripts/script.php?script_id=95
+	2)解压 解压到 ~/.vim/目录下
+	3)配置
+		let g:winManagerWindowLayout='FileExplorer,BufExplorer|TagList' "配置FileExplorer与BufExplorer同一个窗口用ctrl+n切换
+		nmap <silent> <F10> :WMToggle<cr>   "设置打开关闭快捷键
+		let g:AutoOpenWinManager = 1	"设置默认打开winmanager,但需要在winmanager.vim加入如下内容
+			"set auto open Winmanager 
+			if !exists("g:AutoOpenWinManager")
+				let g:AutoOpenWinManager = 0
+			end
+			if g:AutoOpenWinManager 
+				autocmd VimEnter * nested  call s:StartWindowsManager() "|'q'|4wincmd w  
+6.安装BufExplorer
+	1)下载 https://www.vim.org/scripts/script.php?script_id=42
+	2)解压 解压到 ~/.vim/ 目录下
+7.安装Cscope  （可查找函数调用的地方）
+	1)下载 https://sourceforge.net/projects/cscope/files/cscope/
+	2)安装 ./configure & make & make install
+	3)使用 
+		在.vimrc 中加配置 :set cscopequickfix=s-,c-,d-,i-,t-,e-
+		在src所在目录 cscope -Rbq 生成  cscope.in.out ， cscope.po.out，  cscope.out
+		在.vimrc中加配置 :cs add /home/wooin/vim74/cscope.out /home/wooin/vim74
+		快捷键配置：
+			"cscope配置
+			:cs add /root/soft/vim74/cscope.out /root/soft/vim74
+			:set cscopequickfix=s-,c-,d-,i-,t-,e-
+			nmap <C-_>s :cs find s <C-R>=expand("<cword>")<CR><CR>  使用 ctrl+shift+- 再按s
+			nmap <C-_>g :cs find g <C-R>=expand("<cword>")<CR><CR   查找函数定义
+			nmap <C-_>c :cs find c <C-R>=expand("<cword>")<CR><CR>  查找函数使用的地方 用 :cw 打开窗口查找具体使用的地方
+			nmap <C-_>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+			nmap <C-_>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+			nmap <C-_>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+			nmap <C-_>i :cs find i <C-R>=expand("<cfile>")<CR>$<CR>
+			nmap <C-_>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+8.安装 MiniBufExplorer （打开多个文件窗口时快速切换）
+	1)下载 http://www.vim.org/scripts/script.php?script_id=159
+	2)安装 将下载的 minibufexpl.vim文件丢到 ~/.vim/plugin 文件夹中即可
+	3 使用
+		<Tab>切换 <Enter>打开 d 删除
+		let g:miniBufExplMapWindowNavVim = 1 "使用<C-h,j,k,l>切换到上下左右的窗口中去
+9.安装 VisualMark (高亮书签)
+	1)下载 http://www.vim.org/scripts/script.php?script_id=1026
+	2)安装 把visualmark.vim 文件丢到 ~/.vim/plugin 文件夹就好了
+	3)使用
+		mm 设置/取消设置书签
+		f2 书签间跳转
+10.代码自动补全
+	1)需要安装ctags 5.6
+	2)设置，在.vimrc中加
+		filetype plugin indent on
+		set completeopt=longest,menu
+	3.使用
+		输入.或->后按 ctrl+x ctrl+o 调出提示窗口 
+		Ctrl+P	向前切换成员
+		Ctrl+N	向后切换成员
+		Ctrl+E	表示退出下拉窗口, 并退回到原来录入的文字
+		Ctrl+Y	表示退出下拉窗口, 并接受当前选项
+11.安装superTab
+	1)下载 https://www.vim.org/scripts/script.php?script_id=1643
+	2)安装 复制supertab.vim到.vim/plugin
+	3)配置 
+		let g:SuperTabRetainCompletionType=2
+		let g:SuperTabDefaultCompletionType="<C-X><C-O>"
+		然后使用tab可调用提示窗口
+12.安装集成插件spf13-vim
+	1.配置
+		autocmd vimenter * NERDTree "自动打开NERDTree

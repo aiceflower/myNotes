@@ -28,3 +28,8 @@ for /f "tokens=2" %%v in (tmp.log) do taskkill /pid %%v
 8.调用其它批处理
 a)call test.bat 在本窗口中
 b)start test.bat  打开新的窗口
+9.查看占用端口
+netstat -aon|findstr "8080"  最后一列是pid
+tasklist|findstr "4284"     查询对应的应用程序
+taskkill /f /t /im httpd     根据服务名删除服务
+taskkill /pid pid   /f      根据pid删除

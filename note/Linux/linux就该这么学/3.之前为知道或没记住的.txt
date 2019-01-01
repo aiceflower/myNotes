@@ -97,3 +97,7 @@
 	MaxSessions 10	最大终端数
 	PasswordAuthentication yes	是否允许密码验证
 	PermitEmptyPasswords no	是否允许空密码登录（很不安全）
+17.显示指定行数5-10行
+    cat -n filename| tail -n +5 | head -n 666666   从第5行开始显示，显示前6行
+    cat -n filename| head -n 10 | tail -n +5  显示前面10行的后5行 （推荐）
+    sed -n '5,10p' filename

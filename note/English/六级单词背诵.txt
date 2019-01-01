@@ -1,4 +1,4 @@
-一、技巧
+## 一、技巧  
 1.前缀表方向，后缀表词性
 2.它词
 beverage 饮料
@@ -6,6 +6,13 @@ vehicle 交通工具
 panorama 全景(在上面看：怕 no ra! 妈)
 cocoon 蚕茧
 guilty 内疚的
+bosom 胸 亲密的
+gigabyte 十亿字节 千兆
+president 总统
+gorgeous 极好的(哥只是)
+turtle 龟
+tortoise 龟
+
 3.背单词技巧
  1)观察特征，音、形、义标记出来
  2)勤标记，多重复(本单元结束，睡前，第二单元前)
@@ -13,8 +20,12 @@ guilty 内疚的
 4.-ing主动方 -ed 被动方 -ive/-ous 很..
 5.since+时间 自从,其它：因为
 6.跟摆脱，去掉有关的常用of：let go of ,deprive sb of 
-二、分类
-1.spect 看
+7.con 有加强之意 常跟to co别的多加with, to是单方面 with是多方面
+8.The + 名词代表一类人 用复数 The rich are..
+9.句子做主语用单数
+10.以en/em开头的动力变名词一般加ment
+## 二、分类  
+### 1.spect 看    
 suspect 怀疑 嫌疑犯(从下面看)
 inspect 检查(从里面看) inspector 检查者
 expect 期望 期待 (往外面看,期待什么)
@@ -28,7 +39,7 @@ spectacles 壮观的景色 眼镜 cantact lens 隐形眼镜
 perspective 透视图 观点(全看完了) from my perspective 我认为
 aspect 方面(只看一下) facet 方面(小脸)[leaflet 传单(小叶子) planet行星 tablet 平板电脑(小桌面) 药片] respect 方面 尊重(往回看)
 respect respective respects (尊重各自的方面)
-2.熟词僻意
+### 2.熟词僻意  
 compromise 妥协 危害
 brave 勇敢的 面对
 table 桌子 提议
@@ -44,7 +55,9 @@ address 地址 解决 演讲(恨一个人，找到他的地址，解决掉他，
 addressee 收件人
 gay 快乐的 同性恋者 鲜艳的 nancy 女同 bromance 兄弟情
 weather 天气 经受 
-3.形近词
+concern 关心 公司
+
+### 3.形近词  
 vocation 职业(o与职业相关，job office)
 vacation 假期(a与快乐相关，gay happy)
 
@@ -52,7 +65,7 @@ continual 断断续续的连续(藕断)
 continuous 不断的连续(丝连)
 
 amid 在...之间 middle
-acid 酸 酸性物质(si si...)
+acid 酸 酸性物质(si si...)                                               
 avid 渴望的 (AV的) avid for doing sth,eager to do sth
 arid 干的 (ri日) solar太阳的 lunar 月亮的
 
@@ -64,13 +77,645 @@ charge (冲)进去(充电)，他(批评)我，我把他打到(住院)，然后�
 discharge 解雇 排放 放电 出院
 accuse 批评 控告 ~ sb of 
 appeal 上诉(~ against) 吸引(~ to) appealing 有吸引力的
-三、近义词
+### 4.近义词  
 1.极好的
 spectacular
 2.程度副词
 extremely、crazingly、deeply、unexpectedly
-四、口
+词根词缀
+1.gene 基因相关
+genetic 遗传的 genetics 遗传学
+genius 天才的
+ingenious 非常聪明的(i我)
+ingenuous 天真的 傻的(u你)
+generate 生殖 生产 创造 发电
+generator 发电机 生产者
+generation 代 ~ gap next/future ~
+degenerate 堕落 退化
+genuine 真正的 fake 假的
+genuinely 真正地
+homogeneous 同质的 同种的 (同一家人基因相似)
+homogenize 使均匀 同化
+heterogeneous 异种的
+generous 大量的 大方的 (很多基因  
+2.an ant 代表人
+human 人类
+assistant 助手
+participant 参与者 (被party 吸引 cip 抓住的人) participate 参加
+hum 泥土
+humid 潮湿的
+humble 低下的 卑微的 /哈姆ble/
+inhume 埋葬 = bury (弄到土里)
+exhume 发掘 (弄出土)
+humiliate 羞辱(用泥巴咂你) = insult (又阴又骚)  
+
+### 5.联想法  
+1.音的联想  
+ambitious 有野心的 有雄心的 
+amateur 业余的 (矮模特)
+layman 门外汉 (懒man)
+frugal 节俭的 (扶乳沟)
+maize 玉米 (妹子) corn
+
+2.形的联想  
+loom 隐约可见 织布机(100米外的妹妹)
+gloom 郁闷 阴暗 (哥有100年妹妹很郁闷) gloomy 黑暗的 沮丧的
+peep 偷窥 (看屁屁) peeping tom 偷窥狂  
+
+3.义的联想
+trivial 琐碎的 (tri三姑vi六婆讨论的事)
+inevitable 不可避免的 (从里往外扔六张桌子) inevitablely 地
+vigor 活力 vigorous 有活力的 viagra 伟哥 /外A gra/
+embrace 拥抱 包括 接受 怀有 
+zebra 斑马(世界上最大的胸z)
+cobra 眼镜蛇(头上扣个bra)
+libra 天秤座 (躺着的bra)
+celebrate 庆祝(扯了bra) celebrity名人
+brake 刹车(bra磕了一下)   
+
+### 6.前缀
+com/con/co-  --------------------------------------------------------------
+共同 一起
+contest 竞赛 (一起测试) contestant 竞赛者
+competition 竞争
+protest 抗议 against 争取=go for (把考试提前了) protester 抗议者
+commemorate 纪念 
+confront 面对 面临 (一起往前)[人做主语用主动，物做主语用被动]
+coinside 与...巧合 (两个都在里面)
+coincidence 巧合 coincident 巧合的 一致的 
+compromise 妥协 危害
+combat 斗争 与...做斗争 battle战斗 battlefield 战场 ~ crime 与犯罪作斗争 criminal 犯罪的 罪犯
+bat 球 棒 蝙蝠 batman
+debat 争论 (在下面打架) heated debat concerning 关于...热烈的争论
+dispute 辩论 (没有放下来)
+disputable 有争议的 
+acrobat 杂质演员(在空中打) acrobatics 杂技
+cohavitation 同居(有一样的习惯)
+inhavit 居住 inhabitant 居民 habitat 	栖息地
+reside  居住 resident   居民 residence 	住宅
+dwell	居住 dweller	居民 dwelling 	住处
+dwell in 居住 dwell on 细想 详述
+locals 当地人 locate 找到 定位 坐落于 be ~ed in  location 位置
+villa 别墅
+
+in memory of 为了纪念...
+in support of 为了支持
+in favor of 赞同 支持
+in need of 需要
+in pursuit of 追求
+
+coordinate 协调 ordinary 普通的
+subordinate 下属
+conform 遵守 form 形式 (一样的形式)
+format 格式化 
+transform 转变 transformer 变压器 促成者 transformers
+deform 使变形 使丑恶 
+formula 配方 方程式 ~ one F1塞车 (形式有啦)
+formulate 用方程式表示 规划 构建
+
+re 阿姨
+recipe 配方 秘诀 (阿姨嬉皮有秘诀)
+reluctant 不情愿的 勉强的 (阿姨拉客不情愿)
+refuge 避难所 庇护 (阿姨扶着哥哥) refugee 避难者
+relic 遗迹 (阿姨离开成遗迹)
+lure 诱惑 饵(路上的阿姨诱惑你)
+feature 特征 专题节目 (飞起来的阿姨有特征)
+bore 使烦扰 (60个阿姨真无聊)
+nightmare 恶梦 (晚上梦到马阿姨是恶梦)
+
+coeducation 男女同校
+cohere 衔接 coherent 连贯的
+inherent 内在的 
+adhere 粘着 遵守 坚持 adherent 追随着 粘着的 坚持的 cling to 坚持 粘着
+compile 编制 pile 一堆 建筑群 (所有的放到一堆) stack堆 堆积
+coexist 共存
+collaborate 合作 勾结 
+concentrage 集中 专心于 (一起到中间来) focus 集中 焦点 center 集中 中心 concentrated 全神贯注的
+confirm 确认 firm 坚定的 公司 concern
+infirm 多病的 不坚定的
+correlate 关联 使相关
+relative 相对的 亲戚 relatively 相对地
+
+consent 同意
+consensus 同识(我们都同意)
+resent 厌恶 sensation 感觉 轰动 (生人杀生引起轰动) sensational 轰动的
+sensitive 敏感的 sensitivity 敏感
+sensible 明智的  sinsibility 理智
+sentimental 多愁善感的 (三踢馒头)
+fundamental 基础的 (方的馒头是基础)
+detrimental 有害的 = harmful (待炊的馒头有害的) be ~ to 
+contribute to 导致 贡献
+give rise to 导致 (A引起B)
+bring about 导致(A带来B)
+lead to 导致
+
+遵守
+observe 观察 遵守
+abide by 
+conform to 
+adhere to 
+comply with   ply 折 reply 回信 apply 申请 应用
+obey 
+
+applicant 申请人
+applicable 可行的 可用的
+applicance 家用电器
+complicated 复杂的 complex复杂的 统合设施
+imply 暗示 
+implicit 含蓄的 不清楚的
+explicit 清楚的
+
+--------------------------------------------------------------
+de 向下 加强 否定
+decide 决定 cide 切 (往下切，欲练此功，必...)
+germicide 杀菌剂 germ 细菌 (这个germ怎么这么多)
+pest 害虫 pesticide 杀虫剂
+suicide 自杀 (衰 要自杀) suicidal 自杀的 
+delicate 美味的 易碎的 脆弱的 精密的 复杂的 柔软的 (林黛玉词)
+defect 缺点 缺陷 (做的不好) fect 做 perfect 完美的 (全部做好了)
+delicious 美味的 dislike 不喜欢 (表强调，否定都有一定的强调作用)
+infect 传染 infectious 传染的 (往里面做)
+swine 猪 (渴完酒跟死猪一样) swan 天鹅 eagle 老鹰 (鹰勾)
+influence 影响 influential 有影响力的 influentials 人
+contagion 传染病 触染 contagious 感染性的
+contaminate 污染 contamination 污染 
+
+a +双写表示一再的
+affect 影响 感动 (一再的做，感动了你)
+affection 感情 喜爱 have affection for 喜爱
+affectionate 深情的  an affectionate kiss 深情的吻
+effect 影响 效果 作用  side effect 副作用
+effective 有效的 effectively address 有效地解决
+
+depress 使压抑
+depressive depressed depression
+press 压 强迫 出版社 新闻 press conference 新闻发布会
+compress 压缩
+impress 印象 (压在心里) impressive 印象深刻的
+express 表达 特快的 快递 expression 表达 表情
+oppress 压迫 镇压 suppress 压制 抑制
+degrade 降级 使降价 使降解
+upgrade 升级 改善 =better 
+depict 描绘 (在下面画画)
+demonstrate 展示 流行示威
+portray 描绘 (巷口有光) ray 光线 
+portrait 肖像 trait 特征 (部分特点)
+apparently 明显地 
+illustration 插图 说明 illustrate 阐明 图解
+derive 起源 获得 (从河里开始，起源于黄河)
+origin 起源 (哦瑞金，革命的起源地)
+region 地区 original 原始的 原创的 originals 新颖的
+radius 半径
+
+thrive 繁荣 (三河交界处)
+boom 繁荣发展 爆炸声 (600个妹妹很繁荣)
+prosperous 繁荣的 prosperity 繁荣
+devastate 毁坏 伤害
+deflate 放气 使缩小 deflation 通货紧缩
+inflate 使充气 膨胀 inflation 通货膨胀
+flatter 奉承 谄媚 (抚摸马的后面，拍马屁)
+decapitate 斩首 解雇 (砍下首都)
+capital 首都 大写字母 资本 capitalist 资本家 capitalism 资本主义
+captain 队长
+capture 捕捉 抓住
+captive 俘虏 (抓住了踢我)
+deduce 推论 (底下的吊死在推论)
+induce 引起 导致 introduce 引进
+conduct 引导 管理 导电 行为 conductor 管理者 管理行为的 列车管理员 导体
+semi=conductor 半导体 insulator 绝缘体
+code [编码 法典 密码] of conduct 行为准则
+deflower 摧毁 夺去..贞节
+despise 鄙视 = look down upon 
+spy 侦查
+scorn 鄙视 (死玉米) scornful 轻蔑的 ly 地
+stable 牢固的 (死桌子)
+belittle 轻视(B小样)
+disdain 鄙视
+blush 脸红 (不拉屎)
+flush 脸红 (生气 激动) 冲洗
+splash 溅出来 飞溅 一抹 一点
+
+--------------------------------------------------------------
+dis 分开 否定
+distinguish 区分
+disable 使不能 使失去能力 enable 使能够
+discard 丢弃 (不要这张牌)
+discord 争论 cord一致 (不一致) according to  根据
+dishearten 使灰心
+dismember 肢解 瓜分 (把人分开)
+display 展览 显示器 展览品
+disregard 忽视 regard 认为 关心
+regardless 不管
+endless 无尽的 love 
+selfless 无私的 selfish 自私的
+timeless 永恒的 
+effortless 不费力气的 effort努力
+distribute 分配 contribute 贡献 attribute 归属于 属性 (一再的贡献)
+nutrition 营养 nutritious 有营养的
+disadvantageous 不利的 advantageous 有利的
+demerit 缺点 merit 优点
+discern 识别 辨别 区分=differ = distinguish
+concern 关心 公司
+discourage 使灰心 courage 勇气 信心(在我们这个年龄爱是需要勇气的) courageous 勇敢的
+discriminate 歧视
+dismiss 解散 解雇
+differ 使...不同 区分
+people's perspective differ dramatically(戏剧地) 不同的人有不同的观点 
+disrupt 破坏 使中断
+abruptly (辱葡萄) 突然地 冒昧地 suddenly
+corrupt 腐败的 腐败 损害 (两个人一起断)
+bribe 行贿 bribery 行贿
+bride 新娘  groom 新郎 (哥有房子)
+erupt 爆发 喷发 well vocano 火山 (我靠 no)
+bankruptcy 破产 bankrupt 破产的
+disagree反对 disagreeable 不好相处的 aggreable 好相处的 天气好的
+disbelieve 不信 怀疑
+discontinue 停止 = give up 放弃
+disfavor 反对 in favor of 支持
+distract 使分心 tract拉 attract吸引 (一再的拉) attractive attraction
+trator拖拉机
+contract 合同 婚约 (把两个人拉到一起) extract 提取 提取物 (往外拉)(名前动后)
+contractor 契约者 
+
+--------------------------------------------------------------
+en 使得 进入
+enact 颁布 扮演 制定法律
+engage 订婚(用to) 忙于 雇佣 be engagee in 致力于  engagement婚约
+enrich 使丰富
+embarrass 尴尬 
+lengthen 延长(距离) prolong 延长(时间) 
+long 渴望 长的
+enlighten 启发 阐明
+enroll 登记 名单 报名 enrollment 招生人数
+enclose 围绕 装入信封 (使关在里面)
+disclose 公开 揭露(关不住了) disclosure 揭发
+enforce 执行 实施
+enhance 提高 改善 improve better upgrade
+enlist招收
+entitle 命名 使有...权力(让你有头衔)
+embody 体现 使具体化
+strengthen 加强 巩固 weaken 变弱 减少
+strength 力量 consolidate 巩固 (一起变固体)
+embark 上船 on 上飞机 从事(上了一条船)
+bark 树皮 狗叫
+barrier 障碍 barrister loyer attorney 律师
+barricade 路障
+encounter 遭遇 遇到 come across 碰到
+count 计数 依靠 有意义 count on me 依靠我 count me on 别算我 count me in 算上我
+account 账户 解释 情况 占据
+on this account 在这个情况下 on no account 决不 on any account 在任何情况下
+accountant 会计师 accounting 会计 账单 会计学
+counter 计算器 柜台 反对 相反的 (带计算器老师反对)
+counterpart 对手 对等物 相似的人或物 副本
+counterfeit 假货 伪造
+
+--------------------------------------------------------------
+drive 开车 驱使 使得 
+leak 漏 泄漏 leakage 泄漏
+bleak 荒凉的 绝望的 (不漏)
+brisk 轻快的 活泼的 (没有风险)
+blight 使枯萎 wither 凋谢
+barren 贫瘠的 不生育的
+fertile 富饶的 能生育的(富而泰)
+bald 秃顶的
+bare 赤裸的 naked 裸体的 nude 裸的
+bear 熊
+bold勇敢的 粗体的
+acumen 聪明 (IQmen) 
+haunt 萦绕 常去的地方(黄阿姨常去)
+haunted 闹鬼的
+aunt 阿姨
+flaunt 炫耀 show off (飞起来的阿姨)
+gaunt 憔悴的(干阿姨很憔悴)
+saunter 散步 闲逛(散步的阿姨) linger徘徊
+
+disordered 无序的 混乱的
+mess 混乱 (没事) in the mess 在混乱中
+messy 混乱的 
+chaos 混乱 (KOS读) chaotic 混乱的 无序的
+程度高的形容词变副词都不非常的意思
+extraordinary 非凡的 extraordinarily 非凡地 非常
+extreme 极端的 extremely 极端地 非常
+exceeding 超越的 非常的 exceedingly 极度地 非常
+exceptional 异常的 超常的 exceptionally 异常地 超常地
+tremendous 极大的 巨大的 tremendously 非常地 惊人地
+enormous 巨大的 大量的=much enormously 巨大地 非常地
+countless 大量的 =many 
+numerous 许多的　(多如牛毛)
+significant 重要的 意义重大的 大量的 significantly 意味学长地 非常 (有意义的事才是标识sign)
+indispensable 必不可少的 (不可以不花钱) 
+expense 花费 代价 at the expense of 以...为代价
+compensate 补偿 for (一起给钱)
+dispense with 省掉 免除(不花钱) [可以不用，不是节约，今天天气好可以不用穿外套]
+
+--------------------------------------------------------------
+ex/e向外
+escape 逃跑 逃避
+exact 准确的 精确的 要求 
+exceed 超过 胜过 exceedingly 非常
+exhibit 展览 展示 展览品 展览会 exhibit interest in 感兴趣
+
+external 外在的
+internal 内在的
+interior 内部的
+exterior 外部的
+maternal 母亲的 母系的 ~ live 产假
+paternal 父亲的
+parental 父母的
+intrinsic 本质的 内在的
+extrinsic 外在的
+superior 上级的 优秀的 上级
+inferior 下级的 劣等的 下级
+elaborate 详尽的 精心制作 详细描述 (付出了很多劳动)
+exaggerate  夸大 使增大 ag 做 agent 代理人 special agent 特工
+agency 代理 中介 travel agency 旅行社
+CIA central intelligence agency 中央情报局
+agriculture 农业 (一个哥哥在太阳下面的文化)
+agenda 日程 /a'dganda/
+schedule 安排 将...列入计划 计划表 时间表 日程 (死车堵了) reschedule 重新安排 改期
+plot 情节 阴谋 密谋 策划 
+ile 容易的 
+agile 灵敏的 
+agitate 摇动 使不安
+
+擅长的短语一般用 in  (那个毁所有)
+excel 擅长
+excellent 擅长的 优秀的 /eksalant/
+fantastic 极好的 fantasy 幻想 白日梦
+fantasize 幻想 
+fabulous 极好的 (发标乐死) fable 虚构 寓言(非常宝贵)
+awesome 极好的
+marvel 吃惊于( 骂我 ma vo读) marvelous 惊人的 极好的 
+outstanding 优秀的 杰出的 stand out 出色
+unique 独一无二的 (有你就可以了) uniquly 独一无二地
+uni 一 单 unit union 
+universal 宇宙的 (只有一个宇宙) universe
+university 大学 (只有一个校区) 
+uniform 统一的 制服
+unit 单元 单位 部队 房间
+union 联合 社团
+unicorn 独角兽 (只有一个角)
+prominent 著名的 (名声在前)
+eminent 著名的 (名声在外)
+splendid 著名的
+remarkable 显著的 remarkablely 非常
+remark 评论 说 注意 (一再的做标记)
+
+presti[di]ge 声望 名望 (s后的t读d)
+distinguished 著名的
+prestigious 有声望的
+well known 著名的
+event 大事 事情 大型活动
+vent 走
+eventual 最终的 最后的 (最后的才是大事)
+initial 最初的 字首的 (以你为首)
+initialy 最初
+initiate 开创 创办
+initiative 主支的 起始的 主动权 
+adventure 冒险 ~ island 冒险岛
+adventurer 冒险者
+adventurous 冒险的
+venture 风险(玩车) 企业
+joint venture 合资企业
+advent 出现 (爱的问题)appearance 出现
+with the advent and advancement of sth 出现和发展 
+convention 大会 传统 习俗
+conventional 符合习俗的 守旧的
+ventilate 通风(问题来了)
+incident 小事 事变 incidental 顺便的
+coincident 巧合(两件小事一起发生)
+affair 实时 绯闻 have an affair 有一个外遇
+
+scandal 丑事 丑闻 (死看都) s后的c读k
+gossip /gosip/八卦 绯闻 聊八卦 gossipy /gosapi/ 八卦的
+issue 热点问题 日常问题 矛盾 期刊 发行
+After an issue issues will be issued 热点疸后期刊将被发布
+extinguish 熄灭 灭火 灭绝 sting 叮 bite 咬
+extinguisher 灭火器 mosquito 蚊子 fly 苍蝇 fire fly 萤火虫 
+distinguish 区分 辨别
+distinction 特征
+distinct 不同的
+distinctive 特别的
+extinct 灭绝的
+extinction 消失
+instinct 本能
+intuistion 直觉 tuition 学费 (吐一身)
+
+exhaust 排气 使精疲力尽 /ig'zo:st/ (一个早死的)
+exhausting 精疲力尽的
+exhausted 耗尽的
+exhaustive 彻底的
+eliminate 淘汰 消除 (丢出限制外)
+
+区分 
+differ/distinguish/discriminate
+
+--------------------------------------------------------------
+in 向内
+invade 侵略 invation va 空 (乘虚而入)
+evade 逃跑 tax evation 避税 evade tax 逃税 
+vacant 空的(没有人)
+empty 空的 (什么都没有)
+vacancy 空缺
+avail 利用
+vail/val 价值
+prevail 流行 占优势 战胜 说服 (价值在前)
+vacuum 真空 吸尘器 真空的 (挖空)
+vaccine 疫苗 (哇克星)
+vaccinate 接种疫苗
+evacuate 撤离 疏散
+invalid 无效的
+in/im/ir在adj前表示 不
+infirm 不坚固的
+inaccessible 无法接近 无法到达的 access 接近 存取 方法 途径 通道 使用权
+informal 不正式的
+incomparable 不可比较的
+matchless 无敌的 无比的
+infamous 声名狼藉的
+reputation 名声
+fame 名望 = prestige famous著名的
+notorious 声名狼藉的
+ignoble 卑微的 =humble
+noble 高贵的 贵族
+ignite 点燃
+despair 绝望
+irrelevant 无关的 relevant  to 有关
+relate 阐述 与...有联系
+relay 接替
+insist 坚持 in  sist 坐
+persist 坚持不懈 缠人 固执 persistent 坚持的 缠人的
+assist in 帮助 assistant 助手
+consist in 帮助 组成
+(in)consistent 一致的
+resist 抵制 抵抗 (re后的s读z)
+irresistible 无法抗拒的 
+immature 不成熟的 幼稚的 mature成熟的 premature 早熟的
+ignorant 不知道的 无知的 of  
+ignore 忽略 (主) neglect 忽略 (被)
+irrational 冲动的 不理智的 不合理的
+rational 理智的 合理的
+remedy 秩序
+comedy 喜剧
+irremediable 不可治的
+inaudible 听不见
+invisible看不见
+inrisibility cload 隐形斗篷
+irregular不规则的
+irreligious 无信仰的
+region 地方 每个region里都有一个religion
+immortal  永垂不朽的 不死的 神仙 
+mortal 会死的 有生命的 凡人的
+moral 有道德的 道德 immoral 
+mortality 死亡率 morality 道德 morale 士气 斗志
+illiterate 不识字的 文盲 liter 文字 literature 文学 letter 文字 字母 
+literal 文字的 确实的 = exact 
+literally 逐字的 确定地 真地 =really = absolutely
+literate 识字的 有文化的
+considerate 体贴的 
+considerable 大量的 重要的
+thoughtful 体贴的 (替你想的很满)
+
+--------------------------------------------------------------
+pro- 往前
+prceed 前进 继续 = lead on  , ce跑 
+proceed with sth , proceed to do sth 
+profit 利润  profitable 有利润的
+benefit 利益 profitability 营利能力
+manoeuvre 操控 /ma'nu:va/
+beneficial 有利的
+work out 解决 锻炼
+superficial 肤浅的 表面的
+artificial 人造的 做作的
+progress 进展 gress 走
+progressive  逐渐的 进步的 起来越
+progressively 越来越 逐渐地
+regress 退步
+aggress 侵略 攻击
+aggressive 有侵略性的 有进取心的 主动的
+aggression 侵略
+congress 国会 议会
+congressman 国会议员
+parliament 议会 国会
+promote 促进 宣传 促销 (往前动)
+remote 遥远的 遥控器
+remove 移动 解雇
+replace 代替 归还 放回去 replace sth with sth 
+promotional 促销的
+bargain 讨价还价 便宜货
+robbery 抢劫 贵物
+It's a sheer 绝对的 完全 robbery? 这简直是.. （抢劫）
+shear 修剪
+
+--------------------------------------------------------------
+fac/fec/fic 做 
+fact 实事
+factory 工厂 (做东西的地方)
+proficient 熟练
+manufacture(r) 制造 加工 制造业 (制造商)
+benefactor 慈善家
+charity 慈善
+welfare 福利
+fare 费用 过 发展 经营
+farewell 告别 再见(很久不见)
+so long 再见(不太久)
+facile 温和的 方便的
+facility 便民设施
+facilitate 便利 方便
+
+ary/ery/ory 地方
+factory 工厂
+infirmary 医务室 clinic诊所
+fishery 养鱼厂 refinery  提炼厂 加工厂 refine 改善 提炼
+observatory 天文台 
+nursery 托儿所 育婴房 苗圃 nurse 照顾 (使)沉淀
+
+pos - 放
+depository 贮藏所 寄存处 deposit 储存 存款 押金
+pose 姿势 提出 造成
+impose 强加于 征税 
+oppose 反对 对抗
+propose 建议 打算 求婚 
+propose to sb 求婚  engage to 订婚  marry to 嫁给  marry取
+compose 构成 写作  
+composition 作文 构成
+
+pre 之前 (pro 往前 [不在前面])
+preview 预习 review 检查
+precaution 预防措施
+cautious  小心的 谨慎的
+proceed 领先
+precede 往前
+quiz 测验
+predecessor 前辈 前任 /'pri:disesa/ 
+
+unprecedented 空前的 史无前例的
+preface 前言
+prehistoric 史前的
+present 陈述 展示
+presentation 陈述 赠送
+presume  假设 = assume 
+resume 重新开始 恢复 简历
+consume 消费 浪费 烧光 烧死
+predict 预测 
+diction措词
+dictionary 字典
+verdict 结论 裁定
+dictation 听写
+dictator 独裁者
+verify 核实
+very 正确的 刚好的
+vertical 直立的 垂直的
+
+per 全
+ceive 收
+perceive 察觉到 顿悟 
+receive 收到 receiveer 电话听筒 收件人 = addressee
+receptive 容易接受的
+reception 接收 接待会 receptionist 接待员
+deceive 欺骗 cheat 欺骗
+deceiver 骗子
+deceptive 欺骗性的
+conceive 构思 怀孕
+concept 概念
+perplex 使困惑 = confuse = puzzle 
+bewilder 使困惑 /bi'wilda/
+permeate /'per:mieit/ 渗透 (全是我吃的)
+penetrate 渗透 刺穿 (用笔往里戳他)
+pervade 弥漫 pervasive and prevalent 很常见的
+permanent = everlasting 永恒的 永久的 = perpetual /pə'petʃʊəl/ = eternal  external 外部的
+
+pet 追求
+compete 竞争 competitive 有竞争力的 竞争的
+appetite 食欲 胃口 appetizer 开胃物
+impetus 动力 促进 /impitas/
+petition请求 请愿 /pi'tishan/
+incentive刺激 动机
+stimulate 刺激 激励
+simulate 模仿的 冒充的
+mock 模仿 嘲笑
+intimate 亲密的 intimacy 亲密
+imitate 模仿
+innocent 无辜的 天真的 innocence 清白 无罪
+naive 天真的 /nai'iv/
+childlike 天真的 childish 幼稚的 -ish 不好的 向下
+vanish 消失 perish 腐烂 毁坏
+perishable 易腐的 establish 建立
+establishment 建立 企业
+
+
+
+## 三、口
 1.society of harmony 和协的社会
 2.You should have a more objective objective.
 3.I will take all the blame 我负全责
+4.I genuinely love you
+5.It so coincident = what a coincidence
+6.I firmly beleve that ... 我坚信
+7.I will be with you regardless of any difficalty.
+8.What you do embodys what you think. 所做即所想
+9.to make each day count 使每一天有意义
+10.You are bank account account for you are economic account 你的银行账户解释了你的经济情况。
+11.Fighting is lonely, because success belongs to the minority, Only if you can tolerate the loneliness that others can hardly bear, Will you achieve the height that's out of the reach of them
+12.The ignorant are alwas ignorant of their ignorance.无知的人从来不觉得自己无知
+13.As we express our gratitude, we must never forget that the highest appreciation is not to utter words, but to live by them.
 六、

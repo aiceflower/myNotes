@@ -1,0 +1,110 @@
+---
+date: 2018-09-20 16:42
+status: public
+title: 为什么大家都说java是值传递？
+---
+
+### 关于java中值传递与引用传递的问题一直以来都有很多人讨论。刚开始学java的时候，就听老师说，java中只有值传递，让我们记住就行，当时也没给我们解释，估计解释了我们也听不懂。后来在工作中逐渐理解了java中的值传递过程。本文将告诉你为什么java中只有值传递。
+
+## 基础知识：
+### 形参与实参
+    形参：在定义函数的时候使用的参数,目的是用来接收调用该函数时传入的参数。
+    实参：调用函数时实际传递给函数的参数。
+
+### 值传递与引用传递：
+    值 传 递：指在调用函数时将实际参数复制一份传递到函数中，这样在函数中如果对参数进行修改，将不会影响到实际参数。
+    引用传递：指在调用函数时将实际参数的地址直接传递到函数中，那么在函数中对参数所进行的修改，将影响到实际参数。
+
+### java中的栈与堆
+    栈：存放基本类型的局部变量，与对象的引用，方法执行结束后栈中的变量和对象的引用消失。
+    堆：存放对象的实例。java中的数组和new出来的对象都是放在堆中的，堆中的对象没有任何引用(就是在栈中没有任何一个变量指向该对象)时会被GC回收。
+
+刚开始学java的过程中我发现对于函数的参数如果是基本类型，在函数中做修改对实参的值没影响。
+```
+public static void main(String[] args) {
+	int a = 3;
+	System.out.format("before change: a=%d\n",a);
+	changeValue(a);
+	System.out.format("after  change: a=%d\n",a);
+}
+public static void changeValue(int value){
+        value = 5;
+}
+```
+两次打印的结果一样，都是3。
+
+但是如果是引用类型，在函数中修改，对实参的内容有影响。
+```
+public static void main(String[] args) {
+	List<String> list = new ArrayList<String>();
+	list.add("zhangsan");
+	System.out.println(list.size());
+	addEle(list);
+	System.out.println(list.size());
+}
+public static void addEle(List<String> source){
+	source.add("lisi");
+}
+```
+打印的结果是
+1
+2
+于是有很多人认为，java中对于基本数据类型是值传递，对于非基本类型是引用传递，当然很长一段时间我也是这样认为。
+
+有一天我看到了如下代码。
+```
+public static void main(String[] args) {
+	String str = "hello";
+	System.out.println(str);
+	changeStr(str);
+	System.out.println(str);
+}
+public static void changeStr(String source){
+	source = "world";
+}
+```
+按照我的理解应该是两次打印一个是hello，一个是world，但两次都是hello。我就有些不理解。于是就查了一些资料，发现java中确实是只有值传递，我没有理解它的本质。著名数学家华罗庚曾说过："数无形时少直觉，形少数时难入微"下面我就用数形结合来说明为什么java中只有值传递。
+
+首先要明白一点java在参数传递的时候并不是把实参传递给了形参，而是建立了实参的副本，然后将副本传递给形参(这是值传递的精髓)。
+1.对于上述changeValue方法,操作都在栈中进行，修改了value对a没有什么影响。如图
+
+![](~/16-50-29.jpg)
+
+2.对于addEle方法，list与source指向的是同一个对象，source.add("lisi");操作的实际也是实参list所热身的对象，所以对对象内容的修改会体现在实参上。
+
+![](~/16-51-29.jpg)
+
+3.对于changeStr方法，开始str与source都指向hello。执行source="world"，创建了一个新的对象"world",然后source指向这个对象，此时实参str还是指向hello，修改source并未对str造成任何影响，所以两次打印都是hello。
+
+![](~/16-53-16.jpg)
+
+当然对于addEle,如果做如下修改，那两次输出的结果都是1，道理很简单，source指向了新的对象，并对新的对象进行操作。对list及list所指的对象并没什么影响。
+public static void addEle(List<String> source){
+	source = new ArrayList<String>();
+	source.add("lisi");
+	source.add("wangwu");
+}
+
+![](~/17-00-44.jpg)
+可以看到java中如果是引用传递，即上述操作中没有中间变量tmp，直接将list传递给source，那么source指向新对象后，list必然也会指向新对象，但事实并非如此。故java中没有引用传递。
+
+## 总结：
+### 理解java中只有值传递只需要理解两点。
+    1.参数传递的时候是拷贝实参的副本传递给形参。(再看下上面值传递与引用传递的定义就知道为什么说java中只有值传递了)
+    2.在方法内只有修改了实参所指向的对象的内容，对实参才有影响。
+## 最后留一个作业：
+只修改swamp方法使得程序输出结果为：
+a=3,b=5
+a=5,b=3
+```
+public static void main(String[] args) {
+        Integer a = 3;
+        Integer b = 5;
+        System.out.format("a=%d,b=%d\n",a,b);
+        swamp(a, b);
+        System.out.format("a=%d,b=%d\n",a,b);
+    }
+    public static void swamp(Integer a, Integer b){
+        
+    }
+```

@@ -1,0 +1,26 @@
+---
+date: 2018-05-18 16:42
+status: public
+title: 一起学JDK源码 -- 开篇
+---
+
+# 简介
+对于java开发人员来说，你学过java基础，知道什么是对象、类、方法、变量，你了解过java IO、多线程、网络编程,知道jsp、servlet、session、cookie,使用过spring、struts2、hibernate、mybatis。你做过很多项目，开发实现各种功能都很轻松，代码写起来一点也不费劲。但你自己心里清楚，你写的都是功能性的业务逻辑，稍微深入一点你就不知道了。你很明白自己其实没有什么水平，更称不上是大牛。于是你为了让自己变成所为的大牛开始学习各种框架spring boot、spring cloud、netty、dubbo。渐渐的你会发现，学这些有什么用，你会的别人不会，但你告诉别人了，别人稍微学一下也就会了，你的竞争力在哪里，于是你又迷茫了。你很努力的在学习，但你又觉得很不踏实，技术的种类何其之多，今天学了这个，明天要用那个，然而一段时间不用之后你会全然忘记。有没有一种一劳永逸的方法呢，答案是有的，那就是要有扎实的java基础。什么才是扎实的java基础，答：玩好JDK。玩好JDK包括两部分：一是学好JVM、二是玩转java基础类库。技术只是手段，思想才是关键。通过查看JDK的源码，了解java的思想。了解了java的创造者是怎么想的，再来学习java相关的框架将会事半功倍，而且根深蒂固。接下来让我们一起走进JDK源码的世界，看看创造者们的思想。至于JVM，研究好了java基础类库再去研究。
+
+# 文章目的
++ 了解创造者们的思想
++ 知晓原理提升面试能力
++ 提升自己的内功
++ 为还在迷茫的我们提供一个方向
+
+# 目录
+[一起学JDK源码 -- Object类](http://aiceflower.farbox.com/post/qi-xue-jdkyuan-ma/-qi-xue-jdkyuan-ma-objectlei#main)
+[一起学JDK源码 -- Number类](http://aiceflower.farbox.com/post/qi-xue-jdkyuan-ma/-qi-xue-jdkyuan-ma-numberlei#main)
+[一起学JDK源码 -- Byte类](http://aiceflower.farbox.com/post/qi-xue-jdkyuan-ma/-qi-xue-jdkyuan-ma-bytelei)
+[一起学JDK源码 -- Short类](http://aiceflower.farbox.com/post/qi-xue-jdkyuan-ma/-qi-xue-jdkyuan-ma-shortlei)
+[一起学JDK源码 -- Integer类](http://aiceflower.farbox.com/post/qi-xue-jdkyuan-ma/-qi-xue-jdkyuan-ma-integerlei)
+[一起学JDK源码 -- Long类](http://aiceflower.farbox.com/post/qi-xue-jdkyuan-ma/-qi-xue-jdkyuan-ma-longlei)
+[一起学JDK源码 -- Float类](http://aiceflower.farbox.com/post/qi-xue-jdkyuan-ma/-qi-xue-jdkyuan-ma-floatlei)
+[一起学JDK源码 -- Double类](http://aiceflower.farbox.com/post/qi-xue-jdkyuan-ma/-qi-xue-jdkyuan-ma-doublelei)
+
+上述是有关一起学JDK源码的目录，后期在更新文章中可能还会添加，每次添加都会修改本文章内容，并且每次发布新文章都会添加超链接到对应的章节。

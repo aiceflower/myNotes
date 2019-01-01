@@ -1,0 +1,128 @@
+---
+date: 2018-09-20 11:00
+status: public
+title: finally代码块中的代码一定会执行吗？
+---
+
+### 熟悉java的人一定经常听说过，finally块中的代码一定会执行，但实际上真的是这样吗，本文带你看一下，java中有哪些情况finally中的代码不会执行。
+
+#### 先来解释下java中总是被人们放到一起比较的三个概念
+#### final、finally、finalize的区别：
+final： java中的修饰符。final修饰的类不能被继承，final修饰的方法不能被重写，final修饰的变量初始化之后不能被修改(当然这条不是绝对的，java中有一些手段可以修改)。
+finally： java异常处理的组成部分，finally代码块中的代码一定会执行（事实真的是这样吗，请往下看）。常用于释放资源。
+finalize：Object类中的一个方法，垃圾收集器删除对象之前会调用这个对象的finalize方法。
+
+## finally与return
+```
+public static int getNum(){
+        int a = 10;
+        try {
+            a = 20;
+            // a = a/0;
+            return a;
+        } catch (Exception e) {
+            a = 30;
+            return a;
+        }finally{
+            a = 40;
+            //return a;
+        }
+    }//调用该方法返回20
+```
+        有不少人认为该方法的返回值是40。执行完finally中的代码后a的值是40这是毋庸置疑的,但方法执行的结果为什么是20呢？那是因为在执行finally之前，程序将return结果赋值给临时变量，然后执行finally代码块，最后将临时变量返回。当然如果在finally代码块中有return语句，最终生效的是finally代码块中的return。
+如果不明白请看下面的例子。
+```
+public static void main(String[] args) {
+        System.out.println(getMap().get("name").toString());
+        //打印zhaoliu
+    }
+	public static Map<String, String> getMap() {
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("name", "zhangsan");     
+        try {
+            map.put("name", "lisi");
+            return map;
+        }
+        catch (Exception e) {
+            map.put("name", "wangwu");
+        }
+        finally {
+            map.put("name", "zhaoliu");
+            map = null;
+        }         
+        return map;
+    }
+```
+有人认为上述代码在main方法中会报错，事实并非如此。以上代码更加印证了return返回的不是变量本身，而是这里的"临时变量".这里也说明了java中只有值传递没有引用传递。如果不明的的可以看我的另一篇文章【为什么大家都说java是值传递】
+
+## finally中的代码真的一定会执行吗？
+    在我这里至少有四种情况finally中的代码不会执行(如果还有其它情况可以在评论里告知，我们共同学习)。
+
+### 1.在执行异常处理代码之前程序已经返回
+```
+public static boolean getTrue(boolean flag) {
+        if (flag) {
+            return flag;
+        }
+        try {
+            flag = true;
+            return flag;
+        } finally {
+            System.out.println("我是一定会执行的代码？");
+        }
+    }
+```
+如果上述代码传入的参数为true那finally中的代码就不会执行了。
+### 2.在执行异常处理代码之前程序抛出异常
+```
+public static boolean getTrue(boolean flag) {
+        int i = 1/0;
+        try {
+            flag = true;
+            return flag;
+        } finally {
+            System.out.println("我是一定会执行的代码？");
+        }
+    }
+```
+    这里会抛出异常，finally中的代码同样不会执行。原理同1中差不多，只有与 finally 相对应的 try 语句块得到执行的情况下，finally 语句块才会执行。就算try语句执行了finally中的代码一定会执行吗，答案是no，要不然我也没有写下去的必要了。请看下面两种情况。
+
+### 3.finally之前执行了System.exit()
+```
+public static boolean getTrue(boolean flag) {
+        try {
+            flag = true;
+            System.exit(1);
+            return flag;
+        } finally {
+            System.out.println("我是一定会执行的代码？");
+        }
+    }
+```
+    System.exit是用于结束当前正在运行中的java虚拟机，参数为0代表程序正常退出，非0代表程序非正常退出。道理也很简单整序都结束了，拿什么个程来执行finally呢。
+
+### 4.所有后台线程终止时，后台线程会突然终止
+```
+public static void main(String[] args) {
+        Thread t1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(5);
+                } catch (Exception e) {
+                }finally{
+                    System.out.println("我是一定会执行的代码？");
+                }
+            }
+        });
+        t1.setDaemon(true);//设置t1为后台线程
+        t1.start();
+        System.out.println("我是主线程中的代码,主线程是非后台线程。");
+    }
+```
+    上述代码，后台线程t1中有finally块，但在执行前，主线程终止了，导致后台线程立即终止，故finally块无法执行。
+
+## 总结：
+    1.与finally相对应的try语句得到执行的情况下，finally才有可能执行。
+	2.finally执行前，程序或线程终止，finally不会执行。
+	3.以后我再也不会说，fianlly代码块中的代码是一定会执行的代码了(哈哈)。

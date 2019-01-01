@@ -1,3 +1,8 @@
+20170325repository
+这是我gitHub上的第一个资源库，从这一步开始我将逐渐成为java大牛
+大家都说GitHub好，一直没有机会尝试，现在终于抽出一点时间来使用这个工具了
+
+
 github笔记
 一.常用命令
 1. 克隆项目
@@ -61,3 +66,30 @@ $ git pull origin master // Check Out
 指定克隆模式: 稀疏克隆模式
 指定克隆的文件夹(或者文件)
 拉取远程文件
+九、git补充
+一.git 配置
+1.命令
+	git config
+2.说明
+	config 配置有system级别 global（用户级别） 和local（当前仓库）三个 设置先从system-》global-》local  底层配置会覆盖顶层配置 分别使用--system/global/local 可以定位到配置文件
+3.查看
+	git config --system(global/local) --list
+4.设置
+	git config --global user.name "z3"
+	git config --global user.email johndoe@example.com
+二、仓库
+1.创建
+	git init 把这个目录变成git可以管理的仓库
+2.回退版本
+	git reset  --hard 版本号
+3.显示版本号
+	git reflog 
+4.将工作区文件撤销到暂存区
+	git checkout  --  file
+5.分支命令
+查看分支：git branch
+创建分支：git branch name
+切换分支：git checkout name
+创建+切换分支：git checkout –b name
+合并某分支到当前分支：git merge name
+删除分支：git branch –d name

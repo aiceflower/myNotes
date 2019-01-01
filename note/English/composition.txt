@@ -1,79 +1,148 @@
-¹ØÓÚÆû³µÊıÁ¿ºÍ¶Â³µÇé¿öµÄ·¶ÎÄ
-As is revealed in the diagram , remarkable changes have occurred as regards the number of vehicles and the average speed on the major roads. According to the information in the bar-chart,we can find that the total number of motor-cars has been on a rapid growth all the time,reaching 1.1 million in 2014. In the meantime,however,the moving speed has been increasingly slower. In 2008, the speed was as high as 58 kilometers per hour,while/whereas it slumped to only 29 kilometers 6 years later.
-The driving factors for this scenario may be listed as follows. Firstly ,traffic congestion related to the increasing number of vehicles contributes a lot to the current situation. Based on a recent report , there exist heavy traffic jams on around 80% of the major roads in big cities,especially in rush hours. In the second,the condition at the moment has a lot to do with the inadequacy of relevant regulations and rules. Finally,we must admit that the backward public transport system is another significant driver that cannot be neglected.
-Considering the arguments above,it¡¯s of little surprise to see the worsening trend conveyed by the diagram. Still,effective efforts must be made to reverse or at least alleviate the deterioration.
+## å°ä½œæ–‡:  
+#### æ€»è¦æ±‚:
+1.æ²¡æœ‰é”™è¯¯
+2.åŒ…å«æ‰€æœ‰å†…å®¹
+3.å­—æ•°120å·¦å³,ç­”é¢˜å¡ä¸€åŠç•¥å¤šä¸€ç‚¹ä½ç½®,æ¯ä¸ªå•è¯åˆ†ç¦»,å¯¹é½
+#### å†™ä½œæ­¥éª¤ï¼š
+1.å®¡é¢˜
+	å®¡é¢˜å››æ­¥éª¤
+	1.æ”¶ä¿¡äºº
+		1)Dear Lucy, ç¡®å®šçš„
+		2)Dear Sir or Madam, ä¸ç¡®å®šçš„
+		3)To all the students/residents æ”¶ä¿¡äººæ˜¯é›†ä½“(é€šçŸ¥ã€æ‹›è˜ã€å€¡è®®)
+	2.ç›®çš„(write a letter åé¢çš„å†…å®¹)
+	3.æçº² 
+	4.ç»“å°¾(æ„Ÿè°¢æˆ–å›å¤)
+2.å†™æ–‡ç« 
+3.æ£€æŸ¥
+	1.ä¿æŒä¸»è°“ä¸€è‡´é¿å…å†™é”™: åŠ may|can + do  æˆ–ã€€did
+	2.ä»¥ä¸‹å››ç§æƒ…å†µå¿…æ­»:
+		of do  ä»‹è¯ä¸èƒ½ç›´æ¥è·ŸåŠ¨è¯åŸå‹ of doing
+		be do  æ­£ç¡®ä¸º be doing æˆ– be done
+		do, do é€—å·ä¸èƒ½ç›´æ¥è¿æ¥ä¸¤ä¸ªå¥å­ do, and do
+		Do, åŸå‹ä¸èƒ½åœ¨å¥é¦–  Doing
+	3.è‹±è¯­ä¸­æ²¡æœ‰ä¹¦åå·,ç”¨æ–œä½“æˆ–å¼•å·
+#### æ–‡ç« ç»“æ„
+å…«å¥æ³•:
+	ç›®çš„æ®µ:
+		1.ä»‹ç» (ä¸‰ç±»èº«ä»½)
+			As one ordinary student in our beloved university.(å­¦ç”Ÿ)
+			As one ordinary resident living hear for twenty more years.(å±…æ°‘)
+			In the name of Postgraduate Association / students union
+		2.ç›®çš„ 
+			I am writing this letter, with my full heart, for the purpose of conveying that...
+	æçº²æ®µ:
+		3.èƒŒæ™¯(write a letter ä¹‹å‰çš„ä¸ºèƒŒæ™¯) 
+			æ”¹å†™é¢˜å¹²
+			As we both know, / It is well known that...
+		4.è¡”æ¥(è§‚ç‚¹)
+			have a beneficial|negative|important|detrimental effect on sth
+		5.æçº²ä¸€
+			å¦‚æœä¸ä¹‹å‰ç›®çš„é‡å¤åˆ™ä¸å†™(å­—æ•°ä¸å¤Ÿå¯å†™ï¼Œæ¢ç§è¯´æ³•)
+		6.æçº²äºŒ
+			ç›®çš„äºŒ
+		7.æçº²ä¸‰
+			ç›®çš„è¡¥å……
+	ç»“å°¾æ®µ:8.æ„Ÿè°¢æˆ–å›å¤
+		Thans a lot for what you have done for me in the past period of time.
+		Thanks a lot for your precious time. I am looking forward to your favourable reply at your earliest convenience.
+å…¶å®ƒæŠ€å·§:
+	1.ARE Action + Reason + Ends
+	2.å›å¿†æ€(æƒ…èŠ‚ä¸å¤Ÿï¼Œå›å¿†æ¥å‡‘)
+	3.è¡¨è¿°åœ¨å‰ï¼Œé™ˆè¿°åœ¨å
+		we are please to inform you that you have been admitted to Peking University graduate program in Business Administration for the coming semester.
+#### è¡¥å……èƒŒè¯µ
+1.This letter is meant to ask wether it would be possible for you to provide a recommandation letter for me as I am striving to get one position in ABC company.
+2.It is well known that you are one of the most prestigious experts in the area related.
+3.If the public can be well educated to enhance their awareness over the benefits of promoting chinese culture(preserving the living circumstance/promoting the phenomenon mentioned),it would be much better.
+4.I have the ability to use English fluently, which is the basic requirement for your company.
+5.May I offer my heartiest congratulations on your success.
+6.After launching the measures mentions, we could have one of better and promising future, in the coming years.
+7.We should learn English well, in that it plays an increasingly important role in contemporary world.
+8.It is indispensable for us to preserve our living surroundings, since the environment we are living in is going from bad to worse.
+9.I am preparing for one important examination, which will take up much of my time and energy.
+10.Words fail me when I try to express my heartfelt gratitude to the help you render me.
+11.The help from you and your family made it possible that I had a very pleasant stay and a chance to know American culture better.
+12.I was injured in a road accident last Friday, when a van unexpectedly drove onto the pavement and knocked me down, the wheels pressing on and over my right thigh After an immediate surgery, the doctors all insist that I should lie on bed for at least three months before standing and then walking again.
+12.Darkness cannot drive out darkness; only light can do that. Hate cannot drive out heat; only love can do that.
+13.a unique lasting culture in the world, that passed down through generations consistently according to Xi Jinping, the Chairman of People's Republic of China.
+14.Every time I was standing in the street in Beijing, without exception, surrounding with endless running cars, these cars constantly produce enormous exhaust fumes and noises, which sound to mock the urbanization and civilization of our over developed society.
 
-
-ÍÆ¼öĞÅ£¨Êé£©
+#### ä¾‹æ–‡
+1.æ¨èä¿¡:
+Dear Professor Brown,
+This is Li Ming, one ordinary student in our university. With my distinct honour, I am writing this letter to inquire whether it would be possible for you to provide a recommendation letter for me.
+It is well known that you are one of the most prestigious experts in the area related. If you were able to attest my qualification for the position and the skills I have attained during the last four years in university, it would be much better. Your recommendation would enhance my prospects of achieving my career goals. Please let me know if there is any further information I can provide to assist you in giving me the recommendation letter. I can be reached at liming@163.com. Alternatively, you can phone me through the number attached. 
+Thanks a lot for your precious time. I am looking forward to your favourable reply at your earliest convenience. 
+	Yours sincerely,
+	Li Ming
+1.æ¨èä¿¡
 Dear Bob,
-I am writing this letter to recommend to you a book I like,¡±Good Times¡±, which exerts a peculiar fascination on a great many college people.
-The reasons for my recommendation are as follows. This book is worthy for its following virtues. The first point that must be stressed is that this work has o complicate but fairly gripping plot. Besides, it must be pointed out that this novel tells an especially romatic story, which I¡¯m convinced is quite to your taste. Finally,the fact cannot be ignored that through reading this piece of fiction,you will know more about American culture and thus improve your English proficiency.
+   I am writing this letter to recommend to you a book I like,â€Good Timesâ€, which exerts a peculiar fascination on a great many college people.
+This book is worthy of its following virtues. The first reason that must be stressed is that this work has o complicate but fairly gripping plot. Besides, it must be pointed out that this novel tells an especially romantic story, which Iâ€™m convinced is quite to your taste. Finally,the fact cannot be ignored that through reading this piece of fiction,you will know more about American culture and thus improve your English proficiency.
 Hoping you can enjoy this book and recommend it to those close to you after reading.
+
+2.æä¾›å¸®åŠ©,é€ç¤¼ç‰©
+	Dear Ken,
+I have just heard that you are moving to another dorm room this weekend. And this letter is aimed at sending my best wishes and asking whether I can offer some help.
+It's quite understandable for you to decide to move outside, because I am fully aware that you are going to take the National Entrance Examination for Postgraduate. 
+It really needs to live and study with other students preparing for upcoming examination. 
+I won't forget the days we live together. And the new basketball is a gift for you. I hope you'll like it, and donâ€™t forget to excise during the preparation, which surely has a beneficial effect on your health.
+If you need my help, please feel free to call me. I am available at any time. Best wishes.
 	Yours sincerely,
-	Zhang Wei 
+	Li Ming
 
+3.é€šçŸ¥
+é€šçŸ¥ï¼š
+Notice
+In order to promote the study of English among us students, the School of Foreign Languages decides to hold the 1st College Cup English Speech Contest on 26th, October at the Art Auditorium.
+Five distinguished professors teaching in our college, led by Professor Williams who just arrive for a one-year exchange program, compose the panel of judges, who shall rate contestants according to the pronunciation, fluency, accuracy and depth of their performances. The winners will, on behalf of our college, attend the National English Speech Contest due in December.
+Every student, regardless of grade or major, is welcomed to sign up for the contest. The glory is yours.
+		Students' Union
+		
+4.æ¥å—å½•å–ï¼Œæä¾›å»ºè®®
+Dear Li Ming,
+Congratulations! On behalf of The Admissions Office, we are pleased to inform you that you have been admitted to Peking University graduate program in Business Administration for the coming semester.
+According to our own experience, you should plan to arrive by Sep.8th, which will allow ample time for orientation and registration procedures. You will be expected to pay an estimated Â¥10,000 per year. And besides, you are qualified to apply for the scholarship which could cover nearly all your expense in school. Hopefully, you could enjoy your wonderful college time here.
+If you have any question concerning information in this letter or the enclosure, please feel free to contact us by phoning the number attached.
+	The Admissions Office
 
-ÇóÖ°ĞÅ
-Dear Sir or Madam,
-I am a to-be-graduate from Sichuan University, majoring in marketing. The letter is intended to express my strongest interest in the position of sales manager advertised in the local newspaper.
-My qualifications, I believe, are adequate enough to meet your requirements. First and foremost, in the past academic years, I have proved to be a straight-A student , awarded a succession of scholarships. Besides, as a passionate participant in business activities on campus, I have accumulated much experience in sales practice, which will lay a solid foundation for the work here. Finally, my self-motivation, cheerful personality and good teamwork will also help guarantee my adequacy for the position.
-I will appreciate it a lot if you are kind enough to schedule an interview at your convenience. Looking forward to your reply.
-	Yours sincerely,
-	Zhang Wei
+5.å–æ¶ˆæ´»åŠ¨ï¼Œè¡¨ç¤ºæ­‰æ„
+Dear Lucy,
+This is Li Ming, and I feel so sorry to write down this letter to you in that I have to recall my invitation for the birthday party on saturday afternoon. 
+As you know, I have been longing for holding the party and meeting with you. But, I just heard that my grandmother is seriously ill. I must go to see her and I am leaving early tommorrow morning. Words fail me in expressing my deep regret. I know that you have been prepared to come and meet my family. Thus, I will plan on a later date for the party.
+Sorry for this last-minute change and please forgive any inconvenience caused. Thank a lot for what you have done for me.
+		Yours sincerely,
+		Li Ming
 
-Ö¾Ô¸ÕßÇóÖ°ĞÅ
-Dear Sir or Madam£¬
-I am a to-be-graduate from Sichuan University, majoring in marketing.The letter is intended to express my strongest interest in the position of sales manager advertised on the local newspaper.
+6.å›ä¿¡ï¼Œç»™å»ºè®®
+å»ºè®®:
+Dear Jack,
+I am really happy to receive your letter. You know that I'm just lucky to win that contest, but I still thank you for your earnest congratulation. 
+I can share what I have learnt and understood if you really want to sharpen translation skills. Maybe you should try a book named English-to-Chinese Translation for International Business, from which I have benefited greatly. Besides, I frequent online translation forums like Translators and Translation Geeks, where a great many users argue over difficult phrases and passages. Most of them are warmhearted, replying whenever you ask.
+I sincerely hope that you can find a way to practice it , make improvement, and enjoy the skill.
+		Yours sincerely,
+		Li Ming
+
+7.æ±‚èŒä¿¡
+Dear Sir or Madamï¼Œ
+I am a to-be-graduate from Peking University, majoring in the deparement of marketing.The letter is intended to express my strongest interest in the position of sales manager advertised on the local newspaper.
 My qualifications, I believe , are adequate enough to meet your requirements. First and foremost, in the past four academic years, I have proved to be a straight A student, advocated a succession of scholarship. Besides, as an enthusiastic participant in business activities on campus, I have accumulated much experience in sales practice, which will lay a solid foundation for the work. Finally, my self-motivation, cheerful personality and good teamwork will also help guarantee my adequacy for the position.
 I would appreciate it a lot if you are kind enough to schedule an interview at your convenience. Looking forward to your reply.
 	Yours sincerely,
 	Li Ming
-
-Í¼±í·¶ÎÄ ÖĞ¹úÍøÃñ
-As is revealed in the graph , noticeable changes have arisen in terms of the number of the netizens in China. According to the data  in the bar-chart,we can find that the netizen number has been growing  all the time. In 2002, the number was just 30 million ,while 8 years later,it jumped to 300 million.In the meantime,the rural area has also witnessed a rapid increase,reaching 120 million in 2010. 
-The driving factors for this scenario may be listed as follows. Firstly ,the gigantic advances of information technology contributes a lot to the current situation. In the second,the condition at the moment has a lot to do with the popularization of mobile phones and computers. Finally,we must admit that the speeding up of life pace is another significant driver that cannot be neglected.
-In view of the discussions above, we can predict with confidence that this established trend will keep going in the current ever-changing and information explosion age.
-
-»·±£³«Òé
-[Dear Sir or Madam,]/[To whom it may concern,]/[To those concerned,]
-I am a common college student keen on environment-friendly actions. The latter is meant to express my deepest concern about {the water pollution/contamination. }
-It must be pointed out that the current river contamination has been deteriorating. Therefore, {it¡¯s necessary that} the relevant department should take immediate and effective action against it.(¸ºÃæÏÖÏóÓÃÕâÁ½¾ä)For one thing, we ought to improve the local public environmental consciousness which is of vital importance to the solution.For another, adequate regulations and rules should be instituted and put into operation as soon as possible.What¡¯s more the chemical plant by the river must be [closed down]/[prohibited from ] discharging waste water before it is purified.
-Thanks a lot for your due attention to the latter. Looking forward to seeing new changes about the river.
-	Yours sincerely,
-    Li  Ming
-
-
-ÔÄ¶ÁÏ°¹ßµÄ·¶ÎÄ£¬±ıÍ¼
-As is revealed in the pie chart, people vary greatly in terms of their reading habits. Based upon the information in the chart, one can notice that only a smaller percentage of people are sticking to the traditional paper stuff, 21% preferring newspaper and periodicals and 15% books. However, those reading online by computer and mobile phone, take up larger shares, accounting for 25% and 39% respectively.
-The driving factors for the scenario can be listed as follows. Firstly, the present condition, to a large degree is closely related to the gigantic advances of information technology. In other words, the Internet has evolved into an indispensable part of our everyday work and life .In the second, we must admit that the popularization of computers and mobile phones is another significant driver that cannot be overlooked. Lastly, the situation at the moment has a lot to do with characteristic convenience and comfort peculiar to the mobile Internet.
-In view of what has been discussed above , it's of little surprise to see such a phenomenon in the current high-tech/fast-paced era.
-
-
-ÇëÇóÔÚÓ¢ÓïÑ§Ï°·½Ãæ¸øÓè°ïÖúµÄĞÅ
-Dear Professor Wang£¬
-I am a student of yours from the department of Computer Science. The letter is meant to ask for some advice for you with my English study. 	My present problems with English are as follows. First and foremost, I have trouble with reading comprehension ,although I have a large vocabulary. What's more ,in spite of all my efforts ,I still find it hard to organize the logic of the composition very well. Last but not the least, I have been wondering how to improve my spoken English as well as listening proficiency. 
+8.æ±‚åŠ©ä¿¡
+Dear Professor Wangï¼Œ
+I am a student of yours from the department of Computer Science. The letter is meant to ask for some advice for you concerning my English study. 	
+My present problems regarding English are as follows. First and foremost, I have trouble with reading comprehension ,although I have a large vocabulary. What's more ,in spite of all my efforts ,I still find it hard to organize the logic of the composition very well. Last but not the least, I have been wondering how to improve my spoken English as well as listening proficiency. 
 I would appreciate it a lot if you're kind enough to schedule an interview with me .Looking forward to your reply at your convenience.
 	Yours sincerely,
-	ZhangWei
+	Li Ming
 
-
-´óÑ§ÉúÔ¤ÆÚĞ½Ë®ºÍÊµ¼ÊĞ½Ë®µÄ²î¾à
-As the table reveals clearly, remarkable changes have occurred in terms of university graduates' expected and real income. Based upon the information provided, one can notice that their expectation has been on a steady decline, approximating in gradually to the actual condition. In 2006,for example, postgraduate expected salary was as much as 6,000 RMB, while it went rapidly down to 4,500 4 years later, which was nearly equal to their real income.
-The driving factor for this scenario may be listed as follows. To begin with, the present conditions stems largely for the dramatic growth of the number of university graduates. To put it in another way, with the development of the Chinese higher education, the job market has been increasingly fierce all the time. In addition, it must be admitted that the situation at the moment is closely related to the positive guidance of the major and relevant departments. Last But not least, the major transformation of the younger generations' outlook on life and values is another significant driver that cannot be ignored.
-In view of the analysis above, it's of little surprise to see this phenomenon in the current ever-changing and rat-race world.  lndeed,  the youngsters ought to shift the emphasis from the monetary reward alone to their choice of lifework.
-
-
-¸ù¾İÍ¼±í´óÑ§ÉúÔ¤ÆÚÊÕÈëÓëÊµ¼ÊÊÕÈëÏÂ½µ
-As the table reveals clearly, remarkable changes have occured in terms of {university graduates' expected and real income }.[Based upon]([According to]/[In the light of]) the information provided,one can notice that{ their expection/expectation has been on a steady [decline]/[increase],approximating gradually to the actual condition}.[In 2006]/[In the year of 2006],for example,the postgraduates' expected salary was as much as 6,000 RMB,while it went rapidly down to 4,500 4 years later,which was nearly equal to their real income.  
-The driving factors for this scenario may be listed as follows.[To start]/[To begin with]/[First and foremost]/[Firstly],the present condition stems largely from {the dramatic growth of the number of university graduates}.(Ô­Òò1£¬Ğ¡Ô­Òò)To put it in another way(»»ÑÔÖ®), {with the development of the Chinese higher education , the job market has been increasingly fierce all the time}(Ô­Òò1µÄ²¹³ä£¬¿ÉÔÚÈÎÒâÒ»¸öÔ­Òòºó).In addition, it must be admitted that the situation at the moment is closely related to {the positive guidance of the media and relevant department }.(´óÔ­Òò)[Last but not the least]/[Lastly], {the major transformation of the younger generation's outlook on (life and value)} is another significant driver that cannot be ignored.(Ğ¡Ô­Òò)
-In view of the analysis above, it's of little surprise to see this phenomenon in the current ever-changing and rat-race world.(ÆÀ¼Û)Indeed,the youngsters ought to shift emphasis from monetary rewards alone to the choice of life work.(½¨Òé) 
-
-
-
-ÇëÇóĞÅ
-Dear Professor Wang(Dear Sir),
-I am a student of yours from Department of Computer Science.(½éÉÜ×Ô¼º)The latter/email is meant to {[ask for]<ÌâÄ¿ÖĞ½èÀ´µÄ>/[seek]} {some advice from you} {with/concerning my English study<ÌâÄ¿ÖĞ½èÀ´µÄ>}.(±íÃ÷Ä¿µÄ)
-My [present]/[current] problems with/regarding English are as follows.[The problems I'm facing with my English are as follows.](×ÜÊöÎÊÌâ)First and formost, I have trouble with reading comprehension, [although I have a large vocabulary.}What's more,in spite of all my efforts, I still find it hard to organize the logic of the composition very well.Last but not the least,I have been wandering how to improve my spoken English {as well as listening proficiency.} 
-I would appreciate it a lot if you are kind enough to schedule an interview with me. Looing forward to your reply at your convenience.
+9.å€¡è®®
+Dear Sir or Madam,
+I am a common college student keen on environment-friendly actions. The latter is meant to express my deepest concern about the water pollution.
+It must be pointed out that the current river contamination has been deteriorating. Therefore, itâ€™s necessary that the relevant department should take immediate and effective action against it.For one thing, we ought to improve the local public environmental consciousness which is of vital importance to the solution.For another, adequate regulations and rules should be instituted and put into operation as soon as possible.Whatâ€™s more the chemical plant by the river must be closed down discharging waste water before it is purified.
+Thanks a lot for your due attention to the latter. Looking forward to seeing new changes about the river.
 	Yours sincerely,
-	Zhang Wei
+	Li Ming

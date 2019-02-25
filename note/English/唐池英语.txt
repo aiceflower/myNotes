@@ -1,0 +1,219 @@
+阅读规则:
+一.时间对比:时间相反，一切相反,本质上是转折
+used to 现在一定不这样
+No longer
+out of date
+while
+past
+today
+now
+
+新旧对比找新的
+
+2.while[让步](一般不考当...,%90是强对比,即与之前意思相反,会省略主语与be动词),意为尽管..,重点在逗号后面(但是..)
+3.中心会反复出现，两句话没有转折，可间接判断文章主旨(logic只有两种相同和相反[but,yet,however])
+
+二.代词+n=前面词的改写
+文中不同的概念表达同一个含义:判断依据:代词(this that these those ) + such + 名词(前面已经出现过)
+
+
+三.中心思想(全真七子--喜欢走--文艺范)
+题干:mainly about /discuss /the best title / the purpose
+方法:
+1)串线[普遍适用]:将各段首未句串联成一个整体，注意转折处(相同逻辑考虑因果关系)
+2)中心词[最直观]:文中反复出现的高频词(注意同意替换)
+3)中心句[看形式]:文章开头的提问的回答，独句段
+
+最重要的理清句子逻辑logic
+细节题:定位好的句字就是你解题最重要的依据
+选项中的比较级慎选(除非原文中有明确比较)
+选项中的名词是用来缩小范围的
+but有时是转折有时是递进(***)
+细节服从主旨(***)[拿到试卷后在四篇阅读上写上细节服从主旨]
+对于作者态度题特别留意形容词，副词
+定语从句可以表原因。
+
+作者态度:(中心框架,adj adv,转折,情态动词后)[注意与人物态度区分]
+正面:
+	positive,optimistic,approval,supportive
+负面:
+	negative,pessimistic,disapproval,critical,objectionable反感的,oppose
+	doubtful,suspicious,skeptical,questionable,
+中立:
+	neutral,objective,impartial,disinterested
+四类:[非正解]
+	uninterested,unconcerned,indifferent,
+	confused,puzzled,subjective,
+	biased,prejudice偏见,contemptuous轻蔑的；侮辱的
+	tolerance 容忍的
+
+doubt 怀疑 		否定
+suspect 认为 	肯定
+maintain (1.维持 2.表达作者强烈的态度坚持认为)
+in the same way 就好比
+否定词+比较级=最高级
+
+考研同学:路见不平就路见不平
+命题人  :路见不平就拔刀相助
+
+长难句三重境界:
+	1.主干
+	2.非主干
+	3.(从句关系)逻辑
+一、主干[做主谓宾](三步曲)
+1.连词
+	and, or, but, yet(并列连词[前后连接相同的内容(要么是词and词<且词性相同>，要么是句and句)])
+	w+that[who,which,what...](从属连词) w开头的连词
+2.动词
+	v-ing 	主动(现在分词)
+	v-ed	被动(过去分词)
+	to do 	不定式(将来分词,将来的不确定所以叫不定式)
+	be动词的三种形式:being/been/to be
+3.介词[非主干,做状语(时间/地点/方位/目的等状语)或后置定语]
+	in, on, at, of, off, with [介词引导的部分永远不做句子主干,用于修饰主干]
+	
+二、非主干:
+	1. _ _ , S+V+O [状语, S+V+O](5种形式)
+		1.状从 		When (I was ) Yong, I could play football.
+		2.介词结构 	On Sunday morning, we go to watch TV.
+		3.分词结构  Finishing my homework, I start to watch TV.
+		4.独立主格	(with) He finishing his homework, I start to watch TV.
+		5.副词或形容词 Surprisingly, he is still alive.
+			Alive, my body belong to you, dead, I'm your butterfly.
+	2. S, _ _ V + O (5+2)
+		1-5.以上5种
+		6.定从 		Beijing, which is a moving city is my hometown.
+		7.名词结构	Beijing, a moving city[同位语] is my hometown.
+	3. S+V+O, _ _ (5+2)
+		1-7.以上7种
+补充:
+1.状语从句:
+	1.When I finish my homework, I start to watch TV.[从句主语与主句主语一样]
+	  When finishing my homework, I start to watch TV.(偷懒,省掉了从句主语,且变为非谓语形式)
+	  When (I was )yong, I could study English.[当状语从句的主语与主干的主语一致且动词为be动词的时候可以省略]
+	  When可以是其它的Which,That...等
+	2.When he finishs his homework, I start to watch TV.[从句主语与主句主语不一样]
+	  (with) He finishing his homework, I start to watch TV.[从句主语与主句主语不一样，这样的从句称为独立主格结构]
+	  独立主格:
+		(with[可有可没有]) + 名词/代词(与主句主语不同) + 分词 + 其它, 主干 
+		S1 + V1 + O1. S2 + V2 + O2.改写成独立主格:1.两个句子间用逗号","连接,2.将其中一个动词改成分词形式 
+2.特殊词
+	1.for: 	prep 为了 conj 因为
+	2.as : 	prep 作为 conj 像...一样, 当...时, 因为, 尽管
+	3.since prep 自从 conj 因为
+3.其它从句
+	1.宾主从句: I believe that god is a girl.
+	2.主语从句: that god is a girl, is obvious.
+		但是头重脚轻了：
+		It is obvious that god is a girl.
+		It be adj/v-ed/v-ing that ...
+		It be adj/v-ed/v-ing to do ... 
+		it为形式主语,that/to do 后面的为真正主语
+	3.表语从句(表语:说明主语的身份、性质、品性、特征和状态的词或从句,常位于系动词（be, become, appear,seem,look,sound,feel,get,smell等词）之后)
+		The fact is that god is a girl.
+	4.定语从句: Beijing, which is a moving city is my hometown.
+	5.状语从句:表示时间、地点、条件、原因、方式、结果的处于从属地位的句子
+	总:成份做主语的从句就是主语从句，成份做宾语的从句就是宾语从句，成分做表语的从句就是表语从句
+4.however/whatever/whenever...
+	however/whatever + adj/adv + 句子 翻译为:无论...，且把adj/adv挪到句子的最后去翻译
+5.句子成分
+	主干:主(S)+谓(V)+宾(O)
+	非主干:
+		定:修饰名词(主或宾 ...的)
+		状:修饰动词的状态 (谓语   ...地)高高兴兴地,小明去上学 "高高兴兴地" 修饰 "上学" 这个动作
+		补:修饰名词(主或宾)
+6.并列省略
+	在并列的句子中，前后有相同的内容，后面可以省略，有时候甚至连主语谓语都省略
+	It is said that in England death is pressing,in Canada (death is )inevitable and in California (death is) optional.
+(背景知识)background:
+1.美国法律
+三权分立：
+	立法legislation - congress[国会]
+	司法court	- supreme court / federal court [最高法庭/联邦法庭]
+	政府authority/agency 
+2.一类人
+	er/or/ist/en/an/ent/ant 都可表示人
+	student 	study的人
+	resident 	反复处于一个地方的人
+完形:
+0.自己收集词:sweep,in turns out 
+1.第一件事读首段首句，开始做每一道题，先看选项，判断类型
+2.背诵所有选项
+3.前复数后单数表举例关系
+做题：
+方法一、逻辑关系题原则 
+	1.判断标准:选项中出现两个及以上的逻辑关系标志词
+	  两种特殊情况(反例):
+		有两个表时间选项时，考虑时间关系
+		固定搭配【当四个选项是介词时考虑搭配可能】
+	2. 做题步骤：
+		a. 理解前后句（如果前后句有空，先补全）
+		b. 根据前后句判断之间关系
+	3.考察内容:
+		对立(转折和让步[同性]) > 因果(原因和结果[不同性]) > 并列 > 举例  > 递进 > 条件
+	六大逻辑关系标志词:
+	4. 六大逻辑关系标志词 ：
+		对立：(同性)
+			转折：but, yet, however, on the contrary= conversely, by contrast=in contrast相比之下, or[转折(否则)或并列(或者)],unfortunately,whereas然而, nevertheless但是；
+			让步：still, although, though, even[让步(即使)或递进(甚至)], even though=even if=even when即使, despite=in spite of尽管(表示前后相反，但是程度很弱表示让步), much as虽然 尽管, as[让步或原因]，while[让步或并列] 
+			其它：against, instead of=rather than而不是,instead代替, ignoring, in return反过来；
+		因果：(不同性)
+			原因: (because, because of, in that, as, for)因为, (as a result of, due to, owing to)由于, in response to作为对...的回应,considering鉴于 考虑到, according to；since [ever since /even since 这两个必错]
+			结果：so that=such that从而 以至于[so...that 如此...以至于], as a result= as a consequence=consequently=therefore=hence=thus=accordingly因此, so所以；
+		并列：and, as well as, then然后, or, while, likewise同样地, simultaneously同时地, meanwhile, similarly,in turn依次 轮流, perhaps；
+		举例：for example, for instance, such as, including 包括 .prep；	
+		递进：also, indeed, furthermore=moreover而且 此外, highlighting突出 强调 .prep, in particular=particularly=especially特别地 尤其地, besides此外；
+		条件：if, only if, unless, as long as=so long as, (supposed=supposing=providing=provided)如果[这四个是独立的单词不是什么分词], with有了...才, only when当且仅当；
+	5.对立关系的重点
+		1.***标点原理，前后都要有标点
+		though, in contrast, for example, for instance, in fact, indeed要做插入语,放于句中时前后要有标点隔开。
+		2.判断对立关系的三个原理
+			意思判断，相反或相对
+			褒贬色彩判断
+			*句式结构判断:前肯后否，可前否后肯(not题)
+	6.逻辑关系题直选法
+		使用条件：选项只有 1 个标志词
+		解题策略：第一步：将其直接勾上 第二步：带回原文验证
+方法二、**同义原则
+	1.两个实词（动、名、形、副）互为同义词或近义词或同形词[长的像]时，答案往往在其中
+		两词辨析取其短,一样长短取其熟(出现频率高)
+	2.两个实词（动、名、形、副）互为反义词时，答案往往在其中
+		两词辨析取其短,一样长短取其熟(出现频率高)
+	3.两个虚词（介、连、感叹）互为同义词或近义词时，答案往往都不选
+	4.两个虚词（介、连）互为同性(相同逻辑关系)时，答案往往都不选 (选项含有标点原理词除外）
+方法三：一般实词题思路
+※动词题：（现在或过去分词属于动词题）
+	1. 从及物不及物角度考虑
+	2. 注意动宾搭配一致性
+	3. 注意主谓搭配一致性
+※形容词题：考虑形容词和名词的修饰关系
+※名词题： 1.通过附近已有名词判断所选名词
+	2.根据空附近介词搭配判断
+	
+总:
+	虚词(逻辑关系题prep/conj)
+		调频必选词 > 标点原理 > 同义/同性排除 > 直选法 > not > 读
+	实词题
+		特殊(同义/同形或反义)短/熟
+		一般(蒙)
+		and 对应分析法(as well as / so ):
+			and 前完整部分 and 后含有未知空,或颠倒,and 前后要成为并列相关的意群
+		从句解题法：当空后面出现从句时（定语从句和同位语从句），该从句必为线索。
+方法四:猛
+	低级蒙法:
+		调频虚词必选词(结合标点原理和虚词同意同性排除)
+			1等:although,however,yet,because
+			2等:even, while
+		高频实词必选词:
+			equal(equality),explain,expose,hurt,predict,necessary
+		高频必不选词
+			1.even since,ever since 
+			2.虚拟语气 if only, lest, now that, or else, in case
+			3.表示关于的词 as to/for,with/in reference to, with regard to 
+	中级蒙法:
+		1-5 	A 
+		6-10	B
+		11-15   C
+		16-20   D
+	高级蒙法:
+		宗旨:先把肯定的选上,剩下的补空

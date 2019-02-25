@@ -1,0 +1,566 @@
+
+小作文：
+1.开头段
+	a)自我介绍(私人信函不写)
+	1)公司职员
+		I am a staff member of your company.
+		I am a staff member of China Electronics Ltd.
+	2)学生团体
+		I am a freshman/sophomore/junior/senior/undergraduate/graduate in the Department of Chinese Language and Literature of Peking University.
+		I am the present of the Students' Union of Peking University.
+	3)社会团体
+		我是谁+我和你的关系
+		I am sb. who do sth.
+		I am a resident who live in this building.
+	b)写信的目的
+	1)
+		I am writing the letter for purpose of expressing my sincere apology to you.
+	2)
+		I am writing the letter to 
+			give/propose/offer 
+			some/serveral
+			useful/conductive/practical
+			suggestions/proposals/recommendations
+			to you.
+	3)
+		I am writing the letter for purpose of resigning from my current post/position.
+	4)
+		I am writing to inform you that I wish to request if you could help me find a potential beneficiary of Project Hope.
+	词汇：	
+		道歉 apologize for /express apology		介绍introduce/introduction
+		感激 appreciate/appreciation			请求 request
+		投诉 file a complaint/complain			通知 inform
+		欢迎 welcome							倡议 proposal
+		邀请 invite/invitation					祝贺 congratulation
+		推荐 recommendation						订购 order
+		拒绝 refuse to / decline to 			求学 apply for program
+		求职 apply for position							辞职 resign from position/quit jobs/leave jobs
+2.中间段
+	1)总 Listed below are pertinent details/reason/suggestions/factors
+	2)说自己 Firstly, as I ..., I... 原因+我要怎么做
+	3)提建议 Secondly, how about doing sth. ?... 先建议，后给推荐
+	4)问对方 Finally, I wonder if you do sth I would .先问对方，再解释自己怎么做
+3.结尾段 
+	a)
+	1)My thanks for you to your (generous help/attention/understanding/appreciation) are beyond words.
+	2)Words fail me when I wish to express my sincere gratitude to you.
+	b)
+	1)I am looking forward to your (favorable reply/participation/arrival/attendance) at your earliest convenience.
+	2)Your prompt attention to my inquiry would be highly appreciated.
+	c)
+	1)Feel free to contact me at... if you have further question.
+4.署名
+	Yours sincerely
+	
+大作文:
+1.审题
+	是否有题目要求:提示词 entitled
+2.读表
+	1.文字说明
+	2.图表分类
+		静态:最高点、最低点、不同点
+		动态:起始点、转折点
+3.草稿
+	1.主题判断
+		正面:重要性 关注 提倡
+		负面:有害性 遏制
+		中立:利弊并存 扬长避短
+	2.主题词和主题句
+		主题词表达:
+			名词 that + 句子
+			A的定义 the meaning of A 
+			A和B的关系	the relation between A and B
+			A对B的影响  the impact/effect/influence of A on B
+		主题句:
+			正面:
+				倒装句:Of great importance is this.
+				被动句:Importance should be attached to this
+				否定加比较:Nothing is more important than this.
+				并列句:This is not only necessary , but indispensable as well
+			负面:
+				Of extreme detriment is this.
+				Detriment should be labelled to this.
+				Nothing is more detrimental than this.
+				This is not only harmful, but damaging as well.
+			中立:
+				tends to be a double edged sword
+				Everything has two side, ... is no exception.
+				the pros of this(单)/these(复) coexist with the cons of that/those
+	3.内容
+		图表：图表描述 the number of 主题词 + 变化 + 程序 + 范围
+			主题词:
+			数据：
+			程度：
+		意义：论证方式
+			举例论证：例子名字
+			原因后果：理由的关键字
+			对立观点：
+		趋势：to do sth 好建议 坏措施 趋势动作 
+	4.亮点：名言警句
+		位置
+		如何改编 替换关键字
+		
+4.写作（时态）
+	通篇：一般现在时 注意：第三人称单数
+	原则：
+		过去式：已故者说的话或者案例，图表作文中对过去某一个时间段的数字变化
+		将来时: 憧憬未来的时候用
+5.检查
+	位置：主要看段首句、篇首句、篇末句
+	雷区：
+		1.三单问题
+		2.主语：只能名词，动名词doing sth ,出现，主语从句to do sth 绝对不能只填一个动词
+		3.that之后的省略号一定要填写句子
+		4.少打省略号，没有书名号，说话是逗号引号
+6.温暖原则
+	1.准确原则(遇到不会写的怎么办？)
+		上下义替换
+			上：找一个能包含你要表达的单词的单词
+				潘多拉->潘老师->女老师->女人->生物
+			下：找一个被你要表达的单词所包含的单词
+		升降级：
+			升级：简单词变复杂多样
+			降级：正确原则，简单同义词
+		添加定从:
+			sb. who 
+			sth. which 
+			a place where 
+		复杂原则:
+			of + n = adj 
+			important = of importance
+			with + n = adv 
+			certainly = with certainty
+			undoubtedly = without a doubt 
+			the + adj 表示一类人
+			the old , the young ,the poor, the rich, the like 
+	2.温暖原则
+		adv + v :
+			栩栩如生地提示 vividly indicate/show 
+			清晰的显示  clear show 
+			象征性发提示 symbolically reveal
+		adj + n :
+			...的图表 abstract/clear  chart
+			有效和高效的措施 effective adn efficient
+			合理的和理性的选择 reasonable and rational choice 
+	3.复杂经典句型
+		倒装句:
+			only with these measures taken can we (do sth)[expect a sound development]/[make dreams come true].
+		归纳总结:
+			情况如此危及，是时候采取措施解决...的问题了(结尾段首句，负面话题)
+			The situation being so serious, it is high thme that we took effective and efficient measures to solve the problem of ...
+		意义强调句：中间段放在论证之后
+			如果没有这样的事情，我们无法做某事(正面)
+			Were there no such thing, never could we do sth.
+			Were there no mobile phone, never could we contact our friends.
+			如果...的情况继续恶化，将会付出昂贵代价(负面)
+			Where the situation of ... to continue , we would pay a high price.
+			如果没有...,我们不能做某事。然而，如果它的相反面继续恶化，我们要付出沉重的代价(中立)
+			Where there no such thing , never would we do sth. Yet, were the opposite facet of this situation to continue, we would pay heavy price.
+		as引导让步结构
+			尽管数据孤立，但彼此之间紧密联系(开头段结尾)
+			Isolated as the figures seem to be, they are connected to one another closely.
+		when引导的时间状语从句
+			When at the age of 6, I was taught by my father.
+		比较级与否定式等于最高级
+			引出例子:除了下面这个我找不到更好的例子:
+				I can think of no better _examples_ than the following one(s).
+			引出原因:除了下面这个我找不到更好的理由:
+				I can think of no better _reason(s)_ than the following one(s).
+7.九宫格
+	开头：1.话题引起2.图画(表)描述3.图画(表)总结
+	中间：4.具体意义5.意义论证6.意义总结
+	结尾：7.归纳评论8.建议措施9.憧憬未来
+开头:
+	1.引出主题
+		图表提供了关于...(主题词)的信息
+		The chart provides information about ...
+		chart ->　bar chart /pie/line 
+		provides -> present , show, indicate ,reflect, reveal, echo, mirror
+		图表比较了A和B
+		The chart compares A(the number/trend of A) with B.
+		The line chart compares the growth rate of American population with the extinction rate of wildlife.
+		图表展示了...在...方面的不同
+		The chart shows the differences about ... in ...
+		The bar chart shows the differences about mobile phone subscription in developing countries and developed ones.
+	2.图表描述:
+		如图所示：As is indicated in the graph
+		添加修饰:subtly/clearly indicated
+		As is clearly indicated in the pie chart 
+		公式: 
+			the numbers of 主题词 + 变化 + 程度 + 范围
+			the number of 主题词 + 变化 + 程度 + 时间范围, ranging from ... to ...
+			number -> figure(s), amount总量，rate速率, propotion比例份额，percentage百分比
+			主题词:
+				A总主题 = B and C主题
+				mobile phone subscription in developing countries and developed ones
+			变化:(谓语)
+				a)静态图(饼状图、表格、孤立的柱状图)
+					是: is , was , are, were 
+					占：represent , account for 
+					由...组成: be composed of ...
+					The number of cost[consumption/expense] in Spring Festival is composed of gitf,traffic,and others.
+				b)动态图
+					上升: increase, rise, grow, ascend 
+						 increased, rose, grew, ascended
+					下降: decrease, decline, diminish, fall, descend
+						decreased, declined, diminished, fell, descended
+			程度:
+				slightly：轻微地
+				slowly:缓慢地
+				steadily:稳步地
+				significantly:显著地
+				sharply:突然地
+			范围: from 起点 to 终点
+			从 1 到 10 ：from 1 to 10 
+			从1990年到2000年： from 1990 to 2000
+			从1990年的1到2000年的10： from 1 in 1990 to 10 2000 
+			从1990年的1900到2000年的1990：from 1900 in the year of 1990 to 1900 int the year of 2000
+	3.图表总结(开头段结尾)
+		a)尽管数字孤立，事实上，紧密联系
+		Isolated as the figures seem to be, as a matter of fact, they are connected to one another closely.
+		词汇:isolated孤立的  figure数字 as a matter of fact 实事上
+		b)尽管有些抽象，但是图表背后却有一个更深刻的含义。
+		Despite a litter abstract, there is a deeper connotation behind the graph.
+		词汇：abstract抽象的 notion, connotation 含义
+		c)绘图者的真正目的不是数据本身，而是要引导我们去探究原因
+		The draftsman's real purpose is not the statistics, but to lead us to find the reasons.
+		词汇:draftsman 绘图者 statistics 数据 lead sb to do sth 领导某人做某事
+	4.事实上，作者真正要告诉我们的不只是数字。
+			As a matter of fact, what the author tries to show us is more than statistics.
+			词汇: 向某人展示某事 show sb sth 
+		补充:变动不只是一种，变量不止一个
+			波状图:
+				尽管...(主题词)的数字波动不定，但总趋势是上升的/下降的
+				Although the number of ... varies , the whole tendency tends to be increasing/decreasing.
+				词汇:
+					变化波动varies
+					总趋势whole tendency
+					上升的increasing，upward
+					下降的decreasing, downward
+			没变化:
+				...的数据不变 The number of ... is flat.
+				...的数据维持稳定在... The number of ... remains steady at ...
+				词汇:
+					不变的flat
+					稳定的steady
+					维持remains
+				The propotion of Chinese cars remains steady at 35%.
+			图表两个变量
+			变量--公式。 关联词，变量二公式
+			关联词:
+				通用：
+					meanwhile 与此同时
+					And ... during the same period/ at the same time 
+				相同:
+					近似地是: likewise similarly
+					递进：furthermore, moreover ,what's more, 
+						even worse, more importantly(这两个表达的作者的情感)
+				相反:
+					however, yet, but, Ironically讽刺地，unfortunately, in contrast , by contrast , on the contrary 
+	5.图表开头段总结
+		线图:
+			第一种:单线上升A
+				1.引出主题 The line chart (clearly) provides information[an upward trend] about A.
+				2.图表描述 To be (more) specific/Specifically speaking, the number of A increased from 1990 to 2000, ranging from 1 to 50.
+				3.图表总结 As a matter of fact, what the author tries to show us is more than statistics.
+			第二种:单线下降A
+				1.引出主题 The line chart (clearly) provides information[an downward trend] about A.
+				2.图表描述 To be (more) specific/Specifically speaking, the number of A decreased from 1990 to 2000, ranging from 50 to 1.
+				3.图表总结 As a matter of fact, what the author tries to show us is more than statistics.
+			第三种:两种线同时上升A B
+				1.引出主题 The line chart clearly provides information about A and B.
+				2.图表描述 To be (more) specific/Specifically speaking, the number of A increases from 1990 to 2000, ranging from 1 to 50. Yet the figure of B rose significantly from 5 to 100 during the same period. 
+				3.图表总结 Isolated as the figures seem to be , they are connected to one another closely.
+			第四种:两种线同时下降A B
+				1.引出主题 The line chart clearly provides information about A and B.
+				2.图表描述 To be more specific, the number of A decreases slightly from 5 in 1990 to 3 in 2000. Yet the figure of B fall significantly from 100 to 5 during the same period. 
+				3.图表总结 Isolated as the figures seem to be , they are connected to one another closely.
+			第五种:两个线一上升(A)一下降(B)(C不变)
+				1.引出主题 The line chart presents the information about A, B and C.
+				2.图表描述 To be more specific, the number of A increases significantly from 1 in 1990 to 50 in 2000. Yet the numbers of B decrease sharply from 100 to 5 during the same period. Meanwhile, the number of C remains steady at 50.
+				3.图表总结 Isolated as the figures seem to be , they are connected to one another closely.
+		柱状图:
+			第一种：同一变量在不同时间段的变化(1900的5到2000的10到2010的100)
+				the bar chart shows how A changes from 1990 to 2010.
+				To be specific, the number of A increased slowly from 5 in 1990 to 10 in 2000, after which it rose sharply to 100 in 2010.
+				Isolated as the figures seem to be , they are connected to one another closely.
+			第二种:
+				the bar chart compares the upward trend of A with that of B.
+				To be specific, the number of A increases steadily from 5 in 1990 to 10 in 2000, Yet, the number of B rises slowly from 10 in 1990 to 15 in 2000, after which it ascends sharply to 100 in 2010. 
+				Isolated as the figures seem to be , they are connected to one another closely.
+		饼状图：
+			一：A由B、C、D、E组成
+			The pie chart presents information about A, which is composed of B, C, D and E.
+			To be specific, the propotion of B,C,D and E accounts for 40%, 20%, 20% and 20% respectively.
+			When taking a closer look更仔细的看, we can find that the biggest one is B.我们能发现
+			Isolated as the figures seem to be , they are connected to one another closely.
+			二：两个变量，此消彼长
+			In terms of the impact of high-tech on our modern life/study/work/traffic, the pie charts showcase the different propotion between A and B.
+			To be specific, the percentage of A increases from 20% in 1990 to 40% in 2010. Yet the number of B decreases from 80% to 60% during the same period.
+			Isolated as the figures seem to be , they are connected to one another closely.
+		表格：
+			一：几个常量在一个表中(等于饼状图)
+			二：多个变量同时上下(转换为线或柱图)
+中间段：(原因后果论证、举例论证、对立观点论证)
+	一：原因后果论证 交待现象+引出原因+具体原因+引出后果+具体后果
+	1.交待现象
+		实事上，这个看似简单的图表微妙地提示了当下吸引我们注意的一个流行现象...(主题词或主题句)
+		Actually, this seemingly simple chart subtly discloses a prevailing phenomenon that ... has attracted out attention.
+		词汇:
+			看似:seemingly
+			微妙地揭示了: subtly disclose
+			流利的: prevailing
+			吸引注意:has attracted our attention.
+			例1：2013在校大学生兼职
+				Actually, this seemingly simple chart subtly discloses a prevailing phenomenon:an increasing number of college students are taking part-time jobs has attracted out attention.
+			例2:参观博物馆的人数上升
+				Actually, this seemingly simple chart subtly discloses a prevailing phenomenon:an increasing number of people would like to spend time and money on arts.
+		实际上，这个图表只是一个流行现象的缩影
+		In fact, this chart is a miniature of a prevalent phenomenon :...或 that ...
+		词汇:
+			缩影:miniature
+			流行的：prevalent
+		这真的是作者想要告诉我们的吗？当然不是了。
+		Is this just what the author try to tell us ? Certainly not.
+	2.引出原因
+		到底是什么导致了这一现象？这是个发人深思的问题。
+		What exactly contributes to (this phenomenon)[the popular of phone换成主题词]? It's a thought-provoking question.
+		词汇:
+			导致contribute to 
+			发人深思的 thought-provoking
+		What exactly contributes to staff's dissatisfaction? It's a thought-provoking question.
+		你可能会思考、为什么会产生这个现象呢?
+		Why, you may wonder, does this phenomenon emerge?
+		词汇: emerge 浮现 产生
+		考虑到这个问题的重要性，有必要指出其背后的原因。
+		Considering the significance of the present situation, we ought to point out the causes behind it.
+		词汇：
+			当前现象the present situation
+			不得不ought
+			指出point out
+		在我看来，有两个基本要素可以解释这一现象。
+		To fundamental factors, from my perspective, could account for this social phenomenon.
+		词汇：
+			基本的fundamental
+			在我看来from my perspective
+			解释account for 
+		为了解释这一趋势，人们想到了各种原因。
+		In order to account for this trend, people have come up with a wide variety of reasons.
+		词汇:
+			解释account for 
+			想出come up with 
+			各种各样a vide variety of 
+	3.具体原因
+		1.第一点原因
+			首先，...可能对它产生了重要的影响
+			To begin with, ... might exert great influence on it.
+			词汇：
+				首先to begin with 
+				产生exert
+				影响influence
+			首先,...可能导致了这个问题
+			Firstly, ... might cause the problem.
+		2.第二点原因
+			The second reason is that 
+			此外
+			What's more , Furthermore , Moreover
+		3.找不出两点原因的话，只写最重要的一个
+		Perhaps, the primary reason is that ... 
+		最重要的是...
+		Most importantly, ... 
+		4.原因的拓展
+			1.媒体宣传
+			负:媒体可能不恰当地夸大了这件事
+			The mass media might inappropriately exaggerate the issue(换成主题词)
+			词汇：
+				媒体media
+				不恰当地inappropriately,improperly
+				夸大exaggerate
+			例1：过度礼品消费
+			Mass media might inappropriately exaggerate the function of gift.
+			正: 大众媒体，如广播、电视和网络，适当地宣扬并鼓励这一事情
+			The mass media, such as radio, television and the internet, might appropriately encourage this issue.
+			词汇：
+				鼓励某人做某事encourage sb to do sth 
+			例1：鼓励大学生做兼职
+			The mass media, such as radio, television and the internet, might appropriately encourage college students to take part-time jobs.
+			例2：鼓励农民工去大城市工作
+			Mass media, such as radio, television and the internet, might appropriately encourage rural workers to work in metropolis.
+			2.政府：执行
+			负：因为缺少管控...的法律才导致了...趋势的扩大
+			A lack of laws and regulations to control ... leads to the expanding trend of ...
+			词汇：
+				法律法规laws and regulations
+				导致lead to / result in / contribute to 
+				扩张趋势expending trend
+			例：交通事故
+			A lake of laws and regulations to control car's quality results in the expanding trend of traffic accidents.
+			正:正是相关法律法规的执行促使这一个令人惊喜的趋势出现
+			It is the enforcement of relevant laws and regulations that makes this surprising trend come into being.
+			词汇：
+				执行enforcement
+				相关的relevant
+				出现come into being
+				trend: upward trend / this issue
+			例：城市化
+			It is the enforcement of relevant laws and regulations that makes the urbanization come into being.
+			3.社会:关注
+			负：
+			1.社会缺少对...的关注导致了...
+			A lake of due attention (from ...) on ... leads to ...
+			2.对...的过多关注导致了...
+			Too much attention (from...) on ... leads to ...
+			例1：城市经济不平衡
+			Too much attention on city construction leads to unbalanced development of economy.
+			例2：包装导致过度消费excessive consumption / over-cost
+			Too much attention on packaging leads to excessive consumption of gift.
+			正：对...的关注促进了...
+			Due attention paid to ... has stimulated the rapid development of ...
+			词汇：
+				促进stimulate
+				迅速发展rapid development
+			例:高科技促进手机发展
+			Due attention paid to high-tech has stimulated the rapid development of mobile phone.
+			4.个人：意识
+			负：个人缺乏... 的意识导致了...
+			A lake of the consciousness of ... results in ... 
+			意识consciousness
+			例：缺乏自我提升意识，导致工作不满
+			A lake of the consciousness of self-promotion results in the dissatisfaction about/for salary/income and working surroundings.
+			正：个人提高了对...的意识
+			The public has enhanced the consciousness of ...
+			大学生提高了提升竞争力的意识
+			The college students have enhanced the consciousness of competitiveness.
+			
+			
+			
+			
+	4.引出结果
+		1.通用结果
+			因此 So/As a result/As a consequence
+			似乎不止一个直接或间接的影响与主题词相关，这些我们都无法忽视
+			There seem to be more than one direct or indirect effects involved in ..., which none of us can fail to notice.Firstly,... . Secondly,...
+			词汇：
+				不止是more than
+				涉及到involved in
+				直接的或间接的direct or indirect
+				没有fail to 
+			例:2010年的手机流行
+				There seem to be more than one direct or indirect effects involved in the popularity of mobile phone which none of us can fail to notice.
+		2.坏的结果
+			如果我们视而不见的话，上述问题将会产生严重的后果
+			The problem mentioned above is bound to generate severe consequence, if we keep turning a blind eye to it.
+	5.具体结果
+	二、第二种论证 科学调查(可放在结果之后用数据表示具体结果)
+	根据一项权威机构的调查表明, ... % ...
+	According to one latest survey conducted by (a certain national authority Peking University), 
+	almost ...% of the people might (hold the same view) do sth.
+	almost ...% of the people might hold the same view that...
+	almost ...% of the people might do similarly in the same situation.
+	almost ...% of the people might do sth.
+	词汇：
+		近期的调查latest survey
+		权威机构authority
+		持有相同的观点hold the same view
+	三、观点与利弊分析
+	1.框架
+		缩减版(让步段)：引出争议+正方观点(+正方的理由和例子)+反方观点+反方理由(+举例)
+		1事实上，这一现象大家一直有争论。2诚然，一部分人可能认为...3然而,其他人都不同意这一观点。4他们的理由是:第一,...。第二,...。比如说
+		1.In fact, this issue (whethor ... or not) has long been a matter of debate.
+		2.Admittedly, a minority of people may hold the view that... to some extent.
+		3.Yet, a majority of people hold the other side of the picture.
+		4.For one thing, ...。For another, ...。For instance, ...
+		适用：中立话题
+		词汇：
+			实事上in fact
+			有争论a matter of debate
+			诚然Admittedly
+			一小部分人a minority of people
+			一定程度上to some extent 
+			大部分人a majority of people
+			不同意hold the other side of the picture
+	2.分析理由(为正反方找理由)
+		1. ...是有利的
+			sth is beneficial to ...
+		2. ...是有害的
+			sth is detrimental to ...
+		3.A的优点大于他的缺点
+			The advantages of A far outweight its disadvantages.
+		4.A的优点大于B的优点
+			The advantages of A are much greater than those of B.
+结尾断：(预测趋势+建议措施+憧憬未来)
+	一、***预测趋势=引言+结论
+		引言：
+			1.总而言之，In conclusion/To sum up/To summerize/All in all /in brief/in short
+			2.考虑到上述问题的方方面面，我像大多数人一样，可以得出结论:...
+			Considering every aspect of this issue , I , as most of others will do , safely draw a conclusion that ...
+			词汇：
+				考虑到considering
+				方方面面every aspect of this issue 
+				得出结论come to / draw a conclusion 
+			3.不管怎样，不管它的作用是积极的还是消极的，可以肯定的是...
+			Anyhow, whether it is positive or negative , one thing is certain that ...
+		结论：
+			1.假设:如果这个好/坏的事情继续发生的话，这个趋势可能朝着更好/更坏的方向发展
+			If the exciting/disturbing thing continues, it will be going on for the better/worse.
+			词汇：
+				令人兴奋的exciting
+				恼人的disturbing
+			2.结论：现在，人们...的趋势正在增加/减少，而且我认为短时间内这种趋势不会改变
+			Nowadays, there is a growing/decreasing tendency for sb. to do sth , which I believe will not change in a short time.
+			词汇：
+				增长的increasing /growing/upward 
+				下降的decreasing/downward
+				在短时间内in a short time
+			3.措施：相要转变这一趋势并非易事，这需要充分意识到...
+			To reverse the trend is not a piece of cake, which requires a good awareness of ...
+			词汇：
+				小菜一碟a piece of cake
+				好的意识a good awareness 
+	二、建议措施
+		1.统一做法：扬长避短
+		因此，我们应该取其精华，去其糟粕
+		Therefore, we should take advantage of the fruits and avoid the opposite facet.
+		因此，下如常言道，我们应该吸取精华，忽略缺点
+		We should, therefore , as the common saying goes,"absorb the essence and neglect the drawbacks"
+		适用：中立话题
+		词汇：
+			利用take advantage of
+			相反面 the oppose facet
+			常言道at the common saying goes 
+			吸取精华absorb the essence 
+			忽略缺点neglect the drawbacks 
+		2.不同主体不同做法：因定主体+to do sth
+		适用：正面话题、中立话题、负面话题
+		媒体宣传
+		The mass media , such as radio ,television and the internet , should make every effort to propagate and advocate it.
+		正面 advocate  
+		负面 end / prevent / put an end to 
+		词汇：
+			大量媒体mass media
+			网络the internet
+			尽全力make every effort 
+			宣传publicize /propagate/report
+		3.政府立法
+		制定法律 It is essential that laws and regulations should be worked out and enforced to do sth .
+		教育公民 The government has the responsibility to educate/encourage every citizen to do sth .
+		词汇：
+			...是根本的It is essential that...
+			制定work out 
+			责任responsibility
+			鼓励某人做某事encourage sb to do sth 
+		4.公民意识
+			社会公众提高...的意识
+			The public should enhance the consciousness of ...
+			我们应该采取实际行去去做某事
+			We ourselves ought to take practical actions to do sth .
+	三、憧憬未来
+		1.如果所有措施付诸实施，前途一片光明
+		If all the situation are turned into reality, the prospect will become more desirable.
+		2.通过等待和希望，我们一定可以实现最终目标
+		Through/By waiting and hoping , we will be able to achieve out untimate goal.
+		3.倒装句
+		Only with these measure taken can we do sth.
+		expect a more harmonious society.
+		make dreams come true.
+		make life more meaningful/colorful

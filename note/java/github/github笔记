@@ -93,3 +93,11 @@ $ git pull origin master // Check Out
 创建+切换分支：git checkout –b name
 合并某分支到当前分支：git merge name
 删除分支：git branch –d name
+
+三、gitee
+1.关联本地创建项目到gitee
+a)创建gitee仓库
+b)本地项目下 git init ; git add . ; git commit -m 'init' ; git push
+c)git remote add origin gitee地址
+d)git pull origin master --allow-unrelated-histories  ; 保存退出
+e)git push origin master 

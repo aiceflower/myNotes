@@ -198,7 +198,7 @@ F4	编辑源  可用于跳转
 1.提示区分大小写
 	settings->Editor->General->Code Completion->Match Case(取消勾选)
 2.包自动导入优化
-	settings->Editor->General->Code Completion->Add unambiguous.../Optimize imports...(勾选这两个)
+	settings->Editor->General->Auto Import->Add unambiguous.../Optimize imports...(勾选这两个)
 3.代码分屏
 	打开文件名上右键->Split...
 4.ctrl+d修改
@@ -230,3 +230,39 @@ F4	编辑源  可用于跳转
 	Tools ->　http client -> test restful web service
 17.设置自定义todo
 	alt+6打开todo窗口->漏斗状->Edit Filters
+18.导入其它主题(如sublime)
+	去http://www.riaway.com下载自己喜欢的主题
+	file->import settings 重启
+19.idea无法输入中文输入法
+	1、关掉idea后在idea的安装路径下把jre64文件夹删掉，或者重命名也行
+	2、升级jdk版本至jdk 8u45以上
+	3、把Java安装路径下的jre文件拷贝到IDEA的安装目录下并重命名为jre64；
+	4、把对应版本的jdk/lib的tools.jar拷贝到jre64/lib下； 
+	5、重启idea
+20.idea开启热加载
+	1.、CTRL + SHIFT + A --> 查找make project automatically --> 选中
+	2.CTRL + SHIFT + A --> 查找Registry --> 找到并勾选compiler.automake.allow.when.app.running
+	3.添加maven依赖
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-devtools</artifactId>
+		<optional>true</optional>
+	</dependency>
+	4.以上三步可使用热加载，如未成功可使用以下解决
+		<build>
+			<plugins>
+				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+					<configuration>
+						<fork>true</fork>//该配置必须
+					</configuration>
+				</plugin>
+			</plugins>
+		</build>
+	或禁用缓存Chrome，开发者模式-->NetWork --> Disable Cache(while DevTools is open)
+21.idea 中自动注入Autowried报错
+	File-Project Structure 页面 Facets下删掉 Spring
+22.取消idea输出行数控制
+	在idea.properties中添加如下内容
+	idea.cycle.buffer.size=disabled

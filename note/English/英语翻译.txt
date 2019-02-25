@@ -1,0 +1,52 @@
+翻译被补充:
+0.accumulation
+标点不要丢失
+通顺，忠实，豁达
+some 在数字的前面表示 大约 = about
+I don't think ... 我认为...不...(不要翻译为我不认为)
+
+1.规则
+	1.词意的软处理(词意的选择或引申)
+	2.顺序调整(定状倒装it形式的处理)
+		定语弄前面，状语弄前面，倒装弄前面,it is said that 据说 reported 据报道,it指代的真正主语提前
+		A of B of C:C的B的A 
+		特:A of B当A为数量时翻译为AB two of the passengers 两名乘客
+		many of the youngsters 很多年轻人
+	3.增词或减词
+	4.全部英文(含专用名词和标点符号)全部译成中文，标点换成汉语标点
+	. 。
+	斜体 《》
+	...  ... ...
+	,,,  、、、
+	5.被动语态,译成尽量不要带被字
+		be -ed 
+		am/is/are, was/were, be/being/been
+		1.受到，加以，得以
+			被惩罚 -> 受到惩罚
+			法律被通过 -> 法案得以通过
+		2.人们...
+			much can be done  人们/我们 有能力做...
+		3.上述两种做法不通，大胆意译
+			All man are created equal. 人生而平等。
+			The transaction is being processed please wait... 交易正在进行中，请稍后...
+			process 处理
+		4.表示弱势群体时"被"可接受
+			They are deprived of unemployment insurance. 他们被剥夺了失业保险。
+	6.从句的翻译
+		定语从句: 名词(组)+ 定从. 译: 定从+名词(组)【定从太长不用弄到前面】
+			名词(组), 定从.按顺序翻译[注意与上区别，有逗号(这种叫非限定性定语从句)]
+		状语从句: 住前译
+		其它从句:(主，宾，表，同位)按顺序翻译 
+	7.固定搭配、句式:积累 
+		in a ... manner 以一种...方式
+		...not..., any more than ... 前面否定，any more than 不翻译但后面变否定
+		...less(1)...more(2)... 与其说(1)...不如说(2)...
+		...more(1)...than(2)... 与其说(2)...不如说(1)...
+	8.代词的翻译：
+		1.he/him/his/himself/they/it[人称代词] 
+		2.that/who/whose/which[疑问代词] 离它最近的那个名词
+		3.this/that/these/those[指示代词] 
+		在不引起歧义的情况下可直译，即he->他。如果可能引发歧义，需要把指代翻译出来。
+		The lesson of Mr.Zhang is different from that of Mr.Shang, who[Mr.Shang] delivers speech enthusiastically.
+	9.双重否定:变为肯定
+2.

@@ -1,0 +1,160 @@
+GET _search
+{
+  "query": {
+    "match_all": {}
+  }
+}
+#创建索引
+PUT /megacorp
+#添加数据
+PUT /megacorp/employee/1
+{
+    "first_name" : "John",
+    "last_name" :  "Smith",
+    "age" :        25,
+    "about" :      "I love to go rock climbing",
+    "interests": [ "sports", "music" ]
+}
+PUT /megacorp/employee/2
+{
+    "first_name" : "Jack",
+    "last_name" :  "Xun",
+    "age" :        18,
+    "about" :      "Life is short",
+    "interests": [ "paint", "rop" ]
+}
+PUT /megacorp/employee/4
+{
+    "first_name" :  "Jane",
+    "last_name" :   "Smith",
+    "age" :         32,
+    "about" :       "I like to collect rock albums",
+    "interests":  [ "music" ]
+}
+PUT /megacorp/employee/3
+{
+    "first_name" :  "Douglas",
+    "last_name" :   "Fir",
+    "age" :         35,
+    "about":        "I like to build cabinets",
+    "interests":  [ "forestry" ]
+}
+#查询某类型下所有数据
+GET /megacorp/employee/_search
+#简单查询
+GET /megacorp/employee/_search?q=last_name:Smith&q=age:25
+#DSL查询
+#match不支持多条件查询
+GET /megacorp/employee/_search
+{
+    "query" : {
+        "match" : {
+            "last_name" : "Smith"
+        }
+    }
+}
+#过滤查询已被弃用，并在ES 5.0中删除。
+GET /megacorp/employee/_search
+{
+    "query" : {
+        "filtered" : {
+            "filter" : {
+                "range" : {
+                    "age" : { "gt" : 30 } 
+                }
+            },
+        "query" : {
+            "match" : {
+                "last_name" : "smith" 
+            }
+        }
+        }
+    }
+}
+#使用bool / must / filter查询
+GET /megacorp/employee/_search
+{
+    "query" : {
+        "bool" : {
+            "filter" : {
+                "range" : {
+                    "age" : { "gt" : 30 }
+                }
+            },
+            "must" : {
+                "match" : {
+                    "last_name" : "smith"
+                }
+            }
+        }
+    }
+}
+#全文索引 match-about,返回相关性最大的结果集
+GET /megacorp/employee/_search
+{
+    "query" : {
+        "match" : {
+            "about" : "rock climbing"
+        }
+    }
+}
+
+#按时间
+{
+  "size": 0,
+  "aggs": {
+    "group_by_state": {
+      "date_histogram": {          //es提供的时间处理函数
+        "field": "createDate",     //需要聚合的字段名字
+        "interval": "hour",        //按小时group by
+        "format": "yyyy-MM-dd HH", //返回值格式化，HH大写，不然不能区分上午、下午
+        "min_doc_count": 0,        //为空填充0
+        "extended_bounds": {       //需要填充0的范围
+          "min": "2016-12-19 01",
+          "max": "2016-12-19 23"
+        }
+      }
+    }
+  },
+  "query": { //这就是where
+    "filtered": {
+      "filter": {
+        "range": {
+          "createDate": {
+            "gte": "2016-12-19T00:00:00.000",
+            "lt": "2016-12-20T00:00:00.000"
+          }
+        }
+      }
+    }
+  }
+}
+@Test
+	public void group_by_day(){
+		String indexName = "ksearch_test3";
+		String typeName = "ks_user_trace";
+		
+		//QueryBuilder queryBuilder = QueryBuilders.boolQuery().must(QueryBuilders.queryFilter(QueryBuilders.rangeQuery("create_time").gte("2016-11-19T01:00:00.000").lt("2016-12-19T00:00:00.000")));
+		QueryBuilder queryBuilder = QueryBuilders.queryFilter(QueryBuilders.rangeQuery("create_time").gte("2016-11-19T01:00:00.000").lt("2016-12-19T00:00:00.000"));
+	
+		
+		AbstractAggregationBuilder aggregation = AggregationBuilders.dateHistogram("group_by_day").field("create_time").interval(DateHistogramInterval.DAY).format("yyyy-MM-dd").minDocCount(0L).extendedBounds("2016-11-19", "2016-12-19");
+		
+		SearchRequestBuilder reqBuilder = client.prepareSearch(indexName)
+				.setTypes(typeName)
+				.setQuery(queryBuilder)
+				.addAggregation(aggregation);
+				
+		
+		SearchResponse resp = reqBuilder.execute().actionGet();
+		Aggregations aggs = resp.getAggregations();
+		InternalHistogram agg = aggs.get("group_by_day");
+		List<Bucket> buckets =  (List<Bucket>) agg.getBuckets();
+		
+		for(Bucket bucket:buckets){
+			Long docCount = bucket.getDocCount();
+			String date = bucket.getKeyAsString();
+			
+			System.out.println(date+":"+docCount);
+		}
+	}

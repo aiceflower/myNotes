@@ -266,3 +266,7 @@ F4	编辑源  可用于跳转
 22.取消idea输出行数控制
 	在idea.properties中添加如下内容
 	idea.cycle.buffer.size=disabled
+23.idea tomcat部署项目
+	Run/Debug Configurations --> add --> Tomcat Server --> Local
+24.idea通过数据库生成实体类
+	view-->Tool Window-->Database-->+-->Data Source-->mysql-->填写信息(下载对应驱动)-->对应表右键Spripted Extensions-->POJO.clj

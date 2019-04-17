@@ -1,3 +1,7 @@
+---
+
+---
+
 ## 疯狂Java_突破程序员基本功的16课
 
 ### 第一课 数组与内存控制
@@ -414,4 +418,257 @@ public static void main(String[] args) {
 ```
 
 对于实例变量初始化的地方有3个，但对于final修饰的实例变量，只有在定义该变量的时候指定初始值，才会有 ”宏变量“ 的效果，在代码块和构造器中为final实例变量指定初始值则无此效果。对于类变量也是如此只有在定义类变量时指定初始值才会有”宏变量“的效果，在静态代码块中指定初始值则无此效果。
+
+##### 内部类中的局部变量
+
+java中规定，如果程序需要在局部内部类中使用局部变量，那么这个局部变量必须是final修饰的。其原因为：对于普通局部变量而言，它的作用域就是停留在方法内，当方法执行结束，局部变量随之消失，但内部类则可能产生隐式的”闭包“，从而使得局部变量脱离经所在的方法继续存在。
+
+```Java
+public void test(){
+    final String str = "Hello";
+    System.out.println(System.identityHashCode(str));
+    new Thread(() -> {
+        System.out.println(System.identityHashCode(str));
+        try {
+            Thread.sleep(20);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }).start();//1
+}
+```
+
+上述代码，正常情况下，当程序执行完1代码后，该方法的生命周期就结束了,局部变量str的作用域也随之结束。但只要新线程里的方法没有执行完，匿名内部类的实例的生命周期就没有结束，将一直可以访问str局部变量的值，这就是内部类会扩大局部变量作用域的例子。
+
+由于内部类可能扩大局部变量的作用域，如果再加上这个被内部类访问的局部变量同有使用final修饰，也就是说该变量的值可以随意改变，那将引起极大的混乱，因此java编译器要求所有被内部类访问的局部变量必须使用final修饰。
+
+### 第三课 常见Java集合的实现细节
+
+#### 1.Set和Map
+
+Set用于存储一组无序，不可重复的元素集合，Map则代表由多个键(key) - 值(value)对组成的集合。表面上看它们之间相似性很少，但实际上有很多关系，可以说Map是Set的扩展。
+
+Set集合与Map集合对应关系：
+
+![Set集合与Map集合对应关系](img\Set与Map对比图.png 'Set集合与Map集合对应关系')
+
+可以看到这些接口的类名如此相似，绝不是偶然现象。考察下Map的key可以发现 ，这些key具有一个特征，所有的key不能重复，key之间没有顺序。也就是说将Map的所有key集中起来，那这些key就组成了一个Set集合，所以，发现Map集合提供了如下方法来返回所有key组成的Set集合。
+
+```Java
+Set<K> keySet();
+```
+
+由此可见，Map集合的所有key且有Set集合的特征，只要把Map的所有key集中起来，那它就是一个Set，这实现了从Map到Set的转换。其实还可以实现从Set到Map的扩展 -- 对于Map而言，相当于每个元素都是key-value的Set集合。
+
+对于一个Map，它的本质是一个关联数组，其实可以改为用一个Set集合来保存它们，反正上面的关联数组中key-value有严格的对应关系，那么干脆将key-value捆绑在一起对待。
+
+![](img\Map转换为Set.png)
+
+为了把Set转换成Map，可以考虑新增定义一个SimpleEntry类，该类代表一个key-value对，当Set集合元素都是SimpleEntry对象时，该Set集合就能被当成Map使用。
+
+下面示范了如何将一个Set扩展成Map：
+
+```Java
+public class SimpleEntry<K,V> implements Map.Entry<K,V>, Serializable {
+    private final K key;
+    private V value;
+    public SimpleEntry(K key, V value){
+        this.key = key;
+        this.value = value;
+    }
+    public SimpleEntry(Map.Entry<K,V> entry){
+        this.key = entry.getKey();
+        this.value = entry.getValue();
+    }
+    @Override
+    public K getKey() {
+        return key;
+    }
+    @Override
+    public V getValue() {
+        return value;
+    }
+    @Override
+    public V setValue(V value) {
+        V oldValue = this.value;
+        this.value = value;
+        return oldValue;
+    }
+    /**
+     * 根据key比较两个SimpleEntry是否相等
+     * @param obj
+     * @return
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == this){
+            return Boolean.TRUE;
+        }
+        if( obj.getClass() == SimpleEntry.class){
+            SimpleEntry entry = (SimpleEntry)obj;
+            return this.key.equals(entry.getKey());
+        }
+        return Boolean.FALSE;
+    }
+    /**
+     * 根据key计算hashCode
+     * @return
+     */
+    @Override
+    public int hashCode() {
+        return key == null ? 0 : key.hashCode();
+    }
+    @Override
+    public String toString() {
+        return key + "=" + value;
+    }
+}
+//继承HashSet实现一个Map
+public class Set2Map<K,V> extends HashSet<SimpleEntry<K,V>> {
+    /**
+     * 清空所有的key-value对
+     */
+    @Override
+    public void clear(){
+        super.clear();
+    }
+    /**
+     * 判断是否包含某个key
+     * @param key
+     * @return
+     */
+    public boolean containsKey(Object key) {
+        return super.contains(new SimpleEntry<>(key, null));
+    }
+    /**
+     * 判断是否包含某个value
+     * @param value
+     * @return
+     */
+    boolean containsValue(Object value){
+        for (SimpleEntry<K, V> entry : this) {
+            if(entry.getValue().equals(value)){
+                return Boolean.TRUE;
+            }
+        }
+        return Boolean.FALSE;
+    }
+    /**
+     * 根据key获取value
+     * @param k
+     * @return
+     */
+    public V get(Object k){
+        for (SimpleEntry<K, V> entry : this) {
+            if(entry.getKey().equals(k)){
+                return entry.getValue();
+            }
+        }
+        return null;
+    }
+    /**
+     * 将指定的key-value放入集合
+     * @param key
+     * @param value
+     * @return
+     */
+    public V put(K key, V value){
+        add(new SimpleEntry<>(key, value));
+        return value;
+    }
+    /**
+     * 将另一个Map的元素放入该Map
+     * @param m
+     */
+    public void putAll(Map<? extends K, ? extends V> m){
+        for (Map.Entry<? extends K, ? extends V> entry : m.entrySet()) {
+            put(entry.getKey(), entry.getValue());
+        }
+    }
+    /**
+     * 根据key删除指定key-value对
+     * @param key
+     * @return
+     */
+    public V removeEntry(Object key){
+        for (Iterator<SimpleEntry<K, V>> it = this.iterator();it.hasNext();){
+            SimpleEntry<K, V> next = it.next();
+            if(next.getValue().equals(key)){
+                V value = next.getValue();
+                it.remove();
+                return value;
+            }
+        }
+        return null;
+    }
+    /**
+     * 获取Map中有多少key-value对
+     * @return
+     */
+    @Override
+    public int size(){
+        return super.size();
+    }
+}
+```
+
+以上代码定义了一个SimpleEntry<K, V>当一个Set集合元素全是SimpleEntry<K, V>对象时，该Set就变成了一个Map<K, V>集合。
+
+集合存储：
+
+虽然集合号称存储的是Java对象，但实际上并不会真正将Java对象放入集合中，而只是在集合中保留这些对象的引用而已。
+
+```Java
+class Person{
+    private String name;
+    private Integer age;
+    public Person(String name, Integer age) {
+        this.name = name;
+        this.age = age;
+    }
+    public String getName() {return name;}
+    public void setName(String name) {this.name = name;}
+    public Integer getAge() {return age;}
+    public void setAge(Integer age) {this.age = age;}
+    @Override
+    public String toString() {
+        return "Person{name=" + name + ", age=" + age + "}";
+    }
+}
+public class JTest {
+    public static void main(String[] args) {
+        List<Person> list = new ArrayList<>();
+        Person p1 = new Person("z3",18);
+        list.add(p1);
+        for (Person person : list) {
+            System.out.println(person);
+        }
+        p1.setAge(28);
+        for (Person person : list) {
+            System.out.println(person);
+        }
+
+    }
+}
+```
+
+上述代码可以证明，修改了p1的age属性后，list集合并未作改动，但随后打印的结果确是修改后的结果。
+
+HashMap的集合存储结构:
+
+![](img\HashMap存储结构.png)
+
+HashMap,采用hash算法决定元素在集合中的位置，根据key计算出hash，来确定该元素在数组中的位置，如果不同的key计算出来的hash值相同，则这些hash值相同的key-value对构成一个链表，存储于该数组元素中。这就是人们所熟知的HashMap是数组加链表的结构。
+
+查看HashMap的源码会发现，table对应的是Node数组，而Node则是一个链表。
+
+```Java
+transient Node<K,V>[] table;
+static class Node<K,V> implements Map.Entry<K,V> {
+    final int hash;
+    final K key;
+    V value;
+    Node<K,V> next;
+}
+```
 

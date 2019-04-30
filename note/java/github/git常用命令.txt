@@ -1,0 +1,12 @@
+git 常用命令
+1.查看本地分支的远程分支关联情况
+git branch -vv
+2.本地分支与远程分支关联
+git checkout dev 先切换到相应分支
+git branch --set-upstream-to origin/dev 与远程分支关联
+3.同步本地可查看远程分支
+ git remote update origin --prune
+4.查看远程分支
+git branch -r 
+5.查看远程仓库地址
+git remote -v

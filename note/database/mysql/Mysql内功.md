@@ -4,7 +4,7 @@
 
 - Mysql设计之初的目标：成为高性能、普通用户支付得起的数据库服务器和工具。
 - Mysql的使命：为所有人贡献一个经济实惠并且性能卓越的数据库软件。
-- Mysql的独到之处：插件式存储引擎，存储类别的粒度小到每个表，可最大程度利用各引擎的优点，避免缺点。
+- Mysql的独到之处：插件式存储引擎，存储类别的粒度小到每个表，可最大程度利用各存储引擎的优点，避免缺点。
 
 ### 二、数据库管理系统
 
@@ -22,7 +22,7 @@
 
 1）语句合法性检查：对SQL语句的语法进行检查、看其是否符合语法规则。
 
-2）主义检查：对语句中的字段，表等进行检查
+2）语义检查：对语句中的字段，表等进行检查
 
 3）获得对象解析锁：保证数据的一致性，防止其它用户改变(保证大量并发情况下的数据完整性)
 
@@ -102,7 +102,7 @@ flush_buffer(){
 }
 ```
 
-注：SELECT @@join_buffer_size;可查看Mysql为每个连接缓冲分配的大小，explain输出中Using join buffer表示使用缓存算法
+注：join_buffer_size为Mysql为每个连接缓冲分配的大小，explain输出中Using join buffer表示使用缓存算法
 
 ##### 3）Mysql排序实现
 
@@ -117,3 +117,34 @@ flush_buffer(){
 - **在表单上使用filesort**：using filesort #如果是多表联合，先单表filesort再对排序后进行join
 - **将join结果先放入临时表，然后使用filesort**：using templorary; using filesort
 
+#### 5.优化
+
+**1.SELECT语句分析**
+
+​	explain + SELECT语句
+
+*结果*：
+
+- **type** ：判断查询是否高效的重要依据
+
+  const/system：主键或唯一索引扫描，最多返回一条数据，速度非常快
+
+  eq_ref：主键索引的关联查询，
+
+  ref ：非唯一索引查询或唯一索引关联查询，单条记录。
+
+  range：索引范围扫描，常用语<,<=,>=,between,in,is null等操作，返回少部分数据时，数据多时为All
+
+  index：索引全扫描
+
+  ALL：全表扫描
+
+  性能：ALL < index < range < ref < eq_ref < const < system
+
+  SQL性能优化目标：至少到range，要求是ref，往上更好
+
+- **possible_keys**: 此次查询中可能选用的索引
+
+- **key**: 此次查询中确切使用到的索引.
+
+- **ref**: 哪个字段或常数与 key 一起被使用

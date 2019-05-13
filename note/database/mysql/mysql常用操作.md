@@ -36,3 +36,15 @@
 
 show variables like 'char%' 查看字符集
 show variables like 'collation_%' 查看核对规则
+
+
+
+安装xtrabackup:
+
+1.下载解压
+
+wget http://www.percona.com/downloads/XtraBackup/XtraBackup-2.1.9/binary/Linux/x86_64/percona-xtrabackup-2.1.9-744-Linux-x86_64.tar.gz
+
+2.执行innobackupex出错
+
+yum install perl-Time-HiRes

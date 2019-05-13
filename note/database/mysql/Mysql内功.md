@@ -117,6 +117,10 @@ flush_buffer(){
 - **在表单上使用filesort**：using filesort #如果是多表联合，先单表filesort再对排序后进行join
 - **将join结果先放入临时表，然后使用filesort**：using templorary; using filesort
 
+#### 5.Mysql网络通信
+
+![](<https://raw.githubusercontent.com/aiceflower/assets/master/img/mysql/mysql_network_communications.png>)
+
 #### 5.优化
 
 **1.SELECT语句分析**

@@ -1,6 +1,0 @@
-server.port: 5601
-server.host: "10.11.10.150"
-server.maxPayloadBytes: 1048576
-server.name: "coineal-log"
-elasticsearch.hosts: ["http://localhost:9200"]
-logging.dest: /data/service/kibana-service/logs/kibana.log 

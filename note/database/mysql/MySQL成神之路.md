@@ -2,13 +2,17 @@
 
 ### 一、基础理论
 
-#### 1.MVCC
+#### 1.事物
 
-#### 2.ACID
+##### a.MVCC(多版本并发控制)
 
-#### 3.范式设计
+##### b.ACID
 
-#### 4.索引设计
+##### c.一致性读
+
+#### 2.范式设计
+
+#### 3.索引设计
 
 ##### 1）索引分类：
 
@@ -20,20 +24,20 @@
 
   又叫辅助索引，是除了聚簇索引以外的索引。
 
-2）常见索引查找算法
+##### 2）常见索引查找算法
 
 - 链表遍历  o(n)
 - 二分查找  log(n)
 - Btree查找  log(n)
 - hash查找 o(1)
 
-#### 5.2PC
+#### 4.2PC
 
-#### 6.CAP
+#### 5.CAP
 
-#### 7.BASE
+#### 6.BASE
 
-#### 8.PAXOS
+#### 7.PAXOS
 
 ### 二、MySQL相关技能
 
@@ -185,7 +189,7 @@ mysqldump --single-transaction --master-data=2 -uroot xtj > my3306/bak/xtj.sql
 
 4.从服务器A拷贝备份到服务器B
 
-5.服务器B上执行一次命题回复
+5.服务器B上执行一次全量恢复
 
 ```mysql
 create database xtj default character set utf8;
@@ -246,7 +250,7 @@ set global read_only=on; #on改成1也可以
 
 注：在bin/目录下有个mysql_upgrade -s可升级数据字典,5.6的数据字典与5.7的不一样
 
-#### 8.备份
+#### 8.备份与恢复
 
 ##### 1.分类
 
@@ -286,7 +290,10 @@ mysqldumper \
 **安装**：
 
 ```shell
- yum install percona-xtrabackup
+#下载解压
+wget http://www.percona.com/downloads/XtraBackup/XtraBackup-2.1.9/binary/Linux/x86_64/percona-xtrabackup-2.1.9-744-Linux-x86_64.tar.gz
+#如果执行innobackupex出错
+yum install perl-Time-HiRes
 ```
 
 **工具**：
@@ -302,7 +309,7 @@ mysqldumper \
 
 1.start xtrabackup_log #redo位置
 
-2.copy .ibd; ibdata1 #会比较page(内在blog块)首尾日志序列号(LSN)是否一致
+2.copy .ibd; ibdata1 #会比较page(内存blog块)首尾日志序列号(LSN)是否一致
 
 3.FLUSH TABLES WITH READ LOCK 锁表(MyISAM)
 
@@ -354,61 +361,165 @@ mysqlbinlog \
     mysql -uroot -p123456 
 ```
 
+#### 9.MySQL锁机制与事物控制
 
+##### 1.执行语句被阻塞如何分析
 
-#### 2.常用命令
+1）查询条件是否是主键
 
-查看mysqld调用my.cnf顺序
+2）事物的隔离级别
 
-```shell
-mysqld --verbos --help |grep my.cnf
-```
+3）是否有索引，是否是唯一索引
 
-查看当前用户
+4）查看sql语句的执行计划
+
+##### 2.事物
+
+概念：
+
+​	事物定义了一个服务操作序列，由服务保证这些操作在多个客户并发访问和服务器出现故障情况下的原子性。数据库中发生了DML或是DDL都会发生事物。
+
+属性：
+
+- **A**（Atomicity）原子性：整个事物的操作要么全部完成，要么全部不完成。（由数据库Redo和Undo实现）
+- **C**（Consistency）一致性：事物开始之前和结束之后数据的完整性没有被破坏，数据库从一种状态到另一种状态。（Undo）
+- **I**（Isolation）隔离性：一个事物的操作对其它事物不可见。（Lock）
+- **D**（Durability）持久性：事物完成以后，该事物对数据库的更改都会保存在数据库中。（Redo）
+
+##### 3.并发会存在的问题
+
+- 脏读（dirty read） ：事物A读取了事物B修改但未提交的数据，且B回滚了。
+- 不可重复读 （unrepeatable read）：会话A读取了会话B修改且提交的数据，相同的条件导致两次读取结果不一样。
+- 幻读（phantom read）：会话A读取了会话B修改且提交的数据，相同的查询，。两次查询的结果条数不一样
+
+##### 4.事物的隔离级别（由低到高）
+
+- Read uncommitted （读未提交）：最低的隔离级别。一个事务可以读取另一个事务并未提交的更新结果。
+
+- Read committed（读提交）：一个事务的更新操作结果只有在该事务提交之后，另一个事务才可以的读取到同一笔数据更新后的结果。【大部分数据库默认】
+- Repeatable read （可重复读）：整个事务过程中，对同一笔数据的读取结果是相同的，不管其他事务是否在对共享数据进行更新，也不管更新提交与否。【MySQL默认，生产改成读提交】
+- Serializable（串行）：最高隔离级别。所有事务操作依次顺序执行。注意这会导致并发度下降，性能最差。
+
+注：这四个级别可以逐个解决脏读 、不可重复读 、幻读这几类问题。
+
+##### 5.图表展示
+
+![](https://raw.githubusercontent.com/aiceflower/assets/master/img/mysql/tx_isolatied.png)
+
+##### 6.编程tip
+
+- 不要在循环中提交
+- 过程中不要有DDL（DDL前后有隐匿commit）
+- 不要使用自动提交
+- 不使用自动回滚
+- 大事物折成小事物
+
+##### 7.不同数据库的锁实现
+
+- InnoDB：行级锁
+- MyISAM：表级锁
+- Oracle：行级锁
+- Sql Server：行级锁，行太多会升级为表锁
+
+##### 8.Lock锁与Latch锁
+
+- 对象：事物/线程
+- 保护：数据库对象/内容结构对象
+- 持续时间：长/短
+- 模式：表锁行锁/互斥
+- 死锁：有/无
+
+##### 9.InnoDB中的锁的模式
+
+- 意向共享锁（IS）: 
+- 意向排它锁（IX）: 
+- 行级共享锁（S）: select * from t1 where name ='C' for update; #name上有普通索引
+- 行级排它锁（X）:  select * from t1 where id =1 lock in share mode;
+
+##### 10.InnoDB锁的兼容性
+
+![](https://raw.githubusercontent.com/aiceflower/assets/master/img/mysql/INNODB_LOCK.png)
+
+##### 11.加锁分析
 
 ```mysql
-select user();
+update t1 set name = 'z3' where id = 1;
+#在表上加了意向排它锁，行上加行级排它锁
+select * from t1 where id = 1;
+#在表上加意向共享锁，在行上加共享锁
+#为什么需要意向锁？
+#假设现在要删除一个表，但表有一万行数据且正在修改第一万行，如果没有意向锁，那扫描到最后一行发现有锁，不能删除报错。如果有意向锁，删除时发现表上有锁，就报错节省时间。
+#每个索引上的锁，最终会加到主键上的行排它锁。
 ```
 
-创建数据库
+##### 12.InnoDB行锁范围
+
+- Record Lock 行记录锁
+- Gap Lock 间隙锁，在索引记录间隙上的锁，或是第一条索引记录之前和最后一条索引记录之后上的间隙锁
+- Next-key Lock 下一键锁，上两种的组合锁
+
+注：Gap Lock锁需要Mysql默认隔离级别RR，每两条数据之间都会加锁，这两条数据之间不能插入数据，能解决幻读不让在行与行之间插入。
+
+13.锁相关操作
 
 ```mysql
-create databases testdb default character set utf8;
+#查询锁
+select * from information_schema.innodb_locks; 
+#查询innodb引擎状态，可查看锁情况
+show engine innodb status \G
+#查询具体等的语句
+SELECT r.trx_id waiting_trx_id,  
+	r.trx_mysql_thread_id waiting_thread,
+	r.trx_query waiting_query,
+	b.trx_id blocking_trx_id,
+	b.trx_mysql_thread_id blocking_thread,
+	b.trx_query blocking_query
+FROM       
+	information_schema.innodb_lock_waits w
+	INNER JOIN information_schema.innodb_trx b  ON  
+	b.trx_id = w.blocking_trx_id
+	INNER JOIN information_schema.innodb_trx r  ON  
+	r.trx_id = w.requesting_trx_id;
 ```
 
-查看表是否正在被访问
+##### 14.MDL(metadata lock)
+
+mysql的select操作会加mdl，保护select语句不被ddl操作。未设置自动提交
+
+解决MDL：
+
+减少ddl高并发、线上db不国轻易alter table、干掉ddl会话(show processlist----kill id)
+
+##### 15.死锁的原因和分析
+
+**1.产生回路**：两个或两个以上的事务执行过程中，分别持有一把锁，然后加另一把锁(AB---BA),产生死锁
+
+**2.加锁顺序不一致**：两个或两个以上的事物并发执行，因争夺资源而造成一种相互等待，产生死锁
 
 ```mysql
-show processlist;
+#第一种
+#session1
+begin;
+update t1 set name = 'a' where id = 1;
+#session2
+begin;
+update t1 set name = 'b' where id = 1;
+#session1
+update t1 set name = 'c' where id = 2;
+#session2
+update t1 set name = 'd' where id = 1; #此时产生死锁
+#设置innodb_print_all_deadlocks=on可把死锁信息保存在日志中
 ```
 
-查看表
+##### 16.减少死锁的方法
 
-```mysql
-show tables from db_name like '%user%';
-```
+- 自动死锁检测，优先回滚小事务
+- 超时设置(innodb_lock_wait_timeout)
+- 尽快提交事务
+- 加for update, lock in share mode 时，最好降低隔离级别RC
+- 事务操作多个表时，每个事务的操作顺序保持一致
+- 通过索引优化SQL效率，降低死锁概率
 
-查看存储引擎状态
+##### 17.与锁相关的表
 
-```mysql
-show engine innodb status \G;
-```
-
-binlog相关看作
-
-```mysql
-#查看所有binlog
-show master logs;
-#flush刷新log日志，自此刻开始产生一个新编号的binlog日志文件
-flush logs;
-#查看master状态
-show master status;
-#最新一个binlog日志的编号名称，及其最后一个操作事件pos结束点(Position)值
-#查看binlog日志信息
-mysqlbinlog binlog.000004 
-#或
-show binlog events in 'binlog.000004' \G
-```
-
-
-
+![](https://raw.githubusercontent.com/aiceflower/assets/master/img/mysql/lock_table.png)

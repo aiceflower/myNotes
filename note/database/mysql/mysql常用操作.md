@@ -7,7 +7,7 @@
 **创建数据库**
 
 ```mysql
-create databases testdb default character set utf8;
+create database testdb default character set utf8;
 ```
 
 #### **2.删**
@@ -22,9 +22,14 @@ create databases testdb default character set utf8;
 select user();
 ```
 
-***查询所有表名***
+***查询表***
 
 ```mysql
+#1
+show tables;
+#2
+show tables from db_name like '%user%';
+#3
 select table_name from information_schema.tables where table_schema='database_name' and table_type='base table';
 ```
 
@@ -60,12 +65,6 @@ mysqld --verbos --help |grep my.cnf
 show processlist;
 ```
 
-**查看表**
-
-```mysql
-show tables from db_name like '%user%';
-```
-
 **查看存储引擎状态**
 
 ```mysql
@@ -78,6 +77,7 @@ show engine innodb status \G;
 show variables like 'char%' #查看字符集
 show variables like 'collation_%' #查看核对规则
 #系统使用utf8字符集，若使用utf8_bin校对规则执行SQL查询时区分大小写，使用utf8_general_ci不区分大小写
+cat data/db_name/db.opt
 ```
 
 ***查询mysql数据存储位置***​	

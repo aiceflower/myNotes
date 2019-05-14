@@ -338,12 +338,13 @@ innobackupex \
 先应用日志Xtrabackup.log(同redo.log),再拷贝备份数据到数据库目录，再加载到内存
 
 ```shell
-innobackupes \
+innobackupex \
 	--apply-log \
-	--defaultsfile=/apps/backup/xtrabackup/backup-my.cnf \
+	--defaults-file=/tmp/u01/backup/xtrabackup/backup-my.cnf \
 	--user=root \
 	--password='123456' \
-	/apps/backup/xtrabackup
+	/tmp/u01/backup/xtrabackup
+#最后的目录与备份时的目录相同，恢复完成后拷贝到mysql的data数据目录下
 ```
 
 注：备份之前和备份过程中产生的数据用innobackupex恢复，备份之后产生的数据，用mysql binlog命令恢复
@@ -353,11 +354,13 @@ innobackupes \
 ```shell
 #查看
 mysqlbinlog --no-defaults my3306/log/binlog/binlog.000004 --start-position="794" --stop-position="1055" | more 
+#登陆后查看（推荐）
+show binlog events in 'binlog.000004' 
 #恢复
 mysqlbinlog \
-	--no-defaults mysql-bin.000002 \
-	--start-position="794" \
-	--stop-position="1055" | \
+	--no-defaults my3306/log/binlog/binlog.000005 \
+	--start-position="1795" \
+	--stop-position="1857" | \
     mysql -uroot -p123456 
 ```
 
@@ -423,8 +426,8 @@ mysqlbinlog \
 
 ##### 8.Lock锁与Latch锁
 
-- 对象：事物/线程
-- 保护：数据库对象/内容结构对象
+- 对象：事务/线程
+- 保护：数据库对象/内存结构对象
 - 持续时间：长/短
 - 模式：表锁行锁/互斥
 - 死锁：有/无
@@ -433,8 +436,8 @@ mysqlbinlog \
 
 - 意向共享锁（IS）: 
 - 意向排它锁（IX）: 
-- 行级共享锁（S）: select * from t1 where name ='C' for update; #name上有普通索引
-- 行级排它锁（X）:  select * from t1 where id =1 lock in share mode;
+- 行级共享锁（S）: select * from t1 where id =1 lock in share mode;
+- 行级排它锁（X）:  select * from t1 where name ='C' for update; #name上有普通索引
 
 ##### 10.InnoDB锁的兼容性
 
@@ -446,7 +449,7 @@ mysqlbinlog \
 update t1 set name = 'z3' where id = 1;
 #在表上加了意向排它锁，行上加行级排它锁
 select * from t1 where id = 1;
-#在表上加意向共享锁，在行上加共享锁
+#在表上加意向共享锁，在行上加MDL，语句后加 for update(排它)，lock in share mode(共享)
 #为什么需要意向锁？
 #假设现在要删除一个表，但表有一万行数据且正在修改第一万行，如果没有意向锁，那扫描到最后一行发现有锁，不能删除报错。如果有意向锁，删除时发现表上有锁，就报错节省时间。
 #每个索引上的锁，最终会加到主键上的行排它锁。
@@ -460,44 +463,22 @@ select * from t1 where id = 1;
 
 注：Gap Lock锁需要Mysql默认隔离级别RR，每两条数据之间都会加锁，这两条数据之间不能插入数据，能解决幻读不让在行与行之间插入。
 
-13.锁相关操作
-
-```mysql
-#查询锁
-select * from information_schema.innodb_locks; 
-#查询innodb引擎状态，可查看锁情况
-show engine innodb status \G
-#查询具体等的语句
-SELECT r.trx_id waiting_trx_id,  
-	r.trx_mysql_thread_id waiting_thread,
-	r.trx_query waiting_query,
-	b.trx_id blocking_trx_id,
-	b.trx_mysql_thread_id blocking_thread,
-	b.trx_query blocking_query
-FROM       
-	information_schema.innodb_lock_waits w
-	INNER JOIN information_schema.innodb_trx b  ON  
-	b.trx_id = w.blocking_trx_id
-	INNER JOIN information_schema.innodb_trx r  ON  
-	r.trx_id = w.requesting_trx_id;
-```
-
-##### 14.MDL(metadata lock)
+##### 13.MDL(metadata lock)
 
 mysql的select操作会加mdl，保护select语句不被ddl操作。未设置自动提交
 
 解决MDL：
 
-减少ddl高并发、线上db不国轻易alter table、干掉ddl会话(show processlist----kill id)
+减少ddl高并发、线上db不轻易alter table、干掉ddl会话(show processlist----kill id)
 
-##### 15.死锁的原因和分析
+##### 14.死锁的原因和分析
 
 **1.产生回路**：两个或两个以上的事务执行过程中，分别持有一把锁，然后加另一把锁(AB---BA),产生死锁
 
 **2.加锁顺序不一致**：两个或两个以上的事物并发执行，因争夺资源而造成一种相互等待，产生死锁
 
 ```mysql
-#第一种
+#回路模拟
 #session1
 begin;
 update t1 set name = 'a' where id = 1;

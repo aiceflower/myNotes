@@ -92,9 +92,43 @@ show global variables like "%datadir%";
 show variables like '%tx%';
 ```
 
+#### 5.锁相关
+
+**加锁**
+
+```mysql
+#行排它锁
+select * from t1 where name ='C' for update;
+#行共享锁
+select * from t1 where id =1 lock in share mode;
+
+```
+
+**查锁**
+
+```mysql
+#查询锁
+select * from information_schema.innodb_locks; 
+#查询innodb引擎状态，可查看锁情况
+show engine innodb status \G
+#查询具体等的语句
+SELECT r.trx_id waiting_trx_id,  
+	r.trx_mysql_thread_id waiting_thread,
+	r.trx_query waiting_query,
+	b.trx_id blocking_trx_id,
+	b.trx_mysql_thread_id blocking_thread,
+	b.trx_query blocking_query
+FROM       
+	information_schema.innodb_lock_waits w
+	INNER JOIN information_schema.innodb_trx b  ON  
+	b.trx_id = w.blocking_trx_id
+	INNER JOIN information_schema.innodb_trx r  ON  
+	r.trx_id = w.requesting_trx_id;
+```
 
 
-#### 5.其它
+
+#### 6.其它
 
 ***源码下载*：**
 

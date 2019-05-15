@@ -119,9 +119,32 @@ flush_buffer(){
 
 #### 5.Mysql网络通信
 
+##### 1.网络通信图示
+
 ![](<https://raw.githubusercontent.com/aiceflower/assets/master/img/mysql/mysql_network_communications.png>)
 
-#### 5.优化
+##### 2.MySQL线程容器类
+
+Mysql线程容器类I_LIST\<THD>主要用途：
+
+- 执行 show processlist命令时，可快速拿到所有线程状态
+- 执行kill命令时，能快速定位目标线程
+- 在关闭mysql服务时，可依次关闭所有mysql线程
+- 作为线程缓冲队列
+
+**注**：线程相关操作，如创建、结束、跟踪线程状态都需要获得一个互斥锁。
+
+#### 6.解析与优化
+
+##### 1.Mysql解析器
+
+​	mysql解析器由词法分析和语法分析两部分组成。
+
+##### 2.查询优化器
+
+​	通过产生可供选择的多个执行计划，并从中选择最低估算开销的执行计划，来优化一条sql语句。
+
+#### 99.优化
 
 **1.SELECT语句分析**
 
@@ -151,4 +174,6 @@ flush_buffer(){
 
 - **key**: 此次查询中确切使用到的索引.
 
-- **ref**: 哪个字段或常数与 key 一起被使用
+- **ref**: 哪个字段或常数与 key 一起被使用 
+
+2. STRAIGHT_JOIN  inner join

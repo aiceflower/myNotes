@@ -504,3 +504,62 @@ update t1 set name = 'd' where id = 1; #此时产生死锁
 ##### 17.与锁相关的表
 
 ![](https://raw.githubusercontent.com/aiceflower/assets/master/img/mysql/lock_table.png)
+
+##### 18.优化
+
+###### 1.IO调度算法
+
+- NOOP算法： 实现了最简单的FIFO队列，所有IO请求大致按照先来后到的顺序进行操作。
+- CFQ算法：对IO地址进行分组排序，把相近的放在一起，提高吞吐量。不是先来后到。
+- Deadline算法：在CFQ基础上解决了请求饿死的情况，还额外为读请求和写请求提供了FIFO队列。
+- Anticipatory算法：
+
+###### ~~2.操作系统优化~~
+
+1.关闭swap，内核参数/etc/sysctl.conf 中添加vm.swapplness=10，默认是60
+
+2.调度算法设置deadline，echo deadline > /sys/block/.../queue/schedule
+
+###### 3.数据库优化
+
+**实例优化**
+
+```mysql
+innodb_buffer_pool_size #数据放到内存中处理，减少io，设置物理内存的60%-80%
+innodb_thread_concurrency #设置线程并发，设置cpu的processor数少几个
+query_cache_type=0 #是否开启查询缓存，修改表会清空
+query_cache_size=0 #查询缓存大小
+max_user_connections #最大连接数，与应用相关
+interactive_timeout #交互超时,120s
+wait_timeout #等待超时，jdbc连接等，120s
+innodb_io_capacity#innodb的io容量，设置iops的75%左右
+innodb_flush_log_at_trx_commit=1#
+sync_binlog=1 #这两个是一个commit就写日志
+innodb_log_file_size #日志文件大小，SSD建议4-8G，SAS建议1-2G
+innodb_flush_method=O_DIRECT #直接刷新到磁盘
+innodb_flush_neighbors #SSD设置0顺序访问，SAS设置1随机访问
+tx_isolation #设置RC提高并发，默认RR
+```
+
+**SQL优化**
+
+**高效sql**
+
+![](https://raw.githubusercontent.com/aiceflower/assets/master/img/mysql/%E9%AB%98%E6%95%88sql.png)
+
+**索引设计**
+
+覆盖索引：
+
+- 查询谓词(**查询条件**)都能够通过index进行扫描
+- 排序(group by、order by)谓词(**排序，分组条件**)都能够通过index进行扫描
+- index包含了查询所需要的所有字段
+
+不能使用索引：
+
+- 不给选择充低的字段建索引，如性别
+- 联合索引中：不要第一个索引列使用范围查询，第一个查询条件不是最左列 【index_name(age,name)】
+- like条件不以%开始
+- 两个独立索引，一个检索一个排序，建议做组合排序
+- 不要在索引字段上使用函数操作
+- 不使用外键索引

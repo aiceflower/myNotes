@@ -58,7 +58,27 @@
 
 #### 2.Mysql框架和模块
 
+##### 1.框架和模块图
+
 ![Mysql框架和模块](<https://raw.githubusercontent.com/aiceflower/assets/master/img/mysql/mysql_frame_and_module.png>)
+
+##### 2.源码部分目录结构简介
+
+- **BUILD目录**：编译和安装脚本目录，执行compile-pentium-debug相当于./configure && make && make install
+- **client目录**：mysql常用命令和客户端工具
+- **storage目录**：Mysql各类存储引擎
+- **mysys目录**：MySQL库函数文件，其实是一个大杂烩，包括文件操作、内存分配、线程控制排序算法、hash函数等。
+- **sql目录**：Mysql服务器内核最为核心和重要的目录，包括线程、查询解析、查询优化，存储引擎接口等。
+- **vio目录**：Virtual I/O 主要用到处理各种网络协议
+
+-------以下是开源社区贡献代码
+
+- **regex目录**：执行正则匹配REGEXP需要这个库支持
+- **dbug目录**：调试库 使用with-debug参数编译会显示dbug输出
+- **strings目录**：
+- **zlib目录**：
+
+##### 3.mysql数据文件简介
 
 #### 3.Mysql查询执行过程
 
@@ -143,6 +163,42 @@ Mysql线程容器类I_LIST\<THD>主要用途：
 ##### 2.查询优化器
 
 ​	通过产生可供选择的多个执行计划，并从中选择最低估算开销的执行计划，来优化一条sql语句。
+
+#### 7.安全管理系统
+
+##### 1.安全相关
+
+1）**账号组成**
+
+​	由用户名和主机共同组成（'root'@'127.0.0.1'）。同一个账号，不同的主机登陆，MySQL服务认为是不同的连接请求。
+
+2）**MySQL登陆认证**
+
+![](<https://raw.githubusercontent.com/aiceflower/assets/master/img/mysql/mysql_login_check.png>)
+
+3）**具体优先原则**
+
+​	服务器把user读到内存后，根据Host和user字段的具体程度重新对host,user字段组成的记录进行排列，然后服务器会根据最先匹配的一条记录去允许登陆连接。
+
+##### 2.Mysql权限表(mysql库下)
+
+- **user**：超级 用户表，包括Mysql操作的所有权限。也用其来进行登陆验证。
+- **db**：针对数据库的权限，权限范围为该库中所有对象(包括表和字段)。对指定host的权限操作。
+- **tables_priv**：数据库中指定表的权限，细化到表
+- **columns_priv**：数据库中指定字段的权限，细化到表中字段
+- **procs_priv**：该表对某一个单独的存储过程或函数进行权限管理。
+
+##### 3.权限级别
+
+MySQL给一个合法用户赋予权限是按照以下顺序得到的：
+
+user(全局) -->  db(库) -->  tables_priv(表)  -->  columns_priv(列)  -->  procs_priv(函数)
+
+权限检查过程也是从user到procs_priv，检查user表如果为Y则所有权限都为Y，不再往下检查，如果为N则往下检查，依此类推。
+
+##### 4.安全级别
+
+![](<https://raw.githubusercontent.com/aiceflower/assets/master/img/mysql/security_level.png>)
 
 #### 99.优化
 

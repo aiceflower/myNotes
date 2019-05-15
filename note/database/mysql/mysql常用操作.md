@@ -25,12 +25,15 @@ select user();
 ***查询表***
 
 ```mysql
+#------表名称--------
 #1
 show tables;
 #2
 show tables from db_name like '%user%';
 #3
 select table_name from information_schema.tables where table_schema='database_name' and table_type='base table';
+#-----------表创建结构--------------------
+show create table table_name;
 ```
 
 ***查看表索引*：**

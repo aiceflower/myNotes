@@ -112,16 +112,28 @@ create user test@'127.0.0.1' identified by '123456';
 
 ##### 2）授权
 
+设置密码
+
+```mysql
+set password for 'test'@'192.168.1.1' = password('123456');#设置密码
+update user set password = password('123456') where user = 'root';#更新user表
+mysqladmin -u root -h 127.0.0.1   password '123456' #命令设置
+```
+
+
+
 查看权限：
 
 ```mysql
-show grants for 'test'@'%';
+show grants for 'test'@'%';#指定用户
+show grants;#当前用户
 ```
 
 单一授权
 
 ```mysql
-grant select on db_name.* to 'test'@'%' ;
+grant select on db_name.* to 'test'@'%' ;#所有表
+grant select(id, age) on testdb.user_info to test@localhost; #指定字段
 ```
 
 授权并创建用户
@@ -129,6 +141,14 @@ grant select on db_name.* to 'test'@'%' ;
 ```mysql
 grant all privileges on *.* to 'test'@'%' identified by '123456';
 ```
+
+撤销权限
+
+```mysql
+revoke all on *.* from test@'%';
+```
+
+
 
 ##### 3）权限等级
 
@@ -323,12 +343,12 @@ yum install perl-Time-HiRes
 
 ```shell
 innobackupex \
-	--default-file=my3306/conf/my.cnf \
+	--defaults-file=/tmp/u01/my3306/conf/my.cnf \
 	--user=root \
 	--password='123456' \
-	--socket=my3306/run/mysql.sock \
+	--socket=/tmp/u01/my3306/run/mysql.sock \
 	--no-timestamp \
-	/apps/backup/xtrabackup
+	/tmp/u01/backup/xtrabackup
 ```
 
 
@@ -539,6 +559,14 @@ innodb_log_file_size #日志文件大小，SSD建议4-8G，SAS建议1-2G
 innodb_flush_method=O_DIRECT #直接刷新到磁盘
 innodb_flush_neighbors #SSD设置0顺序访问，SAS设置1随机访问
 tx_isolation #设置RC提高并发，默认RR
+#安全相关
+skip_name_resolve=on #禁止DNS解析，只允许通过ip认证
+skip_networking=on #关闭TCP/IP网络连接服务，只允许socket(默认连接方式)方式进行连接
+./configure --with-yassl #Mysql自带的yaSSL 
+./configure --with-openssl #三方OpenSSL
+#以上两个需要同时设置 ssl_ca=cacert.pem ssl_cert=server-sert.pem ssl_key=server-key.pem
+mysqld_safe --skip-grant-tables #绕过权限表认证，root密码丢失时可用，
+./configure --disable-grant-options #防范上术漏洞(非法用户登陆系统以上术方式重启服务)
 ```
 
 **SQL优化**

@@ -40,3 +40,5 @@ $HOME/.bash_history [命令存放位置]
 /etc/vim/vimrc
 /etc/vimrc
 ~/.vimrc
+11.内核参数
+/etc/sysctl.conf 

@@ -665,3 +665,88 @@ mysql> install plugin rpl_semi_sync_slave soname 'semisync_slave.so';#lib/plugin
 
 ​	4.使用mysqlbinlog 回复两pos之间的数据
 
+#### 12.高可用的Mysql
+
+##### 1.MHA集群架构
+
+​	MHA管理主从，一个是备份数据，二个是主从切换，服务高可用。
+
+​	MHA是用per语言写的一个脚本管理工具，可维持M-S中Master库的高可用性，最大的特点是可以修复多个slave之间的差异日志，最终使所有slave保持数据一致，然后从中选择一个充当新的Master，并将其它的slave指向它。
+
+2.下载mha-manager(单独的mha机器，可管理多套mysql主从)和mha-node(每台mysql机器上)
+
+https://github.com/yoshinorim/mha4mysql-manager
+
+https://github.com/yoshinorim/mha4mysql-node
+
+#### 13.Mysql框架架构设计与容量规划
+
+##### 1.mysql架构设计
+
+![](https://raw.githubusercontent.com/aiceflower/assets/master/img/mysql/mysql_frame_design.png)
+
+##### 2.容量评估
+
+- LOAD：机器负载，top命令查看load average: 0.01, 0.03, 0.00（平均一分钟，5，15），数据取自/proc/loadavg，何时达到负载，看数据占/proc/cpuinfo中cpu个数即processor的比例
+- CPU：cpu使用率，  top查看cpu，取自/proc/stat
+- QPS：每钞查询数
+- TPS：每钞的事务数(DML操作)
+
+- CONNECT
+- IO
+- NET/IN
+- NET/OUT
+
+峰值qps = (总的PV * 80%) /  (60 * 60 * 24 * 20%)  一天80%的访问会在20%的时间到达
+
+机器数 = 总峰值qps / 压测得出的单台机器的极限qps
+
+压测：
+
+下载：https://codeload.github.com/akopytov/sysbench/zip/0.5
+
+安装：
+
+```shell
+./autogen.sh    
+./configure --with-mysql-includes=mysql/include --with-mysql-libs=mysql/lib && make
+```
+
+压测：
+
+```shell
+#准备工作
+/root/sysbench-0.5/sysbench/sysbench --test=/root/sysbench-
+0.5/sysbench/tests/db/select.lua --oltp-table-size=20000 --mysql-tableengine=innodb --mysql-user=root --mysql-password=123456 --mysql-port=3306 -
+-mysql-host=127.0.0.1 --mysql-db=test --max-requests=0 --max-time=60 --oltptables-count=20 --report-interval=10 --num_threads=2 prepare
+#跑
+/root/sysbench-0.5/sysbench/sysbench --test=/root/sysbench-
+0.5/sysbench/tests/db/select.lua --oltp-table-size=20000 --mysql-tableengine=innodb --mysql-user=root --mysql-password=root123 --mysql-port=3306 -
+-mysql-host=127.0.0.1 --mysql-db=test --max-requests=0 --max-time=60 --oltptables-count=20 --report-interval=10 --num_threads=2 run
+```
+
+##### 3.读写分离方案
+
+​	通过对数据库进行读写分离，来提升数据的处理能力。写操作集中到一个库上，读分解到其它库上。优：每台机器拥有全部数据，因此所有的数据库特性都可以实现，部分机器当机不影响系统的使用。缺：数据的复制同步是一个问题，需要考虑数据的迟滞性，一致性方面的问题。
+
+##### 4.数据分区方案（基本不用）
+
+​	把某一个或某几张相关的表的数据放在一个独立的数据库上，这样就可以把CPU、内存、文件IO、网络IO分解到多个机器中，从而提升系统处理能力。优：不存在数据库副本复制，性能更高。缺每个分区都是单点，如果某个分区宕机，就会影响到系统的使用。
+
+##### 5.数据库分表方案（推荐）
+
+​	也就是把数据库当中数据根据按照分库原则分到多个数据表当中，这样，就可以把大表变成多个小表，不同的分表中数据不重复，从而提高处理效率。优：数据不存在多个副本，不必进行数据复制，性能更高。缺：分表之间的数据很少进行集合运算；分表都是单点，如果某个分表宕机，如果使用的数据不在此分表，不影响使用。
+
+分表方案：同库分表(分表)、不同库分表(分库)
+
+**分库分表限制：**
+
+1.条件查询，分页查询受限制，查询必须带上分库分表所带上的id。
+
+2.事务可能跨多个库，数据一致性无法通过本地事务实现。
+
+3.规则确定后，扩展变更规则要迁移数据。
+
+**分库分表业务痛点**：
+
+全局序列、分片规则、数据聚合、跨库JOIN、分布式事务、高可用、负载均衡、开发复杂度。

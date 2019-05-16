@@ -183,7 +183,7 @@ drop user test@'127.0.0.1';
 
 #### 6.在线迁移mysql
 
-场景从服务器A迁移到服务器B
+场景从服务器A迁移到服务器B(**主从复制**)
 
 1.从服务器A创建一个复制账号
 
@@ -251,6 +251,10 @@ set global read_only=on; #on改成1也可以
 注：read_only对super用户无效
 
 9.服务器B设为主库(服务器B把服务器A转过来的binlog消化完)
+
+10.主从复制常见问题
+
+- **lave_IO_Running 为connecting**（网络不通、密码不对、pos不对、用户权限不足）
 
 #### 7.Mysql线上升级
 

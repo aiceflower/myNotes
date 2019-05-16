@@ -10,6 +10,15 @@
 create database testdb default character set utf8;
 ```
 
+**创建表**
+
+```mysql
+#创建带分区的表
+create table t2(id int primary key,name varchar(10)) engine=MYISAM comment '*' partition by hash(id) partitions 2;
+```
+
+
+
 #### **2.删**
 
 #### **3.改**
@@ -32,8 +41,9 @@ show tables;
 show tables from db_name like '%user%';
 #3
 select table_name from information_schema.tables where table_schema='database_name' and table_type='base table';
-#-----------表创建结构--------------------
+#-----------表创建结构
 show create table table_name;
+
 ```
 
 ***查看表索引*：**
@@ -53,6 +63,16 @@ show columns from user;
 select column_name from information_schema.columns where table_schema='database_name' and table_name='table_name';
 
 ```
+
+**查询表的存储引擎**
+
+```mysql
+show create table table_name;
+#或 【 information_schema.tables 表中也有】
+show table status from db_name where name = 'table_name';
+```
+
+
 
 #### **5.系统相关**
 

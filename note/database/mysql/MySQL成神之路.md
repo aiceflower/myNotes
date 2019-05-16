@@ -181,80 +181,9 @@ drop user test@'127.0.0.1';
 - 备份临时表：mysqldump -h127.0.0.1 -uroot db_name table_name > /tmp/bak.sql
 - 一段时间未出问题后删除临时表：drop table test_bak;
 
-#### 6.在线迁移mysql
+#### 6.
 
-场景从服务器A迁移到服务器B(**主从复制**)
-
-1.从服务器A创建一个复制账号
-
-```mysql
-grant replication slave,replication client on *.* to 'repl' identified by '123456';	
-```
-
-2.服务器A和服务器B设置不同的server_id
-
-```mysql
-show variables like '%server_id%' #查
-set global server_id=102 #改
- #永久改的话改 my.cnf中的server_id
-```
-
-3.服务器A执行一次完整的逻辑备份
-
-```mysql
-mysqldump --single-transaction --master-data=2 -uroot xtj > my3306/bak/xtj.sql
-#--single-transaction 不会锁表	
-#--master-data=2 做主从复制的时候需要加
-```
-
-4.从服务器A拷贝备份到服务器B
-
-5.服务器B上执行一次全量恢复
-
-```mysql
-create database xtj default character set utf8;
-use xtj;
-mysql> source my3306/bak/xtj.sql #这句话需要选中数据库后再操作
-```
-
-6.服务器B上执行change master 设置主从复制
-
-```mysql
-#服务器B上执行
-change master to
-master_host='127.0.0.1',
-master_port=3306,
-master_user='repl',
-master_password='123456',
-master_log_file='binlog.000004',
-master_log_pos=2475
-
-#grep MASTER_LOG_FILE /tmp/u01/my3306/bak/xtj.sql 查找master_log_file和master_log_pos
-```
-
-7.服务器B上执行start slave 启动复制
-
-```mysql
-start slave
-show slave status \G; #查看下状态，如下为ok
-Slave_IO_Running: Yes
-Slave_SQL_Running: Yes
-```
-
- 8.服务器A上设置为read only
-
-```mysql
-show variables like '%read_only%';
-set global read_only=on; #on改成1也可以
-```
-
-注：read_only对super用户无效
-
-9.服务器B设为主库(服务器B把服务器A转过来的binlog消化完)
-
-10.主从复制常见问题
-
-- **lave_IO_Running 为connecting**（网络不通、密码不对、pos不对、用户权限不足）
+- 
 
 #### 7.Mysql线上升级
 
@@ -599,6 +528,77 @@ mysqld_safe --skip-grant-tables #绕过权限表认证，root密码丢失时可�
 
 #### 11.Mysql主从复制
 
+##### 0.在线迁移mysql
+
+场景从服务器A迁移到服务器B(**主从复制**)
+
+1.从服务器A创建一个复制账号
+
+```mysql
+grant replication slave,replication client on *.* to 'repl' identified by '123456';	
+```
+
+2.服务器A和服务器B设置不同的server_id
+
+```mysql
+show variables like '%server_id%' #查
+set global server_id=102 #改
+ #永久改的话改 my.cnf中的server_id
+```
+
+3.服务器A执行一次完整的逻辑备份
+
+```mysql
+mysqldump --single-transaction --master-data=2 -uroot xtj > my3306/bak/xtj.sql
+#--single-transaction 不会锁表	
+#--master-data=2 做主从复制的时候需要加
+```
+
+4.从服务器A拷贝备份到服务器B
+
+5.服务器B上执行一次全量恢复
+
+```mysql
+create database xtj default character set utf8;
+use xtj;
+mysql> source my3306/bak/xtj.sql #这句话需要选中数据库后再操作
+```
+
+6.服务器B上执行change master 设置主从复制
+
+```mysql
+#服务器B上执行
+change master to
+master_host='127.0.0.1',
+master_port=3306,
+master_user='repl',
+master_password='123456',
+master_log_file='binlog.000004',
+master_log_pos=2475
+
+#grep MASTER_LOG_FILE /tmp/u01/my3306/bak/xtj.sql 查找master_log_file和master_log_pos
+```
+
+7.服务器B上执行start slave 启动复制
+
+```mysql
+start slave
+show slave status \G; #查看下状态，如下为ok
+Slave_IO_Running: Yes
+Slave_SQL_Running: Yes
+```
+
+ 8.服务器A上设置为read only
+
+```mysql
+show variables like '%read_only%';
+set global read_only=on; #on改成1也可以
+```
+
+注：read_only对super用户无效
+
+9.服务器B设为主库(服务器B把服务器A转过来的binlog消化完)
+
 ##### 1.主从复制参数
 
 ```mysql
@@ -642,14 +642,26 @@ mysql> install plugin rpl_semi_sync_slave soname 'semisync_slave.so';#lib/plugin
 
 ##### 4.主从复制常见问题
 
-1.主库挂了怎么判断从库是否同步完成？
+1.**主库挂了怎么判断从库是否同步完成**？
 
 ```mysql
  show slave status #看主库同步的日志文件和位置
  #1看复制到哪个文件的哪个位置 Master_Log_File和Read_Master_Log_Pos
  #2看执行文件和位置 Relay_Master_Log_file和Exec_Master_Log_Pos
  #3看文件与位置相等不，也可查主的binlog与从的执行情况
+ show processlist;
+ #看到 has read all relay log同步完成
 ```
 
+2.**lave_IO_Running 为connecting**（网络不通、密码不对、pos不对、用户权限不足）
 
+3.**mysql误删库恢复**
+
+​	1.将最新一次备份的数据回复
+
+​	2.show binlog events in 'binlog.xxx' 记下删除之前的pos，做为stop- position
+
+​	3.查看最新一次备份中的pos，做为start-position
+
+​	4.使用mysqlbinlog 回复两pos之间的数据
 

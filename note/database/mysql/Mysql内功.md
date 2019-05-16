@@ -80,6 +80,12 @@
 
 ##### 3.mysql数据文件简介
 
+- **.frm**：表元数据文件，描述了表的定义，
+- **.ibd**：Innodb存储引擎的MySQL表数据文件、索引文件
+- **.MYD**：MYISAM存储引擎的表数据文件
+- **.MYI**：MYISAM存储引擎的表索引文件
+- **db.opt**：记录了当前库的字符集和核对规则
+
 #### 3.Mysql查询执行过程
 
 ![Mysql查询执行过程](https://raw.githubusercontent.com/aiceflower/assets/master/img/mysql/mysql_query_executing_process.png)
@@ -199,6 +205,45 @@ user(全局) -->  db(库) -->  tables_priv(表)  -->  columns_priv(列)  -->  pr
 ##### 4.安全级别
 
 ![](<https://raw.githubusercontent.com/aiceflower/assets/master/img/mysql/security_level.png>)
+
+#### 8.经典存储引擎
+
+##### 1.Mysql数据文件
+
+**元数据文件  --  frm**
+
+​	MySQL中的每个表，在磁盘上均有一个.frm的文件与之对应(每种存储引擎都有这个文件)。frm在所有平台上的格式是一样的。创建索引也会生成一个.frm文件。打开表时frm文件被缓存在table cache中，下次访问这个表时，无需再次打开和解析这个frm，直接从缓存中取。
+
+**MYISAM数据文件 -- myd**
+
+​	数据与元数据相互穿插存储。MYISAM支持三种不同存储格式 -- 固定的、动态的和压缩的。其中固定和动态根据使用的列类型自动选择，压缩的只能用myisampack工具创建。
+
+**MYISAM索引文件 --  myi**
+
+​	MYISAM存储引擎的每个表都对应一个MYI文件。MYI文件包含两部分，头部信息和索引值。
+
+**Innodb架构**
+
+![](<https://raw.githubusercontent.com/aiceflower/assets/master/img/mysql/innodb_frame.png>)
+
+​	第一层：Handle AP的存在使得Innodb能够顺利插入到Mysql中，同是Innodb还为应用提供了API，用户可将innodb存储引擎添加到其它应用中。
+
+​	第二层：事务层，在Innodb中，所有行为都发生在事务中。
+
+​	第三层：锁功能层，完成锁功能和事务管理的功能(如回滚、提交等)。Innodb采用行级读写锁。
+
+​	第四层：缓存管理层，高效的将数据存放在内存之中。
+
+​	第五层：存储空间IO管理，为文件读写提供接口并维护表空间和日志空间大小。
+
+#### 9.MySQL日志功能
+
+##### 1.几种常见的日志
+
+- **错误日志**：记录MySQL的启动、停止信息及在MySQL运行过程中的错误信息。log_error
+- **普通日志**：记录连接请求和从客户端收到的SQL语句。**默认不记录**该日志，可开启general_log和指定目录general_log_file，记录日志到表设置log_output=TABLE,FILE，表为mysql.general_log（默认CSV存储引擎）
+- **慢查询日志**：记录查询时间大于long_query_time及未使用索引的查询语句。slow_query_log，slow_query_log_file，对应的表为mysql.slow_log（CSV）
+- **二进制日志**：记录所有修改数据的SQL语句，也用于MySQL的数据恢复与复制。log_bin，log_bin_basename
 
 #### 99.优化
 

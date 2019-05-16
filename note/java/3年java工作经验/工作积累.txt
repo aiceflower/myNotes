@@ -120,4 +120,4 @@ a b 为true其它为false
 25.获取对象的内存地址
 	默认Object的hashCode方法返回对象的内存地址，但该方法有时被重写。
 	System.identityHashCode(obj);用这个方法可获取对象的内存地址。
-
+26.TCP/IP协议统一采用大端方式传输数据

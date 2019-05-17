@@ -78,13 +78,29 @@
 - **strings目录**：
 - **zlib目录**：
 
-##### 3.mysql数据文件简介
+##### 3.mysql数据文件及目录简介
+
+- **my.cnf**：mysql配置文件
 
 - **.frm**：表元数据文件，描述了表的定义，
 - **.ibd**：Innodb存储引擎的MySQL表数据文件、索引文件
 - **.MYD**：MYISAM存储引擎的表数据文件
 - **.MYI**：MYISAM存储引擎的表索引文件
-- **db.opt**：记录了当前库的字符集和核对规则
+- **db_name/db.opt**：记录了当前库的字符集和核对规则
+- **mysql_install_db**：Mysql初始化脚本
+- **mysql.sock**：socket，发起本地连接时可用
+- **ibdata[x]**：innodb内部数据
+- **ib_logfile[x]**：innodb内部日志
+- **binlog.index**：管理主库上的binlog文件，只有在此文件中出现的日志文件才被Mysql承认并使用
+- **relay.index**：功能同binlog.index，管理从库的relay log文件
+- **master.info**：从库上文件，由I/O线程更新，记录连接主库时的相关信息
+- **relay-log.info**：从库上文件，由SQL线程更新，记录SQL线程读取和执行Relay Log当前状态
+- **bin目录**：存放可执行文件
+- **data目录**：存放数据库
+- **share目录**：数据库，表初始化脚本及字符集、语言等信息。
+- **include目录**：头文件
+- **binlog目录**：存放myhsql的binlog日志
+- **iblog目录**：innodb数据存放目录，初始化时指定的
 
 #### 3.Mysql查询执行过程
 
@@ -236,7 +252,7 @@ user(全局) -->  db(库) -->  tables_priv(表)  -->  columns_priv(列)  -->  pr
 
 ​	第五层：存储空间IO管理，为文件读写提供接口并维护表空间和日志空间大小。
 
-#### 9.MySQL日志功能
+#### 9.MySQL其它功能
 
 ##### 1.几种常见的日志
 
@@ -244,6 +260,38 @@ user(全局) -->  db(库) -->  tables_priv(表)  -->  columns_priv(列)  -->  pr
 - **普通日志**：记录连接请求和从客户端收到的SQL语句。**默认不记录**该日志，可开启general_log和指定目录general_log_file，记录日志到表设置log_output=TABLE,FILE，表为mysql.general_log（默认CSV存储引擎）
 - **慢查询日志**：记录查询时间大于long_query_time及未使用索引的查询语句。slow_query_log，slow_query_log_file，对应的表为mysql.slow_log（CSV）
 - **二进制日志**：记录所有修改数据的SQL语句，也用于MySQL的数据恢复与复制。log_bin，log_bin_basename
+
+##### 2.复制功能
+
+**单向复制与合并复制**：
+
+​	MySQL采用单向复制，即所有更新都先发生在主服务器端，然后再复制给从服务器。从服务器是只读的，不会有更新传递到主服务器。
+
+​	合并复制是多个服务器进行读写操作，并使用合并复制机制将这些更新统一，将最终的结果传递给从服务器。
+
+**同步复制与异步复制**：
+
+​	同步：所有的请求操作都发生在主/从服务器端，改变同时提交到两个数据库中，操作也同时写到日志中，最后把结果返回给客户端。
+
+​	异步：将请求在主服务器端执行，执行完成将结果返回给客户端，同时记录下操作，然后将变更的记录传递给从服务器，这会存在时间差。
+
+##### 3.Replication复制实现原理
+
+1）主服务器将用户对数据库的改变操作以二进制方式记录在binlog日志中，然后由Binlog Dump线程将日志中的内容传给从服务器。
+
+2）从服务器通过一个I/O线程将主服务器的二进制日志文件中的操作事件，复制到本地的Relay Log的中继日志文件中。（start slave后启动）
+
+3）从服务器通过另一个SQL线程将Relay Log中的操作依次顺序地在本地执行。Relay Log与Binlog有相同的格式，SQL线程会自动删除Relay Log中已经被执行的事件。
+
+##### 4.Replication应用两大模块
+
+**主复制模块：**
+
+​	记录操作到binlog，在index文件中更新不存在的binlog文件，并将符合要求的日志事件传递到从服务器的I/O线程。
+
+**从复制模块：**
+
+​	负责从服务器复制功能。通过I/O线程与主进行通信，并将更新复制到relay log中。然后由SQL线程更新。
 
 #### 99.优化
 

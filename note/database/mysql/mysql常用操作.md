@@ -1,21 +1,89 @@
-<center><h2>Mysql</h2></center>
+<center><h2>MySQL基础</h2></center>
 
-### **一、Mysql常用操作**
+### 一、MySQL基础操作
+
+#### 1.系统相关
+
+1.启动
+
+2.关闭
+
+3.
+
+#### 2.库
+
+##### 1.增
+
+```mysql
+#创建数据库，调协编码为utf-8,
+create database testdb default character set utf8;
+```
+
+##### 2.删
+
+##### 3.改
+
+##### 4.查
+
+```mysql
+show databases;#查看所有数据库
+select database();#查看当前选中数据库
+show create database db_name; #查询库创建语句
+```
+
+
+
+##### 5.其它
+
+#### 3.表
+
+##### 1.增
+
+```mysql
+#创建普通表
+create table test (
+    id int primary key auto_increment,#设置主键自增长
+    mtime timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,#自支更新时间
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='test table'
+#创建带分区的表
+create table t2(id int primary key,name varchar(10)) engine=MYISAM comment '*' partition by hash(id) partitions 2;
+```
+
+
+
+##### 2.删
+
+##### 3.改
+
+##### 4.查
+
+```mysql
+show tables#查询当前库下所有表
+```
+
+
+
+##### 5.其它
+
+#### 4.索引
+
+##### 1.增
+
+##### 2.删
+
+##### 3.改
+
+##### 4.查
+
+##### 5.其它
+
+### **二、Mysql常用操作**
 
 #### **1.增**
 
 **创建数据库**
 
-```mysql
-create database testdb default character set utf8;
-```
 
-**创建表**
-
-```mysql
-#创建带分区的表
-create table t2(id int primary key,name varchar(10)) engine=MYISAM comment '*' partition by hash(id) partitions 2;
-```
 
 
 

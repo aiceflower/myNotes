@@ -39,6 +39,17 @@
 
 #### 7.PAXOS
 
+#### 8.其它
+
+##### 1）MySQL连接方式
+
+- **TCP/IP**：mysql指定-h参数后使用该方式连接
+- **socket**：mysql命令不指定-h参数时使用该方式连接
+
+##### 2）Mysql复制
+
+​	MySQL采用单向复制的方式，不支持多主服务器的复制功能。
+
 ### 二、MySQL相关技能
 
 #### 1.高可用
@@ -598,6 +609,15 @@ set global read_only=on; #on改成1也可以
 注：read_only对super用户无效
 
 9.服务器B设为主库(服务器B把服务器A转过来的binlog消化完)
+
+```mysql
+#查看master上连接的slave信息
+show slave hosts;
+#查看slave上的master信息
+show slave status;
+```
+
+
 
 ##### 1.主从复制参数
 

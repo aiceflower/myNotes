@@ -6,7 +6,18 @@
 
 ##### a.MVCC(多版本并发控制)
 
+**是什么？**
+	MVCC英文全称Multi-Version Concurrency Control多版本并发控制。在我看来如果把乐观锁看作接口的话，那MVCC就是该接口的实现而已。
+	MVCC相对于传统的基于锁的并发控制特点是读不上锁，对于读多写少的场景大提高了并发。
+	我们知道乐观锁主要依靠版本控制，消除锁定，Mysql写操作会加排它锁二者相互矛盾。从某种意义上说Mysql的MVCC并非真正意义上的MVCC，它只是借用了MVCC的名号实现了读的非阻塞而已。
+	InnoDB中的MVCC主要是为RR隔离级别做的。
+**作用？**
+	锁机制可以控制并发操作，但系统开销太大，而MVCC可以在大多数情况下代替行级锁，降低系统开销。
+	MVCC是通过保存数据在某个时间点的快照来实现的。
+
 ##### b.ACID
+
+​	事务的四种属性，原子性，一致性，隔离性，持久性。
 
 ##### c.一致性读
 
@@ -49,6 +60,10 @@
 ##### 2）Mysql复制
 
 ​	MySQL采用单向复制的方式，不支持多主服务器的复制功能。
+
+##### 3）Mysql大杂烩
+
+​	mysql数据库的原则，如果数据是重复的插入是插在后面。
 
 ### 二、MySQL相关技能
 
@@ -192,11 +207,7 @@ drop user test@'127.0.0.1';
 - 备份临时表：mysqldump -h127.0.0.1 -uroot db_name table_name > /tmp/bak.sql
 - 一段时间未出问题后删除临时表：drop table test_bak;
 
-#### 6.
-
-- 
-
-#### 7.Mysql线上升级
+#### 6.Mysql线上升级
 
 如5.6 一主一从升级到5.7
 
@@ -214,7 +225,7 @@ drop user test@'127.0.0.1';
 
 注：在bin/目录下有个mysql_upgrade -s可升级数据字典,5.6的数据字典与5.7的不一样
 
-#### 8.备份与恢复
+#### 7.备份与恢复
 
 ##### 1.分类
 
@@ -329,7 +340,7 @@ mysqlbinlog \
     mysql -uroot -p123456 
 ```
 
-#### 9.MySQL锁机制与事物控制
+#### 8.MySQL锁机制与事物控制
 
 ##### 1.执行语句被阻塞如何分析
 
@@ -470,7 +481,7 @@ update t1 set name = 'd' where id = 1; #此时产生死锁
 
 ![](https://raw.githubusercontent.com/aiceflower/assets/master/img/mysql/lock_table.png)
 
-#### 10.优化
+#### 9.优化
 
 ##### 1.IO调度算法
 
@@ -537,7 +548,7 @@ mysqld_safe --skip-grant-tables #绕过权限表认证，root密码丢失时可�
 - 不要在索引字段上使用函数操作
 - 不使用外键索引
 
-#### 11.Mysql主从复制
+#### 10.Mysql主从复制
 
 ##### 0.在线迁移mysql
 
@@ -617,8 +628,6 @@ show slave hosts;
 show slave status;
 ```
 
-
-
 ##### 1.主从复制参数
 
 ```mysql
@@ -685,7 +694,7 @@ mysql> install plugin rpl_semi_sync_slave soname 'semisync_slave.so';#lib/plugin
 
 ​	4.使用mysqlbinlog 回复两pos之间的数据
 
-#### 12.高可用的Mysql
+#### 11.高可用的Mysql
 
 ##### 1.MHA集群架构
 
@@ -699,7 +708,7 @@ https://github.com/yoshinorim/mha4mysql-manager
 
 https://github.com/yoshinorim/mha4mysql-node
 
-#### 13.Mysql框架架构设计与容量规划
+#### 12.Mysql框架架构设计与容量规划
 
 ##### 1.mysql架构设计
 
@@ -770,3 +779,59 @@ https://github.com/yoshinorim/mha4mysql-node
 **分库分表业务痛点**：
 
 全局序列、分片规则、数据聚合、跨库JOIN、分布式事务、高可用、负载均衡、开发复杂度。
+
+#### 13.Online DDL
+
+**1.mysql原生**
+
+```mysql
+alter table emp drop column age,algorithm=inplace,lock=none;#添加字段，创建索引也用alter，不用create，还有copy的方式，但原生的建议使用inplace
+```
+
+**锁(lock)**：
+
+- DEFAULT：判断当前DDL是否可以用NONE，如果不能判断是否可以用SHARED...EXCLUSIVE
+- NONE：不加任何锁，可读可写，最大并发
+- SHARED：共享模式，mysql的快速创建索引(fast index create)，使用的就是共享锁。可读，不可写。
+- EXCLUSIVE：排他，不可读不可写。
+
+**算法**：
+
+- DEFAULT：根据old_alter_table来确定是用INPLACE(off)还是COPY(on)
+
+- INPLACE：效率比COPY快
+- COPY：
+
+**COPY方式(以创建索引为例)：**
+
+1.新键带索引的临时表，与原表结构相同
+
+2.锁原表(s)，禁止DML，允许查询。
+
+3.将原表数据复制到临时表
+
+4.锁原表(x)，禁止读写，进行rename，升级字典锁
+
+5.完成创建索引操作
+
+**INPLACE方式：**
+
+1.创建索引（只能是二级索引，如果是聚族索引则会使用COPY方式）数据字典
+
+2.加锁(s)，禁止DML，允许查询。
+
+3.读取聚族索引和将二级索引所对应的字段写到二级索引数据字典里，排序并插入新索引（一个新的数据字典，不需要复制数据），**性能高于COPY方式**。
+
+4.等待打开当前表的所有只读事物提交
+
+5.创建索引结束
+
+##### 2.使用OAK工具
+
+Openark-kit工具包的小工具oak-online-alter-table小工具是用来实现Online DDL的（copy的方式）。支持线上DDL/DML/并发。
+
+使用时要检查是否符合oak条件：
+
+- 单列唯一索引（联合索引会引发mysql一个bug）
+- 没有外键
+- 没有定义触发器（有也先删除了）

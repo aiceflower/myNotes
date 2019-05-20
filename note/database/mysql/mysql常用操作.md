@@ -25,6 +25,7 @@ cat data/db_name/db.opt#查看字符集与核对规则
 show variables like '%xxx%';#查看与xxx有关的参数
 port	#端口
 char	#系统编码
+date_format #日期格式
 storage_engine #默认存储引擎
 sql_log_bin #1:记录二进制日志,0:不记录
 log_error #错误日志文件位置
@@ -34,6 +35,33 @@ tx_isolation #查询日志隔离级别
 ```
 
 ##### 3.操作积累
+
+```mysql
+explain select_statement; #分析查询执行计划
+prompt mysql> #\D 完整日期，\d 当前数据库，\h 服务器名称，\u 当前用户 修改提示符
+show warnings; #查看警告信息
+select * from t1 group by name order by null;#避免多余排序
+```
+
+
+
+**MySQLroot密码修改**
+
+```mysql
+#1.知道root密码，登陆
+set password for root@localhost= password('new_password');
+#2.知道root密码,登陆
+update user u set authentication_string = password('123456') where u.user = 'root';
+flush privileges;
+#3.知道root密码未登陆
+mysqladmin -uroot -pold_passowrd password new_password;
+mysqladmin -uroot -proot password 123456;
+#4.不知道root用户密码
+mysqld --skip-grant-tables；#跳过权限校验启动服务
+mysql -u root;#登陆后使用1，2，3方式修改
+```
+
+
 
 ##### 4.其它
 
@@ -49,15 +77,23 @@ tx_isolation #查询日志隔离级别
 
 ```mysql
 #创建数据库，调协编码为utf-8,
-create database testdb default character set utf8;
+create database [IF NOT EXISTS] testdb default character set utf8;
 ```
 
 ##### 2.删
 
 ```mysql
 #删除数据库
-drop database db_name;
+drop database [IF EXISTS] db_name;
 ```
+
+##### 3.改
+
+```mysql
+alter database db_name character set utf8;
+```
+
+
 
 ##### 3.查
 
@@ -83,7 +119,7 @@ use db_name;
 ```mysql
 #-------表
 #创建普通表
-create table test (
+create table [IF NOT EXISTS] test (
     id int primary key auto_increment,#设置主键自增长,
     name varchar(10) not null,#非空
     id_no int(18) unique,
@@ -114,6 +150,7 @@ alter table tb_name drop foreign key fk_name;#删除外键,有外键是主表不
 alter table tb_name drop col_name;#删除表字段
 #-------数据
 delete from tb_name [where id = '1'];#删除表数据
+TRUNCATE TABLE tb_name; #TRUNCATE是DDL语句，它先drop该表，再create该表。而且无法回滚
 ```
 
 ##### 3.改
@@ -122,6 +159,7 @@ delete from tb_name [where id = '1'];#删除表数据
 #-------表
 alter table old_name rename [to] new_name;#修改表名
 alter table tb_name engine=innodb;#修改库存储引擎
+alter table tb_name convert to character set utf8;#修改编码
 #-------字段
 alter table tb_name modify id int(10);#修改字段类型
 alter table tb_name change name name_new varchar(10);#修改字段名，可用于修改字段类型
@@ -438,16 +476,32 @@ FROM
 ##### 7.其它函数
 
 - format(num,len)：四舍五入num，保留小数点后len位，不够补0，len为<=0保留整数
+
 - conv(n,from_base,to_base)：进制转换
+
+- bin/oct/hex(n)：返回n二(八/十六)进制的字符串
+
+- char(n1,n2...)：将数字转换为char
+
 - inet_ntoa(ip)：转换ip到点选地址，inet_ntoa('a.b.c.d')=a * 256^3 + b * 256^2 + c * 256 + d
+
 - inet_ntoa(num)：将点选地址转换为ip
+
 - get_lock(str,time)：结果为1说明得到一个名为str的锁
+
 - is_used_lock(str)：返回当前连接id，锁正在被使用
+
 - is_free_lock(str)：返回0说明锁在被使用
+
 - release_lock(str)：返回1，释放锁
+
 - benchmark(n,expr)：重复执行指定expr操作n次，可报告语句执行时间
+
 - convert(str using gbk)：改变字符集
+
 - cast/convert(x, as type)：改变数据类型 cast(100 as char(2))，convert('2019-05-20 10:10:10',TIME)
+
+  
 
 
 

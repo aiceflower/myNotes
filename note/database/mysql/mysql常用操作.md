@@ -12,11 +12,7 @@ show table status from db_name where name = 'table_name';#查询表的存储引�
 mysqld --verbos --help |grep my.cnf #查询配置文件加载顺序
 show processlist;#查询进程
 show engine innodb status \G;#查看引擎状态
-show variables like 'char%' #查看字符集
-show variables like 'collation_%' #查看核对规则
-#系统使用utf8字符集，若使用utf8_bin校对规则执行SQL查询时区分大小写，使用utf8_general_ci不区分大小写
 cat data/db_name/db.opt#查看字符集与核对规则
-
 ```
 
 ##### 2.系统参数
@@ -25,6 +21,8 @@ cat data/db_name/db.opt#查看字符集与核对规则
 show variables like '%xxx%';#查看与xxx有关的参数
 port	#端口
 char	#系统编码
+collation #核对规则
+#系统使用utf8字符集，若使用utf8_bin校对规则执行SQL查询时区分大小写，使用utf8_general_ci不区分大小写
 date_format #日期格式
 storage_engine #默认存储引擎
 sql_log_bin #1:记录二进制日志,0:不记录
@@ -41,6 +39,9 @@ explain select_statement; #分析查询执行计划
 prompt mysql> #\D 完整日期，\d 当前数据库，\h 服务器名称，\u 当前用户 修改提示符
 show warnings; #查看警告信息
 select * from t1 group by name order by null;#避免多余排序
+group_concat(); #对分组后的某字段进行连接
+limit 也可跟于update，delete语句后
+limit 3000,20 可用 id > 3000 limit 20 替换，提高效率
 ```
 
 
@@ -130,6 +131,8 @@ create table [IF NOT EXISTS] test (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='test table'
 #创建带分区的表
 create table t2(id int primary key,name varchar(10)) engine=MYISAM comment '*' partition by hash(id) partitions 2;
+
+create table t2 like t1; #复制表结构，t2可以学习到t1所有的表结构
 
 #-------字段
 alter table tb_name add col_name varchar(10) not null;#增加字段
@@ -441,7 +444,7 @@ FROM
 - year/quarter/month/day/hour/minute/second(d)：获取d的年/季度/月/日/时/分/秒
 - time_to_sec(time)：将时间转换为秒
 - sec_to_time：秒转换为时间
-- date_add/adddate/date_sub/subdate/addtime/subtime/datediff：计算函数，参数为 d, interval x type
+- date_add/adddate/date_sub/subdate/addtime/subtime/**datediff**：计算函数，参数为 d, interval x type
 - date_format/time_format(d,f)：格式化日期/时间函数
 - get_format(val_type,format_type)：获取模式，如 (datetime,'iso')
 
@@ -500,6 +503,8 @@ FROM
 - convert(str using gbk)：改变字符集
 
 - cast/convert(x, as type)：改变数据类型 cast(100 as char(2))，convert('2019-05-20 10:10:10',TIME)
+
+- group_concat(); #对分组后的某字段进行连接
 
   
 

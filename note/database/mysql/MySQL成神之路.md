@@ -938,7 +938,7 @@ b）三范式
 
 #### 8.sql语句调优
 
-##### 1.慢查询 (bandicam,mindmanager)
+##### 1.慢查询 
 
 **什么是慢查询？**
 
@@ -950,13 +950,7 @@ b）三范式
 
 ​	根据slow_query_log_file查询慢查询日志存放位置，根据日志定位慢查询语句。
 
-2.全文索引fulltext
+​	 
 
-​	 SELECT * FROM `student` WHERE **MATCH**(`name`) **AGAINST**('聪')
 
-```mysql
-#删除外键，2条语句
-alter table emp drop foreign  key fk_emp;#解除约束
-alter table emp drop index fk_emp;#删除外键
-```
 

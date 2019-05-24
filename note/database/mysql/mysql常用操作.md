@@ -9,7 +9,7 @@
 ```mysql
 show engines;#查询系统支持的引擎
 show table status from db_name where name = 'table_name';#查询表的存储引擎
-mysqld --verbos --help |grep my.cnf #查询配置文件加载顺序
+mysql --help |grep my.cnf #查询配置文件加载顺序
 show processlist;#查询进程
 show engine innodb status \G;#查看引擎状态
 cat data/db_name/db.opt#查看字符集与核对规则
@@ -42,6 +42,7 @@ select * from t1 group by name order by null;#避免多余排序
 group_concat(); #对分组后的某字段进行连接
 limit 也可跟于update，delete语句后
 limit 3000,20 可用 id > 3000 limit 20 替换，提高效率
+mysql> system ls -lh /tmp/ #mysql登陆状态下执行系统命令
 ```
 
 
@@ -207,12 +208,16 @@ create [unique|fulltext] index idx_name on tb_name (column(len));#使用create�
 ```mysql
 alter table tb_name drop index idx_name;#删除索引
 drop index idx_name on tb_name;#使用drop删除索引
+#删除外键，2条语句
+alter table emp drop foreign  key fk_emp;#解除约束
+alter table emp drop index fk_emp;#删除外键
 ```
 
 ##### 3.查
 
 ```mysql
 show index in/from tb_name;#查询表上创建的索引
+SELECT * FROM student WHERE MATCH(column) AGAINST('text') #全文索引查询
 ```
 
 

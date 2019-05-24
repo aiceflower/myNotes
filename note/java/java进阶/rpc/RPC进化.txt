@@ -1,0 +1,32 @@
+1.RPC Remote Procedure Call 远程过程调用
+2.如何在一个JVM中调用另一个JVM的方法
+	1.把该方法的字节码文件拷贝过去
+	2.打成相应的jar包，然后引用
+3.通过socket进行传输。(需要写很多的代码)
+	需要把.class转换为二进制文件，所以需要序列化和反序列化。
+4.java大牛对这一过程的实现
+	RMI --> Remote Method Invocation 远程方法调用 (对上述过程的封装，但仅适用于java)
+5.如果要调用其它语言的实现呢(可能其它语言已经实现了，也可能使用其它语言实现更合适)
+	协议	序列化的方式				服务		缺点
+	http  +  	xml 		====>   webservice   	数据冗余
+	http  +     json        ====>   要有高度，可提炼为RPC，即 socket，RMI，webservice ===》 RPC
+	SOAP 简单对象传输协议
+6.RPC的健全
+	加上注册中心(抽取出的公共方法，供其它服务调用) + 监控服务(监控调用次数，频率，服务状态)  ===》起个名字(比如叫double)
+
+有开发的慧根
+7.自开发RPC
+	Consumer + Provider + 通信 + 序列化  RPC基础
+	注册中心 + 监控  添砖加瓦
+	
+###
+1.java基础
+2.java框架
+3.数据库
+4.高效工具
+5.分布式(es、mq)
+7.微服务(dubbo、springcloud)
+8.高并发
+9.性能调优(jvm、tomcat、mysql)
+10.团队协作(maven、git、jenkins)
+11.项目实战

@@ -30,6 +30,7 @@ log_error #错误日志文件位置
 slow_query_log #慢查询
 datadir #数据库数据位置
 tx_isolation #查询日志隔离级别
+lower_case_table_names #表名是否区分大小写。0区分，1不区分
 ```
 
 ##### 3.操作积累
@@ -43,6 +44,15 @@ group_concat(); #对分组后的某字段进行连接
 limit 也可跟于update，delete语句后
 limit 3000,20 可用 id > 3000 limit 20 替换，提高效率
 mysql> system ls -lh /tmp/ #mysql登陆状态下执行系统命令
+```
+
+##### 4.MySQL服务
+
+```mysql
+#启动mysql服务
+mysqld_safe --defaults-file=my.cnf & 
+#关闭服务
+mysqladmin --socket=my3306/run/mysql.sock --port=3306 shutdown & #--socket 可换成 -S
 ```
 
 
@@ -271,6 +281,8 @@ mysql -uroot -p123456 -P3306 -h127.0.0.1 -e "expr" #-e 执行命令
 create user 'user_name'@'host' identified by 'password';#创建用户
 grant select,update on *.* to 'user_name'@'host' identified by 'password';#受权并创建
 insert into mysql.user(host,user,password) values('host','user_name',password('123'));
+flush privileges;
+#这种方式需要flush，它是直接把数据做了持久化，缓存是不知道的，flush是把user中的数据重新加载进缓存。
 #权限
 grant all on *.* to 'user_name'@'host';#授所有权限
 grant select(id,name) on 'db_name'.'tb_name' to 'user_name'@'host';#给列授权
@@ -300,8 +312,8 @@ mysqld --skip-grant-tables #使用此方式启动服务后，修改密码，用�
 
 ```mysql
 select host,user,password from mysql.user;#查询用户密码
-show grant for 'user_name'@'host'; #查询用户权限
-
+show grants for 'user_name'@'host'; #查询用户权限
+show grants;#查看当前用户权限
 ```
 
 

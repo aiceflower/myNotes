@@ -68,25 +68,69 @@
 - **TCP/IP**：mysql指定-h参数后使用该方式连接
 - **socket**：mysql命令不指定-h参数时使用该方式连接
 
-##### 2）Mysql复制
+##### 2）Mysql逻辑架构
 
-​	MySQL采用单向复制的方式，不支持多主服务器的复制功能。
+**架构图**
 
-##### 3）Mysql大杂烩
+![](https://raw.githubusercontent.com/aiceflower/assets/master/img/mysql/mysql_architecture.png)
+
+**4层逻辑结构**	
+
+- 连接层：客户端和连接服务，socket|tcp/ip通信。连接处理，授权认证等。
+- 服务层：完成大多数的核心服务功能。缓存查询、SQL分析优化、跨存储引擎的功能过程函数等。
+- 引擎层：存储引擎真正负责了数据的存储和提取。服务器通过api与各存储引擎进行通信。
+- 存储层：将数据存储在运行于裸设备的文件系统之上，并完成与存储引擎的交互。
+
+##### 3）MySQL概念
+
+- **SQL**，结构化查询语言(Structured Query Language)。客户端使用SQL来操作服务器。
+- Mysql设计之初的**目标**：成为高性能、普通用户支付得起的数据库服务器和工具。
+- Mysql的**使命**：为所有人贡献一个经济实惠并且性能卓越的数据库软件。
+- Mysql的**独到之处**：插件式存储引擎，存储类别的粒度小到每个表，可最大程度利用各存储引擎的优点。<span style="color:blue">插件式存储引擎架构将查询处理和其它的系统任务以及数据的存储提取相分离。</span>可根据业务需求和实际的需要选择合适的存储引擎。
+- 三种觉见的**数据库系统**：面向对象型、关系型、对象关系型
+- DBMS**功能模块**：网络客户端连接(客户端访问)、查询解析和优化（查询接口、查询处理、查询优化、查询执行)、存储引擎(文件读取)
+- mysql**解析器**由词法分析和语法分析两部分组成。
+- 查询**优化器**：通过可供选择的执行计划，找到最低估算开销的执行计划，来优化一条SQL语句。(基于开销的优化)
+- **Mysql账号**由用户名和主机共同组成（'root'@'127.0.0.1'）。同一个账号，不同的主机登陆，MySQL服务认为是不同的连接请求。
+- **具体优先原则**：服务器把user读到内存后，根据Host和user字段的具体程度重新对host,user字段组成的记录进行排列，然后服务器会根据最先匹配的一条记录去允许登陆连接。
+- MySQL采用单向复制的方式，不支持多主服务器的复制功能。
+
+##### 4）MySQL积累
+
+- mysql的utf8(每个字符最多三个字节)不是真正的utf-8(每个字符最多4个字节)，<span style='color:red'>使用utf8mb4=utf8</span>
 
 - mysql数据库的原则，如果数据是重复的插入是插在后面。
-- 在数据库中所有的字符串类型，必须使用单引，不能使用双引！
+-  客户端  -->  发送sql命令-->查询接口-->查询处理/优化-->查询执行-->读写文件-->查询结果
+- Mysql权限检查顺序：user(全局) -->  db(库) -->  tables_priv(表)  -->  columns_priv(列)  -->  procs_priv(函数)
+
+- 在数据库中所有的字符串类型，必须使用<span style="color:red">单引</span>，不能使用双引
 - mysql默认开启事物自动提交，可使用begin;开启一个事务
-- InnoDB 引擎在加锁的时候，只有通过索引进行检索的时候才会使用行级锁，否则会使用表级锁。这个索引一定要创建成唯一索引，否则会出现多个重载方法之间无法同时被访问的问题.
+- mysql默认安装完成后表名区分大小写，字段名不区分
+- InnoDB 引擎在**加锁**的时候，只有通过索引进行检索的时候才会使用行级锁，否则会使用表级锁。这个索引一定要创建成唯一索引，否则会出现多个重载方法之间无法同时被访问的问题.
 - 上千行以内的数据排序操作可放在内存中，服务器可以有很多台，但DB只有几台。
+
+-------<span style='color:red'>索引相关</span>------------
+
+-------**join优化**------------
+
+- 尽可能减少join语句中的循环总次数：永远用小结果驱动大结果
+- 优先优化嵌套循环的内层循环
+- 保证join语句中被驱动表上join条件已经被索引
+
+- 索引建立在经常查询的字段中
+
+- 左右连接，相反建索引(左连接建立右表索引，因为左连接左表数据都存在)
+- 极端条件下可调大joinbuffer大小
+
+-------**其它优化**------------
+
 - 组合索引第一个可单独作为条件查询(会使用索引)，后面的不可单独做为条件查询(不会使用索引)
-- 使用or时所有条件都有索引才会使用索引
-- is null可能会使用索引，= null不会使用
-- \>= 相对于 > 会做两次扫描
-
-##### 4）SQL
-
-​	结构化查询语言(Structured Query Language)。客户端使用SQL来操作服务器。
+- 使用**or**时所有条件都有索引才会使用索引
+- **is null**可能会使用索引，= null不会使用
+- **>=** 相对于 > 会做两次扫描
+- group by 基本上都需要排序，会有临时表产生
+- 对于单键索引，选择过虑性更好的索引
+- 在选择组合索引时过虑性最好的字段中，位置越前越好
 
 ##### 5）SQL语句分类
 
@@ -94,6 +138,196 @@
 2. DML（Data Manipulation Language）：数据操作语言，用来定义数据库记录（数据）；增、删、改：表记录
 3. DCL（Data Control Language）：数据控制语言，用来定义访问权限和安全级别；
 4. DQL（Data Query Language）：数据查询语言，用来查询记录（数据）。
+
+##### 6）查询语句处理
+
+**语句形式**
+
+```mysql
+SELECT DISTINCT 
+	<select_list>
+FROM
+	<left_table> <join_type>
+JOIN <right_table> on <join_condition>
+WHERE
+	<where_condition>
+GROUP BY
+	<group_by_list>
+HAVING
+	<having_condition>
+ORDER BY
+	<order_by_condition>
+LIMIT <limit_number>
+```
+
+**处理过程**
+
+1.语句合法性检查：对SQL语句的语法进行检查、看其是否符合语法规则。
+
+2.语义检查：对语句中的字段，表等进行检查
+
+3.获得对象解析锁：保证数据的一致性，防止其它用户改变(保证大量并发情况下的数据完整性)
+
+4.数据访问权限核对：检查用户是否有这个数据（库、表、列）的访问权限。
+
+**机器读取语句过程**
+
+```mysql
+1 FROM <left_table>
+2 ON <join_condition>
+3 <join_type> JOIN <right_table>
+4 WHERE <where_condition>
+5 GROUP BY <group_by_list>
+6 HAVING  <having_condition>
+7 SELECT 
+8 DISTINCT <select_list>
+9 ORDER BY <order_by_condition>
+10 LiMIT <limit_number>
+```
+
+**SQL解析**
+
+![](https://raw.githubusercontent.com/aiceflower/assets/master/img/mysql/sql_parse_flow.png)
+
+##### 7）MySQL系统和核心库
+
+- 网络连接和网络通信协议子系统
+- 线程、进程和内存分配子系统
+- 查询解析和查询优化子系统
+- 存储引擎接口子系统
+- 各类存储引擎子系统
+- 安全管理子系统
+- 日志子系统
+- 其他子系统 -- 如复制功能、错误功能
+- mysys核心库文件
+
+##### 8）图
+
+**框架和模块图**
+
+![Mysql框架和模块](<https://raw.githubusercontent.com/aiceflower/assets/master/img/mysql/mysql_frame_and_module.png>)
+
+**Mysql查询执行过程**
+
+![Mysql查询执行过程](https://raw.githubusercontent.com/aiceflower/assets/master/img/mysql/mysql_query_executing_process.png)
+
+##### 网络通信图示
+
+![](<https://raw.githubusercontent.com/aiceflower/assets/master/img/mysql/mysql_network_communications.png>)
+
+**MySQL登陆认证**
+
+![](<https://raw.githubusercontent.com/aiceflower/assets/master/img/mysql/mysql_login_check.png>)
+
+**安全级别**
+
+![](<https://raw.githubusercontent.com/aiceflower/assets/master/img/mysql/security_level.png>)
+
+
+
+##### 9）文件目录说明
+
+**源码部分目录结构简介**
+
+- **BUILD目录**：编译和安装脚本目录，执行compile-pentium-debug相当于./configure && make && make install
+- **client目录**：mysql常用命令和客户端工具
+- **storage目录**：Mysql各类存储引擎
+- **mysys目录**：MySQL库函数文件，其实是一个大杂烩，包括文件操作、内存分配、线程控制排序算法、hash函数等。
+- **sql目录**：Mysql服务器内核最为核心和重要的目录，包括线程、查询解析、查询优化，存储引擎接口等。
+- **vio目录**：Virtual I/O 主要用到处理各种网络协议
+
+-------以下是开源社区贡献代码
+
+- **regex目录**：执行正则匹配REGEXP需要这个库支持
+- **dbug目录**：调试库 使用with-debug参数编译会显示dbug输出
+- **strings目录**：
+- **zlib目录**：
+
+**mysql数据文件及目录简介**
+
+- **my.cnf**：mysql配置文件
+- **.frm**：表元数据文件，描述了表的定义，
+- **.ibd**：Innodb存储引擎的MySQL表数据文件、索引文件
+- **.MYD**：MYISAM存储引擎的表数据文件
+- **.MYI**：MYISAM存储引擎的表索引文件
+- **db_name/db.opt**：记录了当前库的字符集和核对规则
+- **mysql_install_db**：Mysql初始化脚本
+- **mysql.sock**：socket，发起本地连接时可用
+- **ibdata[x]**：innodb内部数据
+- **ib_logfile[x]**：innodb内部日志
+- **binlog.index**：管理主库上的binlog文件，只有在此文件中出现的日志文件才被Mysql承认并使用
+- **relay.index**：功能同binlog.index，管理从库的relay log文件
+- **master.info**：从库上文件，由I/O线程更新，记录连接主库时的相关信息
+- **relay-log.info**：从库上文件，由SQL线程更新，记录SQL线程读取和执行Relay Log当前状态
+- **bin目录**：存放可执行文件
+- **data目录**：存放数据库
+- **share目录**：数据库，表初始化脚本及字符集、语言等信息。
+- **include目录**：头文件
+- **binlog目录**：存放myhsql的binlog日志
+- **iblog目录**：innodb数据存放目录，初始化时指定的
+
+##### 10）Mysql权限表(mysql库中)
+
+- **user**：超级 用户表，包括Mysql操作的所有权限。也用其来进行登陆验证。
+- **db**：针对数据库的权限，权限范围为该库中所有对象(包括表和字段)。对指定host的权限操作。
+- **tables_priv**：数据库中指定表的权限，细化到表
+- **columns_priv**：数据库中指定字段的权限，细化到表中字段
+- **procs_priv**：该表对某一个单独的存储过程或函数进行权限管理。
+
+##### 11）MySQL核心算法
+
+**Bitmaps -- 位图(mysys/my_bitmap.c包含操作位图的函数)**
+
+​	比特位图使用少量空间，提供大量信息。用一个比特位代表true和false值。
+
+**表连接缓存工作原理**
+
+SELECT * FROM t1,t2,t3 where t1.col3 = t2.col2 and t3.cal4 < 30;
+
+```c
+//未使用冲存算法
+while (t1_rec in t1){ //表t1中的每个记录
+	while (t2_rec in t2 and t2_rec.col2 = t1_rec.col3){
+	/*对于表t2中的每个记录且该记录中col2和tl_col中的col3相等*/
+		while (t3_rec in t3 and t3_rec.col4 < 30){
+			put the (t1_rec, t2_rec, t3_rec) combination to output buffer
+		}
+	}
+}
+//其中t1和t2组合后多次扫描t3,t3扫描有很多是重复的
+//使用缓冲算法
+while (t1_rec in t1){ //表t1中的每个记录
+	while (t2_rec in t2 and t2_rec.col2 = t1_rec.col3){
+		put (t1_rec, t2_rec) into the buffer
+		if (buffer = full)
+			call flush_buffer();
+	}
+}
+flush_buffer(){
+	while (t3_rec in t3 and t3_rec.col4 < 30){
+		while (rec in buffer){
+			put the (t1_rec, t2_rec, t3_rec) combination to output buffer
+		}
+	}
+}
+```
+
+注：join_buffer_size为Mysql为每个连接缓冲分配的大小，explain输出中Using join buffer表示使用缓存算法
+
+**Mysql排序实现**
+
+排序不仅仅用于order by ,同样group by 也会用到排序，Mysql有两类方式进行排序：
+
+- **作用 range、ref、index读写方式**：explain的输出 range、ref、index是描述对索引的读取方式。这类方式获得的输出都是按索引的顺序排序的
+- **filesort排序算法**：将一组记录按照快速排序放入到内存缓存，然后这几个内存缓存按合并算法排序 @@sort_buffer_size
+
+***执行排序的三种方法***：
+
+- **使用已排序索引**：Explain不提及任何filesort #有索引且排序的是索引字段
+- **在表单上使用filesort**：using filesort #如果是多表联合，先单表filesort再对排序后进行join
+- **将join结果先放入临时表，然后使用filesort**：using templorary; using filesort
+
+12）
 
 ### 二、MySQL相关技能
 
@@ -129,83 +363,6 @@ SQL优化
 
 SQL审计
 
-### 三、mysql操作
-
-#### 1.启动
-
-mysql.server  -->  mysqld_safe【启动且监控mysqld】 -->  mysqld
-
-mysqld_mutil（启动多个）
-
-```sql
-mysql.server start
-/etc/init.d/mysqld start #同第一种一样，只是把上面的拷贝到这个目录里重命名了下
-service mysqld start
-mysqld --defaults-file=my.cnf &
-mysqld_safe --defaults-file=my.cnf & #推荐这种启动
-mysqld_mutil start #多实例启动，推荐多个单启动
-```
-
-#### 2.关闭
-
-```shell
-mysqladmin --socket=my3306/run/mysql.sock --port=3306 shutdown & #--socket 可换成 -S
-```
-
-#### 3.账户权限
-
-##### 1)创建用户
-
-```mysql
-#-----方式一-------
-insert into user(host,user,password) values('127.0.0.1','test',password('123456'));
-flush privileges;
-#这种方式需要flush，它是直接把数据做了持久化，缓存是不知道的，flush是把user中的数据重新加载进缓存。
-#-----方式二-------
-create user test@'127.0.0.1' identified by '123456';
-
-```
-
-##### 2）授权
-
-设置密码
-
-```mysql
-set password for 'test'@'192.168.1.1' = password('123456');#设置密码
-update user set password = password('123456') where user = 'root';#更新user表
-mysqladmin -u root -h 127.0.0.1   password '123456' #命令设置
-```
-
-
-
-查看权限：
-
-```mysql
-show grants for 'test'@'%';#指定用户
-show grants;#当前用户
-```
-
-单一授权
-
-```mysql
-grant select on db_name.* to 'test'@'%' ;#所有表
-grant select(id, age) on testdb.user_info to test@localhost; #指定字段
-```
-
-授权并创建用户
-
-```mysql
-grant all privileges on *.* to 'test'@'%' identified by '123456';
-```
-
-撤销权限
-
-```mysql
-revoke all on *.* from test@'%';
-```
-
-
-
 ##### 3）权限等级
 
 1.核心开发权限 (一般给 insert delete update select)
@@ -213,12 +370,6 @@ revoke all on *.* from test@'%';
 2.管理权限----表级 (create drop lock)
 
 3.管理权限----server级别 (dba)
-
-##### 4)删除用户
-
-```mysql
-drop user test@'127.0.0.1'; 
-```
 
 #### 4.MYsql数据库安全配置
 
@@ -534,73 +685,6 @@ update user set status=2,version=version+1 where id= 1 and version=#{version};
 
 ​	对于update，insert，delete无法手动加共享锁和排他锁，mysql默认加排他锁。
 
-#### 9.优化
-
-##### 1.IO调度算法
-
-- NOOP算法： 实现了最简单的FIFO队列，所有IO请求大致按照先来后到的顺序进行操作。
-- CFQ算法：对IO地址进行分组排序，把相近的放在一起，提高吞吐量。不是先来后到。
-- Deadline算法：在CFQ基础上解决了请求饿死的情况，还额外为读请求和写请求提供了FIFO队列。
-- Anticipatory算法：
-
-##### ~~2.操作系统优化~~
-
-1.关闭swap，内核参数/etc/sysctl.conf 中添加vm.swapplness=10，默认是60
-
-2.调度算法设置deadline，echo deadline > /sys/block/.../queue/schedule
-
-##### 3.数据库优化
-
-**实例优化**
-
-```mysql
-innodb_buffer_pool_size #数据放到内存中处理，减少io，设置物理内存的60%-80%
-innodb_thread_concurrency #设置线程并发，设置cpu的processor数少几个
-query_cache_type=0 #是否开启查询缓存，修改表会清空
-query_cache_size=0 #查询缓存大小
-max_user_connections #最大连接数，与应用相关
-interactive_timeout #交互超时,120s
-wait_timeout #等待超时，jdbc连接等，120s
-innodb_io_capacity#innodb的io容量，设置iops的75%左右
-innodb_flush_log_at_trx_commit=1#
-sync_binlog=1 #这两个是一个commit就写日志
-innodb_log_file_size #日志文件大小，SSD建议4-8G，SAS建议1-2G
-innodb_flush_method=O_DIRECT #直接刷新到磁盘
-innodb_flush_neighbors #SSD设置0顺序访问，SAS设置1随机访问
-tx_isolation #设置RC提高并发，默认RR
-#安全相关
-skip_name_resolve=on #禁止DNS解析，只允许通过ip认证
-skip_networking=on #关闭TCP/IP网络连接服务，只允许socket(默认连接方式)方式进行连接
-./configure --with-yassl #Mysql自带的yaSSL 
-./configure --with-openssl #三方OpenSSL
-#以上两个需要同时设置 ssl_ca=cacert.pem ssl_cert=server-sert.pem ssl_key=server-key.pem
-mysqld_safe --skip-grant-tables #绕过权限表认证，root密码丢失时可用，
-./configure --disable-grant-options #防范上术漏洞(非法用户登陆系统以上术方式重启服务)
-```
-
-**SQL优化**
-
-**高效sql**
-
-![](https://raw.githubusercontent.com/aiceflower/assets/master/img/mysql/%E9%AB%98%E6%95%88sql.png)
-
-**索引设计**
-
-覆盖索引：
-
-- 查询谓词(**查询条件**)都能够通过index进行扫描
-- 排序(group by、order by)谓词(**排序，分组条件**)都能够通过index进行扫描
-- index包含了查询所需要的所有字段
-
-不能使用索引：
-
-- 不给选择率低的字段建索引，如性别
-- 联合索引中：不要第一个索引列使用范围查询，第一个查询条件不是最左列 【index_name(age,name)】
-- like条件不以%开始
-- 两个独立索引，一个检索一个排序，建议做组合排序
-- 不要在索引字段上使用函数操作
-- 不使用外键索引
-
 #### 10.Mysql主从复制
 
 ##### 0.在线迁移mysql
@@ -709,7 +793,14 @@ log_slave_updates #ON M-S-S的话需要开启
   - 缺：可能会产生大量的日志记录，如一条update更新多条数据，则每条修改都有记录
 - **Mixed**：SBR与RBR混合，不使用
 
-##### 3.Semi-sync复制（半同步复制）
+##### 3.几种常见的日志
+
+- **错误日志**：记录MySQL的启动、停止信息及在MySQL运行过程中的错误信息。log_error
+- **普通日志**：记录连接请求和从客户端收到的SQL语句。**默认不记录**该日志，可开启general_log和指定目录general_log_file，记录日志到表设置log_output=TABLE,FILE，表为mysql.general_log（默认CSV存储引擎）
+- **慢查询日志**：记录查询时间大于long_query_time及未使用索引的查询语句。slow_query_log，slow_query_log_file，对应的表为mysql.slow_log（CSV）
+- **二进制日志**：记录所有修改数据的SQL语句，也用于MySQL的数据恢复与复制。log_bin，log_bin_basename
+
+##### 4.Semi-sync复制（半同步复制）
 
 将日志先传输到从库，然后再返回应用事务提交成功。减少数据丢失的风险（主从复制，主数据库宕机的话数据丢失严重），不能完全避免数据丢失。增加了额外的等待时间，性能有所下降。
 
@@ -722,7 +813,7 @@ mysql> install plugin rpl_semi_sync_slave soname 'semisync_slave.so';#lib/plugin
 #主开启 rpl_semi_sync_slave_enabled=on ,配置文件中设置全局
 ```
 
-##### 4.主从复制常见问题
+##### 5.主从复制常见问题
 
 1.**主库挂了怎么判断从库是否同步完成**？
 
@@ -746,6 +837,28 @@ mysql> install plugin rpl_semi_sync_slave soname 'semisync_slave.so';#lib/plugin
 ​	3.查看最新一次备份中的pos，做为start-position
 
 ​	4.使用mysqlbinlog 回复两pos之间的数据
+
+##### 6.**单向复制与合并复制**：
+
+​	MySQL采用单向复制，即所有更新都先发生在主服务器端，然后再复制给从服务器。从服务器是只读的，不会有更新传递到主服务器。
+
+​	合并复制是多个服务器进行读写操作，并使用合并复制机制将这些更新统一，将最终的结果传递给从服务器。
+
+##### 7.**同步复制与异步复制**：
+
+​	同步：所有的请求操作都发生在主/从服务器端，改变同时提交到两个数据库中，操作也同时写到日志中，最后把结果返回给客户端。
+
+​	异步：将请求在主服务器端执行，执行完成将结果返回给客户端，同时记录下操作，然后将变更的记录传递给从服务器，这会存在时间差。
+
+##### 8.Replication应用两大模块
+
+**主复制模块：**
+
+​	记录操作到binlog，在index文件中更新不存在的binlog文件，并将符合要求的日志事件传递到从服务器的I/O线程。
+
+**从复制模块：**
+
+​	负责从服务器复制功能。通过I/O线程与主进行通信，并将更新复制到relay log中。然后由SQL线程更新。
 
 #### 11.高可用的Mysql
 
@@ -938,6 +1051,31 @@ b）三范式
 
 #### 2.索引
 
+**什么是索引**
+
+​	索引是帮助MySQL高效获取数据的**数据结构**。可理解为：排好序的快速查找数据结构。
+
+**覆盖索引**：
+
+- 查询谓词(**查询条件**)都能够通过index进行扫描
+- 排序(group by、order by)谓词(**排序，分组条件**)都能够通过index进行扫描
+- index包含了查询所需要的所有字段
+
+**不能使用索引**：
+
+- 不给选择率低的字段建索引，如性别
+- 联合索引中：不要第一个索引列使用范围查询，第一个查询条件不是最左列 【index_name(age,name)】
+- like条件不以%开始
+- 两个独立索引，一个检索一个排序，建议做组合排序
+- 不要在索引字段上使用函数操作
+- 不使用外键索引
+
+**索引的优缺点**
+
+优：提高数据**检索效率**，降低数据库的IO成本。降低数据**排序的成本**，也降低了CPU的消耗
+
+缺：索引也占用空间。在做Insert、Update、Delete时需要维护索引。
+
 #### 3.分表分库
 
 ##### 1.垂直拆分
@@ -957,6 +1095,33 @@ b）三范式
 #### 4.读写分离
 
 #### 5.参数配置
+
+```mysql
+innodb_buffer_pool_size #数据放到内存中处理，减少io，设置物理内存的60%-80%
+innodb_thread_concurrency #设置线程并发，设置cpu的processor数少几个
+query_cache_type=0 #是否开启查询缓存，修改表会清空
+query_cache_size=0 #查询缓存大小
+max_user_connections #最大连接数，与应用相关
+interactive_timeout #交互超时,120s
+wait_timeout #等待超时，jdbc连接等，120s
+innodb_io_capacity#innodb的io容量，设置iops的75%左右
+innodb_flush_log_at_trx_commit=1#
+sync_binlog=1 #这两个是一个commit就写日志
+innodb_log_file_size #日志文件大小，SSD建议4-8G，SAS建议1-2G
+innodb_flush_method=O_DIRECT #直接刷新到磁盘
+innodb_flush_neighbors #SSD设置0顺序访问，SAS设置1随机访问
+tx_isolation #设置RC提高并发，默认RR
+#安全相关
+skip_name_resolve=on #禁止DNS解析，只允许通过ip认证
+skip_networking=on #关闭TCP/IP网络连接服务，只允许socket(默认连接方式)方式进行连接
+./configure --with-yassl #Mysql自带的yaSSL 
+./configure --with-openssl #三方OpenSSL
+#以上两个需要同时设置 ssl_ca=cacert.pem ssl_cert=server-sert.pem ssl_key=server-key.pem
+mysqld_safe --skip-grant-tables #绕过权限表认证，root密码丢失时可用，
+./configure --disable-grant-options #防范上术漏洞(非法用户登陆系统以上术方式重启服务)
+```
+
+
 
 #### 6.mysql服务器升级
 
@@ -980,7 +1145,307 @@ b）三范式
 
 ​	根据slow_query_log_file查询慢查询日志存放位置，根据日志定位慢查询语句。
 
-​	 
+**慢的原因？**(执行时间长、等待时间长)
+
+​	查询语句写的烂、索引失效、关联查询太多(设计缺陷或不得已需求)、服务器调优及各参数设置	
+
+##### 2.高效sql
+
+![](https://raw.githubusercontent.com/aiceflower/assets/master/img/mysql/%E9%AB%98%E6%95%88sql.png)
+
+##### 3.性能分析
+
+1）MySQL Query Optimizer
+
+2）MySQL常见瓶颈：
+
+- CPU：CPU瓶颈一般在数据装入内存或从磁盘上读取数据时
+- IO：硬盘IO瓶颈发生在装入数据远大于内存容量时
+- 服务器硬件：通过top、free、iostat、vmstat查看系统性能状态
+
+3）EXPLAIN
+
+**是什么**
+
+​	查看SQL执行计划
+
+**能干嘛**
+
+- 表的读取顺序(id)
+- 数据读取操作的操作类型(select_type)
+- 哪些索引可以使用(possible_keys)
+- 哪些索引被实际应用(key)
+- 表之间的引用(ref)
+- 每张表有多少行被优化器查询(rows)
+
+**怎么玩**
+
+​	explain + SELECT语句
+
+**结果**
+
+a）**id**
+
+​	select查询的序列号，包含一组数字，表示查询中执行select子句或操作表的顺序
+
+三种情况：
+
+​	id相同：执行顺序由上至下
+
+​	id不同：如果是子查询，id的序号会递增，id值越大优先级越高，值越大越先被执行
+
+​	id相同不同：同时存在
+
+注：id如果相同，可认为是一组，从上往下顺序执行。在所有组中，id值越大，优先级越高，越先执行。
+
+可查看执行顺序
+
+b）**select_type**
+
+- SIMPLE：简单的select查询，查询中不包含查询或UNION
+
+- PRIMARY：查询中包含任何复杂的子部分，最外层标记为PRIMARY
+- SUBQUERY：子查询
+- DERIVED：在FROM列表中包含的子查询被标记为DERIVED(衍生)，MYSQL会递归执行这些子查询，结果放在临时表中
+- UNION：第二个SELECT出现在UNION之后，则被标记为UNION：若UNION包含在FROM子句中，外层SELECT被标记为DERIVED
+- UNION RESULT：从UNION表获取结果的SELECT
+
+c）**type** ：判断查询是否高效的重要依据
+
+- system：表只有一行记录
+
+- const：表示通过索引一次就找到了，主键或唯一索引扫描，只匹配一条数据
+
+- eq_ref：主键索引的关联查询，
+
+- ref ：非唯一索引查询或唯一索引关联查询，单条记录。
+
+- range：索引范围扫描，常用语<,<=,>=,between,in,is null等操作，返回少部分数据时，数据多时为All
+
+- index：索引全扫描
+
+- ALL：全表扫描
+
+type类型结果值从**最好到最坏**依次是：
+
+**system**>**const**>**eq_ref**>**ref**>fulltext>ref_or_null>index_merge>unique_subquery>index_subquery>**range**>**index**>**all**
+
+注：一般来说要保证查询至少到range，最好能达到ref
+
+d）**possible_keys**
+
+​	 此次查询中可能被使用的索引
+
+e）**key**
+
+​	 此次查询中实际使用到的索引，查询中若使用了覆盖索引（查询的字段与建立复合索引一致，查询的列被所建的索引覆盖），则该索引只出现在key列表中。
+
+f）**key_len**
+
+​	索引中使用的字节数，通过该列获取使用的索引长度。在不损失**精确性**的情况下，**长度**越短越好。
+
+g）**ref**
+
+​	 显示索引的哪一列被使用了。如果可能的话，是一个常数。哪些列或常量被用于查找索引列上的值。
+
+h）**rows**
+
+​	大致估算出，找到所需要的记录所需要读取的行数。
+
+i）**extra**
+
+​	包含不适合在其它列显示，但十分重要的额外信息。
+
+- <span style='color:red'>using filesort</span>：对数据使用外部排序（**九死一生**）
+- <span style='color:red'>using temporary</span>：使用临时表保存中间结果，mysql在对查询结果排序时使用临时表。（**十死无生**）
+
+注：以上多出现在排序数量与顺序与建立索引数量与顺序不一致的情况
+
+- <span style='color:red'>using index</span>：使用了覆盖索引
+- using where：使用了where过虑
+- using join buffer：使用了连接缓存
+- impossible where：where子句的值总是false，不能获取任何元组
+- select tables optimized away：没有group by 的情况下基于索引优化min/max操作
+- distinct：优化distinct操作
+
+**索引建立**
+
+一表：顺序建立就行，如果中间有范围查询索引会失效
+
+二表：左右连接，相反建立
+
+三表：同二表，相当于两次二表
+
+**4）永远小表驱动大表**
+
+**in与exists**
+
+```mysql
+select * from A where id in (select id from B) #B的数据集小于A时，in优于exists
+select * from A where exists (select 1 from B where B.id = A.id)
+=
+for select * from A 
+for select * from B where B.id = A.id #当A的数据小于B时，exists优于in
+```
+
+**EXISTS**
+
+SELECT * FROM tb_name WHERE **EXISTS** (subquery)
+
+将主查询的数据，放到子查询中做条件验证，根据验证结果(T or F )来决定主查询数据是否保留。
+
+**5）ORDER BY优化**
+
+Mysql支持**两种排序**：filesort和index
+
+order by使用index排序**满足情况**：
+
+- order by 语句使用索引最左前列
+- 使用where子句与order by 子句条件列组合满足索引最左前列
+
+尽可能在**索引列上完成排序**操作。
+
+如果不在索引列上，**firesort有两种算法**：
+
+- 双路排序：两次IO，(mysql4.1以前)
+- 单路排序：一次IO，但有个问题(排序数据大于sort_buffer指定大小，需要多次取出性能不如双路)
+
+增大sort_buffer_size和max_length_for_sort_data参数设置
+
+**提高Order By 的速度**
+
+a）order by时select * 是个大忌，缓冲区大小可能不够用。两种算法都可能超出sort_buffer容量，超出后会创建tmp文件进行合并排序
+
+b）尝试提高sort_buffer_size，两种算法都会提高效率
+
+c）尝试提高max_length_for_sort_data，会增加用改进算法的概率
+
+**总结：**
+
+- 为排序使用索引
+- 索引同升同降会使用索引
+- 如果最左前列为常量，则order by能使用索引
+
+**为排序使用索引**
+
+```mysql
+key a_b_c(a,b,c);#创建abc三个字段组合索引
+#order by 能使用索引，最左前缀
+order by a
+order by a,b
+order by a,b,c
+order by a desc, b desc, c desc
+#如果where使用索引的最左前缀定义为常量，则order by能使用索引
+where a = const order by b,c
+where a = const and b = const order by c
+where a = const and b > const order by b,c
+#不能使用索引进行排序
+order by a asc, b desc, c desc 	#排序不一致
+where g = const order by b,c  	#丢失a索引
+where a = const order by c		#丢失b索引 
+where a = const order by a,d	#d不是索引的一部分
+where a in(...) order by b,c 	#对于排序来说，多个相等条件也是范围查询
+```
 
 
 
+##### 4.索引失效
+
+**如何避免**
+
+- 全值匹配我最爱(复合索引)
+- 最佳左前缀法则：复合索引中查询从最左列开始且不**跳过索引中的列**。
+- 不在索引列上做任何操作（计算、函数、(自动or手动)类型转换，会导致<span style="color:red">索引失效</span>
+- 存储引擎不能使用索引中范围条件右边的列
+- 尽量使用覆盖索引（只访问索引的查询(索引列和查询列一致)），减少select *
+- 不使用不等于(!=、<>)，会导致全表扫描
+- 不使用is not null
+- like条件不以通配符开头，索引失效导致全表扫描（业务就要使用两边%号，可**使用覆盖索引**）
+- 字符串要加单引号，不加索引失效（用一隐匿类型转换）
+- 少用or，用它列连接时索引可能会失效
+
+注：复合索引中跳过中间或中间是范围查找，后面的不会使用索引但like常量开头后面索引还可用
+
+<font style="color:red">总结</font>：
+
+- 全值匹配我最爱，最左前缀要遵守
+- 带头大哥不能死，中间兄弟不能断
+- 索引列上少计算，范围之后全失效
+- like百分加右边，覆盖索引不写星
+- 不等空值还有or，索引失效要少用
+- varchar引号不可丢，SQL高级也不难
+
+#### 9.其它
+
+##### 1.IO调度算法
+
+- NOOP算法： 实现了最简单的FIFO队列，所有IO请求大致按照先来后到的顺序进行操作。
+- CFQ算法：对IO地址进行分组排序，把相近的放在一起，提高吞吐量。不是先来后到。
+- Deadline算法：在CFQ基础上解决了请求饿死的情况，还额外为读请求和写请求提供了FIFO队列。
+- Anticipatory算法：
+
+##### ~~2.操作系统优化~~
+
+1.关闭swap，内核参数/etc/sysctl.conf 中添加vm.swapplness=10，默认是60
+
+2.调度算法设置deadline，echo deadline > /sys/block/.../queue/schedule
+
+10. #### 排查
+
+1.观察，至少跑一天看看的慢SQL情况
+
+2.开启慢查询日志，设置阙值，提取慢查询SQL
+
+3.explain + 慢SQL分析
+
+4.show profile 查询SQL在Mysql服务器里面的执行细节和生命周期情况
+
+5.进行SQL数据库服务器的参数调优
+
+### 六、存储引擎
+
+#### 1.Mysql数据文件
+
+**元数据文件  --  frm**
+
+​	MySQL中的每个表，在磁盘上均有一个.frm的文件与之对应(每种存储引擎都有这个文件)。frm在所有平台上的格式是一样的。创建索引也会生成一个.frm文件。打开表时frm文件被缓存在table cache中，下次访问这个表时，无需再次打开和解析这个frm，直接从缓存中取。
+
+**MYISAM数据文件 -- myd**
+
+​	数据与元数据相互穿插存储。MYISAM支持三种不同存储格式 -- 固定的、动态的和压缩的。其中固定和动态根据使用的列类型自动选择，压缩的只能用myisampack工具创建。
+
+**MYISAM索引文件 --  myi**
+
+​	MYISAM存储引擎的每个表都对应一个MYI文件。MYI文件包含两部分，头部信息和索引值。
+
+**Innodb架构**
+
+![](<https://raw.githubusercontent.com/aiceflower/assets/master/img/mysql/innodb_frame.png>)
+
+​	第一层：Handle AP的存在使得Innodb能够顺利插入到Mysql中，同是Innodb还为应用提供了API，用户可将innodb存储引擎添加到其它应用中。
+
+​	第二层：事务层，在Innodb中，所有行为都发生在事务中。
+
+​	第三层：锁功能层，完成锁功能和事务管理的功能(如回滚、提交等)。Innodb采用行级读写锁。
+
+​	第四层：缓存管理层，高效的将数据存放在内存之中。
+
+​	第五层：存储空间IO管理，为文件读写提供接口并维护表空间和日志空间大小。
+
+![](https://raw.githubusercontent.com/aiceflower/assets/master/img/mysql/innodb_architecture.png)
+
+#### 2.MyISAM和InnoDB主要区别
+
+1）MyISAM是非事务安全型的，而InnoDB是事务安全型的。
+2）MyISAM锁的粒度是表级，而InnoDB支持行级锁定。
+3）MyISAM支持全文类型索引，而InnoDB不支持全文索引。
+4）MyISAM相对简单，所以在效率上要优于InnoDB，小型应用可以考虑使用MyISAM。
+5）MyISAM表是保存成文件的形式，在跨平台的数据转移中使用MyISAM存储会省去不少的麻烦。
+6）InnoDB表比MyISAM表更安全，可以在保证数据不会丢失的情况下，切换非事务表到事务表。
+
+![](https://raw.githubusercontent.com/aiceflower/assets/master/img/mysql/instore_compare.png)
+
+#### 3.应用场景
+
+1）MyISAM管理非事务表。它提供高速存储和检索，以及全文搜索能力。如果应用中需要执行大量的SELECT查询，那么MyISAM是更好的选择。
+2）InnoDB用于事务处理应用程序，具有众多特性，包括ACID事务支持。如果应用中需要执行大量的INSERT或UPDATE操作，则应该使用InnoDB，这样可以提高多用户并发操作的性能。

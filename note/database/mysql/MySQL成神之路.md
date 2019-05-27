@@ -98,16 +98,16 @@
 ##### 4）MySQL积累
 
 - mysql的utf8(每个字符最多三个字节)不是真正的utf-8(每个字符最多4个字节)，<span style='color:red'>使用utf8mb4=utf8</span>
-
 - mysql数据库的原则，如果数据是重复的插入是插在后面。
--  客户端  -->  发送sql命令-->查询接口-->查询处理/优化-->查询执行-->读写文件-->查询结果
+- 客户端  -->  发送sql命令-->查询接口-->查询处理/优化-->查询执行-->读写文件-->查询结果
 - Mysql权限检查顺序：user(全局) -->  db(库) -->  tables_priv(表)  -->  columns_priv(列)  -->  procs_priv(函数)
-
 - 在数据库中所有的字符串类型，必须使用<span style="color:red">单引</span>，不能使用双引
 - mysql默认开启事物自动提交，可使用begin;开启一个事务
 - mysql默认安装完成后表名区分大小写，字段名不区分
 - InnoDB 引擎在**加锁**的时候，只有通过索引进行检索的时候才会使用行级锁，否则会使用表级锁。这个索引一定要创建成唯一索引，否则会出现多个重载方法之间无法同时被访问的问题.
 - 上千行以内的数据排序操作可放在内存中，服务器可以有很多台，但DB只有几台。
+- show open tables; 查看表使用和锁情况
+- <span style='color:red'>innodb索引失效会使行锁变表锁</span>
 
 -------<span style='color:red'>索引相关</span>------------
 
@@ -685,6 +685,22 @@ update user set status=2,version=version+1 where id= 1 and version=#{version};
 
 ​	对于update，insert，delete无法手动加共享锁和排他锁，mysql默认加排他锁。
 
+##### 19.锁相关操作
+
+```mysql
+show open tables; #查看哪些表被加锁了
+show status like 'table%'#table_locks_immediate产生表锁的次数，table_locks_waited锁等待次数
+lock table tb1 read, tb2 write;#给表加读，写锁.表锁
+unlock tables ; #解锁
+show status like 'innodb_row_lock%' #查看行锁情况
+```
+
+##### 20.MyISAM锁
+
+MyISAM表锁两种模式：表共享读锁，表独占写锁。<span style='color:red'>读锁阻写不阻读，写锁读写</span>都阻。
+
+MyISAM表读操作为读锁，写操作加写锁。
+
 #### 10.Mysql主从复制
 
 ##### 0.在线迁移mysql
@@ -1149,6 +1165,37 @@ mysqld_safe --skip-grant-tables #绕过权限表认证，root密码丢失时可�
 
 ​	查询语句写的烂、索引失效、关联查询太多(设计缺陷或不得已需求)、服务器调优及各参数设置	
 
+**开启时机**
+
+​	需要的时候才开启，会影响一定的性能。slow_query_log(on/off)
+
+**日志分析工具**
+
+```mysql
+#mysqldumpslow 工具
+s：按何种方式排序
+c：访问次数
+l：锁定时间
+r：返回记录
+t：查询时间
+al：平均锁定时间
+ar：平均返回记录数
+at：平均查询时间
+t：返回前面多少条数据
+g：后边搭配一个正则匹配模式，大小写不敏感
+#得到返回记录集最多的10个slq
+mysqldumpslow -s r -t 10 mysql-slow.log
+#得到访问次数最多的10个sql
+mysqldumpslow -s c -t 10 mysql-slow.log
+#得到按照时间排序的前10条数据里面含有左连接的查询语句
+mysqldumpslow -s t -t 10 -g "left join" mysql-slow.log
+#建议在使用这些命令时结构|和more使用
+```
+
+​	
+
+​	
+
 ##### 2.高效sql
 
 ![](https://raw.githubusercontent.com/aiceflower/assets/master/img/mysql/%E9%AB%98%E6%95%88sql.png)
@@ -1347,7 +1394,13 @@ where a = const order by a,d	#d不是索引的一部分
 where a in(...) order by b,c 	#对于排序来说，多个相等条件也是范围查询
 ```
 
+**6）GROUP BY优化**
 
+大部分同Order By。
+
+group by 实质是先排序后分组，遵循索引建立的最佳左前缀
+
+where高于having，能写在where限定的条件就不要写在having
 
 ##### 4.索引失效
 
@@ -1374,6 +1427,50 @@ where a in(...) order by b,c 	#对于排序来说，多个相等条件也是范�
 - like百分加右边，覆盖索引不写星
 - 不等空值还有or，索引失效要少用
 - varchar引号不可丢，SQL高级也不难
+
+##### 5.show profile
+
+**是什么？**
+
+​	mysql提供，可用来分析当前会话中语句执行的资源消耗情况，可用于sql的调优测量。默认参数处于关闭状态，并保存近15次的运行结果。
+
+**怎么用？**
+
+```mysql
+#1.是否支持
+show variables like 'profiling';
+#2.开启功能
+set profiling = on;
+#3.运行sql
+#4.查看结果
+#5.诊断sql，show profile cpu,block io for query num; #上一步的问题sql数字号码
+type:
+all 				显示所有开销信息
+block io 			显示块IO开销
+context switches	上下文切换开销
+cpu					CPU开销
+ipc					发送和接收开销
+memory				内存开销
+page faults			页面错误开销
+source				source_function, source_file, source_line 相关开销
+swaps				交换次数相关开销
+#6.日常开发需要注意的结论
+converting HEAP to MyISAM 查询结果太大，内存都不够用了往磁盘上搬了
+creating tmp table 创建临时表 (拷贝数据到临时表，用完再删除)
+copying to tmp table on disk 把内存中临时表复制到磁盘，危险！！！
+locked
+```
+
+##### 6.全局查询日志
+
+<span style='color:red'>永远不上在生产环境上用</span>
+
+```mysql
+set global general_log = 1;
+set global log_output='table';
+```
+
+
 
 #### 9.其它
 

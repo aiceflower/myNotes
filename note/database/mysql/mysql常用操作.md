@@ -180,6 +180,7 @@ alter table tb_name change name name_new varchar(10);#修改字段名，可用�
 alter table tb_name modify col_name varchar(10) after col_name_source;#修改字段位置
 #-------数据
 update table set age = 18, name = 'z3' where id = 2;#修改表数据
+ALTER TABLE tb_name AUTO_INCREMENT = 1; #指定表的自增长
 ```
 
 ##### 4.查
@@ -525,7 +526,113 @@ FROM
 
   
 
+#### 11.存储过程(无返回值)
+
+##### 1.增
+
+```mysql
+delimiter $$ #设置结束符号为非分号
+create procedure insert_dept(in start int(10),in max_num int(10))
+begin
+declare i int default 0;
+set autocommit = 0;#设置自动提交为0
+repeat
+set i = i + 1;
+insert into dept(deptno, dname, loc) values((start+i),rand_string(10), rand_string(8));
+until i = max_num
+end repeat;
+commit;
+end $$
+##-------------------------------------
+create procedure insert_all_emp(in start int(10),in count int(10))
+begin
+declare i int default 0;
+declare add_num int default 500000;
+repeat
+call insert_emp ((start + add_num * i + i + 1), add_num);#调用存储过程
+set i = i + 1;
+until i = count
+end repeat;
+end $$
+```
+
+##### 2.删
+
+```mysql
+drop procedure pro_name;
+```
+
+##### 3.查
+
+```mysql
+#名、类型、定义
+select ROUTINE_NAME, ROUTINE_TYPE,ROUTINE_DEFINITION from information_schema.ROUTINES where ROUTINE_SCHEMA='db_name'; 
+```
 
 
 
+#### 12.函数(有返回值)
+
+##### 1.增
+
+```mysql
+delimiter $$ #设置结束符号
+#产生随机长度字符串
+create function rand_string(n int) returns varchar(255)
+begin
+	declare chars_str varchar(100) default 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	declare return_str varchar(255) default '';
+	declare i int default 0;
+	while i < n do
+	set return_str = concat(return_str,substring(chars_str,floor(1+rand()*52),1));
+	set i = i + 1;
+	end while;
+	return return_str;
+end $$
+```
+
+##### 2.删
+
+```mysql
+drop function fun_name;
+```
+
+##### 3.查
+
+```mysql
+#名、类型、定义
+select ROUTINE_NAME, ROUTINE_TYPE,ROUTINE_DEFINITION from information_schema.ROUTINES where ROUTINE_SCHEMA='db_name';  
+```
+
+
+
+#### 13.触发器
+
+##### 1.增
+
+```mysql
+CREATE TRIGGER dept_delete AFTER DELETE ON dept FOR EACH ROW
+BEGIN
+DECLARE s1 VARCHAR(40)character set utf8;
+DECLARE s2 VARCHAR(20) character set utf8;#后面发现中文字符编码出现乱码，这里设置字符集
+SET s2 = " is deleted";
+SET s1 = CONCAT(OLD.dname,s2);     #函数CONCAT可以将字符串连接
+INSERT INTO logs(log) values(s1);
+END $
+```
+
+
+
+##### 2.删
+
+```mysql
+drop trigger trigger_name;
+```
+
+##### 3.查
+
+```mysql
+#库、名、账户、定义
+select TRIGGER_SCHEMA,TRIGGER_NAME,DEFINER,ACTION_STATEMENT from information_schema.TRIGGERS where TRIGGER_SCHEMA='db_name';
+```
 

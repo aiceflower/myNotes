@@ -91,10 +91,10 @@ delimiter $$ #设置结束符号
 create function rand_string(n int) returns varchar(255)
 begin
 	declare chars_str varchar(100) default 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-	declare return_str varhcar(255) default '';
+	declare return_str varchar(255) default '';
 	declare i int default 0;
 	while i < n do
-	set return_str = concat(return_str,substring(cahrs_str,floor(1+rand()*52),1));
+	set return_str = concat(return_str,substring(chars_str,floor(1+rand()*52),1));
 	set i = i + 1;
 	end while;
 	return return_str;
@@ -116,7 +116,7 @@ drop function rand_num;
 ```mysql
 #往emp表插入数据
 delimiter $$
-create procedure insert_emp(int start int(10),int max_num int(10))
+create procedure insert_emp(in start int(10),in max_num int(10))
 begin
 declare i int default 0;
 set autocommit = 0;#设置自动提交为0
@@ -129,7 +129,7 @@ commit;
 end $$
 #往dept表插入数据
 delimiter $$
-create procedure insert_dept(int start int(10),int max_num int(10))
+create procedure insert_dept(in start int(10),in max_num int(10))
 begin
 declare i int default 0;
 set autocommit = 0;#设置自动提交为0

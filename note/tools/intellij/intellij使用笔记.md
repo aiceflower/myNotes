@@ -275,3 +275,12 @@ preference-->Live Template-->+-->Edit variables
 	Run/Debug Configurations --> add --> Tomcat Server --> Local
 #### 24.idea通过数据库生成实体类
 	view-->Tool Window-->Database-->+-->Data Source-->mysql-->填写信息(下载对应驱动)-->对应表右键Spripted Extensions-->POJO.clj
+
+#### 25.idea使用lombok
+
+```java
+1.导入lombok
+2.idea设置
+settings -> build -> compiler -> annotation processors -> enable annotation processing
+```
+

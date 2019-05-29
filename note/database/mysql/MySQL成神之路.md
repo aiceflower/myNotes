@@ -98,6 +98,7 @@
 ##### 4）MySQL积累
 
 - mysql的utf8(每个字符最多三个字节)不是真正的utf-8(每个字符最多4个字节)，<span style='color:red'>使用utf8mb4=utf8</span>
+- <span style='color:red'>max_allowed_packet</span>设置Server接受的数据包大小
 - mysql数据库的原则，如果数据是重复的插入是插在后面。
 - 客户端  -->  发送sql命令-->查询接口-->查询处理/优化-->查询执行-->读写文件-->查询结果
 - Mysql权限检查顺序：user(全局) -->  db(库) -->  tables_priv(表)  -->  columns_priv(列)  -->  procs_priv(函数)
@@ -1443,6 +1444,7 @@ show variables like 'profiling';
 set profiling = on;
 #3.运行sql
 #4.查看结果
+show profiles
 #5.诊断sql，show profile cpu,block io for query num; #上一步的问题sql数字号码
 type:
 all 				显示所有开销信息

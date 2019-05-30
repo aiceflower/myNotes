@@ -194,6 +194,8 @@ show columns from user;#查看表字段
 select column_name from information_schema.columns where table_schema='database_name' and table_name='table_name';#查询表字段
 show create table tb_name;#查看建表语句
 SELECT Auto_increment FROM information_schema.`TABLES` WHERE Table_Schema='xtj' AND table_name = 't2' limit 1;#查询表的自增长值
+#查看表是什么时候更新的
+SELECT * FROM information_schema.tables WHERE table_schema='db_name' AND table_name='tb_name' ;
 #表数据查询
 select * from tb_name [where];
 #in 包含指定集合，not in 不包含指定集合, between and 范围查询，like 匹配查询 '_'为一个占位符，is null 空查询，is not null 非空，and 并，or 或，distince 不重复，order by 排序，group by 分组，having 过虑聚合，with rollup 统计所有分组数之和，limit index, num 限制查询数量，inner join 内连接，left join 左外连接，right join 右外连接，any/some 满足其一，all满足所有，exists 存在，not exists ，union [all] 合并，regexp 使用正则
@@ -379,8 +381,14 @@ select * from t1 where id =1 lock in share mode;
 ##### 2.查
 
 ```mysql
-#查询锁
+#查询当前锁住的表
+show open tables;
+#查看正在锁的事务
 select * from information_schema.innodb_locks; 
+#查看下在锁的事务
+SELECT * FROM INFORMATION_SCHEMA.INNODB_TRX;
+#查看等待锁的事务
+SELECT * FROM INFORMATION_SCHEMA.INNODB_LOCK_WAITS;
 #查询innodb引擎状态，可查看锁情况
 show engine innodb status \G
 #查询具体等的语句
@@ -396,6 +404,12 @@ FROM
 	b.trx_id = w.blocking_trx_id
 	INNER JOIN information_schema.innodb_trx r  ON  
 	r.trx_id = w.requesting_trx_id;
+```
+
+##### 3.删
+
+```mysql
+kill id;#通过show processlist;查看id
 ```
 
 

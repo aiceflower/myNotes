@@ -2,7 +2,7 @@
 
 #### 一.注解驱动方式启动容器
 
-1.创建主配置类
+##### 1.创建主配置类
 
 ```Java
 //配置类等同于配置文件
@@ -18,12 +18,113 @@ public class MainConfig {
 
 
 
-2.创建容器
+##### 2.创建容器
 
 ```Java
 ApplicationContext applicationContext = 
     new AnnotationConfigApplicationContext(MainConfig.class);
 ```
+
+##### 3.常用类
+
+1.国际华相关
+
+- MessageSource：用于国际化功能,系统会自动查找名为messageSource的bean，通常用ResourceBundleMessageSoure类
+
+2.ApplicationContext事件机制(标准的<span style="color:red">观察者模式</span>)
+
+- ApplicationEvent：容器事件
+- ApplicationListener：监听器（监听程序触发事件和容器内部事件）
+- ApplicationContext.publishEvent(env)：发布事件
+- ContextRefreshedEvent：容器初始化或刷新触发
+- RequestHandledEvent：只能应用于使用DispatcherServlet的Web应用，当处理用户请求结束后触发
+
+3.bean获取Spring容器
+
+- BeanFactoryAware：获取BeanFactory
+- ApplicationContextAware：获取ApplicationContext容器
+- BeanNameAware：获得bean本身的id
+
+4.request和session作用域生效(servlet)
+
+- RequestContextListener：监听器
+- RequestContextFilter：过虑器
+
+注：如果使用DispatcherServlet则无须配置以上两者，内部已经处理了所有请求相关的状态。
+
+5.配置相关
+
+- @Configuration：修饰一个Java配置类
+- @Bean：修饰一个方法，方法返回值定义为一个bean
+- @Value：修饰一个Field，为其配置一个值
+- @Import：修饰类，为当前配置 类导入其它配置类
+- @Scope：修饰方法，指定该bean的作用域
+- @Lazy：修饰方法，指定bean是否需要延迟初始化
+- @DependOn：修饰方法，指定初始化该bean之前需要初始化的bean
+- @ImportResource：导入指定的xml配置文件
+
+6.工厂bean
+
+- FactoryBean：实现该接口的bean无法作为正常bean使用，返回该bean的getObject()
+
+7.SpEL表达式
+
+- ExpressionParser
+
+8.bean的生命周期
+
+- InitializingBean：Bean所有依赖关系结束后执行
+- DisposableBean：Bean销毁前执行
+- @PostConstruct：bean的初始化执行的方法
+- @PreDestroy：bean销毁前执行的方法
+
+9.bean的后期处理
+
+- BeanPostProcessor(bean后处理器，处理窗口中所有的bean)：两个方法在bean初始化前和初始化后执行
+- BeanFactoryPostProcessor(容器后处理器，处理容器本身)：可对spring容器进行扩展
+
+bean后处理器：
+
+- BeanNameAutoProxyCreator：根据beanName创建bean实例代理
+- DefaultAdvisorAutoProxyCreator：根据提供的advisor对容器中所有bean实例创建代理
+
+容器后处理器：
+
+- PropertyPlaceholderConfigurer：属性占位符配置器，读取propertiex属性文件,${userName}
+
+如果是schema，则<context:property-placeholder location="db.properties"/>
+
+- PropertyOverrideConfigurer：重写占位符配置器,读取属性文件中的值设置目标bean的属性值，格式为beanName.property=value，<context:property-override location="db.properties"/>
+- CustomAutowireConfigurer：自定义自动装配的配置器
+- CustomScopeConfugurer：自定义作用域的配置器
+
+10.标注spring的bean
+
+- @Component：普通bean
+- @Controller：控制器组件类
+- @Service：业务逻辑组件类
+- @Repository：dao组件类
+
+<context:component-scan base-package="com.base"/>
+
+11.资源访问
+
+- Resource：资源访问接口
+- UrlResource：访问网络资源
+  - 同java.net.URL的包装，标准的协议前缀file:文件系统，http:访问http网络资源，ftp:访问ftp
+
+- ClassPathResource：访问类加载路径里资源
+- FileSystemResource：访问文件系统里资源
+- ServletContextResource：访问相对于ServletContext路径里的资源
+- InputStreamResource：访问输入流资源
+- ByteArrayResource：访问字节数组资源
+- ResourceLoader：该接口的实现类可以获得一个Resource实例（通过getResource("db.ini")方法），spring的各context都实现了该接口，可获得与context同策略的资源，如FileSystemXmlApplicationContext获得FileSystemResource（<span style="color:red">策略模式</span>）,可通过getDescription()判断是哪种资源，也可通过前缀来指定资源如：ctx.getResource("http://localhost:8080/bean.xml")对应URLResource
+- ResourceLoaderAware：指定该接口的实现类必须有一个ResourceLoader实例，类似其它xxxAware
+
+ApplicationContext确定资源访问策略：
+
+- 实现类指定访问策略
+- 前缀指定访问策略
 
 #### 二、常用注解
 

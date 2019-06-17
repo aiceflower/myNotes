@@ -23,8 +23,8 @@ git branch (-b) dev
 切换
 git checkout dev
 查看
-git branck	
-二、常用设置		
+	git branck	
+	二、常用设置		
 修改配置内容.git/config
 git config --global user.name [username]
 git config --global user.email [email]
@@ -101,3 +101,5 @@ b)本地项目下 git init ; git add . ; git commit -m 'init' ; git push
 c)git remote add origin gitee地址
 d)git pull origin master --allow-unrelated-histories  ; 保存退出
 e)git push origin master 
+
+![1560784811966](C:\Users\alonglamp\AppData\Roaming\Typora\typora-user-images\1560784811966.png)

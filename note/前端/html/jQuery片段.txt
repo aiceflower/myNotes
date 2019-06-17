@@ -144,3 +144,18 @@ function vibration(){
    }
    navigator.vibrate([500, 300, 400,300]);[震动时间，停止时间，震动时间，停止时间………..]
 }
+14.绑定回车事件
+$('#content').bind('keypress',function(event){
+	var content = $(this).val();		
+	if(event.keyCode == '13')
+	{
+		alert('您输入的内容是：' + content);
+	}
+});
+$('#c').keypress(function(event){
+	var c = $(this).val();
+	if(event.keyCode == '13')
+	{
+		alert('您输入的内容是：' + c);
+	}
+});

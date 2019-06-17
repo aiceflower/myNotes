@@ -102,6 +102,7 @@ server_id=101
 skip_name_resolve=ON
 socket=my3306/run/mysql.sock
 tmpdir=my3306/tmp
+lower_case_table_names=1 
 
 #binlog
 log_bin=my3306/log/binlog/binlog

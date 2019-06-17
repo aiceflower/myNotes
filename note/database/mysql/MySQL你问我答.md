@@ -83,7 +83,7 @@ deptno mediumint unsigned not null default 0
 set global log_bin_trust_function_creators=1
 ```
 
-3.创建函数(有返回值)，保证每条数据都不同
+3.创建函数(有返回值)，保证每条数据都不同。<span style='color:red'>【第2步不设置这步会报错】</span>
 
 ```mysql
 #随机产生字符串

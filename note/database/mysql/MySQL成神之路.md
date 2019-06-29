@@ -194,8 +194,9 @@ LIMIT <limit_number>
 6 HAVING  <having_condition>
 7 SELECT 
 8 DISTINCT <select_list>
-9 ORDER BY <order_by_condition>
-10 LiMIT <limit_number>
+9 UNION
+10 ORDER BY <order_by_condition>
+11 LiMIT <limit_number>
 ```
 
 **SQL解析**

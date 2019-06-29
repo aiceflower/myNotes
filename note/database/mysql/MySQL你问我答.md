@@ -77,7 +77,7 @@ deptno mediumint unsigned not null default 0
 )engine=innodb default charset=utf8mb4;
 ```
 
-2.设置参数 (mysql插入大量数据会报一个错)
+2.设置参数 (创建函数时会报一个错)
 
 ```mysql
 set global log_bin_trust_function_creators=1

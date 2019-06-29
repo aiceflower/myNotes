@@ -112,6 +112,7 @@
 - InnoDB 引擎在**加锁**的时候，只有通过索引进行检索的时候才会使用行级锁，否则会使用表级锁。这个索引一定要创建成唯一索引，否则会出现多个重载方法之间无法同时被访问的问题.
 - 上千行以内的数据排序操作可放在内存中，服务器可以有很多台，但DB只有几台。
 - show open tables; 查看表使用和锁情况
+- 使用pt-duplicate-key-checker  -uroot -p 查询重复及冗余索引
 - <span style='color:red'>innodb索引失效会使行锁变表锁</span>
 
 -------<span style='color:red'>索引相关</span>------------
@@ -121,11 +122,10 @@
 - 尽可能减少join语句中的循环总次数：永远用小结果驱动大结果
 - 优先优化嵌套循环的内层循环
 - 保证join语句中被驱动表上join条件已经被索引
-
 - 索引建立在经常查询的字段中
-
 - 左右连接，相反建索引(左连接建立右表索引，因为左连接左表数据都存在)
 - 极端条件下可调大joinbuffer大小
+- 把子查询优化成join查询，注意一对多关系时两种结果条数不一样，可使用distinct
 
 -------**其它优化**------------
 
@@ -1168,11 +1168,15 @@ mysqld_safe --skip-grant-tables #绕过权限表认证，root密码丢失时可�
 
 ​	查询时间超过long_query_time(mysql默认10s)定义时间的查询就为慢查询.
 
+​	通过log_queries_not_using_indexes查看没有使用索引的查询
+
 **如何定位慢查询？**
 
 ​	show status like '%Slow_queries%'; 如果大于0则说明存在慢查询
 
 ​	根据slow_query_log_file查询慢查询日志存放位置，根据日志定位慢查询语句。
+
+​	pt-index-usage -u -p mysql_slow.log 通过慢日志分析索引，查看哪些索引未使用
 
 **慢的原因？**(执行时间长、等待时间长)
 
@@ -1205,7 +1209,27 @@ mysqldumpslow -s t -t 10 -g "left join" mysql-slow.log
 #建议在使用这些命令时结构|和more使用
 ```
 
-​	
+```shell
+#pt-query-digest工具
+yum install -y perl-CPAN perl-Time-HiRes #安装perl
+wget percona.com/get/percona-toolkit.tar.gz #下载源码
+tar zxf percona-toolkit.tar.gz #解压
+cd percona-toolkit-2.2.19
+perl Makefile.PL PREFIX=/usr/local/percona-toolkit #
+make && make install #安装
+#使用
+pt-query-digest slow-log > slow_log.report #输出到文件
+pt-query-digest slow-log -review \
+ h=127.0.0.1,D=test,p=root,P=3306,u=root,t=query_review \
+ --create-reviewtable \
+ --review-history t=hostname_slow
+#判定慢sql
+1.查询次数多，且查询占用时间长的sql，通常为pt-query-digest分析的前几个查询
+2.IO大的sql，分析中Rows examine项
+3.未命中索引的sql，Rows examine和Rows Send的对比
+```
+
+
 
 ​	
 

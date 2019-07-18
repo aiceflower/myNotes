@@ -713,6 +713,16 @@ v = 'hello world!'
 		13.事务
 			session.commit()
 			session.rollback()
+	4.连接池
+		pip install DBUtils
+		创建连接池
+		pool = PooledDB(creator=pymysql, mincached=2, maxcached=5, maxshared=3, maxconnections=6,
+                             blocking=True, host=self.host, port=self.port, user=self.user,
+                             password=self.password, database=self.db)
+		连接
+		conn = pool.connection()
+        游标
+		cur = conn.cursor()
 二十一、Web框架
 	1.flask
 		1.安装 

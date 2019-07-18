@@ -31,6 +31,16 @@ slow_query_log #慢查询
 datadir #数据库数据位置
 tx_isolation #查询日志隔离级别
 lower_case_table_names #表名是否区分大小写。0区分，1不区分
+
+#系统优化参数
+innodb_buffer_pool_size #设置为75%，如果服务器单独运行数据库，且数据库中只有Innodb表
+innodb_buffer_pool_instances #控制缓冲池个数，控制并发性
+innodb_log_buffer_size #缓冲大小，不用太大
+innodb_flush_log_at_trx_commit #多长时间把变更刷新的磁盘，0-每秒刷新，1-每次变更刷新保证数据不丢失，2-提高IO数据最多丢失1秒
+innodb_read_io_threads，innodb_write_io_threads #读写io数量，根据负载修改
+innodb_file_per_table #OFF所有表共享表空间，ON每个表单独表空间，建议ON
+innodb_stats_on_metadata #决定什么情况下刷新表统计信息，建议off
+#三方工具配置系统参数 https://tools.percona.com/wizard Percon Configuration Wizard
 ```
 
 ##### 3.操作积累
@@ -667,5 +677,12 @@ drop trigger trigger_name;
 ```mysql
 #库、名、账户、定义
 select TRIGGER_SCHEMA,TRIGGER_NAME,DEFINER,ACTION_STATEMENT from information_schema.TRIGGERS where TRIGGER_SCHEMA='db_name';
+```
+
+#### 14.常用难写
+
+```mysql
+#查询重复索引，比如有主键索引，但在建立联合索引时又加上了主键，information_schema库中
+select a.TABLE_SCHEMA  '数据库名', a.table_name '表名',a.index_name '索引1', b.index_name '索引2', a.column_name '重复列 名' from statistics a join statistics b on a.table_schema=b.table_schema and a.table_name=b.table_name and a.seq_in_index=b.seq_in_index and a.column_name=b.column_name where a.seq_in_index=1 and a.index_name <> b.index_name;
 ```
 

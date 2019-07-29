@@ -159,3 +159,5 @@ $('#c').keypress(function(event){
 		alert('您输入的内容是：' + c);
 	}
 });
+15.直接编辑网页内容
+	控制台输入 document.body.contentEditable=true或document.designMode = "on" 

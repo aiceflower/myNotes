@@ -119,6 +119,8 @@ ctrl+alt+左右 回到上一次停留的位置方
 ctrl+shift+backspace 跳转到上次编辑的地	
 Ctrl + Alt + F7 跳转到方法变量调用地方
 
+<font color=#e00>F2</font>跳转到下一个错误位置
+
 #### 插入：
 Ctrl + J 插入自定义动态代码模板 
 Alt + Insert(fn+enter相当于) 代码自动生成，如生成对象的 set / get 方法，构造函数，toString() 等

@@ -1,0 +1,8 @@
+### 1.Python问题
+1.tuple indices must be integers or slices, not str
+	元组索引必须是整数或切片
+### 2.idea工具提示问题
+1.异常捕获提示Too broad exception
+	在try上添加 # noinspection PyBroadException注释
+2.变量提示 shadows name ‘xxxx’
+	主函数为变量与方法中变量名相同，设置为不同即可

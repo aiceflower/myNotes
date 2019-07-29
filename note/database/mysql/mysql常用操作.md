@@ -185,6 +185,7 @@ alter table old_name rename [to] new_name;#修改表名
 alter table tb_name engine=innodb;#修改库存储引擎
 alter table tb_name convert to character set utf8;#修改编码
 #-------字段
+alter table tb_name add col_name varchar(10) not null;#增加字段
 alter table tb_name modify id int(10);#修改字段类型
 alter table tb_name change name name_new varchar(10);#修改字段名，可用于修改字段类型
 alter table tb_name modify col_name varchar(10) after col_name_source;#修改字段位置
@@ -494,8 +495,8 @@ kill id;#通过show processlist;查看id
 - currentdate/current_date()：将当前日期按照yyyy-mm-dd或yyyymmdd形式返回，curdate()+0，时转换成yyyymmdd形式的数字。
 - surtime/current_time()：当前时间以hh:mm:ss或hhmmss形式返回
 - now/current_timestamp/localtime/sysdate()：当前日期和时间yyyy-mm-dd hh:mm:ss或yyyymmddhhmmss格式
-- unix_timestamp([date])：时间戳，date可以是时间或时间格式的字符串,GMT时间
-- from_unixtime(timestamp)：把时间戳转换为日期格式，GMT时间
+- <span style="color:red">unix_timestamp</span>([date])：时间戳，date可以是时间或时间格式的字符串,GMT时间
+- <span style="color:red">from_unixtime</span>(timestamp)：把时间戳转换为日期格式，GMT时间
 - utc_date/utc_time：UTC日期时间
 - month/monthname(date)：获取月份和月份英文全称
 - dayname/dayofweek/weekday(d)：星期全称，周的第几天

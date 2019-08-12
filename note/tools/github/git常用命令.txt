@@ -10,3 +10,10 @@ git branch --set-upstream-to origin/dev 与远程分支关联
 git branch -r 
 5.查看远程仓库地址
 git remote -v
+6.创建新分支
+	1.拉取远程分支 git clone remote_url
+	2.与远程分支关联 git remote add origin remote_url
+	3.查看所有分支（本地和远程） git branch -a 
+	4.查看远程分支 git branch -r
+	5.创建并切换分支 git checkout -b branchname 【等价：git branch branchname+git checkout branchname】
+	6.提交新分支 git push origin branchname

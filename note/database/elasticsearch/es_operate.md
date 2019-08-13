@@ -96,7 +96,7 @@ Elasticsearch是一个基于Lucene 的实时分布式搜索和分析引擎 ，用于全文搜索、 结构化
 
 #### 3.查
 
-***查询所有索引***：GET /_cat/indicesv
+***查询所有索引***：GET /_cat/indices?v
 
 ***查询某类型下所有数据***：GET /索引名/类型名/_search
 

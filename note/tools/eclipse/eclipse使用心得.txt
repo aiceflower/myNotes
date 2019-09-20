@@ -60,3 +60,8 @@ windows->preference->general->editors->text editors->background color->设置颜色(
 4.修改主题
 	help -> Install New SoftWare ->Add eclipse_theme http://eclipse-color-theme.github.com/update 
 	windows -- Perferences –- General -- Appearence -- ColorTheme  选择自己喜欢的
+5.eclipse添加插件之扩展安装
+	在eclipse安装目录下新建links目录，在其中新建xxx.link文件，添加如下内容
+	path=<pluginPath>
+	在pluginPath路径下新建eclipse文件夹，在将插件的plugins,features目录复制到eclipse目录下重启即可
+	卸载插件只需要将对应的link文件删除即可

@@ -400,3 +400,14 @@
 	swapoff /dev/sdb6 停止swap分区
 	
 33.数据同步写入磁盘： sync
+
+34.查看信息
+
+grep MemTotal /proc/meminfo 最大内存
+grep "model name" /proc/cpuinfo CPU信息
+uname -rm 内核
+cat /etc/redhat-release 系统版本
+
+vi /etc/profile 后添加
+ulimit –u 102400 修改系统最大并发线程数
+ulimit –n 102400 修改系统最大打开文件数

@@ -1,0 +1,28 @@
+@import '../../../../common/css/getUnit.scss';
+
+.com-counting{
+  width:unit(400);
+  position:absolute;
+  right:unit(48);
+
+
+  .hour,.detail{
+    color:#fff;
+  }
+
+  .hour{
+    font-size:unit(80);
+    line-height:unit(80);
+    float: left;
+  }
+
+  .detail{
+    float: right;
+    font-size : unit(32);
+    line-height: unit(32);
+  }
+
+  .date,.week{
+    margin-top: unit(6);
+  }
+}

@@ -1,0 +1,95 @@
+1.Expression Language EL表达式
+2.输出常量
+	${1}
+3.算述表达式，支持加+，减-，乘*，除/ div，求余% mod，三目 a==b?c:d;
+	${10 % 4}
+	表达式把所有数值都当作浮点数处理
+	输出$  使用$$
+4.逻辑运算符
+	小于 < lt
+	大于 > gt
+	小于等于 <= le
+	大于等于 >= ge
+	等于 == eq
+	不等于 != ne
+	比较字符 ${'a' < 'b'}
+5.表达式语言的内置对象
+	1.pageContext:代表该页面的pageContext对象
+	2.pageScope:获取page范围的属性值
+	3.requestScope：获取request范围的属性值
+	4.sessionScope：获取session范围的属性值
+		${sessionScope["login"]}
+	5.applicationScope：获取application范围的属性值
+	6.param：获取请求参数值
+		${param.name}
+		${param["name"]}
+	7.paramValues：获取请求的参数值，与param的区别是，该对象获取的是数组的属性值
+	8.header：获取请求头的属性值
+		${header.host}
+		${header["host"]}
+	9.headerValues：获取请求头的属性值
+	10.initParam：获取请求web应用的初始化参数
+	11.cookie：获取指定的cookie值
+		${cookie["name"].value}
+6.表达式语言自定义函数
+	函数的本质：提供一种语法允许在el中使用某个类的静态方法
+	1.定义函数处理类
+		一个包含静态访问的类，也可以是系统类
+	2.使用标签库定义函数
+		定义标签函数与定义标签方法类似在<tablib>中添加<function>标签
+	3.使用，先导入标签库，再使用
+	4.实现
+		方法：
+			public static String reverse(String text){
+				StringBuilder sb = new StringBuilder(text);
+				return sb.reverse().toString();
+			}
+		标签：
+		<taglib>
+		  <tlib-version>1.0</tlib-version>
+		  <jsp-version>1.2</jsp-version>
+		  <short-name>crazyit</short-name>
+		  <uri>http://com.grgbanking.function</uri>
+		  <description>
+			A simple tab library for the examples
+		  </description>
+		  <function>
+			<name>reverse</name>
+			<function-class>com.grgbanking.function.Functions</function-class>
+			<function-signature>java.lang.String reverse(java.lang.String)</function-signature>
+		  </function>
+			
+		</taglib>
+7.Tag File支持
+	Tag File是自定义标签的简化用法，可以不定义标签处理类和标签库文件，但仍然可以在jsp页面中使用自定义标签
+	步骤：
+		a.建立Tag文件
+			Tag File具有以下5个编译指令
+			taglib :类似jsp中的taglib
+			include ：类似jsp中的include
+			tag:类似jsp中的page指令，有pageEncoding、body-content等属性，设置页面编码等属性
+			attribute：设置自定义标签的属性
+			variable：设置自定义标签变量，将变量传给jsp页面使用
+		b.文件内容
+			<%@ tag pageEncoding="GBK" import="java.util.*"%>
+			<!-- 定义四个标签属性 -->
+			<%@ attribute name="bgColor" %>
+			<%@ attribute name="cellColor" %>
+			<%@ attribute name="title" %>
+			<%@ attribute name="bean" %>
+			<table>
+			  <tr>
+				<th><b>${title}</b></th>
+			  </tr>
+			<% 
+				List<String> list = (List<String>)request.getAttribute("a");
+				for(Object ele :list){
+			%>
+				<tr>
+					<td bgcolor="${cellColor }"><%=ele %></td>
+				</tr>
+				<%}%>
+			</table>
+		 c.使用
+			<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>//tagdir是标签文件所有目录，注意是目录而不是文件
+			<tags:iterator bgColor="#99dd99" cellColor="#9999cc" title="迭代器标签" bean="a"></tags:iterator>

@@ -1,0 +1,40 @@
+@import "config";
+
+.header{
+  height : $headerH;
+  background-color: $csairBlue;
+}
+
+
+.nav{
+  position:absolute;
+  width: $navW;
+  left : 0;
+  bottom:0;
+  top: $headerH;
+  background-color : #ccc;
+
+  li{
+    padding-left:30px;
+    line-height : 50px;
+    border-bottom: 1px solid #ddd;
+
+    &:hover{
+      color : $csairBlue;
+      cursor: pointer;
+    }
+
+    &:nth-child(1){
+      border-top: 1px solid #ddd;
+    }
+  }
+}
+
+.router-view{
+  position:absolute;
+  top: $headerH;
+  left : $navW;
+  right:0;
+  bottom:0;
+  background-color: lightpink;
+}

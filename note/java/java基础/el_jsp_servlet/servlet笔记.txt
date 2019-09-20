@@ -1,0 +1,79 @@
+1.servlet3.0之后可以使用servlet注解，需要tomcat7及以上版本
+2.servlet生命周期
+	1.创建servlet实例，客户端第一次请求servlet或web应用启动时创建(l<oad-on-startup>1</oad-on-startup>)
+	2.web窗口调用servlet的init方法，对servlet进行初始化
+	3.servlet准备接收客户端请求，并处理请求
+	4.servlet销毁
+3.配置或获取servlet初始化参数
+	配置：在servlet中
+		<init-param>
+			<param-name>driver</param-name>
+			<param-value>com.mysql.jdb.Driver</param-value>
+		</init-param>
+	获取：
+		使用ServletConfig对象完成，getInitParameter("key");
+4.开发自定义标签
+	1.开发自定义标签处理类
+		继承javax.servlet.jsp.tagext.SimpleTagSupport
+		如果标签中包含属性，必需有对应的getter和setter方法
+		重写doTag()方法，负责生成页面内容
+	2.建立一个*.tld文件，每个*.tld文件对应一个标签库，每个标签库可以包含多个标签
+	3.在jsp页面中使用自定义标签
+5.servlet路径问题，页面跳转及页面路径问题
+	req.getRequestDispatcher("/WEB-INF/jsp/index.jsp").forward(req, resp);//绝对路径
+	1.在应用内部'/'代表的就是应用名称
+	2.在jsp页面中/demo/firstServlet,其中demo是应用名，/firstServlet是请求地址
+	但我们经常这样写${pageContext.request.contextPath}/firstServlet
+	3.页面资源引入
+		<script type="text/javascript" src="${pageContext.request.contextPath}/pages/event/js/addevent.js"></script>
+6.servlet配置过滤器
+	1.创建一个Filter处理类实现Filter类，实现doFilter方法
+	2.在web.xml文件中配置Filter
+	filter中获取初始化配置信息
+	ServletContext context = this.config.getServletContext();
+	config.getInitParameter("");
+7.servlet配置监听器
+	1.使用Listnetr
+
+　　a.定义Listener实现类，实现2中的各种接口
+
+　　b.在web.xml文件中配置Listener
+
+　　　<listener>
+
+　　　　<listener-class>com.ConnListener</listener-class>
+
+　　　</listener>
+
+	2.监听不同的web事件需要实现不同的Listener
+
+	　　ServletContextListener:监听web应用启动与关闭
+
+	　　ServletContextAttributeListener:监听ServletContext范围(application)内属性的改变
+
+	　　ServletRequestListener:监听用户请求
+
+	　　ServletRequestAttributeListener:监听ServletRequest范围(request)内属性的改变
+
+	　　ServletSessionListener:监听用户session的开始和结束
+
+	　　ServletSessionAttributeListener:监听HttpSession(session)内属性的改变
+8.servlet3.0提供的异步(tomcat7)
+	AsyncContext actx = request.startAsync();
+	actx.setTimeout(30*10000);
+	actx.start(new Executor(actx);//传的是一个线程
+	Executor类实现Runnable，复写run方法
+	在run方法中
+	actx.getRequest();
+	actx.dispatch("/async.jsp");
+	注：
+		1.被异步请求dispatch的目标页面需要指定session="false",表明该页面不会重新创建session
+		2.对于希望用异步调用的servlet而言，开发者必需显式指定开启异步调用。
+			在web.xml中的servlet中<servlet><async-supported>true</async-supported></servlet>
+	async.jsp页面
+		<%@ page contentType="text/html;charset=gbk" language="java" session="false"%>
+		<%out.println("业务调用结束");
+		//完成异步调用
+		request.getAsyncContext().complete();%>
+9.异步监听
+	实现AsyncListener接口，实现其四个监听方法

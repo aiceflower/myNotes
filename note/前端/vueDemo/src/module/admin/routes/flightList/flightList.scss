@@ -1,0 +1,184 @@
+@import '../../../../common/css/getUnit';
+
+.flight-list{
+  background: -webkit-linear-gradient(#022955, #214f88); /* Safari 5.1 - 6.0 */
+  background: linear-gradient(#022955, #214f88); /* 标准的语法 */
+
+
+  .list-content{
+    padding-top:unit(30);
+    width : unit(1798);
+    height: unit(823);
+    position:relative;
+    margin:0 auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: -webkit-linear-gradient(#014679, #16619c); /* Safari 5.1 - 6.0 */
+    background: linear-gradient(#014679, #16619c); /* 标准的语法 */
+    border-radius: unit(8);
+
+    /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+    &::-webkit-scrollbar
+    {
+      width: 16px;
+      height: 16px;
+      background-color: #F5F5F5;
+    }
+
+    /*定义滚动条轨道 内阴影+圆角*/
+    &::-webkit-scrollbar-track
+    {
+      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+      border-radius: 10px;
+      background-color: #F5F5F5;
+    }
+
+    /*定义滑块 内阴影+圆角*/
+    &::-webkit-scrollbar-thumb
+    {
+      border-radius: 10px;
+      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+      background-color: #555;
+    }
+
+    .flight{
+      float: left;
+      width: unit(400);
+      margin-left : unit(37);
+
+      .flight-img{
+        width: unit(400);
+        height : unit(190);
+        overflow: hidden;
+        border-radius : unit(8);
+
+
+        > img{
+          width:100%;
+        }
+      }
+
+      .flight-type{
+        text-align: center;
+        color:#fff;
+        font-size : unit(30);
+        line-height:unit(60);
+        height: unit(67);
+      }
+    }
+  }
+
+  $tabOffsetTop : 97;
+  $smCirR : 15; //小圆半径
+  $bigCirR : 30;
+  $smCirC : #c0d8e3; //小圆背景色
+  $bigCirB : #8edaff; //大圆border颜色
+  $cirSpace : 130; //圆间距
+  $lineH : 8; //基准线高度
+  $itemW : 100;
+  .tab-bar{
+    float: right;
+    height : unit($lineH);
+    width : unit(1700);
+    margin-right : unit(62);
+    position:relative;
+    background-image: url(./img/line.png);
+    background-position: right;
+    background-repeat: no-repeat;
+    margin-top: unit($tabOffsetTop);
+
+    @function getSmCircleRight( $index ){
+      @return unit((3 - $index) * $cirSpace);
+    }
+
+    @function getBigCircleRight( $index ){
+      $ret : (3 - $index) * $cirSpace - ($bigCirR - $smCirR);
+      @return unit($ret);
+    }
+
+    .sm-circle{
+      position:absolute;
+      top : unit(( $smCirR * 2 - $lineH ) / -2);
+      background-color : $smCirC;
+      border-radius: 100%;
+      width : unit( $smCirR * 2);
+      height : unit( $smCirR * 2);
+      z-index:1;
+    }
+
+    .sm-circle1{
+      right : getSmCircleRight(0);
+    }
+
+    .sm-circle2{
+      right : getSmCircleRight(1);
+    }
+
+    .sm-circle3{
+      right : getSmCircleRight(2);
+    }
+
+    .big-circle{
+    //  display: none;
+      z-index:100;
+      position:absolute;
+      top : unit(( $bigCirR * 2 - $lineH ) / -2);
+      background-color : #fff;
+      border-radius: 100%;
+      border: unit(2) solid $bigCirB;
+      width : unit( $bigCirR * 2);
+      height : unit( $bigCirR * 2);
+      background-image: url(./img/icon_plane-2.png);
+      background-position:center center;
+      background-repeat: no-repeat;
+    }
+
+    .big-circle1{
+      right : getBigCircleRight(0);
+    }
+
+    .big-circle2{
+      right : getBigCircleRight(1);
+    }
+
+    .big-circle3{
+      right : getBigCircleRight(2);
+    }
+
+    @function getTextRight( $index ){
+      $ret : (3 - $index) * $cirSpace + $smCirR - 50;
+      @return unit($ret);
+    }
+    .text{
+      height: unit(30);
+      line-height: unit(30);
+      width : unit(100);
+      top : unit( -60 );
+      position:absolute;
+      color : #a9b5c9;
+      font-size: unit(30);
+      text-align: center;
+
+      &.cur{
+        color : #fff;
+        -webkit-transform: translateY(unit(-8));
+        -moz-transform: translateY(unit(-8));
+        -ms-transform: translateY(unit(-8));
+        -o-transform: translateY(unit(-8));
+        transform: translateY(unit(-8));
+      }
+    }
+
+    .text1{
+      right : getTextRight(0);
+    }
+
+    .text2{
+      right : getTextRight(1);
+    }
+
+    .text3{
+      right : getTextRight(2);
+    }
+  }
+}

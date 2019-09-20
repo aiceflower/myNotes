@@ -1,0 +1,40 @@
+hibernate：
+基础dao最终继承HibernateDaoSupport有getHibernateTemplate();getSessionFactory();getSession();
+getHibernateTemplate().get(Person.class, personid);//根据主键获取对象
+Object p = getHibernateTemplate().load(Person.class, personid);
+getHibernateTemplate().delete(p);//删除实例，先加载，后删除
+getHibernateTemplate().bulkUpdate(hql)//批量更新数据，delete,update
+this.getHibernateTemplate().getSessionFactory().getCurrentSession();//获取session
+//分页查询
+this.hibernateTemplate.executeFind(new HibernateCallback(){
+public Object doInHibernate(Session session)throws HibernateException, SQLException {
+return session.createQuery("from RuntimeDocumentState ").setFirstResult((pageNO-1)*pageSize).setMaxResults(pageSize).list();}
+});//对应的有一个execute方法，返回的是一个对象，而不是一个集合
+//修改list();返回结果，默认为object数组List<Object[]>
+ String hql = " select new list(name,passwd) from Users";//返回list,用Query执行List<List<String>>
+String hql = " select new map(name,passwd) from Users";//返回map,用Query执行List<Map<String>>,返回自定义对象同理，key为0，1...可用as别名
+
+Criteria
+Criteria crit = sess.createCriteria(Cat.class);
+crit.setMaxResults(50);
+List cats = crit.list();
+List cats = sess.createCriteria(Cat.class)add( Restrictions.like("name", "Fritz%") ) .list();
+添加其它的条件    
+add( Restrictions.between("weight", minWeight, maxWeight) );between
+add( Restrictions.like("name", "Fritz%") );like
+add( Restrictions.or(Restrictions.eq( "age", new Integer(0) ),Restrictions.isNull("age"));or
+.add( Restrictions.in( "name", new String[] { "Fritz", "Izi", "Pk" } ) );in
+add( Restrictions.disjunction()
+        .add( Restrictions.isNull("age") )
+        .add( Restrictions.eq("age", new Integer(0) ) )
+        .add( Restrictions.eq("age", new Integer(1) ) )
+        .add( Restrictions.eq("age", new Integer(2) ) )
+    ) );
+addOrder( Order.asc("name") );排序
+createAlias("kittens", "kt").createAlias("mate", "mt").add( Restrictions.eqProperty("kt.name", "mt.name") );别名
+
+Query
+Query query = session.createQuery(hql);
+SQLQuery sqlQuery = session.createSQLQuery(sql);
+
+

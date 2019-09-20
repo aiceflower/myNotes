@@ -1,0 +1,81 @@
+@import "../../../../../../common/css/getUnit.scss";
+
+$itemSpace : 50;
+$smItemW : 156;
+$smItemH : 240;
+$bigItemW : 176;
+$bigItemH : 270;
+$arrowW : 53;
+$arrowH : 81;
+
+$loopW : 8 * $itemSpace + 6 * $smItemW + $bigItemW + $arrowW * 2;
+$loopH : $bigItemH;
+$border : unit(2) solid #008acb;
+$cuterW : $loopW - $itemSpace * 2 - $arrowW * 2;
+$cuterH : $bigItemH;
+
+.com-loop{
+  position:absolute;
+  bottom: unit(23);
+  left : 0;
+  right : 0;
+  margin: auto;
+  height : unit($loopH);
+  width : unit($loopW);
+
+
+
+  .cutter{
+    margin: 0 auto;
+    width : unit($cuterW);
+    height : unit($cuterH);
+
+    overflow: hidden;
+
+    .flex-box{
+      display: flex;
+      display: -webkit-flex; /* Safari */
+      justify-content: space-between  ;
+      align-items : center;
+      width : unit($cuterW);
+      height : unit($cuterH);
+      transition: all .5s;
+      -webkit-transition : all .5s;
+
+      .item{
+        width : unit($smItemW);
+        height : unit($smItemH);
+        background-position: center;
+        background-size: auto 100%;
+        background-repeat: no-repeat;
+
+        &.cur{
+          border : $border;
+          width : unit($bigItemW);
+          height : unit($bigItemH);
+        }
+      }
+    }
+  }
+
+  .btn{
+    position:absolute;
+    width : unit($arrowW);
+    height : unit($arrowH);
+    top:0;
+    bottom:0;
+    margin:auto;
+    background-size :100%;
+    background-repeat: no-repeat;
+  }
+
+  .btn-l{
+    left:0;
+    background-image: url(./img/arrow-l.png);
+  }
+
+  .btn-r{
+    right:0;
+    background-image: url(./img/arrow-r.png);
+  }
+}

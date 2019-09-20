@@ -1,0 +1,62 @@
+@import '../../../../common/css/getUnit.scss';
+
+.com-preview{
+  position:absolute;
+  z-index:9999;
+  width:100%;
+  height:100%;
+  left:0;
+  top:0;
+
+  &:before{
+    content : ' ';
+    position:absolute;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    background-color:#333;
+    z-index:1;
+    opacity : 0.8;
+  }
+
+  .close{
+    position:absolute;
+    right:0;
+    top:0;
+    width:50px;
+    height:50px;
+    background-color:#000;
+    color:#fff;
+    z-index:100;
+  }
+
+  .preview-img{
+    position:absolute;
+    left:0;
+    top:0;
+    right:0;
+    bottom:0;
+    margin:auto;
+    width:unit(1500);
+    height:100%;
+    z-index:10;
+    background-size : contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
+
+  .preview-video{
+    z-index:10;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    margin: auto;
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+  }
+
+}

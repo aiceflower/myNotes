@@ -1,0 +1,108 @@
+
+@import '../../../../common/css/getUnit';
+
+.movie-detail{
+  background: -webkit-linear-gradient(#0174aa, #0c96d6); /* Safari 5.1 - 6.0 */
+  background: linear-gradient(#0174aa, #0c96d6); /* 标准的语法 */
+
+  .movie-mes{
+    width : unit(1860);
+    height : unit(710);
+    overflow: hidden;
+    -webkit-perspective: 1000px;
+    perspective: 1000px;
+
+    .detail-mes{
+      float: right;
+      width : unit(1360);
+
+      .movie-name{
+        height:unit(36);
+        line-height: unit(36);
+        margin-top: unit(13);
+        margin-bottom: unit(23);
+        font-size : unit(36);
+        color : #fff;
+      }
+
+      .mes-content{
+        position:relative;
+        height : unit(540);
+        background: -webkit-linear-gradient(#025b92, #0d68a4); /* Safari 5.1 - 6.0 */
+        background: linear-gradient(#025b92, #0d68a4); /* 标准的语法 */
+        padding : unit(30) unit(30) 0 unit(30);
+
+        .cutter{
+          position:relative;
+          height: unit(428);
+          overflow-x: hidden;
+          overflow-y: auto;
+        }
+
+        .ul-list{
+          font-size : unit(30);
+          color : #fff;
+
+          &.offset{
+            margin-top : unit(24);
+
+            > li{
+              line-height : unit(54);
+            }
+          }
+
+          .text-hidden{
+            overflow: hidden;
+            text-overflow:ellipsis;
+            white-space: nowrap;
+            margin-bottom : unit(16);
+          }
+
+          > li{
+            line-height: unit(30);
+            height : unit(30);
+          }
+        }
+
+        .player{
+          width : unit(300);
+          height : unit(80);
+          position:absolute;
+          background-color:#fff;
+          right:unit(40);
+          bottom: unit(30);
+        }
+      }
+    }
+
+    .poster{
+      height : unit(540);
+      width : unit(340);
+      margin-top : unit(72);
+      text-align: right;
+      padding-right : unit(18);
+
+      float: right;
+      $rotate : 30deg;
+      $style : rotateY($rotate) scale(1.07) translateX(unit(-30));
+      -webkit-transform: $style;
+      -moz-transform:  $style;
+      -ms-transform: $style;
+      -o-transform:  $style;
+      transform: $style;
+      background-position: center;
+      background-size: auto 100%;
+
+      > img{
+        $rotate : 30deg;
+        $style : rotateY($rotate) scale(1.07) translateX(unit(-30));
+        height : 100%;
+        -webkit-transform: $style;
+        -moz-transform:  $style;
+        -ms-transform: $style;
+        -o-transform:  $style;
+        transform: $style;
+      }
+    }
+  }
+}

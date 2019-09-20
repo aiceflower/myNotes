@@ -1,0 +1,48 @@
+一、jsp基础知识
+1.small tips
+	jsp本质是servlet，是一个特殊的java类，第一次请求jsp会稍微有点慢，因为容器会把jsp转换成servlet
+	jsp生成的java代码放在tomcat的work\Catalina\localhost\webDemo\org\apache\jsp下，里面有三个方法init();destroy();service();
+	jsp传送到浏览器的是标准的html页面
+	jsp会编译成servlet每个servlet容器中只有一个实例
+	pageContext可以获取jsp中的九大内置对象
+2.jsp注释
+	<%-- jsp注释内容 --%>//不会显示到页面，因为是java代码，不会传送
+	<!-- html注释内容 -->//会传送到页面，因为是html内容
+3.jsp声明
+	<%! 声明部分 %>
+4.输出jsp表达式
+	<%=表达式%> 等同于out.println();
+5.jsp的三个编译指令
+	a.page
+	b.include
+		<%@include file="head"%>//静态引入，会导入编译指令
+		<jsp:include> //动态引入，如果被引入的文件经常修改的话使用
+	c.taglib
+	<%@ 编译指令名 属性名="属性值" ...%>
+6.jsp的七个动作指令
+	jsp:forward 转发，执行页面跳转,forward不会丢失请求参数
+		<jsp:forward page="forward-result.jsp">
+			<jsp:param name="page" value="29"/>
+		</jsp:forward>
+	jsp:param 传递参数
+	jsp:include 动态引入jsp页面，不会导入编译指令
+	jsp:plugin 下载JavaBean或Applet到客户端执行
+	jsp:useBean 创建一个JavaBean实例
+	jsp:setProperty 设置JavaBean实例的属性值
+	jsp:getProperty	输出JavaBean实例的属性值
+7.动态导入与静态导入的区别
+	1.静态导入是将被导入的代码完全融入，两个页面整合成一个servlet，动态导入则在servlet中使用include方法来引入被导入页面内容
+	2.静态导入时被导入页面编译指令会起作用，动态导入时被导入页面失去作用，只是插入页面的body内容
+	3.动态导入还可以增加额外的参数
+8.forward与include的区别
+	forward拿目标页面代替原有页面，include则是拿目标页面插入原有页面
+9.jsp的九个内置对象
+	application:
+	config:
+	exception:
+	out:
+	page:
+	pageContext:
+	request:
+	response:
+	session   

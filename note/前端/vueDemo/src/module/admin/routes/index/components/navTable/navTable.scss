@@ -1,0 +1,165 @@
+@import "../../../../../../common/css/getUnit.scss";
+
+.index-nav-table{
+  margin-left: unit(63);
+
+  .shadow{
+    -webkit-box-shadow:  unit(4) unit(4) unit(20) #222;
+  }
+
+  .col{
+    float: left;
+
+    &:nth-child(n + 2){
+      margin-left: unit(20);
+    }
+
+    .cell{
+      position:relative;
+
+      .icon-offset{
+        position:relative;
+      }
+
+      .icon-offset1{
+        margin-top: unit(-5);
+      }
+
+
+    }
+
+    .content{
+      border-radius: unit(8);
+      overflow: hidden;
+      position:relative;
+    }
+
+    .bg-img{
+      position:relative;
+      z-index:1;
+    }
+
+    .href{
+      .intro-text{
+        color: #fff;
+        font-size:unit(40);
+      }
+    }
+
+    .intro-text{
+      position:absolute;
+      bottom:unit(20);
+      left:unit(20);
+      right : unit(20);
+      height: unit(80);
+      z-index:10;
+      color: #fff;
+      font-size:unit(40);
+
+      &:before{
+        content :' ';
+        position:absolute;
+        width:100%;
+        height:100%;
+        left:0;
+        top:0;
+        background-color:#e5004a;
+        border-radius: unit(8);
+        z-index:1;
+      }
+
+      .tips-content{
+        position:relative;
+        z-index:100;
+        height: unit(80);
+        line-height: unit(80);
+        text-align: center;
+
+        img{
+          vertical-align: middle;
+        }
+
+        .tips{
+          margin-left: unit(10);
+        }
+      }
+    }
+  }
+
+  .col1{
+    .cell{
+      width: unit(350);
+      height: unit(250);
+
+      .content{
+        background-color:#FFF;
+        height: unit(250);
+      }
+
+      &:nth-child(n+2){
+        margin-top: unit(20);
+      }
+
+      .icon-content{
+        position:relative;
+        height:unit(190);
+
+        > img{
+          position:absolute;
+          left:0;
+          right:0;
+          top:0;
+          bottom:0;
+          margin:auto;
+        }
+      }
+
+      .text{
+        font-size:unit(40);
+        line-height:unit(40);
+        color:#e5004a;;
+        text-align: center;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .col2{
+    .cell{
+      width: unit(520);
+      height: unit(790);
+
+      .content{
+        height: unit(790);
+      }
+
+    }
+  }
+
+  .col3{
+    .cell{
+      width: unit(340);
+      height: unit(385);
+
+      .content{
+        height: unit(385);
+      }
+
+      &:nth-child(n+2){
+        margin-top: unit(20);
+      }
+    }
+  }
+
+  .col4{
+    .cell{
+      width: unit(520);
+      height: unit(790);
+
+      .content{
+        height: unit(790);
+      }
+
+    }
+  }
+}

@@ -1,3 +1,4 @@
 一、快捷键
 1.代码提示 esc
 2.代码上/下移动 alt+command+[/]
+3.定位到当前显示文件 command + shift + j

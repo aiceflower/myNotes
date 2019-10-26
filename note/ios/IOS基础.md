@@ -579,6 +579,43 @@ int main(int argc, char * argv[]) {
 
 ```
 
+##### 10.各类型转换
+
+```objective-c
+//1. NSString转化为UNICODE String：
+(NSString*)fname ＝ @“Test”;
+char fnameStr[10];
+memcpy(fnameStr, [fname cStringUsingEncoding:NSUnicodeStringEncoding], 2*([fname length]));
+与strcpy相比，memcpy并不是遇到'\0'就结束，而是一定会拷贝完n个字节
+
+//2. NSString 转化为 char *
+NSString * str＝ @“Test”;
+const char * a =[str UTF8String];
+
+//3.char * 转化为 NSString
+NSString *str=[NSString stringWithCString  encoding:NSUTF8StringEncoding];
+
+//4. char * 转化 NSData
+ //方法一：
+   char * a = (char*)malloc(sizeof(byte)*16);
+   NSData *data = [NSData dataWithBytes: a   length:strlen(a)];
+// 方法二：
+    转换为NSString： - (id)initWithUTF8String:(const char *)bytes
+    然后用NSString的 - (NSData *)dataUsingEncoding:(NSStringEncoding)encoding
+
+//5. NSData 转化 char *
+  NSData data ；
+  char* a=[data bytes];
+
+//6. NSData 转化 NSString;
+NSData* data;
+NSString* aStr= ［NSString alloc] initWithData:data   encoding:NSASCIIStringEncoding];
+
+//7. NSString 转化 NSData对象
+
+NSData* xmlData = [@"testdata" dataUsingEncoding:NSUTF8StringEncoding];
+```
+
 
 
 ##### 3.类与对象

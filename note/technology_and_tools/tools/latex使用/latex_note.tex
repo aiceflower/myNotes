@@ -1,0 +1,66 @@
+%!TEX program = xelatex
+% 导言区 %是注释
+\documentclass[12pt]{article} %book, report, letter   [10pt] 默认字体大小 有 10 11 12
+\usepackage[UTF8]{ctex} %编译中文
+
+\newcommand\degree{^\circ}
+
+\title{\heiti My First Document} %标题
+\author{My Name} %作者
+\date{\today} %日期
+
+
+
+
+	
+
+% 正文区
+
+\begin{document} %一个文件只能有一个document
+	Hello LaTex.
+	% 空行用于换行
+
+	你好 LaTex.
+
+	$x^2 + x = y$ % $ 行内数学公式
+	$$x^2 + x = y$$ % $$ 行间数学公式
+	这是下一行
+	%\maketitle %使用标题
+	
+	%字体设置   字体属性：字体编码、字体族、字体系列、字体形状、字体大小
+	\textrm{Roman Family}
+	{\rmfamily  Roman Family 这可以限定作用范围}
+	
+	%中文字体
+	\kaishu 楷书    \heiti 黑体 \songti 宋体 \fangsong 仿宋
+	\textbf 粗体   \textit 斜体
+
+	%字体大小
+	{\tiny		Hello}\\
+	{\scriptsize		Hello}\\
+	{\footnotesize		Hello}\\
+	{\small		Hello}\\
+	{\normalsize		Hello}\\
+	{\large		Hello}\\
+	{\Large		Hello}\\
+	{\LARGE		Hello}\\
+	{\huge		Hello}\\
+	{\Huge		Hello}\\
+	
+	\zihao{5} 你好   % 使用数字设置大小  0 5 
+	
+	%文档结构  
+	\section{引言}
+		{\zihao{0} 注意内容与格式要分离}
+		
+		这里是正文正文这里是正文正文这里是正文正文这里是正文正文这里是正文这正文这里是正文正文这里是正文\\不是段落这ww正文\\
+		% 使用空行或  \\ 实现换行 但不产生段落
+		这里是正文正文这里是正文正文这里是正文正文\par 新段落这里是正文正文这里是正文正文这里是正文正文这里是正文正文
+	\section{实验方法}
+	\subsection{数据}
+	\subsection{图表}
+	\subsubsection{图1}
+	\subsubsection{图2}
+	\section{结论}
+\end{document}
+

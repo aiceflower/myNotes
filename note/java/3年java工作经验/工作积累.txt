@@ -121,3 +121,20 @@ a b 为true其它为false
 	默认Object的hashCode方法返回对象的内存地址，但该方法有时被重写。
 	System.identityHashCode(obj);用这个方法可获取对象的内存地址。
 26.TCP/IP协议统一采用大端方式传输数据
+27.java的优点
+	1.java的可移植性体现了，一次编程，处处运行的梦想。
+	2.java采用强类型机制，异常处理，垃圾自动收集，丢弃指针等措施来保障程序的健壮性。
+28.数据类型的作用：
+	1.确定了该类型数据的取值范围
+	2.确定了允许对该类型进行的操作	
+29.获取流中的数据一行一行地获取
+	String cmd = "hello world\n please hehehe";  
+	Scanner s = new Scanner(System.in);//获取键盘输入
+	Scanner s = new Scanner(cmd);//获取自定义字符串，或从流中读取的文本
+	s.useDelimiter(" |,|\\."); //更改分隔符，默认是用空格分隔，支持正则
+	s.delimiter(); //返回此 Scanner 当前正在用于匹配分隔符的 Pattern。
+	s.hasNext();//判断扫描器中当前扫描位置后是否还存在下一段。
+	s.hasNextLine();//如果在此扫描器的输入中存在另一行，则返回 true。
+	s.next();//查找并返回来自此扫描器的下一个完整标记。
+	s.nextLine();//此扫描器执行当前行，并返回跳过的输入信息。
+	也可使用BufferedReader

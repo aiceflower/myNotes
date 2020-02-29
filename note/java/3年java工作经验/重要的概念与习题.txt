@@ -24,3 +24,4 @@
         //Integer[] b = {298,3,45,6};
         System.out.println(Arrays.asList(a).contains(2));
     }
+3.System.out.println('a'+'b'+""+3+4);

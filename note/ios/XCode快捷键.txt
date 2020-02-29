@@ -4,3 +4,4 @@
 3.定位到当前显示文件 command + shift + j
 4.选中Navigator command + 1/2/3...
 5.command + control + up/down .h与.m文件跳转
+6.返回至上一次光标位置：Control + Command + ←/→

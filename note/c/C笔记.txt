@@ -1,0 +1,793 @@
+0.头文件与库函数
+	sys/stat.h:
+	stat("d:\tt.txt",&s);
+	stdio.h:
+		printf//打印数据 
+	stdlib.h
+		system//调用系统命令
+		rand//生成随机整数
+		atoi(a)//将字符串转换成一个整数。
+		atof//转换为float
+		atol//转换为long
+	Windows.h
+	WinExec("notepad",SW_NORMAL);//执行系统命令
+	time.h
+		time();//time_t tm = time(NULL);//得到系统时间
+		clock_t c = clock();//得到系统时间，单位毫秒
+	string.h
+		strlen(s);//得到字符串长度，有效长度，不包含结尾的0
+		strcat(s,s1);//拼接两个字符串，将结果放到第一个参数中，不安全，会存在溢出问题(第一个长度不够)
+		strncat(s,s1,6);//安全，合并的时候可以限定追加的个数
+		strcmp(s1,s2);//比较两个字符串中的内容是否相同，如果相同返回0
+		strncmp(s1,s2,5);//只比较前和个字符如果相同返回0
+		strcpy(s,s1);//将s1的内容，拷贝到s中
+		strncpy(s,s1,3);//将s1的内容，拷贝到s中，只拷贝指定个数，前三个
+		sprintf(s,"i=%d",i);//将格式化后的字符串输出到第一个参指定的字符串中去。也可以使用这个函数将数字转换成字符串
+		sscanf(s,"%d+%d",&a,&b);从一个字符串中得到一个数 char s[100] = "10+20";a+b=30;
+		strchr(s,'o');//查找字符,找到了返回字符所在的位置(指针，如在hello world中查找o则返回o world),如果找不到则返回NULL
+		strstr(s,"ll");//同上差不多，但是后一个参数是字符串不是字符
+		strtok(s,"_");//根据指定字符截取，第一次调用第一个参数是一个字符串，第二次及之后调用第一个参数是NULL,"abc_123_lell";
+			char s[100] = "abc_123_lell";
+			char *buf;
+			buf = strtok(s,"_");//buf=abc;
+			buf = strtok(NULL,"_");//buf=123;
+			buf = strtok(NULL,"_");//buf=lell;
+			//一次性截取
+				buf = strtok(s,"_");
+				while(buf){
+					printf("%d\n",buf);
+					buf = strtok(NULL,"_");//如果没有找到返回NULL
+				}
+		strerror(errno);
+1.solaris操作系统
+2.一些含义
+	include:告诉编译器包含一个头文件，C语言中调用库函数都要包含头文件
+	main:C语言中的主函数，一个C语言程序必须有且只有一个主函数。
+	注释: //(c++) /* */(标准C语言注释)
+	C语言区分大小写
+	return用于终止程序，C语言中return后可以根语句，但不执行
+	数组名与数组名取地址效果是一样的
+	c语言中define定义的常量无法使用指针修改，但const定义的常量可以通过指针修改
+	函数名代表的是函数的地址
+	C语言函数的参数是从右往左入栈的
+3.printf，向标准输出设备输出字符串
+	%d,整数，有符号的十进制
+	%hd,短整数
+	%hu,无符号的短整数
+	%o,无符号的八进制
+	%x,无符号的16进制
+	%X,输出16进制大写
+	%u,无符号十进制(最高位不是符号[0正数，1负数])
+	%d,数字，数字前加0，代表八进制，加0x代表十六进制
+	%p,输出地址 printf("%p",&a);
+	%c,输出一个字符
+	%f,输出一个float或double
+	%lf,输出一个long double
+	%e,%E科学计数法表示
+	%s,%S,字符串
+	%%,输出一个%
+	l,附加在d,u,o,x表示长整数
+	-,左对齐，默认为右对齐printf("%6d",2);
+	m,代表一个整数，数据最小宽度
+	0,前面补0，与-不能同用，pringf("%06",2);
+	N,宽度至少为N位，不够以空格补
+3.0putchar,scanf,getchar
+	putchar(48);//打印一个字符
+	scanf("%d",&a);//一定要用&取变量的地址，scanf会报错，用如下方式解决
+		1.#define _CRT_SECURE_NO_WARNINGS
+		2.#pragma warning(disable:4996)
+	getchar等到用户键盘输入的按键，只能得到一个字符，char a = 0; a = getchar()
+4.system:执行操作系统的命令或运行指定的程序，需要stdlib.h库函数
+5.系统命令
+	ncpa.cpl:网络连接
+	netplwiz:高级用户控制面板
+	optionalfeatures:打开或关闭windows功能
+	compmgmt.msc:计算机管理 
+	lusrmgr.msc:本地用户和组 
+	devmgmt.msc:设备管理器 
+	desk.cpl屏幕分辨率
+	firewall.cpl:Windows防火墙
+	wf.msc：高级安全Windows防火墙(可设置入站出站规则)
+	main.cpl:鼠标属性
+	osk:打开软键盘
+	powercfg.cpl:电源选项 
+	snippingtool:截图工具
+	services.msc:打开本地服务
+	sysdm.cpl:系统属性 
+	taskmgr：任务管理器
+	slmgr.vbs 查看系统激活信息
+	
+	systeminfo:查看系统信息
+	msinfo32:系统信息
+	msra:远程协助
+	narrator:讲述人
+	nslookup:IP地址侦测器
+	odbcad32:odbc数据库管理器
+	cleanmgr:磁盘清理工具
+	dfrgui:磁盘碎片整理程序
+	diskmgmt.msc:磁盘管理 
+	inetcpl.cpl:Internet属性
+	intl.cpl:区域和语言(可更改输入法)
+	fsmgmt.msc:共享文件夹管理器(也可使用命令net share查看已经共享的文件)
+	mmsys.cpl:声音
+	Recdisc:创建系统修复光盘
+	slui:Windows激活，查看系统激活信息
+	soundrecorder：录音机
+	syskey：系统加密
+	timedate.cpl：日期和时间 
+	UserAccountControlSettings用户账户控制设置(更改计算机通知)
+	utilman:轻松访问中心
+	wuapp：Windows更新
+	write：写字板
+	-----------------------------------
+	dir 列出文件目录 -s 列出子目录
+	md 创建目录
+	rd 删除目录
+	net user 查看有哪些用户
+	net user pillow 查看pillow帐户的属性
+	net localgroup administrators pillow /add 把pillow添加到管理员用户组
+	net start 查看开启了哪些服务
+	net start | find "Server"
+	net start/stop telnet 开启/停止telnet服务
+	netstat -an 查看端口的网络连接情况 | find "8080"
+	“DEL/A-S *.*”表示删除当前目录下除系统文件以外的所有文件（只是删除文件）
+	rmdir /s /Q 目录 /S删除目录及目录下的所有子目录和文件。
+	rd /s /q webDemo 删除目录及子目录
+	findstr "Hello" aa.txt 在aa.txt文件中寻找字符串hello
+	find 文件名 查找某文件
+　　title 标题名字 更改CMD窗口标题名字
+　　color 颜色值 设置cmd控制台前景和背景颜色；
+	0=黑、1=蓝、2=绿、3=浅绿、4=红、5=紫、6=黄、7=白、8=灰、9=淡蓝、A=淡绿、B=淡浅绿、C=淡红、D=淡紫、E=淡黄、F=亮白
+	regedit /s 注册表文件名 导入注册表；参数/S指安静模式导入，无任何提示；
+　　regedit /e 注册表文件名 导出注册表
+6.C语言返回值在windows与unix的不同
+	主函数return 0代表成功，return -1代表失败
+	linux中得到的数字除以16进制的100(0x100)才能得到前一个函数的返回值
+	在windows中可以直接得到前一个函数的返回值
+7.gcc参数
+	-o 指定生成的文件名，在windows下不指定生成.exe文件，在linux下不指定生成.out文件
+	-E 预编译 gcc -E -o a.e a.c
+	-S 转换成汇编语言 gcc -E -o c1.c c.c    gcc -S -o c.s c1.c
+		visual studio 将C转换成汇编：f9设置断点，f5调试，右键转汇编
+	-c 将代码编译成二进制的机器语言 gcc -c -o c.o c.c 
+	gcc -o c c.o 生成c可执行文件
+8.C语言的编译过程
+	预编译(.c)-->编译()-->连接(可执行文件)
+	预编译:把include包含的库文件替换到c文件中，同时将代码中的注释去掉
+9.<> 与""
+	<>:让C语言编译器去系统目录下寻找相关头文件
+	"":去用户当前目录下找相关头文件
+10.汇编转换
+	a = 1;
+	b = 2;
+	c = a+b;
+	__asm{ //嵌套汇编语言
+		mov a ,1
+		mov b ,2
+		mov eax ,a
+		add eax ,b
+		mov c ,eax
+	}
+11.使用system("notepad");会弹出黑框
+	#include <Windows.h>
+	WinExec("notepad",SW_NORMAL);//解决弹黑框问题
+12.RISC与CISC CPU架构
+	RISC精简指令集
+	CISC复杂指定集，一般讲x86架构的CPU都是复杂指定集，AMD,intel就是x86的，linux就是基于x86的操作系统
+13.计算机(运算器，控制器，寄存器)
+	cpu寄存器的位数，决定了cpu的位数。
+	8位:a
+	16位:al ah ax
+	32位:eax
+	64位:reax
+	cpu与操作系统的关系：64位的cpu可以装32位的系统，但32位的cpu装64位的系统就会出问题
+		32位的系统，是在32位的环境下编译的，64位的系统是在64位的环境下编译的
+14.常量
+	#define MAX 10 //定义一个常量，常量值不能修改，宏常量(在方法外)
+	const int a = 20;//定义了一个const常量(在方法中)
+	常量在定义的时候必须给一个初值
+	两种区别:
+	//TODO
+15.进制
+	printf("%d",010);//前面加0代表八进制，不加代表十进制
+	printf("%d",0x10);//前面加0x代表十六进制，或printf("%x",10);
+	C语言无法表达2进制
+16.sizeof求指定数据类型在内存中的大小，单位字节
+	sizeof(10); //4
+17.数据类型
+	short:短整形,2个字节
+	int:整形,4个字节(不论是什么系统都是4字节)
+	long:长整形，32位系统下4个字节;64位系统windows下4个字节，linux下8个字节
+	long long:8个字节
+	unsigned int/short/long/long long:无符号整数(都是正数)
+	char:一个字节
+	float:32位系统下是4个字节
+	double:32位系统下是8个字节
+	long double:
+18.把short赋值给int
+	short i = 2; int i1 = i;//无影响
+	short i = -2; int i1 = i;//保留符号位，剩下的用1补
+	0000 0000 0000 0010 //i  short
+	0000 0000 0000 0000 0000 0000 0000 0010 //i1  int
+	1111 1111 1111 1101 //i short
+	1111 1111 1111 1111 1111 1111 1111 1101 //i1 int
+	求以下的结果：
+	unsigned short a = 0;
+	a = a -1;
+	printf("%d\n",a);
+19.大端对齐与小端对齐
+	对于arm,intel这种x86构架的复杂指令，整数在内存中是倒者存放的，低地址放低位，高地址放高位。小端对齐。
+	但对于unix服务器的cpu更多是采用大端对齐的方式存放整数
+20.char
+	char c ;
+	c = 4;//整数4，4
+	c = '4';//字符4，52
+	不可打印的转义字符:
+	\a报警
+	\d退格
+	\n换行
+	\r回车
+	\t制表符
+	补码的符号位不动，其他位求反，最后整个数+1，得到原码
+21.volatile代表变量是可以被cpu指令之外的地方改变的,编译器就不会针对这个变量去优化代码。
+	int i = 0;
+	i = i+5;
+	i = i+10;
+	i = i + 30;
+	以上代码cpu会这样执行
+	int i = 0;
+	//i = i+5;
+	//i = i + 10;
+	//i = i + 30;
+	i = i + 45;
+	如果使用如下，cpu就不会优化，可在过程中改变i的值
+	volatile int i = 0;
+22.register，建议指令，而不是命令形的指令。
+	regedit int i = 0;//代表i在cpu寄存器中，而不是内存中
+23.字符串
+	字符串是内存中一段连续的char空间，以'\0'结尾
+24.运算符
+	左值:表示可以被更改的数据对象
+	右值:能赋给左值的量
+	常量只能做右值，因为常量不能被改变
+	逗号运算符：
+		逗号表达式先求逗号左边的值，然后求右边的值，整个表达式是逗号右边的值
+		int a = 2;int b = 3;int c = 4;int d = 5;
+		int i = (a= b ,c+d);//i = 9
+25.优先级
+	< > <= >=这四种相同，== != 这两种相同，但前四种大于后两种，且大于赋值
+26.goto语句
+	无条件地跳转到标号去执行。
+	int main(){
+		goto end;
+		printf("aaa");
+		end:
+		printf("bbb");
+		return 0;
+	}//aaa不会被打印出来
+27.设置桌面背景图片
+	SystemParametersInfoA(20,0,"D:\\temp\\1.jpg",3);//20代表设置系统桌面背景，3代表立即执行
+	sprintf(str,"D:\\temp\\%d.jpg",i);//格式化一个字符串
+	ShellExecuteA(NULL,"open","D:\\tmep\\a.mp3",0,0,SW_HIDE);
+28.字符串数组
+	char arr[100]={'a','b','c','d'};
+	char arr[100]="abcd";
+	char arr[]="abcd";//想下sizeof(arr)的值是几，5最后有一个0
+	char arr[100] = {0};
+	字符串与字符数组是一模一样的
+	C语言的编译器不会检查数组的下标是否有效果。
+	字符串一定是在内存中以0结尾的一个char数组。
+	char arr[5] = {0};
+	arr[0]='a';
+	arr[1]='b';
+	arr[2]='c';
+	arr[3]='d';
+	//arr[4]='e';//有和没有这句话，下面的打印结果不一样，如果赋值了那么字符串最后一个就不是0了。 
+	printf("%s",arr);
+	如果将一个字符串当作char处理，那么标准的ASCII字符是一个正数，汉字的第一个字节一定是负数。
+	while(arr[len++]);len--;//计算字符数组的长度
+	while(arr[len++]==' ');len--;//计算字符数组前面有几个空格
+	//注意，以上两个小技巧只针对字符数组，因为一个字符占一个字节。
+29.rand与srand
+	rand是伪随机数产生器，每次调用rand产生的随机数都是一样的。
+	如果调用rand之前先调用的srand就可以出现的随机数。
+	time_t tm = time(NULL);//得到系统时间
+	srand(tm);//随机数种子发生器，只要种子一样产生的随机数就一样，所以种一一般传系统时间
+30.scanf，gets，fgets，puts,fputs
+	int a ;
+	char s[100] ={0};
+	scanf("%d",&a);
+	scanf("%s",s);
+	//如果scanf参数中的数组长度小于用户在键盘输入的长度，那么scanf应付缓冲区溢出，导致程序崩溃。
+	//scanf将回车，空格，制表符都认为是字符串输入结束标识。
+	//数字与字符串的方式不一样，数字需要取地址，字符串不需要
+	gets函数认为回车是输入结束标识，空格不是输入结束标识，但gets与scanf一样存在缓冲区溢出问题
+	fgets(s,100,stdin);//第一个参数是char的数组，第二个参数代表数组的大小，单位字节，第三个参数stdin代表标准输入的意思
+	//fgets是安全的，不会出现缓冲区溢出的问题，只要保证第二个参数小于数组长度就可以避免溢出问题
+	fgets(s,sizeof(s)-1,stdin);//不用修改长度
+	puts只能输出字符串，且会自动在结尾添加回车。
+	fputs(s,stdout);
+31.字符串的初始化与赋值
+	初始化可以这样，char s[100] ="hello";
+	之后赋值就不能再使用s = "world";了
+	可以使用strcpy(s,"world");
+32.C语言函数
+	1.在函数使用之前一定要先定义这个函数
+	2.可以先申明这个函数，然后使用，在使用代码的后面现定义这个函数。
+	3.如果一个函数没有写返回值类型，则返回值类型为int
+	4.实参与形参的传递是值传递(基本数据类型)，只能由实参传给形参，如果是数组则是引用传递。
+33.size_t
+	这是一个什么类型呢，unsigned int 很多函数如果确认不会返回负数，那么就用size_t
+	size_t a = sizeof(s);
+	size_t b = strlen(s);
+34.include,define,ifndef,endif
+	include:文件内容替换
+	define:文本替换，用到的地方替换为申明
+	头文件定义：
+		#ifndef __AH__
+		#define __AH__//具体宏的名字是自定义的
+		
+		int max(int a,int b);
+		int add(int a,int b);
+		
+		#endif
+		//为了防止多次include的时候重复替换头文件内容
+35.指针
+	指针变量也是一个变量，是一个整数，指针存放的一个地址，该地址指向一块内存空间。
+	int a = 1;
+	int *p = &a ; //得到变量a的地址，将这个值赋值给变量p,
+		int *p ; 定义一个变量，名字叫p，p可以指向int的地址
+		*p的意思是指针变量指向内存的内容，也就是变量的值
+	void *p1; //这个叫无类型指针，意思是这只是一个指针变量，而不指向任何具体的数据类型。
+	p1=NULL;//将这个指针赋值为NULL，值为NULL的指针，为们称为空指针
+	指向NULL的指针叫空指针，没有任何指向的指针叫野指针。
+	程序中要避免野指针的存在。会导致程序崩溃。
+37.指针兼容性	
+	指针之间赋值比普通数据类型赋值检查更为严格，例如不可以把一个double*赋值给int*
+	原则上这定是相同类型的指针，指向相同类型的变量地址，不能混指。
+	int与double的指针不能互相赋值
+38.指向常量指针，常量指针
+	指向常量的指针：
+	const int *p = &a;//p这个指针只能指向一个常量，不能通过*p的方法修改一个const指针，*p是一个只读的值不能写，但是p可以指向其它的地址
+		指向一个常量的指针，可以改变指向，但是不管指向哪里，那里的值是不可以修改的。
+	C语言的小bug：int a = 10;const int *p = &a;int *p1 = p; *p1 = 20;这样就修改了值了
+				同理，常量也可以修改。const int a = 100; int *p = &a; *p = 100;
+	常量指针：
+		int *const p =&a;//可以通过常量指针修改或读取一个变量的值，一旦修改就不能修改其指向。
+39.指针与数组的关系
+	1.指针与char数组的关系
+	ip地址的保存方法，通过一个int传递ipv4的地址，使用4个字节足够了。//具体方法看hello.c中的ip2s,s2ip方法
+	2.指针与int数组的关系
+	指针运算不是简单的整数加减法，而是指针指向的数据类型在内存中占用的字节数为倍数运算。
+		int *p a; p++;实际移动了sizeof(int)个字节。
+	3.两个指针相减可以得到两个数组元素的相对距离
+	4.int *p = &a; 不等于 int *p ; *p = &a;(这种是给野指针赋值，没意义)应该是int *p; p = &a;
+	5.指针变量只能存放地址，不能直接将int变量直接赋值给指针。//int *p = 100;避免出现这种代码
+	6.int *p ;p = NUll; NULL实际上就是0
+	7.int buf[10]={1,2,3,5,6,7,8,9,10};int *p = buf; 不能写buf++,但可以写p++;buf是一个常量，但指针是一个变量。可以写 int *p = buf+5;常量不可以做左值，但可以做右值
+	8.C语允许指针通过数组下标的方法访问数组的成员。 buf[5]可以写成p[5]等同于*(p+5)
+	9.指针操作数组的几种方式
+		1.*(p+2)=10;
+		2.p[2]=10;
+		3.p+=2;*p=10;(p[2]=11,这样相当于修改谁的内容?相当于修改第四个元素的值，因为指针的位置变化了。p[2]相当于*(p+2))
+		方法1和方法2没有修改p指向的内存地址，但方法3修改的p的指向地址
+40.visual 生成dell
+	1.项目-->属性-->配置属性-->配置类型-->选择动态库
+	2.__declspec(dllexport)//加了这个关键字，代表go函数可以在其他程序中调用dll函数
+		void go(){...}
+	3.点击生成
+41.数组指针
+	int buf[2]3] = {{1,2,3},{4,5,6}};
+	int (*p)[3];定义了一个指针，指向int [3]这种数据类型，指向二维数组的指针
+	p = buf;sizeof(p)等于12
+42.指向二维数组的指针
+	int buf[2][3]:二维数组名称，buf代表数组的首地址
+	int (*a)[5]:定义一个指向int[5]类型的指针变量
+	a[0],*(a+0),*a:0行0列元素地址
+	a+1:第1行首地址
+	a[1],*(a+1),第1行第0列元素地址
+	a[1]+2,*(a+1)+2,&a[1][2]:第1行第2列元素地址
+	*(a[1]+2),*(*(a+1)+2),a[1][2]:第1行第2列元素的值
+43.当数组名作为函数的参数时，C语言理解为数组名是一个指针变量
+	函数形参是数组时，代表指针变量
+	这样计算数组的长度的时候就只能在实际调用的地方计算，不能在函数里面计算。sizeof(buf)/sizeof(int); 
+	将二维数组作为函数的参数时定义的类型为(*p)[3],不可以是buf[2][3],也不可以是**p，即 int fun(int (*p)[3],int a,int b){...}
+	一维数组作为函数的参数*p,buf[],即 int fun(int *p ,int a){...}
+44.通过const保护函数参数
+		int fun(const int *p){...};
+45.定义返回指针的函数
+	int *myfun(int *p){
+		....
+		return p;
+	}
+	1.在函数名上写*
+	2.返回指针
+46.int main(){
+	void(*p)();//定义一个，指向没有参数，没有返回值的指向函数的指针
+	int i = 0;
+	scanf("%d",&i);
+	if(i==0)
+		p = man;
+	else
+		p = woman;
+	p();//这段代码是程序运行的时候才决定到底调用哪个函数  
+	return;
+}
+47.C语言中的回调函数
+	int func1(int (*p)(int,int),int a,int b)//第一个参数是指向函数的指针
+	{
+		return p(a,b);//通过指向函数的指针调用一个函数
+	}
+	int main(){
+		int i = func1(add,6,9);//add函数在这里就叫回调函数
+		printf("i=%d\n",i);
+		return 0;
+	}
+48.memset,memcpy,memmove 函数 
+	这三个函数分别实现内存设置，内存拷贝，和内存移动
+	使用memcpy的时候一定要确保内存没有重叠区域。	
+	memset(buf,0,sizeof(buf));//1，内存地址，2 ，要设置的值，3.内存大小，单位字节
+	将一块内存初始化为0最常见的方法。
+	memcpy(buf2,buf1,sizeof(buf1));//将buf1的内存内容拷贝到	buf2,拷贝大小为第三个参数。
+	memmove(buf2,buf1,sizeof(buf1));//内存移动
+	操作内存的三个函数,在string.h中
+49.指针小结
+	int i		:定义整形变量
+	int *p 		:定义一个指向int的指针变量
+	int a[10]	:定义一个int数组
+	int *p[10]	:定义一个指针数组，其中每个数组元素指向一个int型变量的地址
+	int (*p)[10]:定义一个数组指针，指向int[10]类型的指针变量
+	int func()	:定义一个函数，返回值为int型
+	int *func()	:定义一个函数，返回值为int*型
+	int (*p)()	:定义一个指向函数的指针，函数的原型为无参数，返回值为int
+	int **p 	:定义一个指向int的指针的指针，二级指针
+50.字符指针与字符串
+	main函数
+	int main(int argc, char *args[]);  前一个是参数的个数，后一个为指针数组，默认个数为1，参数为文件名
+51.内存管理
+	内存的四个区域：代码区、静态区、栈区、堆区
+	代码区：代码区code，程序被操作系统加载到内存的时候，所有的可执行代码都加载到了代码区，也叫代码段
+			，这块内存是不可以在运行期间修改的。
+	静态区：所有的全局变量以及程序中的静态变量都存储到静态区
+	栈区：
+		所有的自动变量，函数的形参都是由编译器自动放出栈中，当一个自动变量超出其作用域时，自动从栈中弹出。
+		对于自动变量何时进栈，何时出栈，是不需要程序控制的，由C语言编译器实现
+	椎区：堆heap和栈一样，也是一种在程序运行过程可以随时修改内存区域。
+		堆是一个大容器，它的容量要远大于栈，但是在C语言中，堆内存空间的申请和释放需要手动通过代码来完成。
+	
+	结果：
+	定义数组的时候数组的大小只能是常量，不能是变量，但可以在堆中动态创建一个数组。int *array = malloc(sizeof(int));
+	每个线程都有自己的专属栈，先进后出，栈的最大尺寸固定，超出则引起溢出
+	变量离开作用域后，栈上的数据会自动释放
+	堆内存必须手工释放(C/C++),除非语言执行环境支持gc
+	栈是一个很小的东西，定义一个超大的数组一定会栈溢出。
+	先栈还是堆？
+		明确知道数据占用多大内存
+52.文件间的调用
+	extern int age;//有一个变量类型是int，名字是age，已经在其它文件中定义了，这里只是申明，可以直接使用了
+	auto int a = 0;//这里的auto可以不写，C语言默认变量是auto的，自动变量
+	register int i = 0;建议如果有寄存器空闲，就把变量放到寄存器中使用，对于寄存器变量不能使用指针去操作
+	静态变量 static int i = 0;只初始化一次，程序运行期间静态变量一直存在
+	全局静态变量，只在定义这个变量的文件内部全局有效，不能在其它文件中使用，这时候如果用extern，就会报错
+	C语言中的函数都是全局的，如果加了static那么这个函数就只能在该文件内使用
+	extern void test();与void test();效果是一样的。但如果是变量就有区别了。
+	定义全局int i ;有两个含义，定义跟申明，如果这个变量已经在其它文件中定义了，那就是申明，相当于extern int i ;，否则就是定义。
+53.堆的分配和释放，malloc，free
+	void * malloc(size_t size);//malloc函数在堆中分配参数size指定大小的内存，单位字节，函数返回void *指针。
+	int *p = (int *)malloc(sizeof(int)*10);//malloc返回一个无类型指针
+	void free(void *p);//负责在堆中释放malloc分配的内存。参数p为malloc返回的堆中的内存地址。
+	free(p);//释放malloc申请的内存，只能释放一次。
+	不能将一个栈变量的地址通过函数的返回值返回。但可以返回堆地址，但一定要free，也可以返回静态区地址，这时不能free
+	堆数组：int *p = (int *)malloc(sizeof(int)*10);
+	栈数组：int arr[10] ={0};
+54.重要的理解
+	1.不正常
+	void getheap(int *P){
+		p = malloc(10);
+	}
+	int main(){
+		int *p = NULL;
+		getheap(*p);//如果这里直接写p = malloc(10);就没有问题，但是写函数就有问题了，这两个地址不是同一个地址。
+		p[0]=1;
+		printf("%d\n",p[0]);
+	}
+	2.正常
+	void getheap(int **p){
+		*p = malloc(10);
+	}
+	int main(){
+		int *p = NULL;
+		getheap(&p);
+		p[1]=1;
+		printf("%d\n",p[1]);
+		free(p);
+	}
+55.内存四区
+	code area：程序代码指令，常量字符串，只可读
+	static area：存放全局变量/常量，静态变量/常量
+	heap：由程序员控制，使用malloc/free来操作
+	stack：预先设定大小，自动分配与释放
+56.堆的内存分配和释放
+	操作系统在管理内存的时候最小单位不是字节，而是内存页
+	char *p = malloc(10);//开房没做清洁
+	memset(p,0,10);//做清洁
+	char *pp = 	calloc(10,sizeof(char));//开房之后并做清洁，合并以上两个
+	char *p1 = realloc(pp,20);//在原有内存基础上，在堆中间增加连续的内存，如果原有空间没有连续可用空间
+		，那么会分配一个空间，，将原有内存copy到新 空间，然后释放原有空间。realloc跟malloc只分配，不打扫
+	如果realloc(NULL,10);等于malloc
+57.结构体
+	struct student{
+		char name[100];
+		int age;
+		int sex;
+	};//说明了一个结构休的数据成员类型,定义结构体末尾需要有分号。
+	struct student st;//定义了一个结构体变量，名叫st
+	st.age = 10;
+	st.sex = 0;
+	strcpy(st.name,"zhang san");
+	或 
+	struct student st = {"zhangsan",10,0};//顺序不能乱
+	struct student st = {0};
+	struct student st = {.age=20,.name="lisi",.sex=0};//可打乱位置，可少写
+58.结构体成员的内存对齐 
+	结构体在内存中是一个矩形，不是一个不规则形状，按最长的元素对齐
+	如:
+		struct student{ int a;char b;};  //占8个字节
+		struct student{ int a;char b;char c;};  //也是占8个字节
+		struct student{char b,int b,charc}; //这种占12个字节，注意顺序不同占字节也不同，与上一个有一定的区别  
+		
+		struct D{ 
+			char a:2;//定义了一个成员为char，但这个成员只占2个bit,这里不能定义超过本身长度的变量，如char a:9;是错误的
+		};
+		struct B{
+			char a:4;
+			char b:2;
+			char c:2;
+		};//这个结构体在内存中占1个字节
+		struct C{
+			int a:4;
+			char b:2;
+			char c:2;
+		};//这个结构体在内存中占8个字节
+59.结构体中嵌套结构体，以任意结 构体中最大长度的元素对齐
+	结构体与指针
+	struct A{
+		int a;
+		int b;
+	};
+	struct A a;
+	struct A *p = &a;
+	(*p).a = 10;
+	(*p).b = 20;
+	指针指向结构体的成员 p->a  ，这种方式只能是指针，不可以是数组，数组只能用arr[0]的形式访问，这种指向只能是第一个后面的需要用点，如p->college.student.name="zhangsan";
+	p->a=10;
+	p->b=20;
+	数组 
+	struct B array[10]={0};
+	p = array;//将数组的首地址赋值给p 
+	p->a = 10;
+	p->b = 20;
+	p++;
+	p->a = 30;
+	p->b= 40;
+60.释放问题
+	char *p = malloc(10);
+	char *arr = p;
+	p++;
+	free(p);//这样是有问题的，p已经指向后一个地址了，如果释放是释放的是从p开始以后的10个字节
+	这时候应该释放arr,如果让p指向原来的地址则可以释放p
+61.结构体的成员如果是指针
+	struct man{
+		char *name;//如果这里定义为 char name[100];就不会出现下面的错误了，这样就只是改数组的内容
+		int age;
+	};
+	int main(){
+		struct man c = {"tom",20}//这样相当于一个指针指向了一个常量
+		strcopy(c.name,"make");//这样会报错，相当于修改常量的值
+		return 0;
+	}
+	修改：
+	int main(){
+		struct man m;
+		m.name = malloc(sizeof(char)*100);//分配空间
+		strcpy(m.name,"tom");
+		strcpy(m.name,"make");
+		free(m.name);
+		return 0;
+		}//这样操作就不会有异常
+	更加复杂的情况
+	int main(){
+		struct man *m = malloc(sizeof(struct man));
+		m->name = malloc(sizeof(char)*100);
+		strcpy(m->name,"tom");
+		p-age = 30; 
+		
+		free(m-name);//这里一定要先释放name，再释放结构体，写反，或者不释放name都不可以。
+		free(m);
+	}
+62.结构体作为函数的参数的时候
+	结构体作为参数，跟变量作为参数是一样的，是值传递，如果需要修改需要用指针来传递
+	一般来讲不要把结构体变量作为函数的参数，这样很占用空间，可以用指针作为函数的参数，
+	这样即可以修改结构体的内容，也不占用空间，因为指针只占用4个字节
+	如果不用修改结构体的内容就用const修饰，如果需要修改就不用const
+63.联合体union
+	union A{
+		int a;
+		char b;
+	};//联合体的所有成员的内存地址是一样的，且长度永远是最大元素的长度
+	联合体中如果有指针成员，那么一定要使用完这个指针，并且free指针后才能使用其它成员
+64.枚举
+	enum A{
+		red,black,yellow
+	};//枚举是常量，不能修改，默认里面的值从0开始一直往后排，如red=0,black=1,yellow=2
+	也可以指定值
+	enum A{ red=5,black,yellow};//这样black=6,yellow=7
+	enum A{ red=5,black=2,yellow};//这样yellow=3
+	enum A{ red,black,yellow=9,white};//这样red=0,black=1,white=10
+	枚举总是从离它最近的一个元素开始往后加
+	枚举中都是整数，都是常量，可以有一次初始化(在枚举中初始化，而不是在外面)，但之后不能再修改
+65.typedef
+	用于定义一个新的数据类型
+	typedef char BYTE;//在全局的地方，需要有分号，define没有分号
+	与define的区别，
+		define只是简单的数据替换，而使用typedef后是一个数据类型，typedef仅限于数据类型，不能是表达式或具体的值
+		typedef是编译器的，define是预编译指令
+		typedef可增加程序的可移植性，但不能定义常量
+		对于复杂的函数定义可以使用typedef来定义
+	typedef常见用法
+	struct stu{ int a,int b};
+	typeof struct stu A;//这样使用起来就很方便，不用总写struct stu 
+	或
+	typedef struct stu{int a,int b} A;//合上面两句为一句，也可以把这句中的stu去掉
+	例：
+		typedef int INT;
+		typedef unsigned int UINT;
+		typedef char CHAR;
+		typedef unsigned char UCHAR;
+66.操作文件 
+	r 以只读的方式打开文件，文件必需存在
+	r+ 以可读写的方式打开文件，该文件必需存在
+	rb+ 读写打开一个二进制文件，文件必需存在
+	rw+ 读写打开一个文件
+	w	只写，如果文件不存在就创建，如果存在就覆盖
+	w+ 可读写，同上类似
+	a 以追加的方式打开只写文件，可创建，保存文件以前内容及eof
+	a+ 追加，可读写
+	这些参数后都可以加一个b，加b代表二进制方式读写
+	windwos下,写w会自动在\n前加\r,linux则不会，linux都是以\n结尾的,所以如果在读取文件的时候加b会按原始的读，
+	如果不加windows会自动在\n前面加\r,即如果读取二进制文件需要加上b
+	FILE *p = fopen("D:\aaa.txt","w");//用写的方式打开文件
+	fputs("helloworld",p);//向文件写一个字符串
+	fclose(p);//关闭这个文件
+	写文件：
+	int main(){
+		char s[1024] = {0};
+		FILE *p = fopen("D:\aaa.txt","w");
+		while(1){
+			memset(s,0,sizeof(s));
+			//scanf("%s",s);不能有空格
+			gets(s);//可以有空格
+			if(strcmp(s,"exit")==0)
+				break;
+			int len = strlen(s);
+			s[len]='\n';
+			fputs(s,p);
+		}
+		fclose(p);
+	}
+	读文件：
+	int main(){
+		char s[1024] = {0};
+		FILE *p = fopen("D:\aaa.txt","r");
+		while(!feof(p)){
+			memset(s,0,sizeof(s));//初始化内存
+			fgets(s,sizeof(s),p);内存地址,这块内存的大小，fopen返回的文件的指针
+			//这种方式只能读一行,feof(p);如果到文件结尾返回真
+			printf("%s",s);
+		}
+		fclose(p);
+		return 0;
+	}	
+67.文件读写
+	gec(c);//一次只读写一个字符 while(c!=EOF){...};
+	FILE *p = fopen("D:\aaa.txt","r");
+	//判断丰p是否为NULL
+	char c =0;
+	while((c=getc(p))!=EOF){...}
+	
+	putc('a',p);写一个字节
+68.fprintf,fscanf
+	fprintf与printf一样，只是将内容输出到文件中，fprintf(p,"%s",buf);
+	fscanf和scanf用法基本一致，fscanf是从一个文件中读取内容 fscanf(p,"%a + %b =",&a,&b); 文件中的内容是 32 + 22 =
+69.fread,fwrite 用于操作二进制文件，之前学的函数只是用于操作文本文件 	
+	fread(buf,sizeof(char),1,p);缓冲区，读取时最小单位大小单位是byte，一次读几个单位，打开的文件指针,返回值是一次读取的字节数size_t
+	fwrite(buf,sizeof(char),1,p);
+	可通过移动指针到文件最后获取文件大小，然后一次性读取。
+70.stat函数	
+	struct stat st = {0};
+	stat("D:\\test.txt",&st);
+	st.st_size;//得到文件大小
+	写结构体：
+		struct stu st = {1,30};
+		FILE *p = fopen("D:\\aaa.txt","wb");
+		fwrite(&st,sizeof(st),1,p);
+		fclose(p);
+	读结构体：
+		struct stu st = {0};
+		FILE *p = fopen("D:\\aaa.txt","rb");
+		fread(&st,sizeof(st),1,p);
+		fclose(p);
+		printf("a=%d,b=%d\n",st.a,st.b);
+71.fseek，ftell，fflush
+	fseek(p,-5,SEEK_END);//SEEK_SET文件开头 SEEK_CUR当前位置 SEEK_END文件结尾，
+	参数：文件指针，偏移量，从哪里开始偏移，
+	fseek返回0代表移动成功，-1代表失败，但往文件后移超过文件大小返回0，往文件开头移超过返回-1
+	ftell(p);获取文件读取当前位置
+	fflush(p);把缓冲区的内容立即写入文件，优：不会因为停电或电脑故障丢失数据，缺：程序效率低下，硬盘寿命变短
+	rewind(r);重置指针
+72.remove，rename
+	remove("D:\\test.txt");//删除文件
+	rename("D:\\test.txt","D:\\bbb.txt");//重命令文件
+73.文件小结
+	EOF代表-1，feof(p)是一个函数代表文件结尾
+	fprintf,fscanf,fgets,fputs 都是针对文本文件的行进行读写操作
+74.基础数据结构	
+	算法：五个特性
+		有穷性、确定性、可行性、输入、输出。
+---------------------------C语言高级-----------------------------------------------------------
+1.鸡汤
+//数组作参数的退化问题，退化为指针
+//结论，把数组的首地址和数组的有效长度，传递给被调用函数
+//数据类型：固定大小内存块的别名
+
+//int b[10]
+//b+1,&b+1,结果不一样，它们代表的数据类型不一样，
+//b代表数组元素的首地址
+//&b代表整个数组的地址
+
+//指针指向谁，就把谁的地址赋给谁
+
+//局部变量不能把内存的块返回去，当函数执行完的时候这块区域就被释放了。
+//return不是把内存块返回出去，而是把内存块的首地址返回去
+//理解指针的关键是在内存，没有内存哪里来的指针
+//清楚的知道内存空间来自何方，去向何处，理解指针的关键
+//建立正确的程序运行内存布局图是学好C语言的关键
+
+//char buf[100] ,buf的内存地址buf+1永远是向上的
+//C++编译器会为每一个应用程序创建一个内存四区，而不是函数
+//VAssistX插件
+2.指针
+	1.指针也是一种变量，占用内存空间，用来保存内存地址，占4个字节
+	2.*p操作内存，在申明的时候*表示所申明的对象为指针，
+		在使用的时候*表示操作指针所指向的内存空间中的值
+		*p放在=的左边赋值(给内存赋值)，放在=的右边取值(从内存取值)
+	3.指针变量和它指向的内存块是两个不同的概念
+		含义1：给p赋值只会改变指向，不会改变所指的内容。p++
+		含义2：给*p赋值只会所指的内容，不会改变指向
+		含义3：保证所指的地方能够被修改
+		给指针赋值只是改变的指针的指向，不改变里面的值
+	4.指针也是一种数据类型，是指它指向的内存空间的数据类型
+		指针步长(p++),根据所指内存空间的数据类型来确定
+		指针作函数参数时，形参有多级指针的时候，编译器只需要分配4个字节的内存空间，
+		当我们使用内存的时候，我们才关心所指向的是一维还是二维。
+		不可以修改常量字符串的值
+3.指针赋值的工程意义
+	函数调用时，形参传给实参，用实参取地址，传给形参，在被调用函数里面用*p来改变实参，把运算结果传出来
+4.间接赋值成立的条件
+	1.定义1个变量(实参)，定义一个变量形参
+	2.把实参取地址传递给形参(建立关联)
+	3.*形参去间接地修改实参
+5.主调函数，被调函数
+	1.主调函数可以把堆区，栈区，全局区数据内存地址传递给被调用函数
+	被调用函数只能返回堆区，全局区数据
+	2.内存分配方式
+		指针作函数参数时是有输入和输出特性的。
+6.字符串
+	1.C语言中的字符串是以0结尾的字符串
+	2.在C语言中没有字符串类型，通过字符数组来模拟字符串
+	3.字符串的内存分配，椎上，栈上，全局区
+7.字符数组初始化
+	1.指定长度
+		char buf[100]={'a','b','c','d'};//初始化个数大于内存个数编译报错//后面的4-99为0
+	2.不指定长度，编译器会自动计算数组长度
+		char buf1[] = {'a','b','c','d'};//buf1是一个数组，不是一个以0结尾的字符串

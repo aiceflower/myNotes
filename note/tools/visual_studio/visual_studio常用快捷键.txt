@@ -1,0 +1,12 @@
+ctrl + j 代码提示
+ctlr + -  跳转到上次光标所在地
+ctrl + shift + enter 另起一行
+ctrl + enter 往上别起一行
+ctrl + u 转换小写
+ctrl + shift + u 转换大写
+选中行 alt + 方向键 快速移动行
+ctrl + l 快速删除行
+ctrl +k ,ctrl +c 注释选中内容 
+ctrl +k ,ctrl +u 取消注释
+
+添加代码片段：工具-》代码片段管理器-》Visual C++ -> 复制位置下面的路径并打开该目录 -》 复制文件，修改文件内容

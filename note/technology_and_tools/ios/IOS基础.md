@@ -891,5 +891,8 @@ an.eat()
 //1.创建obj-c项目
 //2.创建Cocoa Touch Class文件，选Swift语言，创建提示的头文件
 //3.在使用的地方引入 工程名-Swift.h文件 然后使用Obj-c语法调用
+
+调用方法 需要在方法前加 @objc public 
+调用带参数的方法 转换时会带上参数  如 test(state:NSObject)  -> testWithState
 ```
 

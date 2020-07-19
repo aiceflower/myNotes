@@ -1,7 +1,9 @@
 一、快捷键
 1.代码提示 esc
-2.代码上/下移动 alt+command+[/]
+2.代码上/下移动 alt+command+ [ / ]
 3.定位到当前显示文件 command + shift + j
 4.选中Navigator command + 1/2/3...
 5.command + control + up/down .h与.m文件跳转
 6.返回至上一次光标位置：Control + Command + ←/→
+7.左/右缩进 command+[ / ]
+8.调试 F6单步调试、F7跳入，F8继续， 和Eclipse类似

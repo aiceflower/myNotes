@@ -28,6 +28,15 @@ key>NSAppTransportSecurity</key>
   <key>NSAllowsArbitraryLoads</key>
   <true/>
 </dict>
+//xinit
+ - (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        
+    }
+    return self;
+}	
 ```
 
 

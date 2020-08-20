@@ -138,3 +138,5 @@ a b 为true其它为false
 	s.next();//查找并返回来自此扫描器的下一个完整标记。
 	s.nextLine();//此扫描器执行当前行，并返回跳过的输入信息。
 	也可使用BufferedReader
+30.java创建对象的五种方式
+	new、clone、Class.newInstance、Constractor.newInstance、反序列化、String s = "abc";

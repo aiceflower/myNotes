@@ -25,3 +25,32 @@
         System.out.println(Arrays.asList(a).contains(2));
     }
 3.System.out.println('a'+'b'+""+3+4);
+4.System.out.println(12345 + 5432l);
+5.以下编译是否通过
+System.out.println("aa");
+http://www.baidu.com
+System.out.println("bb");
+6.如何交换两个变量的值(不通过中间变量)  两种方式 减法和异或
+7.0-101中有一个重复元素，找出这个元素。o(n)  求和法(数据太多可能溢出)，数组计数法(用空间换时间)，异或
+8.输出学生的成绩
+    0-59 E 60-69 D  70-79 C 89 -89 B 90 - 100 A
+    用 if 判断  low
+    用数组 再 s/10
+9.以下程序输出什么
+    int i = 0;
+    for(int j = 0;j<100;j++){
+        i = i ++; // 把 i = tmp 然后 i++ 然后 i = tmp 故 i = 0
+    }
+    System.out.println(i);//0
+10. 以下程序输出什么
+    int i = 1;
+    System.out.println(i = 2);//2  赋值表达式  把 2 = i 然后输出i
+
+    int a = 1;
+    int b = a + (a = 2) + a + (a = 3);
+    System.out.println(a);
+    System.out.println(b);
+
+    int x = 10;
+    double y = 9.5;
+    System.out.println(x>y?x:y);//10.0 用最大的类型去接收

@@ -17,9 +17,22 @@
  5.在终端中打开finder
  open path
  6.让终端显示更具色彩
-1.让ls,grep 显示颜色在.bash_profile中加入如下
-alias ls='ls -G'
-alias ll='ls -l'
-alias grep='grep --color'
-2.在~/.vimrc文件中加入,没有该文件就创建它
-syntax on
+	1.让ls,grep 显示颜色在.bash_profile中加入如下
+	alias ls='ls -G'
+	alias ll='ls -l'
+	alias grep='grep --color'
+	2.在~/.vimrc文件中加入,没有该文件就创建它
+	syntax on
+7.mac使用技巧
+command + i 查看简介
+三指轻拍单词，查看意思
+ctrl + command + 空格 输入emoji
+修改启动项的行 defaults write com.apple.dock springboard-rows -int 6/Default
+修改启动项的列 defaults write com.apple.dock springboard-columns -int 8/Default
+隐藏/显示桌面上的内容  defaults write com.apple.finder CreateDesktop -bool false;killall Finder
+defaults write com.apple.finder CreateDesktop -bool true;killall Finder
+强制退出程序 opt+cmd+esc
+重建立索引
+sudo mdutil -i off /（该命令用来关闭索引）
+sudo mdutil -E /（该命令用来删除索引）
+sudo mdutil -i on /（该命令用来重建索引）

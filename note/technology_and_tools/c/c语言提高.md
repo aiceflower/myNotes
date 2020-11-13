@@ -587,3 +587,27 @@ int createUser(user **u,int len){
 //注意，结构体中如果有指针类型需要显示分配内存
 ```
 
+### 六、数据结构
+
+#### 1.堆
+
+**概念：**
+
+​	堆通常是一个可以被看做一棵树的数组对象，堆中某个节点的值总是不大于或不小于其父节点的值，堆总是一棵完全二叉树。
+
+#### 2.C++中的堆实现
+
+​	堆在c++中的实现为优先队列。
+
+```c++
+#include <queue>
+priority_queue<int> max_heap; //大顶堆
+priority_queue<int, vector<int>, less<int>> max_heap;//与上面等效
+
+priority_queue<int, vector<int>, greater<int>> min_heap;//小项堆
+
+```
+
+
+
+​	

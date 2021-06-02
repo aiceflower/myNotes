@@ -286,3 +286,67 @@ preference-->Live Template-->+-->Edit variables
 settings -> build -> compiler -> annotation processors -> enable annotation processing
 ```
 
+### 五、常用插件
+
+**Alibaba Java Coding Guidelines**
+
+​	阿里巴巴的编码规约检查。
+
+**Alibaba Cloud Toolkit**
+
+​	快速部署到服务器，超级牛逼 超级推荐。
+
+**RESTfultoolkit**
+
+​	根据url 查找controller。
+
+**FindBugs**
+
+​	更深入的去检查异常。
+
+**Translation**
+
+​	翻译插件。 
+
+**MyBatis Log Plugin**
+
+​	根据执行sql 替换掉 ？ 显示完整 sql。
+
+**MyBatisCodeHelperPro**
+
+​	支持mapper互跳，方法自动生成，代码自动生成。
+
+ 
+
+**JRebel** 
+
+​	热加载插件
+
+**JUnitGenerator**
+
+​	测试代码自动生成。
+
+**Codota**
+
+​	代码提示工具，扫描你的代码后，根据你的敲击完美提示。
+
+**Material Theme UI**
+
+​	idea主题插件。
+
+**CodeGlance** 
+
+​	代码迷你缩放图插件，类似sublime
+
+**BackgroundImagePlus**
+
+​	idea背景图。
+
+**String Manipulation**
+
+​	变量名使用驼峰形式、常量需要全部大写。
+
+**Chinese(Simplified) Language Pack EAP**
+
+​	汉化
+

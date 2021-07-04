@@ -211,7 +211,7 @@ newType block1;
 //#include "AppDelegate.h" 完全兼容C , 也可使用 #import引入头文件
 @interface Hello : NSObject //定义类
 {
-    int num;//私有属性
+    int num;//私有属性c
 }
 -(id)init;
 -(void) sayHello; //公有属性
@@ -881,7 +881,7 @@ an.eat()
 ```swift
 //1.创建swift项目
 //2.创建Cocoa Touch Class文件
-//3.创建Obj-c文件，将其头文件引入到 xxx-Bridging-Header.h文件中
+//3.创建Obj-c文件，将其头文 件引入到 xxx-Bridging-Header.h文件中
 //4.在其它swift文件中以swift语法正常调用Obj-C对象
 ```
 

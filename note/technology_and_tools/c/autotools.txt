@@ -1,0 +1,102 @@
+autotools(autoconf, automake, and libtool)
+
+
+1.编写configure配置文件
+configure.ac
+
+2.编写makefile配置文件
+Makefile.am
+
+3.编译
+autoreconf -i
+./configure
+make
+
+清除
+make clean 清除.o
+make distclean 同上，但将configure生成的文件全部删除掉
+
+4.其它
+t="$(mktemp -d)"
+DISTDIR="$t" make install
+find "$t"
+make uninstall
+find "$t"
+make dist
+tar tvzf *.tar.gz
+make distcheck
+
+5.约定使用m4子目录代替默认的 aclocal.m4
+删除 aclocal.m4
+创建 m4目录
+在 configure.ac 添加 AC_CONFIG_MACRO_DIR([m4])
+在 Makefile.am 添加 ACLOCAL_AMFLAGS = -I m4 --install
+
+6.使用子src子目录
+configure.ac
+改AC_CONFIG_SRCDIR
+添加subdir-objects AM_INIT_AUTOMAKE([1.11 subdir-objects -Wall -Werror])
+Makefile.am
+改hell_SOURCES
+
+#####配置项############
+
+#项目名，版本号
+AC_INIT([pro_name], [0.1_version])
+
+#autoconf最低版本
+AC_PREREQ([2.68])
+
+#文件必需存在
+AC_CONFIG_SRCDIR([hello.c])
+
+#生成 config header
+AC_CONFIG_HEADERS([config.h])
+
+#Auxiliary files go here
+AC_CONFIG_AUX_DIR([build-aux])
+
+#初始化 automake
+AM_INIT_AUTOMAKE([1.11 -Wall -Werror])
+
+#配置创建Makefile
+AC_CONFIG_FILES([Makefile])
+
+# 查找，嗅探 c编译器
+AC_PROG_CC
+# c++ 编译器
+AC_PROG_CXX
+# bison/yacc
+AC_PROG_YACC
+
+#结束标识
+AC_OUTPUT
+
+
+
+Makefile.am 配置
+#配置可执行文件名
+bin_PROGRAMS={TARGET}
+#替换默认变量
+{TARGET}_{SPECIFICS}
+#源码
+{TARGET}_SOURCES
+#extra objects for program
+{TARGET}_LDADD
+#C预处理器FLAG
+{TARGET}_CPPFLAGS
+{TARGET}_CPPFLAGS = -DDEBUG
+
+
+Libtool:
+
+
+
+
+
+
+
+
+
+
+

@@ -9,6 +9,7 @@
 ```mysql
 show engines;#查询系统支持的引擎
 show table status from db_name where name = 'table_name';#查询表的存储引擎
+show variables like '%storage_engine%';#查询当前存储引擎
 mysql --help |grep my.cnf #查询配置文件加载顺序
 show processlist;#查询进程
 show engine innodb status \G;#查看引擎状态
@@ -400,11 +401,16 @@ purge master logs before '20190519'; #删除比指定时间早的日志文件
 ##### 1.增
 
 ```mysql
+#增加表锁
+lock table table_name1 read(write), table_name2 read(write),... 
+#MyISAM在执行查询select前会自动给涉及的所有表加读锁。在执行增删改前会自动给涉及的表加写锁。
+
 #行排它锁
 select * from t1 where name ='C' for update;
 #行共享锁
 select * from t1 where id =1 lock in share mode;
 
+####索引失效自动行锁变表锁
 ```
 
 ##### 2.查
@@ -420,7 +426,7 @@ SELECT * FROM INFORMATION_SCHEMA.INNODB_TRX;
 SELECT * FROM INFORMATION_SCHEMA.INNODB_LOCK_WAITS;
 #查询innodb引擎状态，可查看锁情况
 show engine innodb status \G
-#查询具体等的语句
+#查询具体等的语句,哪条语句让我等待。
 SELECT r.trx_id waiting_trx_id,  
 	r.trx_mysql_thread_id waiting_thread,
 	r.trx_query waiting_query,

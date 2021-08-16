@@ -35,6 +35,8 @@
 
 #### 3.索引设计
 
+单值索引、复合索引。
+
 ##### 1）索引分类：
 
 - 聚簇索引
@@ -87,6 +89,7 @@
 
 ##### 3）MySQL概念
 
+- MySql是单进程多线程框架，Oracle是多进程。
 - **SQL**，结构化查询语言(Structured Query Language)。客户端使用SQL来操作服务器。
 - Mysql设计之初的**目标**：成为高性能、普通用户支付得起的数据库服务器和工具。
 - Mysql的**使命**：为所有人贡献一个经济实惠并且性能卓越的数据库软件。
@@ -114,8 +117,13 @@
 - show open tables; 查看表使用和锁情况
 - 使用pt-duplicate-key-checker  -uroot -p 查询重复及冗余索引
 - <span style='color:red'>innodb索引失效会使行锁变表锁</span>
+- 数据库不真正删除数据的原因：1.为了大数据分析用 2.为了索引用
+- 互联网嘛，工作压力又大，大干，快上，先完成，后完美，小步快跑，反复迭代，自然而然带bug，终有一天挂了。
+- 先完成，后完美，先功能，后性能。
 
 -------<span style='color:red'>索引相关</span>------------
+
+
 
 -------**join优化**------------
 
@@ -341,7 +349,21 @@ flush_buffer(){
 - **在表单上使用filesort**：using filesort #如果是多表联合，先单表filesort再对排序后进行join
 - **将join结果先放入临时表，然后使用filesort**：using templorary; using filesort
 
-12）
+##### 12）七种JOIN
+
+包含A和B（内连接）：select * from tableA a inner join tableB b on a.key = b.key
+
+包含A不管B（左连接）：select * from tableA a left join tableB b on a.key = b.key
+
+包含B不管A（右连接）：select * from tableA a right join tableB b on a.key = b.key
+
+A中不包含B的部分：select * from tableA a left join tableB b on a.key = b.key where b.key is null
+
+B中不包含A的部分：select * from tableA a right join tableB b on a.key = b.key where a.key is null
+
+包含A和B（全外连接）：左连接和右连接union (合并+去重)
+
+包含A和B但不包含A和B的公共部分：A不包含B和B不包含A的union
 
 ### 二、MySQL相关技能
 
@@ -562,9 +584,11 @@ mysqlbinlog \
 
 ##### 3.并发会存在的问题
 
-- 脏读（dirty read） ：事物A读取了事物B修改但未提交的数据，且B回滚了。
-- 不可重复读 （unrepeatable read）：会话A读取了会话B修改且提交的数据，相同的条件导致两次读取结果不一样。
-- 幻读（phantom read）：会话A读取了会话B修改且提交的数据，相同的查询，。两次查询的结果条数不一样
+- 更新丢失（Lost update）：多事务时，最后的更新覆盖了由其它事务所做的更新。
+
+- 脏读（dirty read） ：事物A读取了事物B<span style="color:red">已修改但未提交的数据</span>，且B回滚了。不符合一致性。
+- 不可重复读 （unrepeatable read）：会话A读取了会话B<span style="color:red">已修改且提交的数据</span>，相同的条件导致两次读取结果不一样,不符合隔离性。
+- 幻读（phantom read）：会话A读取了会话B<span style="color:red">新增且提交的数据</span>，相同的查询，两次查询的结果条数不一样，不符合隔离性。
 
 ##### 4.事物的隔离级别（由低到高）
 
@@ -575,6 +599,13 @@ mysqlbinlog \
 - Serializable（串行）：最高隔离级别。所有事务操作依次顺序执行。注意这会导致并发度下降，性能最差。
 
 注：这四个级别可以逐个解决脏读 、不可重复读 、幻读这几类问题。
+
+```mysql
+ show variables like 'tx_isolation';
+ set autocommit=0;#设置关闭自动提交
+```
+
+
 
 ##### 5.图表展示
 
@@ -588,7 +619,20 @@ mysqlbinlog \
 - 不使用自动回滚
 - 大事物折成小事物
 
-##### 7.不同数据库的锁实现
+##### 7.锁相关
+
+锁：计算机协调多个进程或线程并发访问某一资源的机制。多个事务访问同一资源，根据访问的先后顺序给事务排序。
+
+锁分类：
+
+- 对数据库操作类型分(读/写)：读锁(共享锁)：针对同一份数据，多个读可同时进行而不会相互影响、写锁(排它锁)：当前写操作完成之前，会阻断其它写锁和读锁。
+- 对数据库操作粒度：表锁、行锁
+
+**开销、加锁速度、死锁、粒度、并发性能**
+
+​	只能就具体应用特点来说哪种锁更合适：表锁(偏读)、行锁(偏写)、页锁
+
+**不同数据库的锁实现**
 
 - InnoDB：行级锁
 - MyISAM：表级锁
@@ -629,14 +673,14 @@ select * from t1 where id = 1;
 ##### 12.InnoDB行锁范围
 
 - Record Lock 行记录锁
-- Gap Lock 间隙锁，在索引记录间隙上的锁，或是第一条索引记录之前和最后一条索引记录之后上的间隙锁
-- Next-key Lock 下一键锁，上两种的组合锁
+- Gap Lock 间隙锁，在索引**记录间**隙上的锁，或是第一条索引记录**之前**和最后一条索引记录**之后**上的间隙锁(解决幻读)
+- Next-key Lock 下一键锁，上两种的组合锁，行和行前后上锁
 
 注：Gap Lock锁需要Mysql默认隔离级别RR，每两条数据之间都会加锁，这两条数据之间不能插入数据，能解决幻读不让在行与行之间插入。
 
 ##### 13.MDL(metadata lock)
 
-mysql的select操作会加mdl，保护select语句不被ddl操作。未设置自动提交
+mysql5.5增加，mysql的select操作会加mdl，保护select语句不被ddl操作。未设置自动提交
 
 解决MDL：
 
@@ -702,11 +746,7 @@ update user set status=2,version=version+1 where id= 1 and version=#{version};
 ##### 19.锁相关操作
 
 ```mysql
-show open tables; #查看哪些表被加锁了
-show status like 'table%'#table_locks_immediate产生表锁的次数，table_locks_waited锁等待次数
-lock table tb1 read, tb2 write;#给表加读，写锁.表锁
-unlock tables ; #解锁
-show status like 'innodb_row_lock%' #查看行锁情况
+x show open tables; #查看哪些表被加锁了show status like 'table%'#table_locks_immediate产生表锁的次数，table_locks_waited锁等待次数lock table tb1 read, tb2 write;#给表加读，写锁.表锁unlock tables ; #解锁show status like 'innodb_row_lock%' #查看行锁情况select * from information_schema.innodb_locks;#查询锁情况	unlock tables ; #解锁mysql
 ```
 
 ##### 20.MyISAM锁
@@ -714,6 +754,8 @@ show status like 'innodb_row_lock%' #查看行锁情况
 MyISAM表锁两种模式：表共享读锁，表独占写锁。<span style='color:red'>读锁阻写不阻读，写锁读写</span>都阻。
 
 MyISAM表读操作为读锁，写操作加写锁。
+
+MyISAM在执行查询select前会自动给涉及的所有表加读锁。在执行增删改前会自动给涉及的表加写锁。
 
 #### 10.Mysql主从复制
 
@@ -1083,13 +1125,31 @@ b）三范式
 
 **什么是索引？**
 
-​	索引是帮助MySQL高效获取数据的**数据结构**。可理解为：排好序的快速查找数据结构。索引是一个文件。
+​	索引是帮助MySQL高效获取数据的**数据结构**。可理解为：排好序的快速查找数据结构。索引是一个文件。索引两大功能：查找快，排好序。索引会影响到where后面的查找和order by后面的排序。
 
 **覆盖索引**：
 
 - 查询谓词(**查询条件**)都能够通过index进行扫描
 - 排序(group by、order by)谓词(**排序，分组条件**)都能够通过index进行扫描
 - index包含了查询所需要的所有字段
+
+**哪些情况需要创建索引：**
+
+- 主键自动创建唯一索引
+- 频繁作为查询的字段应该创建索引
+- 查询中与其它表关联的字段，外键关系建立索引
+- 单键/组合索引的选择问题，在高并发下倾向于创建组合索引
+- 查询中排序的字段，排序字段若通过索引访问将大大提高排序速度
+- 查询中统计或者分组(分组的提前是排序)字段需要创建索引
+- 数据百万以上，explain有All建立索引
+
+**哪些情况不要创建索引：**
+
+- 频繁更新的字段不适合创建索引
+- where条件里用不到的字段不要创建索引
+- 表记录太小，百万以内不建
+- 经常增删改的表不忍者刺客
+- 数据重复且分布平均的表字段
 
 **不能使用索引**：
 
@@ -1179,9 +1239,12 @@ mysqld_safe --skip-grant-tables #绕过权限表认证，root密码丢失时可�
 
 ​	pt-index-usage -u -p mysql_slow.log 通过慢日志分析索引，查看哪些索引未使用
 
-**慢的原因？**(执行时间长、等待时间长)
+**慢的原因？**(磁盘空间满了、执行时间长、等待时间长)
 
-​	查询语句写的烂、索引失效、关联查询太多(设计缺陷或不得已需求)、服务器调优及各参数设置	
+- 查询语句写的烂：各种连接，各种子查询导致用不上索引或没建索引。
+- 索引失效：建了索引没用上，(单值索引、复合索引)。
+- 关联查询太多join：设计缺陷或不得已需求。
+- 服务器调优及各参数设置：缓冲，线程数等。	
 
 **开启时机**
 
@@ -1240,7 +1303,7 @@ pt-query-digest slow-log -review \
 
 ##### 3.性能分析
 
-1）MySQL Query Optimizer
+1）MySQL Query Optimizer Mysq查询优化分析器
 
 2）MySQL常见瓶颈：
 
@@ -1269,7 +1332,7 @@ pt-query-digest slow-log -review \
 
 **结果**
 
-a）**id**
+a）<span style='color:red'>**id**</span>
 
 ​	select查询的序列号，包含一组数字，表示查询中执行select子句或操作表的顺序
 
@@ -1291,13 +1354,13 @@ b）**select_type**
 
 - PRIMARY：查询中包含任何复杂的子部分，最外层标记为PRIMARY
 - SUBQUERY：子查询
-- DERIVED：在FROM列表中包含的子查询被标记为DERIVED(衍生)，MYSQL会递归执行这些子查询，结果放在临时表中
+- DERIVED：在FROM列表中包含的子查询被标记为DERIVED(衍生虚表)，MYSQL会递归执行这些子查询，结果放在临时表中
 - UNION：第二个SELECT出现在UNION之后，则被标记为UNION：若UNION包含在FROM子句中，外层SELECT被标记为DERIVED
 - UNION RESULT：从UNION表获取结果的SELECT
 
-c）**type** ：判断查询是否高效的重要依据
+c）<span style='color:red'>**type**</span> ：判断查询是否高效的重要依据
 
-- system：表只有一行记录
+- system：表只 有一行记录
 
 - const：表示通过索引一次就找到了，主键或唯一索引扫描，只匹配一条数据
 
@@ -1307,7 +1370,7 @@ c）**type** ：判断查询是否高效的重要依据
 
 - range：索引范围扫描，常用语<,<=,>=,between,in,is null等操作，返回少部分数据时，数据多时为All
 
-- index：索引全扫描
+- index：索引全扫描，只遍历索引树，比All快，index是从索引中读，all是从硬盘中读。
 
 - ALL：全表扫描
 
@@ -1319,34 +1382,34 @@ type类型结果值从**最好到最坏**依次是：
 
 d）**possible_keys**
 
-​	 此次查询中可能被使用的索引
+​	 此次查询中**可能**被使用的索引，但不一定被实际索引使用。
 
-e）**key**
+e）<span style='color:red'>**key**</span>
 
-​	 此次查询中实际使用到的索引，查询中若使用了覆盖索引（查询的字段与建立复合索引一致，查询的列被所建的索引覆盖），则该索引只出现在key列表中。
+​	 此次查询中**实际**使用到的索引，查询中若使用了覆盖索引（查询的字段与建立复合索引一致，查询的列被所建的索引覆盖），则该索引只出现在key列表中。
 
 f）**key_len**
 
-​	索引中使用的字节数，通过该列获取使用的索引长度。在不损失**精确性**的情况下，**长度**越短越好。
+​	索引中使用的字节数，通过该列获取使用的索引长度。在不损失**精确性**的情况下，**长度**越短越好。显示最大可能长度，而非实际长度。
 
 g）**ref**
 
 ​	 显示索引的哪一列被使用了。如果可能的话，是一个常数。哪些列或常量被用于查找索引列上的值。
 
-h）**rows**
+h）<span style='color:red'>**rows**</span>
 
 ​	大致估算出，找到所需要的记录所需要读取的行数。
 
-i）**extra**
+i）<span style='color:red'>**extra**</span>
 
-​	包含不适合在其它列显示，但十分重要的额外信息。
+​	包含不适合在其它列显示，但**十分重要**的额外信息。
 
-- <span style='color:red'>using filesort</span>：对数据使用外部排序（**九死一生**）
-- <span style='color:red'>using temporary</span>：使用临时表保存中间结果，mysql在对查询结果排序时使用临时表。（**十死无生**）
+- <span style='color:red'>using filesort</span>：对数据使用外部排序（**九死一生**）,mysql无法使用索引进行排序。索引断层，索引失效等情况。
+- <span style='color:red'>using temporary</span>：使用临时表保存中间结果，mysql在对查询结果排序时使用临时表。（**十死无生**）常见于order by 或 group by
 
 注：以上多出现在排序数量与顺序与建立索引数量与顺序不一致的情况
 
-- <span style='color:red'>using index</span>：使用了覆盖索引
+- <span style='color:red'>using index</span>：使用了覆盖索引，(**好事**)，查询的列被所建的索引覆盖。
 - using where：使用了where过虑
 - using join buffer：使用了连接缓存
 - impossible where：where子句的值总是false，不能获取任何元组
@@ -1442,6 +1505,46 @@ where高于having，能写在where限定的条件就不要写在having
 
 ##### 4.索引失效
 
+**哪些情况会引起索引失效**
+
+- 隐式类型转换 本来是varchar型你给数字型
+- 索引断层(建立a_b_c复合索引) 但直接使用c
+- 索引列参与表达式计算
+
+```mysql
+SELECT 'sname' FROM 'stu' WHERE 'age' + 10 = 30;
+```
+
+-  函数运算
+
+```mysql
+SELECT 'sname' FROM 'stu' WHERE LEFT('date',4) < 1990;
+```
+
+-  %词语%--模糊查询
+
+```mysql
+SELECT * FROM 'manong' WHERE `uname` LIKE '%码农%' -- ⾛索引
+SELECT * FROM 'manong' WHERE `uname` LIKE "%码农%" -- 不⾛索引
+```
+
+-  字符串与数字⽐较不⾛索引(隐式类型转换)
+
+```mysql
+CREATE TABLE 'a' ('a' char(10));
+EXPLAIN SELECT * FROM 'a' WHERE 'a'="1" -- ⾛索引
+EXPLAIN SELECT * FROM 'a'WHERE 'a'=1 -- 不⾛索引，同样也是使⽤了函数运算
+```
+
+-  查询条件中有 or ，即使其中有条件带索引也不会使⽤。换⾔之，就是要求使⽤的所有字段，都必须建⽴索 引
+
+```mysql
+select * from dept where dname='xxx' or loc='xx' or deptno = 45;
+```
+
+- 正则表达式不使⽤索引
+- MySQL 内部优化器会对 SQL 语句进⾏优化，如果优化器估计使⽤全表扫描要⽐使⽤索引快，则不使⽤索引。
+
 **如何避免**
 
 - 全值匹配我最爱(复合索引)
@@ -1507,6 +1610,7 @@ locked
 ```mysql
 set global general_log = 1;
 set global log_output='table';
+#此后你所编写的sql语句将会记录在mysql库里的general_log表中
 ```
 
 
@@ -1526,11 +1630,13 @@ set global log_output='table';
 
 2.调度算法设置deadline，echo deadline > /sys/block/.../queue/schedule
 
-10. #### 排查
+10. #### 排查分析慢原因
+
+1.观察，CPU、内存、IO(硬盘，网络)
 
 1.观察，至少跑一天看看的慢SQL情况
 
-2.开启慢查询日志，设置阙值，提取慢查询SQL
+2.开启慢查询日志，设置阙值，比如5秒，提取慢查询SQL
 
 3.explain + 慢SQL分析
 

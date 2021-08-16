@@ -4297,6 +4297,19 @@
 							"width": 60,
 							"height": 25,
 							"text": "1..2"
+						},
+						{
+							"_type": "UMLNoteView",
+							"_id": "AAAAAAF7PeXwk95lWdU=",
+							"_parent": {
+								"$ref": "AAAAAAFtcHxiPW84CtQ="
+							},
+							"font": "Arial;13;0",
+							"left": 64,
+							"top": 32,
+							"width": 217,
+							"height": 115,
+							"text": "Note：注释\nDependency：依赖(使用)\nAssociation：关联\nGeneralization：泛化(继承)\nRealization：实现\nAggregation：聚合\nComposition：组合"
 						}
 					]
 				},
@@ -4329,7 +4342,8 @@
 							"_parent": {
 								"$ref": "AAAAAAFtcH2cZm9AjAg="
 							},
-							"name": "name"
+							"name": "name",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -4338,7 +4352,8 @@
 								"$ref": "AAAAAAFtcH2cZm9AjAg="
 							},
 							"name": "age",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						}
 					],
 					"operations": [
@@ -4704,7 +4719,8 @@
 							"_parent": {
 								"$ref": "AAAAAAFtcMuU6nd18YM="
 							},
-							"name": "name"
+							"name": "name",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -4712,7 +4728,8 @@
 							"_parent": {
 								"$ref": "AAAAAAFtcMuU6nd18YM="
 							},
-							"name": "age"
+							"name": "age",
+							"type": ""
 						}
 					]
 				},
@@ -4888,7 +4905,8 @@
 							"_parent": {
 								"$ref": "AAAAAAFtcNDbhXntIFw="
 							},
-							"name": "color"
+							"name": "color",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -4896,7 +4914,8 @@
 							"_parent": {
 								"$ref": "AAAAAAFtcNDbhXntIFw="
 							},
-							"name": "brand"
+							"name": "brand",
+							"type": ""
 						}
 					]
 				},
@@ -4965,7 +4984,8 @@
 							"_parent": {
 								"$ref": "AAAAAAFtcNJw4nsz9xI="
 							},
-							"name": "headlight"
+							"name": "headlight",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -4973,7 +4993,8 @@
 							"_parent": {
 								"$ref": "AAAAAAFtcNJw4nsz9xI="
 							},
-							"name": "motor"
+							"name": "motor",
+							"type": ""
 						}
 					]
 				}

@@ -17,12 +17,69 @@ public class GroupMerge{
         System.out.println(getProvince(data1));
         System.out.println(getProvince(data2));
 
-        //
+        //广度优先
         System.out.println(bfs(data1));
         System.out.println(bfs(data2));
+
+        //并查集
+        System.out.println(mergeFind(data1));
+        System.out.println(mergeFind(data2));
     }
 
-    
+    private static int mergeFind(int[][] data) {
+        int len = data.length;
+        //维护要结点，元素值代表索引指向的 root
+        int[] head = new int[len];
+        //维护高度，元素传正代表索引的高度
+        int[] level = new int[len];
+        //init
+        for(int i = 0; i < len; i++){
+            head[i] = i;
+            level[i] = 1;
+        }
+        for(int i = 0; i < len; i++){
+            for(int j = i + 1; j < len; j++){
+                if (data[i][j] == 1){//相连，合并
+                    merge(i, j, head, level);
+                }
+            }
+        }
+        int res = 0;
+        //多少元素值与索引值相同，则有多少集合，即省份
+        for(int i = 0; i < len; i++){
+            if (head[i] == i){
+                res++;
+            }
+        }
+        return res;
+    }
+
+    private static void merge(int left, int right, int[] head, int[] level) {
+        
+        int leftRoot = find(left, head);
+        int rightRoot = find(right,head);
+        if (leftRoot == rightRoot){
+            return;
+        }
+        
+        if (level[left] <= level[right]){
+            head[left] = rightRoot;
+        }else{
+            head[right] = leftRoot;
+        }
+        if (level[left] == level[right]){
+            level[left]++;
+            level[right]++;
+        }
+    }
+
+    private static int find(int x, int[] head) {
+        if (head[x] == x){
+            return x;
+        }
+        return find(head[x], head);
+    }
+
     private static int bfs(int[][] citys) {
         int province = 0;
         Queue<Integer> q = new LinkedList<>();
@@ -58,7 +115,7 @@ public class GroupMerge{
 
         for (int i = 0; i < citys; i++){
             if (!visited[i]){
-                bfs(i, visited, citysConnected);
+                dfs(i, visited, citysConnected);
                 province++;
             }
         }
@@ -67,13 +124,13 @@ public class GroupMerge{
 
 
     //深度优先
-    private static void bfs(int i, boolean[] visited, int[][] citysConnected) {
+    private static void dfs(int i, boolean[] visited, int[][] citysConnected) {
         int citys = citysConnected.length;
         for (int j = 0; j < citys; j++){
             //判断 j 是否与 i 相连接，如果 j 已经相连接，则不需要再继续了
             if (citysConnected[i][j] == 1 && !visited[j]){
                 visited[j] = true;
-                bfs(j, visited, citysConnected);
+                dfs(j, visited, citysConnected);
             }
         }
     }

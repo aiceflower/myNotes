@@ -6,7 +6,7 @@ public class PrimeCount{
      * @param args
      */
     public static void main(String[] args){
-        System.out.println(findPrimeCount(1000));
+        System.out.println(findPrimeCount(100));
         System.out.println(eishai(1000));
     }
 

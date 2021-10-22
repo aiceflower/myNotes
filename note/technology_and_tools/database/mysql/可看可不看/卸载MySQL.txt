@@ -1,14 +1,15 @@
-Í£Ö¹MySQL
-1Ìí¼ÓÉ¾³ı³ÌĞòÖĞĞ¶ÔØMySQL
-2µ½°²×°Ä¿Â¼É¾³ıMySQL
-3É¾³ı£ºC:\Documents and Settings\All Users\Application Data\MySQL
+åœæ­¢MySQL
+1æ·»åŠ åˆ é™¤ç¨‹åºä¸­å¸è½½MySQL
+2åˆ°å®‰è£…ç›®å½•åˆ é™¤MySQL
+3åˆ é™¤ï¼šC:\Documents and Settings\All Users\Application Data\MySQL
 	C:\ProgramData\MySQL
-4²é¿´×¢²á±í£º
+4æŸ¥çœ‹æ³¨å†Œè¡¨ï¼š
 regedit
 HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services
 HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Services
 HKEY_LOCAL_MACHINE\SYSTEM\ControlSet002\Services
-ËÑË÷mysql£¬ÕÒµ½Ò»ÂÉ¸Éµô£¡
+æœç´¢mysqlï¼Œæ‰¾åˆ°ä¸€å¾‹å¹²æ‰ï¼
 ============================
 
-ĞèÒªÖØÆôµçÄÔ(win xp)£¬Ö±½ÓÖØĞÂ°²×°¼´¿É
+éœ€è¦é‡å¯ç”µè„‘(win xp)ï¼Œç›´æ¥é‡æ–°å®‰è£…å³å¯
+

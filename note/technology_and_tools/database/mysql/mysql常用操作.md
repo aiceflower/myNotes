@@ -100,7 +100,7 @@ mysql -u root;#登陆后使用1，2，3方式修改
 
 ```mysql
 #创建数据库，调协编码为utf-8,
-create database [IF NOT EXISTS] testdb default character set utf8;
+create database [IF NOT EXISTS] testdb default character set utf8mb4 COLLATE utf8mb4_general_ci;
 ```
 
 ##### 2.删
@@ -318,6 +318,8 @@ flush privileges;
 #这种方式需要flush，它是直接把数据做了持久化，缓存是不知道的，flush是把user中的数据重新加载进缓存。
 #权限
 grant all on *.* to 'user_name'@'host';#授所有权限
+grant all on db.* to 'name'@'%'; #授所有权限
+flush privileges;
 grant select(id,name) on 'db_name'.'tb_name' to 'user_name'@'host';#给列授权
 ```
 

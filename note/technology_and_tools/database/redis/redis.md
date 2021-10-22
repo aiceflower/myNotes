@@ -282,13 +282,13 @@
 
 - 2.修改如下配置
   		daemonize yes
-  		port 6379
-  		bind ip
-  		dir /usr/local/redis_cluster 
-  		cluster-enabled yes 
-  		cluster-config-file nodes.conf 
-  		cluster-node-timeout 5000
-  		appendonly yes 
+    		port 6379
+    		bind ip
+    		dir /usr/local/redis_cluster 
+    		cluster-enabled yes 
+    		cluster-config-file nodes.conf 
+    		cluster-node-timeout 5000
+    		appendonly yes 
 
 - 3.redis集群需要安装ruby,rubygems,gem install redis 
 
@@ -502,7 +502,7 @@ jedis.eval(script, Collections.singletonList(lockKey), Collections.singletonList
 
 4. 
 
-5. to
+5. 云原生
 
 
 
@@ -558,7 +558,7 @@ redis与memcache都是基于内存的。
 IO epoll
 单线程 && IO threads
 聊场景
-从业务入手了业务，公司有这个业务，那个业务，分别用Redis的这个那个点实现了它。
+从业务入手聊业务，公司有这个业务，那个业务，分别用Redis的这个那个点实现了它。
 
 聊分布式、中间件、集群等
 

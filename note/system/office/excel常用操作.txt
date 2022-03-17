@@ -26,6 +26,6 @@ excel函数：
 
 =HYPERLINK("#sheet2!A8","跳转")
 
-四、列转行，等列多行
+四、列转行，一列转等列多行
 
 =INDEX(A1:A410,(ROW(A1)-1)*10+COLUMN(A1))

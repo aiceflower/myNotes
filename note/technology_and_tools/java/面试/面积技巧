@@ -7,7 +7,6 @@
 程序不能直接访问硬件(磁盘、网卡等)、内核可以调用
 程序通过系统调用(软中断)访问硬件；硬中断(鼠标、键盘、时钟中断)
 
-
 IO
 epoll
 C10K，一万个客户端
@@ -27,13 +26,14 @@ epoll_wait(fd8)
 accept fd5 -> fd6
 epoll_ctl(fd8,fd6)
 
-
 同样是epoll为什么redis是轮询，nginx是阻塞？
 	redis的一个线程除了接收客户端，还会干很多事情，比如LRU、LFU、RDB、AOF等所以需要轮询。
 	nginx一个线程就干一个事，等客户端来，来了之后才干活。
 
+linu
 
-linux
+linux网络模型：阻塞 IO 、非阻塞 IO 、多路复用IO、信号驱动式 IO 、异步 IO
+
 /proc/pid(某个进程号)/fd 存放io数(file、socket、pipeline)
 /proc/pid(某个进程号)/task 线程数
 默认安装man，需要安装 man-pages

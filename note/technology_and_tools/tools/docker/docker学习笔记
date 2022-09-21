@@ -68,6 +68,23 @@ docker run -d nginx 即运行容器，把一个镜像变成一个容器
 二、docker镜像位置
 1. http://c.163.com
 2.https://hub.docker.com/
+修改
+vi /etc/docker/daemon.json
+//配置docker国内源
+{
+  "registry-mirrors":[
+    "https://registry.docker-cn.com",				//国内官方镜像
+	"https://mirrors.tuna.tsinghua.edu.cn",			//清华镜像
+	"https://aeckruos.mirror.aliyuncs.com",			//阿里云镜像,需要注册
+	"http://hub-mirror.c.163.com"，					//网易163镜像
+	"https://docker.mirrors.ustc.edu.cn",			//中科大镜像
+  ],
+ "insecure-registries": ["192.168.6.129:5000"]		//docker私库地址
+}
+重启
+systemctl restart docker
+查看镜像源
+docker info|grep Mirrors -A 1
 三、docker网络
 网络类型：bridge 
 		host 
